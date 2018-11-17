@@ -1,2 +1,7 @@
 # audio-tennis-alexa-skill
-Skill for Amazon Alexa like game "Word tennis"
+Skill game for Amazon Alexa
+
+## Documentation
+
+## Build
+mvn clean assembly:assembly -DdescriptorId=jar-with-dependencies -DskipTests package

@@ -1,0 +1,44 @@
+{
+  "NO": [
+    "no",
+    "oh no",
+    "no no",
+    "nope",
+    "I do not",
+    "no thank you"
+  ],
+  "YES": [
+    "ok",
+    "yes",
+    "yep",
+    "yeah",
+    "I do",
+    "yes please",
+    "you know it",
+    "of course"
+  ],
+  "AGAIN": [
+    "again",
+    "try again"
+  ],
+  "LOW": [
+    "1st",
+    "low",
+    "first",
+    "one"
+  ],
+  "MEDIUM": [
+    "mid",
+    "middle",
+    "medium",
+    "second",
+    "two"
+  ],
+  "HIGH": [
+    "3rd",
+    "high",
+    "third",
+    "last",
+    "three"
+  ]
+}
