@@ -1,6 +1,5 @@
 package com.muffinsoft.alexa.skills.audiotennis.constants;
 
-public class CardConstants {
+public class CardConstants extends com.muffinsoft.alexa.sdk.constants.CardConstants {
 
-    public static final String WELCOME_CARD = "welcome";
 }

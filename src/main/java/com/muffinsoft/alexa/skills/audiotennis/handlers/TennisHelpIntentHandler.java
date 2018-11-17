@@ -1,22 +1,22 @@
 package com.muffinsoft.alexa.skills.audiotennis.handlers;
 
-import com.amazon.ask.dispatcher.request.handler.HandlerInput;
-import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.handlers.HelpIntentHandler;
-import com.muffinsoft.alexa.skills.audiotennis.activities.HelpStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
+
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_HELP_PHRASE;
 
 public class TennisHelpIntentHandler extends HelpIntentHandler {
 
-    private final ConfigContainer configurationContainer;
+    private final PhraseManager phraseManager;
 
     public TennisHelpIntentHandler(ConfigContainer configurationContainer) {
         super();
-        this.configurationContainer = configurationContainer;
+        this.phraseManager = configurationContainer.getPhraseManager();
     }
 
     @Override
-    public StateManager nextTurn(HandlerInput handlerInput) {
-        return new HelpStateManager(getSlotsFromInput(handlerInput), handlerInput.getAttributesManager(), configurationContainer);
+    protected String getPhrase() {
+        return phraseManager.getValueByKey(WANT_HELP_PHRASE);
     }
 }

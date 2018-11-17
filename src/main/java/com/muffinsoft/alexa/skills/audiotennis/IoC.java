@@ -1,6 +1,8 @@
 package com.muffinsoft.alexa.skills.audiotennis;
 
 
+import com.muffinsoft.alexa.sdk.components.IntentFactory;
+import com.muffinsoft.alexa.skills.audiotennis.components.TennisIntentFabric;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
@@ -14,6 +16,7 @@ public class IoC {
     private static final UserReplyManager userReplyManager;
     private static final AliasManager aliasManager;
     private static final ConfigContainer configContainer;
+    private static final TennisIntentFabric intentFabric;
 
     static {
         phraseManager = new PhraseManager("phrases/en-US.json");
@@ -21,6 +24,7 @@ public class IoC {
         userReplyManager = new UserReplyManager("phrases/replies.json");
         aliasManager = new AliasManager("settings/aliases.json");
         configContainer = new ConfigContainer(phraseManager, cardManager, userReplyManager, aliasManager);
+        intentFabric = new TennisIntentFabric(configContainer);
     }
 
     public static UserReplyManager provideUserReplyManager() {
@@ -29,5 +33,9 @@ public class IoC {
 
     public static ConfigContainer provideConfigurationContainer() {
         return configContainer;
+    }
+
+    public static IntentFactory provideIntentFactory() {
+        return intentFabric;
     }
 }

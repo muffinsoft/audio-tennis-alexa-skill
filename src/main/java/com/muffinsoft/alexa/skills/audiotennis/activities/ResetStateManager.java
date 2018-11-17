@@ -3,12 +3,12 @@ package com.muffinsoft.alexa.skills.audiotennis.activities;
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
+import com.muffinsoft.alexa.sdk.enums.IntentType;
+import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
-import com.muffinsoft.alexa.skills.audiotennis.enums.Intents;
-import com.muffinsoft.alexa.skills.audiotennis.enums.StatePhase;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 import org.apache.logging.log4j.LogManager;
@@ -41,13 +41,13 @@ public class ResetStateManager extends BaseStateManager {
         DialogItem.Builder builder = DialogItem.builder();
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
-            getSessionAttributes().put(INTENT, Intents.GAME);
-            getSessionAttributes().put(STATE_PHASE, StatePhase.STRIPE_INTRO);
+            getSessionAttributes().put(INTENT, IntentType.GAME);
+            getSessionAttributes().put(STATE_PHASE, StateType.SUBMISSION_INTRO);
             builder.addResponse(Speech.ofText(phraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
         }
         else if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
             builder.addResponse(Speech.ofText(phraseManager.getValueByKey(WANT_MISSION_FROM_BEGINNING_PHRASE)));
-            getSessionAttributes().put(INTENT, Intents.RESET_CONFIRMATION);
+            getSessionAttributes().put(INTENT, IntentType.RESET_CONFIRMATION);
         }
         else {
             builder.addResponse(Speech.ofText(phraseManager.getValueByKey(REPEAT_LAST_PHRASE)));

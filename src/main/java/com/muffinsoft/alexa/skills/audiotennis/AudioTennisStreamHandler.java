@@ -24,7 +24,7 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
 
         return Skills.standard()
                 .addRequestHandlers(
-                        new TennisActionIntentHandler(IoC.provideConfigurationContainer()),
+                        new TennisActionIntentHandler(IoC.provideIntentFactory()),
                         new TennisCancelIntentHandler(IoC.provideConfigurationContainer()),
                         new TennisFallbackIntentHandler(IoC.provideConfigurationContainer()),
                         new TennisHelpIntentHandler(IoC.provideConfigurationContainer()),
