@@ -1,10 +1,13 @@
-package com.muffinsoft.alexa.skills.audiotennis.activities;
+package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseGameStateManager;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.UserReplyManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 
 import java.util.Map;
@@ -16,10 +19,17 @@ import static com.muffinsoft.alexa.sdk.enums.StateType.READY;
 
 public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
+    protected final PhraseManager phraseManager;
+    protected final AliasManager aliasManager;
+    protected final UserReplyManager userReplyManager;
+
     private StateType stateType;
 
     public TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
         super(inputSlots, attributesManager);
+        this.phraseManager = configContainer.getPhraseManager();
+        this.aliasManager = configContainer.getAliasManager();
+        this.userReplyManager = configContainer.getUserReplyManager();
     }
 
     @Override
