@@ -4,7 +4,6 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
-import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
@@ -17,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.sdk.model.Speech.ofAlexa;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.SELECT_MISSION_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.CURRENT_MISSION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.USER_PROGRESS;
@@ -56,7 +56,7 @@ public class SelectLevelStateManager extends BaseStateManager {
             cardTitle = aliasManager.getValueByKey(String.valueOf(this.getSessionAttributes().get(CURRENT_MISSION)));
         }
 
-        DialogItem.Builder builder = DialogItem.builder().withResponse(Speech.ofText(dialog));
+        DialogItem.Builder builder = DialogItem.builder().addResponse(ofAlexa(dialog));
 
         if (cardTitle != null) {
             builder.withCardTitle(cardTitle);

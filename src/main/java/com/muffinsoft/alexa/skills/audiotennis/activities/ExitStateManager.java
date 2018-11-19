@@ -15,13 +15,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
-import static com.muffinsoft.alexa.sdk.enums.StateType.MISSION_INTRO;
-import static com.muffinsoft.alexa.sdk.model.Speech.ofText;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
+import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
+import static com.muffinsoft.alexa.sdk.model.Speech.ofAlexa;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.EXIT_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.RETURN_TO_GAME_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.STATE_PHASE;
 
 public class ExitStateManager extends BaseStateManager {
 
@@ -38,7 +38,7 @@ public class ExitStateManager extends BaseStateManager {
 
     @Override
     protected void populateActivityVariables() {
-        stateType = StateType.valueOf(String.valueOf(getSessionAttributes().getOrDefault(STATE_PHASE, MISSION_INTRO)));
+        stateType = StateType.valueOf(String.valueOf(getSessionAttributes().getOrDefault(STATE_TYPE, ACTIVITY_INTRO)));
     }
 
     @Override
@@ -49,16 +49,16 @@ public class ExitStateManager extends BaseStateManager {
         DialogItem.Builder builder = DialogItem.builder();
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            builder.addResponse(ofText(phraseManager.getValueByKey(EXIT_PHRASE)));
+            builder.addResponse(ofAlexa(phraseManager.getValueByKey(EXIT_PHRASE)));
             builder.withShouldEnd(true);
         }
         else if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
-            getSessionAttributes().put(STATE_PHASE, StateType.SUBMISSION_INTRO);
-            builder.addResponse(ofText(phraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
+            getSessionAttributes().put(STATE_TYPE, StateType.SUBMISSION_INTRO);
+            builder.addResponse(ofAlexa(phraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
         }
         else {
-            builder.addResponse(ofText(phraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
+            builder.addResponse(ofAlexa(phraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
         }
 
         return builder.build();

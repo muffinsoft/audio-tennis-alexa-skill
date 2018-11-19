@@ -9,9 +9,14 @@ import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 
 import java.util.Map;
 
-public class TennisBaseGameStateManager extends BaseGameStateManager {
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
+import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
+import static com.muffinsoft.alexa.sdk.enums.StateType.DEMO;
+import static com.muffinsoft.alexa.sdk.enums.StateType.READY;
 
-    private StateType stateType = StateType.ACTIVITY_INTRO;
+public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
+
+    private StateType stateType;
 
     public TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
         super(inputSlots, attributesManager);
@@ -19,7 +24,7 @@ public class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected void populateActivityVariables() {
-        super.populateActivityVariables();
+        stateType = StateType.valueOf(String.valueOf(getSessionAttributes().getOrDefault(STATE_TYPE, ACTIVITY_INTRO)));
     }
 
     @Override
@@ -43,11 +48,6 @@ public class TennisBaseGameStateManager extends BaseGameStateManager {
     }
 
     @Override
-    protected DialogItem.Builder handleGamePhaseState(DialogItem.Builder builder) {
-        return super.handleGamePhaseState(builder);
-    }
-
-    @Override
     protected DialogItem.Builder handleWinState(DialogItem.Builder builder) {
         return super.handleWinState(builder);
     }
@@ -59,16 +59,27 @@ public class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected DialogItem.Builder handleReadyToPlayState(DialogItem.Builder builder) {
+        this.stateType = StateType.GAME_PHASE_1;
         return super.handleReadyToPlayState(builder);
     }
 
     @Override
     protected DialogItem.Builder handleDemoState(DialogItem.Builder builder) {
-        return super.handleDemoState(builder);
+        this.stateType = READY;
+        return builder.withSlotName(actionSlotName);
     }
 
     @Override
     protected DialogItem.Builder handleActivityIntroState(DialogItem.Builder builder) {
-        return super.handleActivityIntroState(builder);
+
+        // should run demo
+        if (true) {
+            this.stateType = DEMO;
+        }
+        else {
+            this.stateType = READY;
+        }
+
+        return builder.withSlotName(actionSlotName);
     }
 }
