@@ -2,9 +2,9 @@ package com.muffinsoft.alexa.skills.audiotennis.content;
 
 import com.muffinsoft.alexa.sdk.content.BaseContentManager;
 
-public class PhraseManager extends BaseContentManager<String> {
+public class RegularPhraseManager extends BaseContentManager<String> {
 
-    public PhraseManager(String path) {
+    public RegularPhraseManager(String path) {
         super(path);
     }
 }

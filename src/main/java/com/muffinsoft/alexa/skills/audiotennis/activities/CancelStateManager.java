@@ -6,7 +6,7 @@ import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
-import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 import org.apache.logging.log4j.LogManager;
@@ -23,11 +23,11 @@ public class CancelStateManager extends BaseStateManager {
 
     private static final Logger logger = LogManager.getLogger(CancelStateManager.class);
 
-    private final PhraseManager phraseManager;
+    private final RegularPhraseManager regularPhraseManager;
 
     public CancelStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
         super(inputSlots, attributesManager, configContainer.getDialogTranslator());
-        this.phraseManager = configContainer.getPhraseManager();
+        this.regularPhraseManager = configContainer.getRegularPhraseManager();
     }
 
     @Override
@@ -38,16 +38,16 @@ public class CancelStateManager extends BaseStateManager {
         String dialog;
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            dialog = phraseManager.getValueByKey(SELECT_MISSION_PHRASE);
+            dialog = regularPhraseManager.getValueByKey(SELECT_MISSION_PHRASE);
 
             getSessionAttributes().put(INTENT, IntentType.GAME);
         }
         else if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
-            dialog = phraseManager.getValueByKey(WANT_EXIT_PHRASE);
+            dialog = regularPhraseManager.getValueByKey(WANT_EXIT_PHRASE);
             getSessionAttributes().put(INTENT, IntentType.EXIT);
         }
         else {
-            dialog = phraseManager.getValueByKey(REPEAT_LAST_PHRASE);
+            dialog = regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE);
         }
 
         DialogItem.Builder builder = DialogItem.builder().addResponse(getDialogTranslator().translate(dialog));

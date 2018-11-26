@@ -11,7 +11,7 @@ import com.muffinsoft.alexa.skills.audiotennis.constants.GreetingsConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.GreetingsManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 import org.apache.logging.log4j.LogManager;
@@ -28,7 +28,7 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.CardConstants.WE
 public class LaunchStateManager extends BaseStateManager {
 
     private static final Logger logger = LogManager.getLogger(LaunchStateManager.class);
-    private final PhraseManager phraseManager;
+    private final RegularPhraseManager regularPhraseManager;
     private final GreetingsManager greetingsManager;
     private final CardManager cardManager;
 
@@ -36,7 +36,7 @@ public class LaunchStateManager extends BaseStateManager {
 
     public LaunchStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
         super(inputSlots, attributesManager, configContainer.getDialogTranslator());
-        this.phraseManager = configContainer.getPhraseManager();
+        this.regularPhraseManager = configContainer.getRegularPhraseManager();
         this.cardManager = configContainer.getCardManager();
         this.greetingsManager = configContainer.getGreetingsManager();
     }

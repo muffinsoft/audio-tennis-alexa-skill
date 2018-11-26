@@ -1,6 +1,5 @@
 {
-  "welcomePhrase": "Glad you’ve come over! I love playdates! And today, I’ve got something so cool, so different for us to do. Would you like to follow me?",
-  "welcomeBackPhrase": "Welcome back! Would you like to follow me?",
+  "readyToStartPhrase": "Ready to start?",
   "selectMissionPhrase": "Please, select mission",
   "wantStartMissionPhrase": "Do you want to start a new mission?",
   "wantResetProgressPhrase": "Are you sure you want to discontinue the mission and lose all your progress?",

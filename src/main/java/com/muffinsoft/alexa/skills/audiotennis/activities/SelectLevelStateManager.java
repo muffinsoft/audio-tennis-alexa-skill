@@ -6,7 +6,7 @@ import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
@@ -25,13 +25,13 @@ public class SelectLevelStateManager extends BaseStateManager {
     private static final Logger logger = LogManager.getLogger(SelectLevelStateManager.class);
 
     private final AliasManager aliasManager;
-    private final PhraseManager phraseManager;
+    private final RegularPhraseManager regularPhraseManager;
     private UserProgress userProgress;
 
     public SelectLevelStateManager(Map<String, Slot> slots, AttributesManager attributesManager, ConfigContainer configContainer) {
         super(slots, attributesManager, configContainer.getDialogTranslator());
         this.aliasManager = configContainer.getAliasManager();
-        this.phraseManager = configContainer.getPhraseManager();
+        this.regularPhraseManager = configContainer.getRegularPhraseManager();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SelectLevelStateManager extends BaseStateManager {
 
         String dialog = null;
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            dialog = phraseManager.getValueByKey(SELECT_MISSION_PHRASE);
+            dialog = regularPhraseManager.getValueByKey(SELECT_MISSION_PHRASE);
         }
 
         String cardTitle = null;

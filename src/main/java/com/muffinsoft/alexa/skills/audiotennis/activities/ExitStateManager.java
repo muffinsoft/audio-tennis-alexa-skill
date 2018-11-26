@@ -7,7 +7,7 @@ import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
-import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 import org.apache.logging.log4j.LogManager;
@@ -26,13 +26,13 @@ public class ExitStateManager extends BaseStateManager {
 
     private static final Logger logger = LogManager.getLogger(CancelStateManager.class);
 
-    private final PhraseManager phraseManager;
+    private final RegularPhraseManager regularPhraseManager;
 
     private StateType stateType;
 
     public ExitStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
         super(inputSlots, attributesManager, configContainer.getDialogTranslator());
-        this.phraseManager = configContainer.getPhraseManager();
+        this.regularPhraseManager = configContainer.getRegularPhraseManager();
     }
 
     @Override
@@ -48,16 +48,16 @@ public class ExitStateManager extends BaseStateManager {
         DialogItem.Builder builder = DialogItem.builder();
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            builder.addResponse(getDialogTranslator().translate(phraseManager.getValueByKey(EXIT_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_PHRASE)));
             builder.withShouldEnd(true);
         }
         else if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
             getSessionAttributes().put(STATE_TYPE, StateType.SUBMISSION_INTRO);
-            builder.addResponse(getDialogTranslator().translate(phraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
         }
         else {
-            builder.addResponse(getDialogTranslator().translate(phraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
         }
 
         return builder.build();

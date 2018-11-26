@@ -1,22 +1,22 @@
 package com.muffinsoft.alexa.skills.audiotennis.handlers;
 
 import com.muffinsoft.alexa.sdk.handlers.HelpIntentHandler;
-import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_HELP_PHRASE;
 
 public class TennisHelpIntentHandler extends HelpIntentHandler {
 
-    private final PhraseManager phraseManager;
+    private final RegularPhraseManager regularPhraseManager;
 
     public TennisHelpIntentHandler(ConfigContainer configurationContainer) {
         super();
-        this.phraseManager = configurationContainer.getPhraseManager();
+        this.regularPhraseManager = configurationContainer.getRegularPhraseManager();
     }
 
     @Override
     protected String getPhrase() {
-        return phraseManager.getValueByKey(WANT_HELP_PHRASE);
+        return regularPhraseManager.getValueByKey(WANT_HELP_PHRASE);
     }
 }

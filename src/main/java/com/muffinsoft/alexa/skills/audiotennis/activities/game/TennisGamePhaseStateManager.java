@@ -21,10 +21,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         return null;
     }
 
-    private void generateNextWord() {
-
-    }
-
     @Override
     protected DialogItem.Builder handleMistakeAnswer(DialogItem.Builder builder) {
         this.activityProgress.iterateMistakeCounter();

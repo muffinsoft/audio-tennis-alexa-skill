@@ -10,6 +10,7 @@ public class ActivityProgress {
     private int successCounter;
     private int mistakeCounter;
     private int enemyMistakeCounter;
+    private String previousWord;
 
     public static ActivityType getDefaultActivity() {
         return IoC.provideProgressManager().getFirstActivity();
@@ -72,5 +73,13 @@ public class ActivityProgress {
 
     public void iterateEnemyMistakeCounter() {
         this.enemyMistakeCounter += 1;
+    }
+
+    public String getPreviousWord() {
+        return previousWord;
+    }
+
+    public void setPreviousWord(String previousWord) {
+        this.previousWord = previousWord;
     }
 }

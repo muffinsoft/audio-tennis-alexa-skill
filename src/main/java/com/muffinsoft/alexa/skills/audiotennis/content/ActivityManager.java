@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muffinsoft.alexa.sdk.util.ContentLoader;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
+import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,4 +42,7 @@ public class ActivityManager {
         return containerByActivity.get(type);
     }
 
+    public WordContainer getNextWordForActivity(ActivityType activityType, String previousWord) {
+        return new WordContainer("a", "b");
+    }
 }
