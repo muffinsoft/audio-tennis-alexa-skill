@@ -1,0 +1,6 @@
+{
+  "name": "ALPHABET_RACE",
+  "startWrongPointPositionValue": 3,
+  "iterateWrongPointPositionEveryLevels": 2,
+  "addendToWrongPointPosition": 2
+}

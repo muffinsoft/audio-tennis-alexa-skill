@@ -17,7 +17,6 @@ import java.util.Map;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
-import static com.muffinsoft.alexa.sdk.model.Speech.ofAlexa;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.EXIT_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.RETURN_TO_GAME_PHRASE;
@@ -32,7 +31,7 @@ public class ExitStateManager extends BaseStateManager {
     private StateType stateType;
 
     public ExitStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(inputSlots, attributesManager);
+        super(inputSlots, attributesManager, configContainer.getDialogTranslator());
         this.phraseManager = configContainer.getPhraseManager();
     }
 
@@ -49,16 +48,16 @@ public class ExitStateManager extends BaseStateManager {
         DialogItem.Builder builder = DialogItem.builder();
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            builder.addResponse(ofAlexa(phraseManager.getValueByKey(EXIT_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(phraseManager.getValueByKey(EXIT_PHRASE)));
             builder.withShouldEnd(true);
         }
         else if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
             getSessionAttributes().put(STATE_TYPE, StateType.SUBMISSION_INTRO);
-            builder.addResponse(ofAlexa(phraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(phraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
         }
         else {
-            builder.addResponse(ofAlexa(phraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(phraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
         }
 
         return builder.build();

@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
-import static com.muffinsoft.alexa.sdk.model.Speech.ofAlexa;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.SELECT_MISSION_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_EXIT_PHRASE;
@@ -27,7 +26,7 @@ public class CancelStateManager extends BaseStateManager {
     private final PhraseManager phraseManager;
 
     public CancelStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(inputSlots, attributesManager);
+        super(inputSlots, attributesManager, configContainer.getDialogTranslator());
         this.phraseManager = configContainer.getPhraseManager();
     }
 
@@ -51,7 +50,7 @@ public class CancelStateManager extends BaseStateManager {
             dialog = phraseManager.getValueByKey(REPEAT_LAST_PHRASE);
         }
 
-        DialogItem.Builder builder = DialogItem.builder().addResponse(ofAlexa(dialog));
+        DialogItem.Builder builder = DialogItem.builder().addResponse(getDialogTranslator().translate(dialog));
 
         return builder.build();
     }

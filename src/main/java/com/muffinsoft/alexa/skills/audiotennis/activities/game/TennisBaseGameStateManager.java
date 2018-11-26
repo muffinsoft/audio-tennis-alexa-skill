@@ -8,11 +8,16 @@ import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.PhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.UserReplyManager;
+import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
 import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
 import static com.muffinsoft.alexa.sdk.enums.StateType.DEMO;
 import static com.muffinsoft.alexa.sdk.enums.StateType.READY;
@@ -23,10 +28,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected final AliasManager aliasManager;
     protected final UserReplyManager userReplyManager;
 
-    private StateType stateType;
+    StateType stateType;
+    UserProgress userProgress;
+    ActivityProgress activityProgress;
 
-    public TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(inputSlots, attributesManager);
+    TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
+        super(inputSlots, attributesManager, configContainer.getDialogTranslator());
         this.phraseManager = configContainer.getPhraseManager();
         this.aliasManager = configContainer.getAliasManager();
         this.userReplyManager = configContainer.getUserReplyManager();
@@ -35,6 +42,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     @Override
     protected void populateActivityVariables() {
         stateType = StateType.valueOf(String.valueOf(getSessionAttributes().getOrDefault(STATE_TYPE, ACTIVITY_INTRO)));
+
+        LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
+        this.activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress();
+
+        LinkedHashMap rawUserProgress = (LinkedHashMap) getSessionAttributes().get(USER_PROGRESS);
+        this.userProgress = rawUserProgress != null ? mapper.convertValue(rawUserProgress, UserProgress.class) : new UserProgress();
     }
 
     @Override

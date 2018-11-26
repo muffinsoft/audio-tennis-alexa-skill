@@ -61,7 +61,20 @@
         {
           "name": "ACTION",
           "values": [
-
+            {
+              "name": {
+                "value": "yes",
+                "synonyms": [
+                  "ok",
+                  "yep",
+                  "yeah",
+                  "I do",
+                  "yes please",
+                  "you know it",
+                  "of course"
+                ]
+              }
+            }
           ]
         },
         {

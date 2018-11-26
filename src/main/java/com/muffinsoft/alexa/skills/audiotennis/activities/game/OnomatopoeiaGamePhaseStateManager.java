@@ -16,4 +16,9 @@ public class OnomatopoeiaGamePhaseStateManager extends TennisGamePhaseStateManag
     protected boolean isSuccessAnswer() {
         return super.isSuccessAnswer();
     }
+
+    @Override
+    protected boolean isEndWinActivityState() {
+        return super.isEndWinActivityState();
+    }
 }

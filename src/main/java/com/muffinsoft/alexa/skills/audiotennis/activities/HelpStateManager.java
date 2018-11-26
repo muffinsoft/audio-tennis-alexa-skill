@@ -18,7 +18,7 @@ public class HelpStateManager extends BaseStateManager {
     private final PhraseManager phraseManager;
 
     public HelpStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(inputSlots, attributesManager);
+        super(inputSlots, attributesManager, configContainer.getDialogTranslator());
         this.phraseManager = configContainer.getPhraseManager();
     }
 
