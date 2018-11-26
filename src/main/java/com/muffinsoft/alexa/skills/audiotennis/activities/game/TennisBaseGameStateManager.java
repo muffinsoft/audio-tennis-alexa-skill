@@ -18,6 +18,7 @@ import com.muffinsoft.alexa.skills.audiotennis.content.UserReplyManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
+import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
@@ -80,6 +81,15 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected DialogItem.Builder populateResponse(DialogItem.Builder builder) {
+
+        if (!activityProgress.isUpdateForLevel()) {
+            ActivitySettings settingsForActivity = activityManager.getSettingsForActivity(this.currentActivityType);
+            activityProgress.updateWithLevelSettings(
+                    this.activityProgress.getCurrentDifficult(),
+                    settingsForActivity.getStartWrongPointPositionValue(),
+                    settingsForActivity.getIterateWrongPointPositionEveryLevels(),
+                    settingsForActivity.getAddendToWrongPointPosition());
+        }
 
         builder = handleStateAction(stateType, builder);
 

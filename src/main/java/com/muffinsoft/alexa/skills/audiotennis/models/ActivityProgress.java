@@ -10,8 +10,13 @@ public class ActivityProgress {
     private int successCounter;
     private int mistakeCounter;
     private int enemyMistakeCounter;
+    private int currentDifficult;
     private String previousWord;
     private String requiredUserReaction;
+
+    private int activityMistakeIteration;
+
+    private boolean updateForLevel;
 
     public static ActivityType getDefaultActivity() {
         return IoC.provideProgressManager().getFirstActivity();
@@ -90,5 +95,25 @@ public class ActivityProgress {
 
     public void setRequiredUserReaction(String reaction) {
         this.requiredUserReaction = reaction;
+    }
+
+    public int getCurrentDifficult() {
+        return currentDifficult;
+    }
+
+    public void setCurrentDifficult(int currentDifficult) {
+        this.currentDifficult = currentDifficult;
+    }
+
+    public boolean isUpdateForLevel() {
+        return updateForLevel;
+    }
+
+    public void setUpdateForLevel(boolean updateForLevel) {
+        this.updateForLevel = updateForLevel;
+    }
+
+    public void updateWithLevelSettings(int currentDifficutlt, int startWrongPointPositionValue, int iterateWrongPointPositionEveryLevels, int addendToWrongPointPosition) {
+        this.updateForLevel = true;
     }
 }

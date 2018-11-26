@@ -3,6 +3,7 @@ package com.muffinsoft.alexa.skills.audiotennis.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserProgress {
+
     public UserProgress() {
     }
 

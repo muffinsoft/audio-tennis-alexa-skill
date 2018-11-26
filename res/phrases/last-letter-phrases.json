@@ -1,6 +1,58 @@
 {
-  "name": "LAST_LETTER",
-  "startWrongPointPositionValue": 3,
-  "iterateWrongPointPositionEveryLevels": 2,
-  "addendToWrongPointPosition": 2
+  "intro": [
+    {
+      "content": "Pay attention to the LAST letter of my word and hit back using any word that starts with that letter. We'll keep going until one of us misses our shot. You know what? Let me play with my sis Lilly so you’ll see how it is done.",
+      "role": "Ben"
+    },
+    {
+      "role": "Sound",
+      "audio": null
+    },
+    {
+      "content": "Dragon!",
+      "role": "Ben"
+    },
+    {
+      "//": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
+      "content": "Night!",
+      "role": "Lily"
+    },
+    {
+      "//": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
+      "content": "Tiger!",
+      "role": "Ben"
+    },
+    {
+      "//": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
+      "content": "Tree!",
+      "role": "Lily"
+    },
+    {
+      "//": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
+      "content": "Oops! Tree doesn’t start with “R”, so Ben wins!",
+      "role": "Alexa"
+    },
+    {
+      "//": "<fanfare sound>",
+      "role": "Sound",
+      "audio": null
+    }
+  ]
 }
+

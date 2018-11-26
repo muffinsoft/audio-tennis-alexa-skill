@@ -49,4 +49,8 @@ public class ActivityManager {
     public String getRandomWordForActivityFromLetter(ActivityType activityType, char lastLetter) {
         return "apple";
     }
+
+    public boolean isWordAvailableForActivity(String word) {
+        return false;
+    }
 }
