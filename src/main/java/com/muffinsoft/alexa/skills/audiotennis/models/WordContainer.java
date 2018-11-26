@@ -1,28 +1,25 @@
 package com.muffinsoft.alexa.skills.audiotennis.models;
 
-import java.util.Collections;
-import java.util.List;
-
 public class WordContainer {
 
     private final String word;
-    private final List<String> userReply;
+    private final String userReaction;
 
-    public WordContainer(String word, List<String> userReply) {
+    public WordContainer(String word) {
         this.word = word;
-        this.userReply = userReply;
+        this.userReaction = null;
     }
 
-    public WordContainer(String word, String userReply) {
+    public WordContainer(String word, String userReaction) {
         this.word = word;
-        this.userReply = Collections.singletonList(userReply);
+        this.userReaction = userReaction;
     }
 
     public String getWord() {
         return word;
     }
 
-    public List<String> getUserReply() {
-        return userReply;
+    public String getUserReaction() {
+        return userReaction;
     }
 }

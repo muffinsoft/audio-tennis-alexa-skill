@@ -106,7 +106,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         }
         else {
             this.stateType = StateType.GAME_PHASE_1;
-            String word = generateNextWord();
+            String word = generateRandomWord();
             builder.addResponse(getDialogTranslator().translate(word));
         }
         return builder;
@@ -154,11 +154,15 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         return index;
     }
 
-    protected String generateNextWord() {
+    protected String generateRandomWord() {
 
-        WordContainer wordContainer = activityManager.getNextWordForActivity(this.currentActivityType, this.activityProgress.getPreviousWord());
+        WordContainer wordContainer = activityManager.getRandomWordForActivity(this.currentActivityType);
 
         this.activityProgress.setPreviousWord(wordContainer.getWord());
+
+        if (wordContainer.getUserReaction() != null) {
+            this.activityProgress.setRequiredUserReaction(wordContainer.getUserReaction());
+        }
 
         return wordContainer.getWord();
     }

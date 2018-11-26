@@ -42,7 +42,11 @@ public class ActivityManager {
         return containerByActivity.get(type);
     }
 
-    public WordContainer getNextWordForActivity(ActivityType activityType, String previousWord) {
-        return new WordContainer("a", "b");
+    public WordContainer getRandomWordForActivity(ActivityType activityType) {
+        return new WordContainer("apple");
+    }
+
+    public String getRandomWordForActivityFromLetter(ActivityType activityType, char lastLetter) {
+        return "apple";
     }
 }

@@ -11,6 +11,7 @@ public class ActivityProgress {
     private int mistakeCounter;
     private int enemyMistakeCounter;
     private String previousWord;
+    private String requiredUserReaction;
 
     public static ActivityType getDefaultActivity() {
         return IoC.provideProgressManager().getFirstActivity();
@@ -81,5 +82,13 @@ public class ActivityProgress {
 
     public void setPreviousWord(String previousWord) {
         this.previousWord = previousWord;
+    }
+
+    public String getRequiredUserReaction() {
+        return requiredUserReaction;
+    }
+
+    public void setRequiredUserReaction(String reaction) {
+        this.requiredUserReaction = reaction;
     }
 }

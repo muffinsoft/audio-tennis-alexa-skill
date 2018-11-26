@@ -14,23 +14,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         super(inputSlots, attributesManager, configContainer);
     }
 
-    @Override
-    protected DialogItem.Builder handleSuccessAnswer(DialogItem.Builder builder) {
-        this.activityProgress.iterateSuccessCounter();
-        generateNextWord();
-        return null;
-    }
 
-    @Override
-    protected DialogItem.Builder handleMistakeAnswer(DialogItem.Builder builder) {
-        this.activityProgress.iterateMistakeCounter();
-
-        if (this.activityProgress.getMistakeCounter() >= 0) {
-            this.stateType = StateType.LOSE;
-        }
-        generateNextWord();
-        return null;
-    }
 
     @Override
     protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
