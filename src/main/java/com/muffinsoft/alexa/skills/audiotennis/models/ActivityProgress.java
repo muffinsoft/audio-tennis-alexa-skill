@@ -3,6 +3,11 @@ package com.muffinsoft.alexa.skills.audiotennis.models;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class ActivityProgress {
 
     private ActivityType currentActivity;
@@ -17,6 +22,7 @@ public class ActivityProgress {
     private int activityMistakeIteration;
 
     private boolean updateForLevel;
+    private Set<String> usedWords;
 
     public static ActivityType getDefaultActivity() {
         return IoC.provideProgressManager().getFirstActivity();
@@ -115,5 +121,23 @@ public class ActivityProgress {
 
     public void updateWithLevelSettings(int currentDifficutlt, int startWrongPointPositionValue, int iterateWrongPointPositionEveryLevels, int addendToWrongPointPosition) {
         this.updateForLevel = true;
+        this.activityMistakeIteration = startWrongPointPositionValue;
+    }
+
+    public Set<String> getUsedWords() {
+        return usedWords != null ? usedWords : Collections.emptySet();
+    }
+
+    public void setUsedWords(String[] words) {
+        if (words != null) {
+            this.usedWords = new HashSet<>(Arrays.asList(words));
+        }
+    }
+
+    public void addUsedWord(String word) {
+        if (this.usedWords == null) {
+            this.usedWords = new HashSet<>();
+        }
+        this.usedWords.add(word);
     }
 }

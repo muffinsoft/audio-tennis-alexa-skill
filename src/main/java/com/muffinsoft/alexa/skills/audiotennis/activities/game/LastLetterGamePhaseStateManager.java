@@ -4,15 +4,17 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
-import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
-import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager {
 
-    public LastLetterGamePhaseStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(inputSlots, attributesManager, configContainer);
+    public LastLetterGamePhaseStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
+        super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
     }
 
     @Override
@@ -26,11 +28,11 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
             String userReply = getUserReply();
             char firstLetter = userReply.charAt(0);
 
-            if(lastLetter != firstLetter) {
+            if (!Objects.equals(lastLetter, firstLetter)) {
                 return false;
             }
 
-            return activityManager.isWordAvailableForActivity(userReply);
+            return !activityProgress.getUsedWords().contains(getUserReply());
         }
         return false;
     }
@@ -40,7 +42,10 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
 
         this.activityProgress.iterateSuccessCounter();
 
-        builder.addResponse(getDialogTranslator().translate(getNextRightWordForActivity()));
+        WordContainer nextWord = getNextRightWordForActivity();
+        this.activityProgress.setPreviousWord(nextWord.getWord());
+
+        builder.addResponse(getDialogTranslator().translate(nextWord.getWord()));
 
         return builder;
     }
@@ -54,7 +59,10 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
             this.stateType = StateType.LOSE;
         }
 
-        builder.addResponse(getDialogTranslator().translate(getNextRightWordForActivity()));
+        WordContainer nextWord = getNextRightWordForActivity();
+        this.activityProgress.setPreviousWord(nextWord.getWord());
+
+        builder.addResponse(getDialogTranslator().translate(nextWord.getWord()));
 
         return builder;
     }
@@ -64,13 +72,13 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         return super.isEndWinActivityState();
     }
 
-    private String getNextRightWordForActivity() {
+    private WordContainer getNextRightWordForActivity() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
 
         return activityManager.getRandomWordForActivityFromLetter(this.currentActivityType, lastLetter);
     }
 
-    private String getNextWrongWordForActivity() {
+    private WordContainer getNextWrongWordForActivity() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
 
         return activityManager.getRandomWordForActivityFromLetter(this.currentActivityType, lastLetter);

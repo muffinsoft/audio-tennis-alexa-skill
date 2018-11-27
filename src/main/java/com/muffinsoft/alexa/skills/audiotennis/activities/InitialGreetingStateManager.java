@@ -11,10 +11,11 @@ import com.muffinsoft.alexa.skills.audiotennis.constants.GreetingsConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.GreetingsManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.GreetingsPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
-import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 
 import java.util.List;
 import java.util.Map;
@@ -27,17 +28,17 @@ import static com.muffinsoft.alexa.sdk.enums.IntentType.INITIAL_GREETING;
 
 public class InitialGreetingStateManager extends BaseStateManager {
 
-    private final GreetingsManager greetingsManager;
+    private final GreetingsPhraseManager greetingsPhraseManager;
     private final ActivitiesPhraseManager activitiesPhraseManager;
     private final RegularPhraseManager regularPhraseManager;
 
     private Integer userReplyBreakpointPosition;
 
-    public InitialGreetingStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(inputSlots, attributesManager, configContainer.getDialogTranslator());
-        this.greetingsManager = configContainer.getGreetingsManager();
-        this.activitiesPhraseManager = configContainer.getActivitiesPhraseManager();
-        this.regularPhraseManager = configContainer.getRegularPhraseManager();
+    public InitialGreetingStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
+        super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
+        this.greetingsPhraseManager = phraseDependencyContainer.getGreetingsPhraseManager();
+        this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
+        this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
     }
 
     @Override
@@ -50,7 +51,7 @@ public class InitialGreetingStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder();
 
-        List<BasePhraseContainer> dialog = greetingsManager.getValueByKey(GreetingsConstants.FIRST_TIME_GREETING);
+        List<BasePhraseContainer> dialog = greetingsPhraseManager.getValueByKey(GreetingsConstants.FIRST_TIME_GREETING);
 
         this.getSessionAttributes().remove(USER_REPLY_BREAKPOINT);
         this.getSessionAttributes().put(INTENT, GAME);

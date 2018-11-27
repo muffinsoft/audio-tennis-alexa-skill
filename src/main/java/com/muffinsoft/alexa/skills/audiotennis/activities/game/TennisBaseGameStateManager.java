@@ -19,7 +19,8 @@ import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
-import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
@@ -47,13 +48,13 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     ActivityType currentActivityType;
     private Integer userReplyBreakpointPosition;
 
-    TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(inputSlots, attributesManager, configContainer.getDialogTranslator());
-        this.regularPhraseManager = configContainer.getRegularPhraseManager();
-        this.aliasManager = configContainer.getAliasManager();
-        this.userReplyManager = configContainer.getUserReplyManager();
-        this.activityManager = configContainer.getActivityManager();
-        this.activitiesPhraseManager = configContainer.getActivitiesPhraseManager();
+    TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
+        super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
+        this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
+        this.aliasManager = settingsDependencyContainer.getAliasManager();
+        this.userReplyManager = settingsDependencyContainer.getUserReplyManager();
+        this.activityManager = settingsDependencyContainer.getActivityManager();
+        this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
     }
 
     @Override

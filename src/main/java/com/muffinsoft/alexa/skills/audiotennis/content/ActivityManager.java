@@ -5,11 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muffinsoft.alexa.sdk.util.ContentLoader;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
+import com.muffinsoft.alexa.skills.audiotennis.models.DictionaryManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ActivityManager {
 
@@ -18,16 +21,17 @@ public class ActivityManager {
     private static final String ONOMATOPOEIA = "settings/onomatopoeia.json";
     private static final String RHYME_MATCH = "settings/rhyme-match.json";
 
-    private final ContentLoader contentLoader = new ContentLoader(new ObjectMapper());
+    private final DictionaryManager dictionaryManager;
 
     private final Map<ActivityType, ActivitySettings> containerByActivity;
 
-    private final Map<String, Map<String, List<String>>> vocabularies = new HashMap<>();
+    public ActivityManager(DictionaryManager dictionaryManager) {
 
-    public ActivityManager() {
+        this.dictionaryManager = dictionaryManager;
 
         containerByActivity = new HashMap<>();
 
+        ContentLoader contentLoader = new ContentLoader(new ObjectMapper());
         containerByActivity.put(ActivityType.ALPHABET_RACE, contentLoader.loadContent(new ActivitySettings(), ALPHABET_RACE, new TypeReference<ActivitySettings>() {
         }));
         containerByActivity.put(ActivityType.LAST_LETTER, contentLoader.loadContent(new ActivitySettings(), LAST_LETTER, new TypeReference<ActivitySettings>() {
@@ -43,11 +47,25 @@ public class ActivityManager {
     }
 
     public WordContainer getRandomWordForActivity(ActivityType activityType) {
-        return new WordContainer("apple");
+        String alphabet = "abcdefjhijklmnopqrstuvwxyz";
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        int index = random.nextInt(alphabet.length());
+        return getRandomWordForActivityFromLetter(activityType, alphabet.charAt(index));
     }
 
-    public String getRandomWordForActivityFromLetter(ActivityType activityType, char lastLetter) {
-        return "apple";
+    public WordContainer getRandomWordForActivityFromLetter(ActivityType activityType, char lastLetter) {
+        Map<Character, HashSet<String>> activityWords = dictionaryManager.getForActivity(activityType);
+        HashSet<String> wordsByRule = activityWords.get(lastLetter);
+        String word = getRandomWordFromCollection(wordsByRule);
+        return new WordContainer(word);
+    }
+
+    private String getRandomWordFromCollection(Set<String> words) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        return words.stream()
+                .skip(random.nextInt(words.size()))
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean isWordAvailableForActivity(String word) {

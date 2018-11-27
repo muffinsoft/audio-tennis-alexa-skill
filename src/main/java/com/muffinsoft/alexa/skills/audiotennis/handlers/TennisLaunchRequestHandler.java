@@ -4,19 +4,22 @@ import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.handlers.LaunchRequestHandler;
 import com.muffinsoft.alexa.skills.audiotennis.activities.LaunchStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 
 public class TennisLaunchRequestHandler extends LaunchRequestHandler {
 
-    private final ConfigContainer configContainer;
+    private final SettingsDependencyContainer settingsDependencyContainer;
+    private final PhraseDependencyContainer phraseDependencyContainer;
 
-    public TennisLaunchRequestHandler(ConfigContainer configContainer) {
+    public TennisLaunchRequestHandler(SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super();
-        this.configContainer = configContainer;
+        this.settingsDependencyContainer = settingsDependencyContainer;
+        this.phraseDependencyContainer = phraseDependencyContainer;
     }
 
     @Override
     public StateManager nextTurn(HandlerInput input) {
-        return new LaunchStateManager(getSlotsFromInput(input), input.getAttributesManager(), configContainer);
+        return new LaunchStateManager(getSlotsFromInput(input), input.getAttributesManager(), settingsDependencyContainer, phraseDependencyContainer);
     }
 }

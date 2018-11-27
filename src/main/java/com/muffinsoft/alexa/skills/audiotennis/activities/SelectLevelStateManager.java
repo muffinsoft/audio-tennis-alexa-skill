@@ -8,7 +8,8 @@ import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
-import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,10 +29,10 @@ public class SelectLevelStateManager extends BaseStateManager {
     private final RegularPhraseManager regularPhraseManager;
     private UserProgress userProgress;
 
-    public SelectLevelStateManager(Map<String, Slot> slots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(slots, attributesManager, configContainer.getDialogTranslator());
-        this.aliasManager = configContainer.getAliasManager();
-        this.regularPhraseManager = configContainer.getRegularPhraseManager();
+    public SelectLevelStateManager(Map<String, Slot> slots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
+        super(slots, attributesManager, settingsDependencyContainer.getDialogTranslator());
+        this.aliasManager = settingsDependencyContainer.getAliasManager();
+        this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
     }
 
     @Override

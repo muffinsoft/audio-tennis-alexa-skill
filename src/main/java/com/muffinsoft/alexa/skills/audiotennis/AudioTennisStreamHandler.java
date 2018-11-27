@@ -25,12 +25,12 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
         return Skills.standard()
                 .addRequestHandlers(
                         new TennisActionIntentHandler(IoC.provideIntentFactory()),
-                        new TennisCancelIntentHandler(IoC.provideConfigurationContainer()),
-                        new TennisFallbackIntentHandler(IoC.provideConfigurationContainer()),
-                        new TennisHelpIntentHandler(IoC.provideConfigurationContainer()),
-                        new TennisLaunchRequestHandler(IoC.provideConfigurationContainer()),
-                        new TennisStopIntentHandler(IoC.provideConfigurationContainer()),
-                        new TennisResetIntentHandler(IoC.provideConfigurationContainer())
+                        new TennisCancelIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
+                        new TennisFallbackIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
+                        new TennisHelpIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
+                        new TennisLaunchRequestHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
+                        new TennisStopIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
+                        new TennisResetIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer())
                 )
                 .addExceptionHandler(new ResponseExceptionHandler())
                 .withSkillId(amazonSkillId)

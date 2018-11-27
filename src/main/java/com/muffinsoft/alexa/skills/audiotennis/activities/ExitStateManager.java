@@ -9,7 +9,8 @@ import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
-import com.muffinsoft.alexa.skills.audiotennis.models.ConfigContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,9 +31,9 @@ public class ExitStateManager extends BaseStateManager {
 
     private StateType stateType;
 
-    public ExitStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, ConfigContainer configContainer) {
-        super(inputSlots, attributesManager, configContainer.getDialogTranslator());
-        this.regularPhraseManager = configContainer.getRegularPhraseManager();
+    public ExitStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
+        super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
+        this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
     }
 
     @Override

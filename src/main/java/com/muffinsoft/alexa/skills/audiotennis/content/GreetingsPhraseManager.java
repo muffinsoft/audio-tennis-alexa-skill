@@ -7,9 +7,9 @@ import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GreetingsManager extends BaseContentManager<List<BasePhraseContainer>> {
+public class GreetingsPhraseManager extends BaseContentManager<List<BasePhraseContainer>> {
 
-    public GreetingsManager(String path) {
+    public GreetingsPhraseManager(String path) {
         super(path);
     }
 
