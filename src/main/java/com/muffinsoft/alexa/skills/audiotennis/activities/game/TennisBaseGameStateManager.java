@@ -13,6 +13,7 @@ import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.GeneralActivityPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.UserReplyManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
@@ -43,6 +44,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected final AliasManager aliasManager;
     protected final ActivityManager activityManager;
     protected final UserReplyManager userReplyManager;
+    protected final GeneralActivityPhraseManager generalActivityPhraseManager;
     StateType stateType;
     UserProgress userProgress;
     ActivityProgress activityProgress;
@@ -58,6 +60,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         this.userReplyManager = settingsDependencyContainer.getUserReplyManager();
         this.activityManager = settingsDependencyContainer.getActivityManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
+        this.generalActivityPhraseManager = phraseDependencyContainer.getGeneralActivityPhraseManager();
     }
 
     @Override

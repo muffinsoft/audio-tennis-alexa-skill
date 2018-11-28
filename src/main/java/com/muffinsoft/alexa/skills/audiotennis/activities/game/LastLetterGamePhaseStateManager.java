@@ -39,7 +39,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
 
     @Override
     protected boolean isEndWinActivityState() {
-        return this.activityProgress.getEnemyMistakeCounter() == settingsForActivity.getMaxMistakeCounter();
+        return this.activityProgress.getPlayerScoreCounter() == settingsForActivity.getScoresToWinCounter();
     }
 
     @Override
@@ -51,6 +51,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         if (this.activityProgress.getEnemySuccessCounter() != 0 && this.activityProgress.getEnemySuccessCounter() % this.activityProgress.getActivityEnemyMistakeIterationPointer() == 0) {
             nextWord = getNextWrongWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
+            iteratePlayerScoreCounter(builder);
         }
         else {
             BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
@@ -65,8 +66,6 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
 
     @Override
     protected DialogItem.Builder handleMistakeAnswer(DialogItem.Builder builder) {
-
-        this.activityProgress.iterateMistakeCounter();
 
         BasePhraseContainer playerLosePhrase;
 
@@ -84,6 +83,8 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
 
         builder.addResponse(getDialogTranslator().translate(nextWord));
 
+        iterateEnemyScoreCounter(builder);
+
         return builder;
     }
 
@@ -96,7 +97,6 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         char wrongLetter = activityManager.getRandomLetterExcept(lastLetter);
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForActivityFromLetter(this.currentActivityType, wrongLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
-        this.activityProgress.iterateEnemyMistakeCounter();
         this.activityProgress.addUsedWord(word);
         return word;
     }

@@ -3,5 +3,5 @@
   "startWrongPointPositionValue": 3,
   "iterateWrongPointPositionEveryLevels": 2,
   "addendToWrongPointPosition": 2,
-  "maxMistakeCounter": 2
+  "scoresToWinCounter": 11
 }

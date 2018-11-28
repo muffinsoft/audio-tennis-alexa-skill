@@ -1,0 +1,183 @@
+{
+  "playerWonOnceAtFirstOrThirdAct": [
+    {
+      "content": "Man... you won",
+      "role": "Ben"
+    },
+    {
+      "content": "Aw man, you beat me",
+      "role": "Ben"
+    },
+    {
+      "content": "Nice job! You won",
+      "role": "Ben"
+    },
+    {
+      "content": "Looks like you got me this time",
+      "role": "Ben"
+    },
+    {
+      "content": "Hey! You defeated me fair and square with a score of",
+      "role": "Ben"
+    },
+    {
+      "content": "Good one!",
+      "role": "Ben"
+    },
+    {
+      "content": "Nice shot!",
+      "role": "Ben"
+    },
+    {
+      "content": "Great hit!",
+      "role": "Ben"
+    },
+    {
+      "content": "Not bad!",
+      "role": "Ben"
+    },
+    {
+      "content": "Woah, nice!",
+      "role": "Ben"
+    },
+    {
+      "content": "Shucks on me!",
+      "role": "Ben"
+    },
+    {
+      "content": "Aww, man!",
+      "role": "Ben"
+    },
+    {
+      "content": "Oops!",
+      "role": "Ben"
+    },
+    {
+      "content": "My bad!",
+      "role": "Ben"
+    },
+    {
+      "content": "Bummer!",
+      "role": "Ben"
+    }
+  ],
+  "playerWonOnceAtSecondOrFourthAct": [
+    {
+      "content": "Looks like this is too easy for you!",
+      "role": "Ben"
+    },
+    {
+      "content": "You've clearly gotten a lot better!",
+      "role": "Ben"
+    },
+    {
+      "content": "I think you're ready for more of a challenge!",
+      "role": "Ben"
+    },
+    {
+      "content": "So you think you're a master already, huh?",
+      "role": "Ben"
+    },
+    {
+      "content": "You're getting really good at this!",
+      "role": "Ben"
+    }
+  ],
+  "enemyWonOnce": [
+    {
+      "content": "I win this round!",
+      "role": "Ben"
+    },
+    {
+      "content": "Woohoo! I win the round!",
+      "role": "Ben"
+    },
+    {
+      "content": "Yay, I win the round!",
+      "role": "Ben"
+    },
+    {
+      "content": "Got you this round!",
+      "role": "Ben"
+    },
+    {
+      "content": "Nice, I win the round!",
+      "role": "Ben"
+    },
+    {
+      "content": "Yes! I won",
+      "role": "Ben"
+    },
+    {
+      "content": "Sweet! beat you",
+      "role": "Ben"
+    },
+    {
+      "content": "Oh yeah! I defeated you",
+      "role": "Ben"
+    },
+    {
+      "content": "Woohoo! I won",
+      "role": "Ben"
+    },
+    {
+      "content": "I got you this time! I won",
+      "role": "Ben"
+    }
+  ],
+  "playerLoseTwice": [
+    {
+      "content": "",
+      "role": "Ben"
+    }
+  ],
+  "playerWonTwice": [
+    {
+      "content": "You're too good.",
+      "role": "Ben"
+    },
+    {
+      "content": "You're not bad.",
+      "role": "Ben"
+    },
+    {
+      "content": "You got me this time!",
+      "role": "Ben"
+    },
+    {
+      "content": "I'll do better next time!",
+      "role": "Ben"
+    },
+    {
+      "content": "Great job!",
+      "role": "Ben"
+    }
+  ],
+  "totalScore": [
+    {
+      "content": "Now the score is %scores%. In %favour% Favour",
+      "role": "Ben"
+    },
+    {
+      "content": "The score is now %scores%. In %favour% Favour",
+      "role": "Ben"
+    },
+    {
+      "content": "Current score %scores%. In %favour% Favour",
+      "role": "Ben"
+    },
+    {
+      "content": "Here's the current score %scores%. In %favour% Favour",
+      "role": "Ben"
+    },
+    {
+      "content": "That makes it %scores%. In %favour% Favour",
+      "role": "Ben"
+    }
+  ]
+}
+
+
+
+
+

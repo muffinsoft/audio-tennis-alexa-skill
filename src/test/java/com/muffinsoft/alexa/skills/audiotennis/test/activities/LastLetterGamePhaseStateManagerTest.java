@@ -17,7 +17,7 @@ import java.util.Map;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 
-public class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
+class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
     @Test
     void testActivePhaseRightAnswer() {
@@ -77,7 +77,7 @@ public class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
-        Assertions.assertEquals(resultActivityProgress.getMistakeCounter(), 1);
+        Assertions.assertEquals(resultActivityProgress.getEnemyScoreCounter(), 1);
         Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
     }
 
@@ -109,7 +109,7 @@ public class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
-        Assertions.assertEquals(resultActivityProgress.getEnemyMistakeCounter(), 1);
+        Assertions.assertEquals(resultActivityProgress.getPlayerScoreCounter(), 1);
         Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
     }
 }

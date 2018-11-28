@@ -13,10 +13,14 @@ public class ActivityProgress {
     private ActivityType currentActivity;
     private ActivityType previousActivity;
     private int successCounter;
-    private int mistakeCounter;
-    private int enemyMistakeCounter;
     private int enemySuccessCounter;
+    private int enemyScoreCounter;
+    private int playerScoreCounter;
     private int currentDifficult;
+    private int playerWinRoundCounter;
+    private int enemyWinRoundCounter;
+    private int playerRoundWinInRow;
+    private int enemyRoundWinInRow;
     private String previousWord;
     private String requiredUserReaction;
 
@@ -60,28 +64,20 @@ public class ActivityProgress {
         this.successCounter = successCounter;
     }
 
-    public int getMistakeCounter() {
-        return mistakeCounter;
+    public int getEnemyScoreCounter() {
+        return enemyScoreCounter;
     }
 
-    public void setMistakeCounter(int mistakeCounter) {
-        this.mistakeCounter = mistakeCounter;
+    public void setEnemyScoreCounter(int enemyScoreCounter) {
+        this.enemyScoreCounter = enemyScoreCounter;
     }
 
-    public int getEnemyMistakeCounter() {
-        return enemyMistakeCounter;
+    public int getPlayerScoreCounter() {
+        return playerScoreCounter;
     }
 
-    public void setEnemyMistakeCounter(int enemyMistakeCounter) {
-        this.enemyMistakeCounter = enemyMistakeCounter;
-    }
-
-    public void iterateSuccessCounter() {
-        this.successCounter += 1;
-    }
-
-    public void iterateMistakeCounter() {
-        this.mistakeCounter += 1;
+    public void setPlayerScoreCounter(int playerScoreCounter) {
+        this.playerScoreCounter = playerScoreCounter;
     }
 
     public int getEnemySuccessCounter() {
@@ -92,12 +88,48 @@ public class ActivityProgress {
         this.enemySuccessCounter = enemySuccessCounter;
     }
 
-    public void iterateEnemyMistakeCounter() {
-        this.enemyMistakeCounter += 1;
-    }
-
     public void iterateEnemySuccessCounter() {
         this.enemySuccessCounter += 1;
+    }
+
+    public void iterateSuccessCounter() {
+        this.successCounter += 1;
+    }
+
+    public void iterateEnemyScoreCounter() {
+        this.enemyScoreCounter += 1;
+    }
+
+    public void iteratePlayerScoreCounter() {
+        this.playerScoreCounter += 1;
+    }
+
+    public void iterateEnemyWinRoundCounter() {
+        this.enemyWinRoundCounter += 1;
+        this.playerRoundWinInRow += 0;
+        this.enemyRoundWinInRow += 1;
+    }
+
+    public void iteratePlayerWinRoundCounter() {
+        this.playerWinRoundCounter += 1;
+        this.playerRoundWinInRow += 1;
+        this.enemyRoundWinInRow = 0;
+    }
+
+    public int getPlayerRoundWinInRow() {
+        return playerRoundWinInRow;
+    }
+
+    public void setPlayerRoundWinInRow(int playerRoundWinInRow) {
+        this.playerRoundWinInRow = playerRoundWinInRow;
+    }
+
+    public int getEnemyRoundWinInRow() {
+        return enemyRoundWinInRow;
+    }
+
+    public void setEnemyRoundWinInRow(int enemyRoundWinInRow) {
+        this.enemyRoundWinInRow = enemyRoundWinInRow;
     }
 
     public String getPreviousWord() {
@@ -160,5 +192,21 @@ public class ActivityProgress {
             this.usedWords = new HashSet<>();
         }
         this.usedWords.add(word);
+    }
+
+    public int getPlayerWinRoundCounter() {
+        return playerWinRoundCounter;
+    }
+
+    public void setPlayerWinRoundCounter(int playerWinRoundCounter) {
+        this.playerWinRoundCounter = playerWinRoundCounter;
+    }
+
+    public int getEnemyWinRoundCounter() {
+        return enemyWinRoundCounter;
+    }
+
+    public void setEnemyWinRoundCounter(int enemyWinRoundCounter) {
+        this.enemyWinRoundCounter = enemyWinRoundCounter;
     }
 }
