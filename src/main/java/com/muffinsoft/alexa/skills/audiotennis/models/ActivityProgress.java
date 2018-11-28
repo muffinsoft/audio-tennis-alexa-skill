@@ -15,11 +15,12 @@ public class ActivityProgress {
     private int successCounter;
     private int mistakeCounter;
     private int enemyMistakeCounter;
+    private int enemySuccessCounter;
     private int currentDifficult;
     private String previousWord;
     private String requiredUserReaction;
 
-    private int activityMistakeIteration;
+    private int activityEnemyMistakeIterationPointer;
 
     private boolean updateForLevel;
     private Set<String> usedWords;
@@ -83,8 +84,20 @@ public class ActivityProgress {
         this.mistakeCounter += 1;
     }
 
+    public int getEnemySuccessCounter() {
+        return enemySuccessCounter;
+    }
+
+    public void setEnemySuccessCounter(int enemySuccessCounter) {
+        this.enemySuccessCounter = enemySuccessCounter;
+    }
+
     public void iterateEnemyMistakeCounter() {
         this.enemyMistakeCounter += 1;
+    }
+
+    public void iterateEnemySuccessCounter() {
+        this.enemySuccessCounter += 1;
     }
 
     public String getPreviousWord() {
@@ -121,7 +134,15 @@ public class ActivityProgress {
 
     public void updateWithLevelSettings(int currentDifficutlt, int startWrongPointPositionValue, int iterateWrongPointPositionEveryLevels, int addendToWrongPointPosition) {
         this.updateForLevel = true;
-        this.activityMistakeIteration = startWrongPointPositionValue;
+        this.activityEnemyMistakeIterationPointer = startWrongPointPositionValue;
+    }
+
+    public int getActivityEnemyMistakeIterationPointer() {
+        return activityEnemyMistakeIterationPointer;
+    }
+
+    public void setActivityEnemyMistakeIterationPointer(int activityEnemyMistakeIterationPointer) {
+        this.activityEnemyMistakeIterationPointer = activityEnemyMistakeIterationPointer;
     }
 
     public Set<String> getUsedWords() {

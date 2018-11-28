@@ -72,7 +72,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected void updateSessionAttributes() {
-        super.updateSessionAttributes();
+        this.getSessionAttributes().put(ACTIVITY_PROGRESS, this.activityProgress);
     }
 
     @Override
@@ -117,6 +117,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         }
         else {
             this.stateType = StateType.GAME_PHASE_1;
+
+            BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
+            builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+
             String word = generateRandomWord();
             builder.addResponse(getDialogTranslator().translate(word));
         }
@@ -165,16 +169,19 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         return index;
     }
 
-    protected String generateRandomWord() {
+    private String generateRandomWord() {
 
         WordContainer wordContainer = activityManager.getRandomWordForActivity(this.currentActivityType);
 
-        this.activityProgress.setPreviousWord(wordContainer.getWord());
+        String word = wordContainer.getWord();
+
+        this.activityProgress.setPreviousWord(word);
+        this.activityProgress.addUsedWord(word);
 
         if (wordContainer.getUserReaction() != null) {
             this.activityProgress.setRequiredUserReaction(wordContainer.getUserReaction());
         }
 
-        return wordContainer.getWord();
+        return word;
     }
 }

@@ -16,9 +16,18 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.currentActivityType = ActivityType.LAST_LETTER;
     }
 
+    @Override
+    protected boolean isEndLoseActivityState() {
+        return this.activityProgress.getMistakeCounter() == activityManager.getSettingsForActivity(this.currentActivityType).getMaxMistakeCounter();
+    }
 
     @Override
     protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
-        return null;
+        return super.handleWinAnswerOfActivity(builder);
+    }
+
+    @Override
+    protected DialogItem.Builder handleLoseAnswerOfActivity(DialogItem.Builder builder) {
+        return super.handleLoseAnswerOfActivity(builder);
     }
 }

@@ -8,6 +8,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.DictionaryManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,6 +21,8 @@ public class ActivityManager {
     private static final String LAST_LETTER = "settings/last-letter.json";
     private static final String ONOMATOPOEIA = "settings/onomatopoeia.json";
     private static final String RHYME_MATCH = "settings/rhyme-match.json";
+
+    private static final String alphabet = "abcdefjhijklmnopqrstuvwxyz";
 
     private final DictionaryManager dictionaryManager;
 
@@ -47,16 +50,36 @@ public class ActivityManager {
     }
 
     public WordContainer getRandomWordForActivity(ActivityType activityType) {
-        String alphabet = "abcdefjhijklmnopqrstuvwxyz";
+        char character = getRandomCharFromString(alphabet);
+        return getRandomWordForActivityFromLetter(activityType, character);
+    }
+
+    private char getRandomCharFromString(String input) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        int index = random.nextInt(alphabet.length());
-        return getRandomWordForActivityFromLetter(activityType, alphabet.charAt(index));
+        int index = random.nextInt(input.length());
+        return alphabet.charAt(index);
+    }
+
+    public char getRandomLetterExcept(char lastLetter) {
+        String replace = alphabet.replace(String.valueOf(lastLetter), "");
+        return getRandomCharFromString(replace);
     }
 
     public WordContainer getRandomWordForActivityFromLetter(ActivityType activityType, char lastLetter) {
-        Map<Character, HashSet<String>> activityWords = dictionaryManager.getForActivity(activityType);
-        HashSet<String> wordsByRule = activityWords.get(lastLetter);
-        String word = getRandomWordFromCollection(wordsByRule);
+        return getRandomWordForActivityFromLetter(activityType, lastLetter, Collections.emptySet());
+    }
+
+    public WordContainer getRandomWordForActivityFromLetter(ActivityType activityType, char lastLetter, Set<String> usedWords) {
+        String word;
+        do {
+            Map<Character, HashSet<String>> activityWords = dictionaryManager.getForActivity(activityType);
+
+            HashSet<String> wordsByRule = activityWords.get(lastLetter);
+
+            word = getRandomWordFromCollection(wordsByRule);
+        }
+        while (usedWords.contains(word));
+
         return new WordContainer(word);
     }
 

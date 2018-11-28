@@ -6,6 +6,7 @@ public class ActivitySettings {
     private int startWrongPointPositionValue;
     private int iterateWrongPointPositionEveryLevels;
     private int addendToWrongPointPosition;
+    private int maxMistakeCounter;
 
     public String getName() {
         return name;
@@ -37,5 +38,13 @@ public class ActivitySettings {
 
     public void setAddendToWrongPointPosition(int addendToWrongPointPosition) {
         this.addendToWrongPointPosition = addendToWrongPointPosition;
+    }
+
+    public int getMaxMistakeCounter() {
+        return maxMistakeCounter;
+    }
+
+    public void setMaxMistakeCounter(int maxMistakeCounter) {
+        this.maxMistakeCounter = maxMistakeCounter;
     }
 }

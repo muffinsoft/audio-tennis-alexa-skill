@@ -45,6 +45,71 @@ public class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
         stateManager.updateAttributesManager();
 
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
-        Assertions.assertNotNull(sessionAttributes);
+        ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
+        Assertions.assertEquals(resultActivityProgress.getSuccessCounter(), 1);
+        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
+    }
+
+    @Test
+    void testActivePhaseWrongAnswer() {
+
+        ActivityManager activityManager = IoC.provideSettingsDependencyContainer().getActivityManager();
+        WordContainer randomWordForActivity = activityManager.getRandomWordForActivity(ActivityType.LAST_LETTER);
+
+        String firstWord = randomWordForActivity.getWord();
+
+        ActivityProgress activityProgress = new ActivityProgress();
+        activityProgress.setPreviousWord(firstWord);
+
+        WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForActivityFromLetter(ActivityType.LAST_LETTER, firstWord.charAt(0));
+        String secondWord = randomWordForActivityFromWrongLetter.getWord();
+        Map<String, Slot> slots = createSlotsForValue(secondWord);
+
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
+        attributes.put(STATE_TYPE, StateType.GAME_PHASE_1);
+
+        LastLetterGamePhaseStateManager stateManager = new LastLetterGamePhaseStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
+
+        stateManager.nextResponse();
+
+        stateManager.updateAttributesManager();
+
+        Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
+        ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
+        Assertions.assertEquals(resultActivityProgress.getMistakeCounter(), 1);
+        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
+    }
+
+    @Test
+    void testActivePhaseEnemyWrongAnswer() {
+
+        ActivityManager activityManager = IoC.provideSettingsDependencyContainer().getActivityManager();
+        WordContainer randomWordForActivity = activityManager.getRandomWordForActivity(ActivityType.LAST_LETTER);
+
+        String firstWord = randomWordForActivity.getWord();
+
+        ActivityProgress activityProgress = new ActivityProgress();
+        activityProgress.setPreviousWord(firstWord);
+        activityProgress.setEnemySuccessCounter(3);
+
+        WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForActivityFromLetter(ActivityType.LAST_LETTER, firstWord.charAt(firstWord.length() - 1));
+        String secondWord = randomWordForActivityFromWrongLetter.getWord();
+        Map<String, Slot> slots = createSlotsForValue(secondWord);
+
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
+        attributes.put(STATE_TYPE, StateType.GAME_PHASE_1);
+
+        LastLetterGamePhaseStateManager stateManager = new LastLetterGamePhaseStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
+
+        stateManager.nextResponse();
+
+        stateManager.updateAttributesManager();
+
+        Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
+        ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
+        Assertions.assertEquals(resultActivityProgress.getEnemyMistakeCounter(), 1);
+        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
     }
 }

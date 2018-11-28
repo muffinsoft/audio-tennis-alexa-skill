@@ -2,5 +2,6 @@
   "name": "LAST_LETTER",
   "startWrongPointPositionValue": 3,
   "iterateWrongPointPositionEveryLevels": 2,
-  "addendToWrongPointPosition": 2
+  "addendToWrongPointPosition": 2,
+  "maxMistakeCounter": 2
 }

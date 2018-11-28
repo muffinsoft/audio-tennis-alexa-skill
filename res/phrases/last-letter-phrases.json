@@ -53,6 +53,75 @@
       "role": "Sound",
       "audio": null
     }
+  ],
+  "opponentFirstPhrase": [
+    {
+      "content": "Let me start.,",
+      "role": "Ben"
+    },
+    {
+      "content": "I'll go first.,",
+      "role": "Ben"
+    },
+    {
+      "content": "I'll serve.,",
+      "role": "Ben"
+    },
+    {
+      "content": "I'll start.,",
+      "role": "Ben"
+    },
+    {
+      "content": "Me first",
+      "role": "Ben"
+    },
+    {
+      "content": "I’ll go ahead and start.",
+      "role": "Ben"
+    }
+  ],
+  "opponentAfterWordPhrase": [
+    {
+      "content": "Your turn!,",
+      "role": "Ben"
+    },
+    {
+      "content": "Hit it back!,",
+      "role": "Ben"
+    },
+    {
+      "content": "You're next!,",
+      "role": "Ben"
+    },
+    {
+      "content": "Give me your best shot!,",
+      "role": "Ben"
+    },
+    {
+      "content": "Go!",
+      "role": "Ben"
+    }
+  ],
+  "opponentReactionAfterXWordsPhrase": [
+    {
+      "content": "Good one. How about",
+      "role": "Ben"
+    },
+    {
+      "content": "I'm going with",
+      "role": "Ben"
+    },
+    {
+      "content": "Hitting back with",
+      "role": "Ben"
+    },
+    {
+      "content": "My next response is",
+      "role": "Ben"
+    },
+    {
+      "content": "I'll hit back with",
+      "role": "Ben"
+    }
   ]
 }
-
