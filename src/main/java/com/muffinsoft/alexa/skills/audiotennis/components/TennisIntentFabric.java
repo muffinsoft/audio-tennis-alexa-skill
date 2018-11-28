@@ -19,6 +19,8 @@ import com.muffinsoft.alexa.skills.audiotennis.activities.game.RhymeMatchGamePha
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,6 +28,8 @@ import java.util.Map;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 
 public class TennisIntentFabric implements IntentFactory {
+
+    private static final Logger logger = LogManager.getLogger(TennisIntentFabric.class);
 
     private final SettingsDependencyContainer settingsDependencyContainer;
     private final PhraseDependencyContainer phraseDependencyContainer;
@@ -74,9 +78,18 @@ public class TennisIntentFabric implements IntentFactory {
     }
 
     private ActivityProgress getCurrentGameActivity(AttributesManager attributesManager) {
+        Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
+        ActivityProgress activityProgress;
+        if (sessionAttributes.containsKey(ACTIVITY_PROGRESS)) {
+            LinkedHashMap rawActivityProgress = (LinkedHashMap) sessionAttributes.get(ACTIVITY_PROGRESS);
+            activityProgress = new ObjectMapper().convertValue(rawActivityProgress, ActivityProgress.class);
+            logger.debug("Current Activity Progress state: " + activityProgress);
+        }
+        else {
+            activityProgress = ActivityProgress.createDefault();
+            logger.debug("Was create default Activity Progress: " + activityProgress);
+        }
 
-        LinkedHashMap rawActivityProgress = (LinkedHashMap) attributesManager.getSessionAttributes().get(ACTIVITY_PROGRESS);
-
-        return rawActivityProgress != null ? new ObjectMapper().convertValue(rawActivityProgress, ActivityProgress.class) : ActivityProgress.createDefault();
+        return activityProgress;
     }
 }

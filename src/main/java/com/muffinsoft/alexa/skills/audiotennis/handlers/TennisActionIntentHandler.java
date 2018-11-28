@@ -4,9 +4,10 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.handlers.GameIntentHandler;
-import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 
 import java.util.Map;
+
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
 
 public class TennisActionIntentHandler extends GameIntentHandler {
 
@@ -22,9 +23,14 @@ public class TennisActionIntentHandler extends GameIntentHandler {
 
     @Override
     protected IntentType getIntentFromRequest(AttributesManager attributesManager) {
-
-        return IntentType.valueOf(
-                String.valueOf(
-                        attributesManager.getSessionAttributes().getOrDefault(SessionConstants.INTENT, IntentType.GAME)));
+        String stringifyIntent = String.valueOf(attributesManager.getSessionAttributes().get(INTENT));
+        if (stringifyIntent == null) {
+            logger.debug("Was evoked action intent handler with default Intent Type");
+            return IntentType.GAME;
+        }
+        else {
+            logger.debug("Was evoked action intent handler with Intent Type: " + stringifyIntent);
+            return IntentType.valueOf(stringifyIntent);
+        }
     }
 }

@@ -27,7 +27,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         String firstWord = randomWordForActivity.getWord();
 
-        ActivityProgress activityProgress = new ActivityProgress();
+        ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
 
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForActivityFromLetter(ActivityType.LAST_LETTER, firstWord.charAt(firstWord.length() - 1));
@@ -58,7 +58,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         String firstWord = randomWordForActivity.getWord();
 
-        ActivityProgress activityProgress = new ActivityProgress();
+        ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
 
         WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForActivityFromLetter(ActivityType.LAST_LETTER, firstWord.charAt(0));
@@ -89,7 +89,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         String firstWord = randomWordForActivity.getWord();
 
-        ActivityProgress activityProgress = new ActivityProgress();
+        ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
         activityProgress.setEnemySuccessCounter(3);
 

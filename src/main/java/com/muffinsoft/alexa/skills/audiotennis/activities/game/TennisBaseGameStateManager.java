@@ -65,12 +65,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected void populateActivityVariables() {
-        stateType = StateType.valueOf(String.valueOf(getSessionAttributes().getOrDefault(STATE_TYPE, ACTIVITY_INTRO)));
+        this.stateType = StateType.valueOf(String.valueOf(getSessionAttributes().getOrDefault(STATE_TYPE, ACTIVITY_INTRO)));
 
         this.userReplyBreakpointPosition = (Integer) this.getSessionAttributes().getOrDefault(USER_REPLY_BREAKPOINT, null);
 
         LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
-        this.activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress();
+        this.activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress(this.currentActivityType);
 
         LinkedHashMap rawUserProgress = (LinkedHashMap) getSessionAttributes().get(USER_PROGRESS);
         this.userProgress = rawUserProgress != null ? mapper.convertValue(rawUserProgress, UserProgress.class) : new UserProgress();
@@ -133,7 +133,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             String word = generateRandomWord();
             builder.addResponse(getDialogTranslator().translate(word));
         }
-        return builder;
+        return builder.withSlotName(actionSlotName);
     }
 
     @Override

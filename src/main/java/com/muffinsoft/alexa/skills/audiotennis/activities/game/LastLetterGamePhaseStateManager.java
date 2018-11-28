@@ -61,7 +61,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         }
         this.activityProgress.setPreviousWord(nextWord);
 
-        return builder;
+        return builder.withSlotName(actionSlotName);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
 
         iterateEnemyScoreCounter(builder);
 
-        return builder;
+        return builder.withSlotName(actionSlotName);
     }
 
     private boolean isWordAlreadyUser() {

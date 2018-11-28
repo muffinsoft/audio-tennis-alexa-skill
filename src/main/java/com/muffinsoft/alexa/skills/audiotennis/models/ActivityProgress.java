@@ -29,12 +29,19 @@ public class ActivityProgress {
     private boolean updateForLevel;
     private Set<String> usedWords;
 
+    private ActivityProgress() {
+    }
+
+    public ActivityProgress(ActivityType currentActivity) {
+        this.currentActivity = currentActivity;
+    }
+
     public static ActivityType getDefaultActivity() {
         return IoC.provideProgressManager().getFirstActivity();
     }
 
     public static ActivityProgress createDefault() {
-        ActivityType activityType = IoC.provideProgressManager().getFirstActivity();
+        ActivityType activityType = getDefaultActivity();
         ActivityProgress activityProgress = new ActivityProgress();
         activityProgress.setCurrentActivity(activityType);
         return activityProgress;
@@ -208,5 +215,27 @@ public class ActivityProgress {
 
     public void setEnemyWinRoundCounter(int enemyWinRoundCounter) {
         this.enemyWinRoundCounter = enemyWinRoundCounter;
+    }
+
+    @Override
+    public String toString() {
+        return "ActivityProgress{" +
+                "currentActivity=" + currentActivity +
+                ", previousActivity=" + previousActivity +
+                ", successCounter=" + successCounter +
+                ", enemySuccessCounter=" + enemySuccessCounter +
+                ", enemyScoreCounter=" + enemyScoreCounter +
+                ", playerScoreCounter=" + playerScoreCounter +
+                ", currentDifficult=" + currentDifficult +
+                ", playerWinRoundCounter=" + playerWinRoundCounter +
+                ", enemyWinRoundCounter=" + enemyWinRoundCounter +
+                ", playerRoundWinInRow=" + playerRoundWinInRow +
+                ", enemyRoundWinInRow=" + enemyRoundWinInRow +
+                ", previousWord='" + previousWord + '\'' +
+                ", requiredUserReaction='" + requiredUserReaction + '\'' +
+                ", activityEnemyMistakeIterationPointer=" + activityEnemyMistakeIterationPointer +
+                ", updateForLevel=" + updateForLevel +
+                ", usedWords=" + usedWords +
+                '}';
     }
 }

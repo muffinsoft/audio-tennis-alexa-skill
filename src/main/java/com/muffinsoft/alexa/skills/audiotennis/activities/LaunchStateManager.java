@@ -24,6 +24,7 @@ import java.util.Map;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.CardConstants.WELCOME_CARD;
 
 public class LaunchStateManager extends BaseStateManager {
@@ -33,6 +34,7 @@ public class LaunchStateManager extends BaseStateManager {
     private final GreetingsPhraseManager greetingsPhraseManager;
     private final CardManager cardManager;
 
+    private Integer userReplyBreakpointPosition;
     private UserProgress userProgress;
 
     public LaunchStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
@@ -46,6 +48,7 @@ public class LaunchStateManager extends BaseStateManager {
     protected void populateActivityVariables() {
         LinkedHashMap rawUserProgress = (LinkedHashMap) getSessionAttributes().get(USER_PROGRESS);
         this.userProgress = rawUserProgress != null ? mapper.convertValue(rawUserProgress, UserProgress.class) : null;
+        this.userReplyBreakpointPosition = (Integer) this.getSessionAttributes().getOrDefault(USER_REPLY_BREAKPOINT, null);
     }
 
     @Override
@@ -74,16 +77,21 @@ public class LaunchStateManager extends BaseStateManager {
     private void buildInitialGreeting(DialogItem.Builder builder) {
         List<BasePhraseContainer> dialog = greetingsPhraseManager.getValueByKey(GreetingsConstants.FIRST_TIME_GREETING);
 
-        int userReplyBreakpointPosition = 0;
+        int index = 0;
 
         for (PhraseContainer phraseSettings : dialog) {
 
+            index++;
+
+            if (this.userReplyBreakpointPosition != null && index <= this.userReplyBreakpointPosition) {
+                continue;
+            }
+
             if (phraseSettings.isUserResponse()) {
-                this.getSessionAttributes().put(SessionConstants.USER_REPLY_BREAKPOINT, userReplyBreakpointPosition + 1);
+                this.getSessionAttributes().put(SessionConstants.USER_REPLY_BREAKPOINT, index);
                 break;
             }
             builder.addResponse(getDialogTranslator().translate(phraseSettings));
-            userReplyBreakpointPosition++;
         }
     }
 
