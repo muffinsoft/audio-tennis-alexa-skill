@@ -17,6 +17,7 @@ import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.UserReplyManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
+import com.muffinsoft.alexa.skills.audiotennis.models.ActivityPhrases;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
@@ -46,6 +47,8 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     UserProgress userProgress;
     ActivityProgress activityProgress;
     ActivityType currentActivityType;
+    ActivityPhrases phrasesForActivity;
+    ActivitySettings settingsForActivity;
     private Integer userReplyBreakpointPosition;
 
     TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
@@ -72,6 +75,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected void updateSessionAttributes() {
+        this.getSessionAttributes().put(STATE_TYPE, this.stateType);
         this.getSessionAttributes().put(ACTIVITY_PROGRESS, this.activityProgress);
     }
 
@@ -83,8 +87,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     @Override
     protected DialogItem.Builder populateResponse(DialogItem.Builder builder) {
 
+        phrasesForActivity = activitiesPhraseManager.getPhrasesForActivity(this.currentActivityType);
+        settingsForActivity = activityManager.getSettingsForActivity(this.currentActivityType);
+
         if (!activityProgress.isUpdateForLevel()) {
-            ActivitySettings settingsForActivity = activityManager.getSettingsForActivity(this.currentActivityType);
             activityProgress.updateWithLevelSettings(
                     this.activityProgress.getCurrentDifficult(),
                     settingsForActivity.getStartWrongPointPositionValue(),

@@ -1,12 +1,62 @@
 {
-  "readyToStartPhrase": "Ready to start?",
-  "selectMissionPhrase": "Please, select mission",
-  "wantStartMissionPhrase": "Do you want to start a new mission?",
-  "wantResetProgressPhrase": "Are you sure you want to discontinue the mission and lose all your progress?",
-  "wantExitPhrase": "Do you want to quit the game?",
-  "returnToGamePhrase": "You'll be returned to game process",
-  "repeatLastPhrase": "I don't understand you. Please, repeat last command",
-  "exitPhrase": "We had fun together. Let's do this again soon.",
-  "fallbackPhrase": "Please, say it again",
-  "wantMissionFromBeginningPhrase": "Do you want to start mission from the beginning?"
+  "readyToStartPhrase": [
+    {
+      "content": "Ready to start?",
+      "role": "Alexa"
+    }
+  ],
+  "selectMissionPhrase": [
+    {
+      "content": "Please, select mission",
+      "role": "Alexa"
+    }
+  ],
+  "wantStartMissionPhrase": [
+    {
+      "content": "Do you want to start a new mission?",
+      "role": "Alexa"
+    }
+  ],
+  "wantResetProgressPhrase": [
+    {
+      "content": "Are you sure you want to discontinue the mission and lose all your progress?",
+      "role": "Alexa"
+    }
+  ],
+  "wantExitPhrase": [
+    {
+      "content": "Do you want to quit the game?",
+      "role": "Alexa"
+    }
+  ],
+  "returnToGamePhrase": [
+    {
+      "content": "You'll be returned to game process",
+      "role": "Alexa"
+    }
+  ],
+  "repeatLastPhrase": [
+    {
+      "content": "I don't understand you. Please, repeat last command",
+      "role": "Alexa"
+    }
+  ],
+  "exitPhrase": [
+    {
+      "content": "We had fun together. Let's do this again soon.",
+      "role": "Alexa"
+    }
+  ],
+  "fallbackPhrase": [
+    {
+      "content": "Please, say it again",
+      "role": "Alexa"
+    }
+  ],
+  "wantMissionFromBeginningPhrase": [
+    {
+      "content": "Do you want to start mission from the beginning?",
+      "role": "Alexa"
+    }
+  ]
 }

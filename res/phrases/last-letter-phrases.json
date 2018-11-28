@@ -104,24 +104,40 @@
   ],
   "opponentReactionAfterXWordsPhrase": [
     {
-      "content": "Good one. How about",
+      "content": "Good one. How about %word%?",
       "role": "Ben"
     },
     {
-      "content": "I'm going with",
+      "content": "I'm going with %word%!,",
       "role": "Ben"
     },
     {
-      "content": "Hitting back with",
+      "content": "Hitting back with %word%!,",
       "role": "Ben"
     },
     {
-      "content": "My next response is",
+      "content": "My next response is %word%!,",
       "role": "Ben"
     },
     {
-      "content": "I'll hit back with",
+      "content": "I'll hit back with %word%!",
       "role": "Ben"
     }
+  ],
+  "playerLoseWrongWordPhrase": [
+    {"content": "%word% doesn't start with %letter%,", "role":"Ben"},
+    {"content": "%word% doesn't begin with %letter%,", "role":"Ben"},
+    {"content": "%letter% isn't the the first letter of %word%,", "role":"Ben"},
+    {"content": "Your word had to start with %letter%,", "role":"Ben"},
+    {"content": "Your word was supposed to start with %letter%", "role":"Ben"}
+  ],
+  "playerLoseRepeatWordPhrase": [
+    {"content": "%word% was already used,", "role":"Ben"},
+    {"content": "we already said %word%,", "role":"Ben"},
+    {"content": "we can't say %word% again,", "role":"Ben"},
+    {"content": "%word% can't be used again,", "role":"Ben"},
+    {"content": "you already said %word%!,", "role":"Ben"},
+    {"content": "I already said %word%!,", "role":"Ben"},
+    {"content": "%word% can't be repeated!", "role":"Ben"}
   ]
 }

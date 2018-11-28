@@ -2,7 +2,6 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
-import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
@@ -33,14 +32,14 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
                 return false;
             }
 
-            return !activityProgress.getUsedWords().contains(getUserReply());
+            return !isWordAlreadyUser();
         }
         return false;
     }
 
     @Override
     protected boolean isEndWinActivityState() {
-        return this.activityProgress.getEnemyMistakeCounter() == activityManager.getSettingsForActivity(this.currentActivityType).getMaxMistakeCounter();
+        return this.activityProgress.getEnemyMistakeCounter() == settingsForActivity.getMaxMistakeCounter();
     }
 
     @Override
@@ -54,7 +53,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
             builder.addResponse(getDialogTranslator().translate(nextWord));
         }
         else {
-            BasePhraseContainer randomOpponentAfterWordPhrase = activitiesPhraseManager.getPhrasesForActivity(this.currentActivityType).getRandomOpponentAfterWordPhrase();
+            BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
             builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
             nextWord = getNextRightWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
@@ -69,9 +68,16 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
 
         this.activityProgress.iterateMistakeCounter();
 
-        if (this.activityProgress.getMistakeCounter() >= 0) {
-            this.stateType = StateType.LOSE;
+        BasePhraseContainer playerLosePhrase;
+
+        if (isWordAlreadyUser()) {
+            playerLosePhrase = phrasesForActivity.getRandomPlayerLoseRepeatWordPhrase();
         }
+        else {
+            playerLosePhrase = phrasesForActivity.getRandomPlayerLoseWrongWordPhrase();
+        }
+
+        builder.addResponse(getDialogTranslator().translate(playerLosePhrase));
 
         String nextWord = getNextRightWordForActivity();
         this.activityProgress.setPreviousWord(nextWord);
@@ -79,6 +85,10 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         builder.addResponse(getDialogTranslator().translate(nextWord));
 
         return builder;
+    }
+
+    private boolean isWordAlreadyUser() {
+        return activityProgress.getUsedWords().contains(getUserReply());
     }
 
     private String getNextWrongWordForActivity() {

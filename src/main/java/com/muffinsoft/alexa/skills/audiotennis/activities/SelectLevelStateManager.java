@@ -4,6 +4,7 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.SELECT_MISSION_PHRASE;
@@ -46,7 +48,7 @@ public class SelectLevelStateManager extends BaseStateManager {
 
         logger.debug("Starting handling user reply '" + this.getUserReply() + "' ...");
 
-        String dialog = null;
+        List<PhraseContainer> dialog = null;
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
             dialog = regularPhraseManager.getValueByKey(SELECT_MISSION_PHRASE);
         }
