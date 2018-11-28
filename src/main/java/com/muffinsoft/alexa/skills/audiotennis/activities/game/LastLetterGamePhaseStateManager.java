@@ -50,8 +50,8 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         String nextWord;
         if (this.activityProgress.getEnemySuccessCounter() != 0 && this.activityProgress.getEnemySuccessCounter() % this.activityProgress.getActivityEnemyMistakeIterationPointer() == 0) {
             nextWord = getNextWrongWordForActivity();
-            builder.addResponse(getDialogTranslator().translate(nextWord));
             iteratePlayerScoreCounter(builder);
+            builder.addResponse(getDialogTranslator().translate(nextWord));
         }
         else {
             BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
@@ -78,12 +78,12 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
 
         builder.addResponse(getDialogTranslator().translate(playerLosePhrase));
 
+        iterateEnemyScoreCounter(builder);
+
         String nextWord = getNextRightWordForActivity();
         this.activityProgress.setPreviousWord(nextWord);
 
         builder.addResponse(getDialogTranslator().translate(nextWord));
-
-        iterateEnemyScoreCounter(builder);
 
         return builder.withSlotName(actionSlotName);
     }
