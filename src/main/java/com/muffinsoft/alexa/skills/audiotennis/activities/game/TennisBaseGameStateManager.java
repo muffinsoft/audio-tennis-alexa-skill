@@ -14,6 +14,7 @@ import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.GeneralActivityPhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.ProgressManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.UserReplyManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
@@ -42,6 +43,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected final RegularPhraseManager regularPhraseManager;
     protected final ActivitiesPhraseManager activitiesPhraseManager;
     protected final AliasManager aliasManager;
+    protected final ProgressManager progressManager;
     protected final ActivityManager activityManager;
     protected final UserReplyManager userReplyManager;
     protected final GeneralActivityPhraseManager generalActivityPhraseManager;
@@ -57,6 +59,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
         this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
         this.aliasManager = settingsDependencyContainer.getAliasManager();
+        this.progressManager = settingsDependencyContainer.getProgressManager();
         this.userReplyManager = settingsDependencyContainer.getUserReplyManager();
         this.activityManager = settingsDependencyContainer.getActivityManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
@@ -122,7 +125,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected DialogItem.Builder handleReadyToPlayState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
-            //redirect to activities
+            builder.addResponse(getDialogTranslator().translate("Here will be redirection to activity's selection"));
         }
         else {
             initGameStatePhrase(builder);
@@ -134,7 +137,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected DialogItem.Builder handleRestartState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
-            //redirect to exit
+            builder.addResponse(getDialogTranslator().translate("Here will be exit"));
         }
         else {
             initGameStatePhrase(builder);
@@ -158,7 +161,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         return builder.withSlotName(actionSlotName);
     }
 
-    protected int wrapAnyUserResponse(List<BasePhraseContainer> dialog, DialogItem.Builder builder, StateType stateType) {
+    private int wrapAnyUserResponse(List<BasePhraseContainer> dialog, DialogItem.Builder builder, StateType stateType) {
 
         if (this.userReplyBreakpointPosition != null) {
             this.getSessionAttributes().remove(USER_REPLY_BREAKPOINT);

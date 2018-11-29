@@ -1,0 +1,25 @@
+{
+  "name": "BAM_WHAM",
+  "startWrongPointPositionValue": 3,
+  "iterateWrongPointPositionEveryLevels": 2,
+  "addendToWrongPointPosition": 2,
+  "scoresToWinRoundCounter": 3,
+  "wordsToReactions": {
+    "Bam": "Wham",
+    "Bap": " Wap",
+    "Boom": "Whoom",
+    "Bomp": "Womp",
+    "Bonk ": "Wonk",
+    "Bop": " Wop",
+    "Boosh": "Woosh",
+    "Bump": "Wump"
+  }
+}
+
+
+
+
+
+
+
+

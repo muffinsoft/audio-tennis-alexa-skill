@@ -6,7 +6,7 @@ public enum ActivityType {
 
     LAST_LETTER,
 
-    ONOMATOPOEIA,
+    BAM_WHAM,
 
     RHYME_MATCH
 }

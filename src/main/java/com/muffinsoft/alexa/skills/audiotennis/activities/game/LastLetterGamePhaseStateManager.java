@@ -18,6 +18,16 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
     }
 
     @Override
+    protected boolean isEndWinActivityState() {
+        return this.activityProgress.getPlayerScoreCounter() == settingsForActivity.getScoresToWinRoundCounter();
+    }
+
+    @Override
+    protected boolean isEndLoseActivityState() {
+        return this.activityProgress.getEnemyScoreCounter() == settingsForActivity.getScoresToWinRoundCounter();
+    }
+
+    @Override
     protected boolean isSuccessAnswer() {
 
         if (getUserMultipleReplies().isEmpty()) {
@@ -35,11 +45,6 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
             return !isWordAlreadyUser();
         }
         return false;
-    }
-
-    @Override
-    protected boolean isEndWinActivityState() {
-        return this.activityProgress.getPlayerScoreCounter() == settingsForActivity.getScoresToWinRoundCounter();
     }
 
     @Override

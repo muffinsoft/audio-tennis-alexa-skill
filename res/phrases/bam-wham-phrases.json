@@ -1,0 +1,46 @@
+{
+  "intro": [
+    {
+      "content": "I love this round! I'm going to use one of my serving words to hit the ball to you. If I say Bam, you say Wham.  If I say Boom, you say Whoom.  If I say Boom Bap, you say Whoom Whap.",
+      "role": "Ben"
+    },
+    {
+      "content": "Boom!",
+      "role": "Ben"
+    },
+    {
+      "content": "Whoom!",
+      "role": "Lily"
+    },
+    {
+      "content": "Bomp, Bap!",
+      "role": "Ben"
+    },
+    {
+      "content": "Whomp, Whap!",
+      "role": "Lily"
+    },
+    {
+      "content": "Whonk, Whoom, Wham!",
+      "role": "Ben"
+    },
+    {
+      "content": "Bonk, Boom, Bam",
+      "role": "Lily"
+    },
+    {
+      "content": "I think you got the idea.  Now let’s go ahead and play.",
+      "role": "Ben"
+    }
+  ],
+  "opponentFirstPhrase": [
+    { "content": "I'll go ahead and start.,", "role": "Ben"},
+    { "content": "I'll serve this time.,", "role": "Ben"},
+    { "content": "It's my turn to serve.,", "role": "Ben"},
+    { "content": "I'm serving. Here I go!,", "role": "Ben"},
+    { "content": "Get ready for my serve!", "role": "Ben"}
+  ]
+}
+
+
+

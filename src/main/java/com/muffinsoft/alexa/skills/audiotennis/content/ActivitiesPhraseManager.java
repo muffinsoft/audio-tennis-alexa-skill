@@ -13,7 +13,7 @@ public class ActivitiesPhraseManager {
 
     private static final String ALPHABET_RACE = "phrases/alphabet-race-phrases.json";
     private static final String LAST_LETTER = "phrases/last-letter-phrases.json";
-    private static final String ONOMATOPOEIA = "phrases/onomatopoeia-phrases.json";
+    private static final String BAM_WHAM = "phrases/bam-wham-phrases.json";
     private static final String RHYME_MATCH = "phrases/rhyme-match-phrases.json";
 
     private final ContentLoader contentLoader = new ContentLoader(new ObjectMapper());
@@ -28,7 +28,7 @@ public class ActivitiesPhraseManager {
         }));
         containerByActivity.put(ActivityType.LAST_LETTER, contentLoader.loadContent(new ActivityPhrases(), LAST_LETTER, new TypeReference<ActivityPhrases>() {
         }));
-        containerByActivity.put(ActivityType.ONOMATOPOEIA, contentLoader.loadContent(new ActivityPhrases(), ONOMATOPOEIA, new TypeReference<ActivityPhrases>() {
+        containerByActivity.put(ActivityType.BAM_WHAM, contentLoader.loadContent(new ActivityPhrases(), BAM_WHAM, new TypeReference<ActivityPhrases>() {
         }));
         containerByActivity.put(ActivityType.RHYME_MATCH, contentLoader.loadContent(new ActivityPhrases(), RHYME_MATCH, new TypeReference<ActivityPhrases>() {
         }));

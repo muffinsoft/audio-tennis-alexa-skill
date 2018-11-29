@@ -19,7 +19,7 @@ public class ActivityManager {
 
     private static final String ALPHABET_RACE = "settings/alphabet-race.json";
     private static final String LAST_LETTER = "settings/last-letter.json";
-    private static final String ONOMATOPOEIA = "settings/onomatopoeia.json";
+    private static final String ONOMATOPOEIA = "settings/bam-wham.json";
     private static final String RHYME_MATCH = "settings/rhyme-match.json";
 
     private static final String alphabet = "abcdefjhijklmnopqrstuvwxyz";
@@ -39,7 +39,7 @@ public class ActivityManager {
         }));
         containerByActivity.put(ActivityType.LAST_LETTER, contentLoader.loadContent(new ActivitySettings(), LAST_LETTER, new TypeReference<ActivitySettings>() {
         }));
-        containerByActivity.put(ActivityType.ONOMATOPOEIA, contentLoader.loadContent(new ActivitySettings(), ONOMATOPOEIA, new TypeReference<ActivitySettings>() {
+        containerByActivity.put(ActivityType.BAM_WHAM, contentLoader.loadContent(new ActivitySettings(), ONOMATOPOEIA, new TypeReference<ActivitySettings>() {
         }));
         containerByActivity.put(ActivityType.RHYME_MATCH, contentLoader.loadContent(new ActivitySettings(), RHYME_MATCH, new TypeReference<ActivitySettings>() {
         }));
@@ -50,8 +50,17 @@ public class ActivityManager {
     }
 
     public WordContainer getRandomWordForActivity(ActivityType activityType) {
-        char character = getRandomCharFromString(alphabet);
-        return getRandomWordForActivityFromLetter(activityType, character);
+        if (activityType == ActivityType.BAM_WHAM) {
+            ActivitySettings activitySettings = containerByActivity.get(activityType);
+            Map<String, String> wordsToReactions = activitySettings.getWordsToReactions();
+            String word = getRandomWordFromCollection(wordsToReactions.keySet());
+            String userReaction = wordsToReactions.get(word);
+            return new WordContainer(word, userReaction);
+        }
+        else {
+            char character = getRandomCharFromString(alphabet);
+            return getRandomWordForActivityFromLetter(activityType, character);
+        }
     }
 
     private char getRandomCharFromString(String input) {

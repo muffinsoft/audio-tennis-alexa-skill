@@ -1,5 +1,6 @@
 package com.muffinsoft.alexa.skills.audiotennis.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 
@@ -12,7 +13,9 @@ public class ActivityProgress {
 
     private ActivityType currentActivity;
     private ActivityType previousActivity;
+    private Set<ActivityType> unlockedActivities = new HashSet<>();
     private int successCounter;
+    private int mistakeCount;
     private int enemyAnswerCounter;
     private int enemyScoreCounter;
     private int playerScoreCounter;
@@ -27,28 +30,31 @@ public class ActivityProgress {
     private int activityEnemyMistakeIterationPointer;
 
     private boolean updateForLevel;
-    private Set<String> usedWords;
+    private Set<String> usedWords = new HashSet<>();
+    private ActivityType possibleActivity;
 
     private ActivityProgress() {
     }
 
     public ActivityProgress(ActivityType currentActivity) {
         this.currentActivity = currentActivity;
+        this.unlockedActivities.add(currentActivity);
     }
 
-    public static ActivityType getDefaultActivity() {
+    @JsonIgnore
+    private static ActivityType getDefaultActivity() {
         return IoC.provideProgressManager().getFirstActivity();
     }
 
+    @JsonIgnore
     public static ActivityProgress createDefault() {
         ActivityType activityType = getDefaultActivity();
-        ActivityProgress activityProgress = new ActivityProgress();
-        activityProgress.setCurrentActivity(activityType);
-        return activityProgress;
+        return new ActivityProgress(activityType);
     }
 
     public void reset() {
         this.successCounter = 0;
+        this.mistakeCount = 0;
         this.enemyAnswerCounter = 0;
         this.enemyScoreCounter = 0;
         this.playerScoreCounter = 0;
@@ -133,6 +139,10 @@ public class ActivityProgress {
         this.enemyRoundWinInRow = 0;
     }
 
+    public void iterateMistakeCount() {
+        this.mistakeCount += 1;
+    }
+
     public int getPlayerRoundWinInRow() {
         return playerRoundWinInRow;
     }
@@ -186,6 +196,14 @@ public class ActivityProgress {
         this.activityEnemyMistakeIterationPointer = startWrongPointPositionValue;
     }
 
+    public int getMistakeCount() {
+        return mistakeCount;
+    }
+
+    public void setMistakeCount(int mistakeCount) {
+        this.mistakeCount = mistakeCount;
+    }
+
     public int getActivityEnemyMistakeIterationPointer() {
         return activityEnemyMistakeIterationPointer;
     }
@@ -199,15 +217,10 @@ public class ActivityProgress {
     }
 
     public void setUsedWords(String[] words) {
-        if (words != null) {
-            this.usedWords = new HashSet<>(Arrays.asList(words));
-        }
+        this.usedWords = new HashSet<>(Arrays.asList(words));
     }
 
     public void addUsedWord(String word) {
-        if (this.usedWords == null) {
-            this.usedWords = new HashSet<>();
-        }
         this.usedWords.add(word);
     }
 
@@ -227,11 +240,32 @@ public class ActivityProgress {
         this.enemyWinRoundCounter = enemyWinRoundCounter;
     }
 
+    public Set<ActivityType> getUnlockedActivities() {
+        return unlockedActivities;
+    }
+
+    public void setUnlockedActivities(ActivityType[] unlockedActivities) {
+        this.unlockedActivities = new HashSet<>(Arrays.asList(unlockedActivities));
+    }
+
+    public void addUnlockedActivity(ActivityType nextActivity) {
+        this.unlockedActivities.add(nextActivity);
+    }
+
+    public void setPossibleActivity(ActivityType possibleActivity) {
+        this.possibleActivity = possibleActivity;
+    }
+
+    public ActivityType getPossibleActivity() {
+        return possibleActivity;
+    }
+
     @Override
     public String toString() {
         return "ActivityProgress{" +
                 "currentActivity=" + currentActivity +
                 ", previousActivity=" + previousActivity +
+                ", unlockedActivities=" + unlockedActivities +
                 ", successCounter=" + successCounter +
                 ", enemyAnswerCounter=" + enemyAnswerCounter +
                 ", enemyScoreCounter=" + enemyScoreCounter +
@@ -241,11 +275,8 @@ public class ActivityProgress {
                 ", enemyWinRoundCounter=" + enemyWinRoundCounter +
                 ", playerRoundWinInRow=" + playerRoundWinInRow +
                 ", enemyRoundWinInRow=" + enemyRoundWinInRow +
-                ", previousWord='" + previousWord + '\'' +
-                ", requiredUserReaction='" + requiredUserReaction + '\'' +
                 ", activityEnemyMistakeIterationPointer=" + activityEnemyMistakeIterationPointer +
-                ", updateForLevel=" + updateForLevel +
-                ", usedWords=" + usedWords +
+                ", possibleActivity=" + possibleActivity +
                 '}';
     }
 }
