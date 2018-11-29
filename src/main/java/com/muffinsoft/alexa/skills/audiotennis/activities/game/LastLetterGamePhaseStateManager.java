@@ -39,7 +39,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
 
     @Override
     protected boolean isEndWinActivityState() {
-        return this.activityProgress.getPlayerScoreCounter() == settingsForActivity.getScoresToWinCounter();
+        return this.activityProgress.getPlayerScoreCounter() == settingsForActivity.getScoresToWinRoundCounter();
     }
 
     @Override
@@ -48,10 +48,11 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         this.activityProgress.iterateSuccessCounter();
 
         String nextWord;
-        if (this.activityProgress.getEnemySuccessCounter() != 0 && this.activityProgress.getEnemySuccessCounter() % this.activityProgress.getActivityEnemyMistakeIterationPointer() == 0) {
+        if (this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getActivityEnemyMistakeIterationPointer() == 0) {
             nextWord = getNextWrongWordForActivity();
-            iteratePlayerScoreCounter(builder);
             builder.addResponse(getDialogTranslator().translate(nextWord));
+            iteratePlayerScoreCounter(builder);
+            builder.addResponse(getDialogTranslator().translate("Your word should starts from " + nextWord.charAt(nextWord.length() - 1)));
         }
         else {
             BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
@@ -97,6 +98,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         char wrongLetter = activityManager.getRandomLetterExcept(lastLetter);
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForActivityFromLetter(this.currentActivityType, wrongLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
+        this.activityProgress.iterateEnemyAnswerCounter();
         this.activityProgress.addUsedWord(word);
         return word;
     }
@@ -105,7 +107,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForActivityFromLetter(this.currentActivityType, lastLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
-        this.activityProgress.iterateEnemySuccessCounter();
+        this.activityProgress.iterateEnemyAnswerCounter();
         this.activityProgress.addUsedWord(word);
         return word;
     }

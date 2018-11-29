@@ -91,7 +91,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
-        activityProgress.setEnemySuccessCounter(3);
+        activityProgress.setEnemyAnswerCounter(3);
 
         WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForActivityFromLetter(ActivityType.LAST_LETTER, firstWord.charAt(firstWord.length() - 1));
         String secondWord = randomWordForActivityFromWrongLetter.getWord();

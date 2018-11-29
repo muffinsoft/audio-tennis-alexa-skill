@@ -66,7 +66,7 @@ public class ActivityPhrases {
     @JsonIgnore
     public BasePhraseContainer getRandomOpponentAfterWordPhrase() {
         int index = getRandomValue(opponentAfterWordPhrase.size() * 2);
-        if (index > opponentAfterWordPhrase.size()) {
+        if (index > opponentAfterWordPhrase.size() - 1) {
             return BasePhraseContainer.empty();
         }
         else {

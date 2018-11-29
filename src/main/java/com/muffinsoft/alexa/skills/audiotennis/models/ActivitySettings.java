@@ -6,7 +6,7 @@ public class ActivitySettings {
     private int startWrongPointPositionValue;
     private int iterateWrongPointPositionEveryLevels;
     private int addendToWrongPointPosition;
-    private int scoresToWinCounter;
+    private int scoresToWinRoundCounter;
 
     public String getName() {
         return name;
@@ -40,11 +40,11 @@ public class ActivitySettings {
         this.addendToWrongPointPosition = addendToWrongPointPosition;
     }
 
-    public int getScoresToWinCounter() {
-        return scoresToWinCounter;
+    public int getScoresToWinRoundCounter() {
+        return scoresToWinRoundCounter;
     }
 
-    public void setScoresToWinCounter(int scoresToWinCounter) {
-        this.scoresToWinCounter = scoresToWinCounter;
+    public void setScoresToWinRoundCounter(int scoresToWinRoundCounter) {
+        this.scoresToWinRoundCounter = scoresToWinRoundCounter;
     }
 }

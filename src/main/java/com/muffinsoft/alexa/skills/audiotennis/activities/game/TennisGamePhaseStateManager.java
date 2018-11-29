@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
@@ -19,11 +20,12 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     @Override
     protected boolean isEndLoseActivityState() {
-        return this.activityProgress.getEnemySuccessCounter() == settingsForActivity.getScoresToWinCounter();
+        return this.activityProgress.getEnemyScoreCounter() == settingsForActivity.getScoresToWinRoundCounter();
     }
 
     @Override
     protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
+
         this.activityProgress.iteratePlayerWinRoundCounter();
 
         if (this.activityProgress.getPlayerRoundWinInRow() == 2) {
@@ -50,7 +52,17 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         else {
             randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWonOnceAtSecondOrFourthAct();
         }
+
         builder.addResponse(getDialogTranslator().translate(randomPhrase));
+
+        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow();
+
+        builder.addResponse(getDialogTranslator().translate(scores));
+
+        String restart = "Do you want to restart?";
+
+        this.stateType = StateType.RESTART;
+        builder.addResponse(getDialogTranslator().translate(restart));
     }
 
     @Override
@@ -65,6 +77,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         }
 
         builder.addResponse(getDialogTranslator().translate(randomPhrase));
+
+        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow();
+
+        builder.addResponse(getDialogTranslator().translate(scores));
         return builder;
     }
 

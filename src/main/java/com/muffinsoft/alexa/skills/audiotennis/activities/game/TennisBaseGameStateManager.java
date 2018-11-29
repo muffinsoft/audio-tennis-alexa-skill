@@ -125,13 +125,19 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             //redirect to activities
         }
         else {
-            this.stateType = StateType.GAME_PHASE_1;
+            initGameStatePhrase(builder);
+        }
+        return builder.withSlotName(actionSlotName);
+    }
 
-            BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
-            builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+    @Override
+    protected DialogItem.Builder handleRestartState(DialogItem.Builder builder) {
 
-            String word = generateRandomWord();
-            builder.addResponse(getDialogTranslator().translate(word));
+        if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+            //redirect to exit
+        }
+        else {
+            initGameStatePhrase(builder);
         }
         return builder.withSlotName(actionSlotName);
     }
@@ -192,5 +198,16 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         }
 
         return word;
+    }
+
+    private void initGameStatePhrase(DialogItem.Builder builder) {
+        this.stateType = StateType.GAME_PHASE_1;
+        this.activityProgress.reset();
+
+        BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
+        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+
+        String word = generateRandomWord();
+        builder.addResponse(getDialogTranslator().translate(word));
     }
 }

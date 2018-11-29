@@ -13,7 +13,7 @@ public class ActivityProgress {
     private ActivityType currentActivity;
     private ActivityType previousActivity;
     private int successCounter;
-    private int enemySuccessCounter;
+    private int enemyAnswerCounter;
     private int enemyScoreCounter;
     private int playerScoreCounter;
     private int currentDifficult;
@@ -45,6 +45,16 @@ public class ActivityProgress {
         ActivityProgress activityProgress = new ActivityProgress();
         activityProgress.setCurrentActivity(activityType);
         return activityProgress;
+    }
+
+    public void reset() {
+        this.successCounter = 0;
+        this.enemyAnswerCounter = 0;
+        this.enemyScoreCounter = 0;
+        this.playerScoreCounter = 0;
+        this.previousWord = null;
+        this.requiredUserReaction = null;
+        this.usedWords = new HashSet<>();
     }
 
     public ActivityType getCurrentActivity() {
@@ -87,16 +97,16 @@ public class ActivityProgress {
         this.playerScoreCounter = playerScoreCounter;
     }
 
-    public int getEnemySuccessCounter() {
-        return enemySuccessCounter;
+    public int getEnemyAnswerCounter() {
+        return enemyAnswerCounter;
     }
 
-    public void setEnemySuccessCounter(int enemySuccessCounter) {
-        this.enemySuccessCounter = enemySuccessCounter;
+    public void setEnemyAnswerCounter(int enemyAnswerCounter) {
+        this.enemyAnswerCounter = enemyAnswerCounter;
     }
 
-    public void iterateEnemySuccessCounter() {
-        this.enemySuccessCounter += 1;
+    public void iterateEnemyAnswerCounter() {
+        this.enemyAnswerCounter += 1;
     }
 
     public void iterateSuccessCounter() {
@@ -223,7 +233,7 @@ public class ActivityProgress {
                 "currentActivity=" + currentActivity +
                 ", previousActivity=" + previousActivity +
                 ", successCounter=" + successCounter +
-                ", enemySuccessCounter=" + enemySuccessCounter +
+                ", enemyAnswerCounter=" + enemyAnswerCounter +
                 ", enemyScoreCounter=" + enemyScoreCounter +
                 ", playerScoreCounter=" + playerScoreCounter +
                 ", currentDifficult=" + currentDifficult +
