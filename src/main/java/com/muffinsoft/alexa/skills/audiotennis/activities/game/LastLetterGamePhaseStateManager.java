@@ -18,24 +18,14 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
     }
 
     @Override
-    protected boolean isEndWinActivityState() {
-        return this.activityProgress.getPlayerScoreCounter() == settingsForActivity.getScoresToWinRoundCounter();
-    }
-
-    @Override
-    protected boolean isEndLoseActivityState() {
-        return this.activityProgress.getEnemyScoreCounter() == settingsForActivity.getScoresToWinRoundCounter();
-    }
-
-    @Override
     protected boolean isSuccessAnswer() {
 
         if (getUserMultipleReplies().isEmpty()) {
 
-            String previousWord = this.activityProgress.getPreviousWord();
+            String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
             char lastLetter = previousWord.charAt(previousWord.length() - 1);
 
-            String userReply = getUserReply();
+            String userReply = getUserReply().toLowerCase();
             char firstLetter = userReply.charAt(0);
 
             if (!Objects.equals(lastLetter, firstLetter)) {
@@ -53,7 +43,7 @@ public class LastLetterGamePhaseStateManager extends TennisGamePhaseStateManager
         this.activityProgress.iterateSuccessCounter();
 
         String nextWord;
-        if (this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getActivityEnemyMistakeIterationPointer() == 0) {
+        if (this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getComplexity() == 0) {
             nextWord = getNextWrongWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
             iteratePlayerScoreCounter(builder);

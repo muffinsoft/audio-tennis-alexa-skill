@@ -20,46 +20,83 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     @Override
-    protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
+    protected boolean isEndWinActivityState() {
+        return this.activityProgress.getPlayerScoreCounter() == settingsForActivity.getScoresToWinRoundValue();
+    }
 
-        this.activityProgress.iteratePlayerWinRoundCounter();
-
-        if (this.activityProgress.getPlayerRoundWinInRow() == 2) {
-            handleTwoInRow(builder);
-        }
-        else {
-            handleWinInRound(builder);
-        }
-        return builder;
+    @Override
+    protected boolean isEndLoseActivityState() {
+        return this.activityProgress.getEnemyScoreCounter() == settingsForActivity.getScoresToWinRoundValue();
     }
 
     @Override
     protected DialogItem.Builder handleLoseAnswerOfActivity(DialogItem.Builder builder) {
+
         this.activityProgress.iterateEnemyWinRoundCounter();
-        BasePhraseContainer randomPhrase;
-        if (this.activityProgress.getEnemyWinRoundCounter() % 2 == 0) {
-            randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerLoseTwice();
+
+        if (checkIfTwoInRow()) {
+
+            handleTwoInRow(builder);
+
+            return builder;
         }
         else {
-            randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
+
+            BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
+
+            builder.replaceResponse(getDialogTranslator().translate(randomPhrase));
+
+            handleRoundEnd(builder);
+
+            return builder;
         }
+    }
 
-        builder.addResponse(getDialogTranslator().translate(randomPhrase));
+    @Override
+    protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
 
-        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow() + ".";
+        this.activityProgress.iteratePlayerWinRoundCounter();
+
+        if (checkIfTwoInRow()) {
+
+            handleTwoInRow(builder);
+
+            return builder;
+        }
+        else {
+            BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWonOnceAtFirstOrThirdAct();
+
+            builder.replaceResponse(getDialogTranslator().translate(randomPhrase));
+
+            handleRoundEnd(builder);
+
+            return builder;
+        }
+    }
+
+    private boolean checkIfTwoInRow() {
+        if (this.activityProgress.getEnemyRoundWinInRow() != 0) {
+            return this.activityProgress.getEnemyRoundWinInRow() % 2 == 0;
+        }
+        else if (this.activityProgress.getPlayerRoundWinInRow() != 0) {
+            return this.activityProgress.getPlayerRoundWinInRow() % 2 == 0;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private void handleRoundEnd(DialogItem.Builder builder) {
+
+        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow();
 
         builder.addResponse(getDialogTranslator().translate(scores));
-        return builder;
-    }
 
-    void iteratePlayerScoreCounter(DialogItem.Builder builder) {
-        this.activityProgress.iteratePlayerScoreCounter();
-        builder.addResponse(getDialogTranslator().translate(". Wrong word! Score goes to Player."));
-    }
+        String restart = "Do you want to restart?";
 
-    void iterateEnemyScoreCounter(DialogItem.Builder builder) {
-        this.activityProgress.iterateEnemyScoreCounter();
-        builder.addResponse(getDialogTranslator().translate(". Score goes to Ben."));
+        this.stateType = StateType.RESTART;
+
+        builder.addResponse(getDialogTranslator().translate(restart));
     }
 
     private void handleTwoInRow(DialogItem.Builder builder) {
@@ -73,24 +110,23 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         }
     }
 
-    private void handleWinInRound(DialogItem.Builder builder) {
-        BasePhraseContainer randomPhrase;
-        if (this.activityProgress.getPlayerWinRoundCounter() % 2 == 0) {
-            randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWonOnceAtFirstOrThirdAct();
-        }
-        else {
-            randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWonOnceAtSecondOrFourthAct();
-        }
+    void iterateEnemyWinRoundCounter(DialogItem.Builder builder) {
+        this.activityProgress.iterateEnemyWinRoundCounter();
+        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow() + ".";
+        builder.addResponseToBegining(getDialogTranslator().translate(scores));
+    }
 
-        builder.addResponse(getDialogTranslator().translate(randomPhrase));
-
-        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow();
-
+    void iteratePlayerScoreCounter(DialogItem.Builder builder) {
+        this.activityProgress.iteratePlayerScoreCounter();
+        builder.addResponse(getDialogTranslator().translate("Score goes to Player."));
+        String scores = "Ben Round Scores " + this.activityProgress.getEnemyScoreCounter() + ", Your Round Scores " + this.activityProgress.getPlayerScoreCounter();
         builder.addResponse(getDialogTranslator().translate(scores));
+    }
 
-        String restart = "Do you want to restart?";
-
-        this.stateType = StateType.RESTART;
-        builder.addResponse(getDialogTranslator().translate(restart));
+    void iterateEnemyScoreCounter(DialogItem.Builder builder) {
+        this.activityProgress.iterateEnemyScoreCounter();
+        builder.addResponse(getDialogTranslator().translate("Score goes to Ben."));
+        String scores = "Ben Round Scores " + this.activityProgress.getEnemyScoreCounter() + ", Your Round Scores " + this.activityProgress.getPlayerScoreCounter();
+        builder.addResponse(getDialogTranslator().translate(scores));
     }
 }

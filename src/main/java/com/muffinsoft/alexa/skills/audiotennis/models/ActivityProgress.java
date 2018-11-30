@@ -19,7 +19,6 @@ public class ActivityProgress {
     private int enemyAnswerCounter;
     private int enemyScoreCounter;
     private int playerScoreCounter;
-    private int currentDifficult;
     private int playerWinRoundCounter;
     private int enemyWinRoundCounter;
     private int playerRoundWinInRow;
@@ -27,7 +26,7 @@ public class ActivityProgress {
     private String previousWord;
     private String requiredUserReaction;
 
-    private int activityEnemyMistakeIterationPointer;
+    private int complexity;
 
     private boolean updateForLevel;
     private Set<String> usedWords = new HashSet<>();
@@ -53,6 +52,7 @@ public class ActivityProgress {
     }
 
     public void reset() {
+        this.updateForLevel = false;
         this.successCounter = 0;
         this.mistakeCount = 0;
         this.enemyAnswerCounter = 0;
@@ -175,25 +175,12 @@ public class ActivityProgress {
         this.requiredUserReaction = reaction;
     }
 
-    public int getCurrentDifficult() {
-        return currentDifficult;
-    }
-
-    public void setCurrentDifficult(int currentDifficult) {
-        this.currentDifficult = currentDifficult;
-    }
-
     public boolean isUpdateForLevel() {
         return updateForLevel;
     }
 
     public void setUpdateForLevel(boolean updateForLevel) {
         this.updateForLevel = updateForLevel;
-    }
-
-    public void updateWithLevelSettings(int currentDifficutlt, int startWrongPointPositionValue, int iterateWrongPointPositionEveryLevels, int addendToWrongPointPosition) {
-        this.updateForLevel = true;
-        this.activityEnemyMistakeIterationPointer = startWrongPointPositionValue;
     }
 
     public int getMistakeCount() {
@@ -204,12 +191,12 @@ public class ActivityProgress {
         this.mistakeCount = mistakeCount;
     }
 
-    public int getActivityEnemyMistakeIterationPointer() {
-        return activityEnemyMistakeIterationPointer;
+    public int getComplexity() {
+        return complexity;
     }
 
-    public void setActivityEnemyMistakeIterationPointer(int activityEnemyMistakeIterationPointer) {
-        this.activityEnemyMistakeIterationPointer = activityEnemyMistakeIterationPointer;
+    public void setComplexity(int complexity) {
+        this.complexity = complexity;
     }
 
     public Set<String> getUsedWords() {
@@ -252,12 +239,24 @@ public class ActivityProgress {
         this.unlockedActivities.add(nextActivity);
     }
 
+    public ActivityType getPossibleActivity() {
+        return possibleActivity;
+    }
+
     public void setPossibleActivity(ActivityType possibleActivity) {
         this.possibleActivity = possibleActivity;
     }
 
-    public ActivityType getPossibleActivity() {
-        return possibleActivity;
+    public void updateWithDifficultSettings(ActivitySettings settingsForActivity) {
+        this.updateForLevel = true;
+        if (this.playerScoreCounter < settingsForActivity.getIterateComplexityEveryScoresValue()) {
+            this.complexity = settingsForActivity.getStartComplexityValue();
+        }
+        else {
+            int multiplication = this.playerScoreCounter / settingsForActivity.getIterateComplexityEveryScoresValue();
+            multiplication = multiplication * settingsForActivity.getAddToComplexityValue();
+            this.complexity = settingsForActivity.getStartComplexityValue() + multiplication;
+        }
     }
 
     @Override
@@ -270,12 +269,11 @@ public class ActivityProgress {
                 ", enemyAnswerCounter=" + enemyAnswerCounter +
                 ", enemyScoreCounter=" + enemyScoreCounter +
                 ", playerScoreCounter=" + playerScoreCounter +
-                ", currentDifficult=" + currentDifficult +
                 ", playerWinRoundCounter=" + playerWinRoundCounter +
                 ", enemyWinRoundCounter=" + enemyWinRoundCounter +
                 ", playerRoundWinInRow=" + playerRoundWinInRow +
                 ", enemyRoundWinInRow=" + enemyRoundWinInRow +
-                ", activityEnemyMistakeIterationPointer=" + activityEnemyMistakeIterationPointer +
+                ", complexity=" + complexity +
                 ", possibleActivity=" + possibleActivity +
                 '}';
     }

@@ -15,8 +15,8 @@ import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateMa
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetConfirmationStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.AlphabetRaceGamePhaseStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGamePhaseStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGamePhaseStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGamePhaseStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.RhymeMatchGamePhaseStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public class TennisIntentFabric implements IntentFactory {
@@ -75,6 +76,7 @@ public class TennisIntentFabric implements IntentFactory {
         if (attributesManager.getSessionAttributes().containsKey(SWITCH_ACTIVITY_STEP)) {
             if (isPositiveReply(inputSlots)) {
                 currentActivity = activityProgress.getPossibleActivity();
+                attributesManager.getSessionAttributes().remove(STATE_TYPE);
             }
             else {
                 currentActivity = activityProgress.getCurrentActivity();

@@ -14,14 +14,4 @@ public class RhymeMatchGamePhaseStateManager extends TennisGamePhaseStateManager
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.RHYME_MATCH;
     }
-
-    @Override
-    protected boolean isSuccessAnswer() {
-        return super.isSuccessAnswer();
-    }
-
-    @Override
-    protected boolean isEndWinActivityState() {
-        return super.isEndWinActivityState();
-    }
 }

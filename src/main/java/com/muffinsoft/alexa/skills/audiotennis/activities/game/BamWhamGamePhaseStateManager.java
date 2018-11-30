@@ -2,12 +2,15 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,23 +21,29 @@ public class BamWhamGamePhaseStateManager extends TennisGamePhaseStateManager {
         this.currentActivityType = ActivityType.BAM_WHAM;
     }
 
-
-    @Override
-    protected boolean isEndWinActivityState() {
-        return this.activityProgress.getSuccessCounter() == settingsForActivity.getScoresToWinRoundCounter();
-    }
-
-    @Override
-    protected boolean isEndLoseActivityState() {
-        return this.activityProgress.getMistakeCount() > settingsForActivity.getAvailableLives();
-    }
+//    @Override
+//    protected boolean isEndWinActivityState() {
+//        return this.activityProgress.getSuccessCounter() == settingsForActivity.getScoresToWinRoundValue();
+//    }
+//
+//    @Override
+//    protected boolean isEndLoseActivityState() {
+//        return this.activityProgress.getMistakeCount() > settingsForActivity.getAvailableLives();
+//    }
 
     @Override
     protected boolean isSuccessAnswer() {
         if (getUserMultipleReplies().isEmpty()) {
-            return Objects.equals(getUserReply(), this.activityProgress.getRequiredUserReaction());
+            return Objects.equals(getUserReply().toLowerCase(), this.activityProgress.getRequiredUserReaction().toLowerCase());
         }
-        return false;
+        else {
+            for (String reply : getUserMultipleReplies()) {
+                if (Objects.equals(reply.toLowerCase(), this.activityProgress.getRequiredUserReaction().toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     @Override
@@ -42,12 +51,24 @@ public class BamWhamGamePhaseStateManager extends TennisGamePhaseStateManager {
 
         this.activityProgress.iterateSuccessCounter();
 
-        WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
+        if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
+            iteratePlayerScoreCounter(builder);
+            this.activityProgress.setUpdateForLevel(false);
+            this.activityProgress.setSuccessCounter(0);
+        }
 
-        builder.addResponse(getDialogTranslator().translate(nextWord.getWord()));
+        List<String> words = new ArrayList<>();
+        List<String> reactions = new ArrayList<>();
 
-        this.activityProgress.setPreviousWord(nextWord.getWord());
-        this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());
+        for (int i = 0; i < this.activityProgress.getComplexity(); i++) {
+            WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
+            words.add(nextWord.getWord());
+            reactions.add(nextWord.getUserReaction());
+        }
+
+        builder.addResponse(getDialogTranslator().translate(String.join(" ", words)));
+
+        this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));
 
         return builder.withSlotName(actionSlotName);
     }
@@ -57,9 +78,12 @@ public class BamWhamGamePhaseStateManager extends TennisGamePhaseStateManager {
 
         this.activityProgress.iterateMistakeCount();
 
-        WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
+        if (this.activityProgress.getMistakeCount() >= settingsForActivity.getAvailableLives()) {
+            iterateEnemyScoreCounter(builder);
+            this.activityProgress.setMistakeCount(0);
+        }
 
-        builder.addResponse(getDialogTranslator().translate("Wrong! "));
+        WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
 
         builder.addResponse(getDialogTranslator().translate(nextWord.getWord()));
 
@@ -67,5 +91,17 @@ public class BamWhamGamePhaseStateManager extends TennisGamePhaseStateManager {
         this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());
 
         return builder.withSlotName(actionSlotName);
+    }
+
+    @Override
+    protected DialogItem.Builder handleLoseAnswerOfActivity(DialogItem.Builder builder) {
+
+        iterateEnemyWinRoundCounter(builder);
+
+        BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerLoseTwice();
+
+        builder.addResponseToBegining(getDialogTranslator().translate(randomPhrase));
+
+        return builder;
     }
 }

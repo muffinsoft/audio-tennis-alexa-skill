@@ -5,11 +5,12 @@ import java.util.Map;
 public class ActivitySettings {
 
     private String name;
-    private int startWrongPointPositionValue;
-    private int iterateWrongPointPositionEveryLevels;
-    private int addendToWrongPointPosition;
-    private int scoresToWinRoundCounter;
+    private int startComplexityValue;
+    private int iterateComplexityEveryScoresValue;
+    private int addToComplexityValue;
+    private int scoresToWinRoundValue;
     private int availableLives;
+    private int successAnswersToGetScoreValue;
     private Map<String, String> wordsToReactions;
 
     public String getName() {
@@ -20,28 +21,28 @@ public class ActivitySettings {
         this.name = name;
     }
 
-    public int getStartWrongPointPositionValue() {
-        return startWrongPointPositionValue;
+    public int getStartComplexityValue() {
+        return startComplexityValue;
     }
 
-    public void setStartWrongPointPositionValue(int startWrongPointPositionValue) {
-        this.startWrongPointPositionValue = startWrongPointPositionValue;
+    public void setStartComplexityValue(int startComplexityValue) {
+        this.startComplexityValue = startComplexityValue;
     }
 
-    public int getIterateWrongPointPositionEveryLevels() {
-        return iterateWrongPointPositionEveryLevels;
+    public int getIterateComplexityEveryScoresValue() {
+        return iterateComplexityEveryScoresValue;
     }
 
-    public void setIterateWrongPointPositionEveryLevels(int iterateWrongPointPositionEveryLevels) {
-        this.iterateWrongPointPositionEveryLevels = iterateWrongPointPositionEveryLevels;
+    public void setIterateComplexityEveryScoresValue(int iterateComplexityEveryScoresValue) {
+        this.iterateComplexityEveryScoresValue = iterateComplexityEveryScoresValue;
     }
 
-    public int getAddendToWrongPointPosition() {
-        return addendToWrongPointPosition;
+    public int getAddToComplexityValue() {
+        return addToComplexityValue;
     }
 
-    public void setAddendToWrongPointPosition(int addendToWrongPointPosition) {
-        this.addendToWrongPointPosition = addendToWrongPointPosition;
+    public void setAddToComplexityValue(int addToComplexityValue) {
+        this.addToComplexityValue = addToComplexityValue;
     }
 
     public int getAvailableLives() {
@@ -52,12 +53,20 @@ public class ActivitySettings {
         this.availableLives = availableLives;
     }
 
-    public int getScoresToWinRoundCounter() {
-        return scoresToWinRoundCounter;
+    public int getSuccessAnswersToGetScoreValue() {
+        return successAnswersToGetScoreValue;
     }
 
-    public void setScoresToWinRoundCounter(int scoresToWinRoundCounter) {
-        this.scoresToWinRoundCounter = scoresToWinRoundCounter;
+    public void setSuccessAnswersToGetScoreValue(int successAnswersToGetScoreValue) {
+        this.successAnswersToGetScoreValue = successAnswersToGetScoreValue;
+    }
+
+    public int getScoresToWinRoundValue() {
+        return scoresToWinRoundValue;
+    }
+
+    public void setScoresToWinRoundValue(int scoresToWinRoundValue) {
+        this.scoresToWinRoundValue = scoresToWinRoundValue;
     }
 
     public Map<String, String> getWordsToReactions() {

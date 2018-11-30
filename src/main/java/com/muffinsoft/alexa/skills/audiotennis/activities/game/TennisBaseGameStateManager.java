@@ -97,11 +97,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         settingsForActivity = activityManager.getSettingsForActivity(this.currentActivityType);
 
         if (!activityProgress.isUpdateForLevel()) {
-            activityProgress.updateWithLevelSettings(
-                    this.activityProgress.getCurrentDifficult(),
-                    settingsForActivity.getStartWrongPointPositionValue(),
-                    settingsForActivity.getIterateWrongPointPositionEveryLevels(),
-                    settingsForActivity.getAddendToWrongPointPosition());
+            activityProgress.updateWithDifficultSettings(settingsForActivity);
         }
 
         builder = handleStateAction(stateType, builder);
@@ -109,16 +105,6 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         // here I will modify response
 
         return builder;
-    }
-
-    @Override
-    protected DialogItem.Builder handleWinState(DialogItem.Builder builder) {
-        return super.handleWinState(builder);
-    }
-
-    @Override
-    protected DialogItem.Builder handleLoseState(DialogItem.Builder builder) {
-        return super.handleLoseState(builder);
     }
 
     @Override
