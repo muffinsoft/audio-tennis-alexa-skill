@@ -51,8 +51,6 @@ public class BamWhamGameStateManager extends TennisGamePhaseStateManager {
 
         if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
             iteratePlayerScoreCounter(builder);
-            this.activityProgress.setUpdateForLevel(false);
-            this.activityProgress.setSuccessCounter(0);
         }
 
         List<String> words = new ArrayList<>();
@@ -78,7 +76,6 @@ public class BamWhamGameStateManager extends TennisGamePhaseStateManager {
 
         if (this.activityProgress.getMistakeCount() >= settingsForActivity.getAvailableLives()) {
             iterateEnemyScoreCounter(builder);
-            this.activityProgress.setMistakeCount(0);
         }
 
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);

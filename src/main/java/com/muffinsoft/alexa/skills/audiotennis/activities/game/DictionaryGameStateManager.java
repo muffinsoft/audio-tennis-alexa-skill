@@ -25,7 +25,7 @@ abstract class DictionaryGameStateManager extends TennisGamePhaseStateManager {
             nextWord = getNextWrongWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
             iteratePlayerScoreCounter(builder);
-            builder.addResponse(getDialogTranslator().translate("Your word should starts from " + nextWord.charAt(nextWord.length() - 1)));
+            addNextWordAfterEnemyWrongAnswer(builder, nextWord);
         }
         else {
             BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
@@ -65,6 +65,8 @@ abstract class DictionaryGameStateManager extends TennisGamePhaseStateManager {
     boolean isWordAlreadyUser() {
         return activityProgress.getUsedWords().contains(getUserReply());
     }
+
+    protected abstract void addNextWordAfterEnemyWrongAnswer(DialogItem.Builder builder, String nextWord);
 
     protected abstract String getNextRightWordForActivity();
 

@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
@@ -15,6 +16,12 @@ public class AlphabetRaceGameStateManager extends DictionaryGameStateManager {
     public AlphabetRaceGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.ALPHABET_RACE;
+    }
+
+    @Override
+    protected void addNextWordAfterEnemyWrongAnswer(DialogItem.Builder builder, String nextWord) {
+        char nextLetter = activityManager.getNextLetter(nextWord.charAt(0));
+        builder.addResponse(getDialogTranslator().translate("Your word should starts from " + nextLetter));
     }
 
     @Override

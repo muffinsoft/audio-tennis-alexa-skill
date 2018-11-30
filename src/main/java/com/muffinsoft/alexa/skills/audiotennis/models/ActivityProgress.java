@@ -121,10 +121,14 @@ public class ActivityProgress {
 
     public void iterateEnemyScoreCounter() {
         this.enemyScoreCounter += 1;
+        this.mistakeCount = 0;
+        this.updateForLevel = false;
     }
 
     public void iteratePlayerScoreCounter() {
         this.playerScoreCounter += 1;
+        this.successCounter = 0;
+        this.updateForLevel = false;
     }
 
     public void iterateEnemyWinRoundCounter() {

@@ -1,7 +1,3 @@
 {
-  "name": "RHYME_MATCH",
-  "startWrongPointPositionValue": 3,
-  "iterateWrongPointPositionEveryLevels": 2,
-  "addendToWrongPointPosition": 2,
-  "scoresToWinRoundCounter": 3
+  "name": "RHYME_MATCH"
 }

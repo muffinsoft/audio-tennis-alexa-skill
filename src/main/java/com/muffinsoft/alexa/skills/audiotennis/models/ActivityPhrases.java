@@ -3,17 +3,18 @@ package com.muffinsoft.alexa.skills.audiotennis.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ActivityPhrases {
 
-    private List<BasePhraseContainer> intro;
-    private List<BasePhraseContainer> opponentFirstPhrase;
-    private List<BasePhraseContainer> opponentAfterWordPhrase;
-    private List<BasePhraseContainer> opponentReactionAfterXWordsPhrase;
-    private List<BasePhraseContainer> playerLoseWrongWordPhrase;
-    private List<BasePhraseContainer> playerLoseRepeatWordPhrase;
+    private List<BasePhraseContainer> intro = Collections.emptyList();
+    private List<BasePhraseContainer> opponentFirstPhrase = Collections.emptyList();
+    private List<BasePhraseContainer> opponentAfterWordPhrase = Collections.emptyList();
+    private List<BasePhraseContainer> opponentReactionAfterXWordsPhrase = Collections.emptyList();
+    private List<BasePhraseContainer> playerLoseWrongWordPhrase = Collections.emptyList();
+    private List<BasePhraseContainer> playerLoseRepeatWordPhrase = Collections.emptyList();
 
     public List<BasePhraseContainer> getIntro() {
         return intro;
@@ -65,6 +66,9 @@ public class ActivityPhrases {
 
     @JsonIgnore
     public BasePhraseContainer getRandomOpponentAfterWordPhrase() {
+        if (opponentAfterWordPhrase.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
         int index = getRandomValue(opponentAfterWordPhrase.size() * 2);
         if (index > opponentAfterWordPhrase.size() - 1) {
             return BasePhraseContainer.empty();
@@ -76,24 +80,36 @@ public class ActivityPhrases {
 
     @JsonIgnore
     public BasePhraseContainer getRandomOpponentFirstPhrase() {
+        if (opponentFirstPhrase.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
         int index = getRandomValue(opponentFirstPhrase.size());
         return opponentFirstPhrase.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomOpponentReactionAfterXWordsPhrase() {
+        if (opponentReactionAfterXWordsPhrase.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
         int index = getRandomValue(opponentReactionAfterXWordsPhrase.size());
         return opponentReactionAfterXWordsPhrase.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomPlayerLoseWrongWordPhrase() {
+        if (playerLoseWrongWordPhrase.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
         int index = getRandomValue(playerLoseWrongWordPhrase.size());
         return playerLoseWrongWordPhrase.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomPlayerLoseRepeatWordPhrase() {
+        if (playerLoseRepeatWordPhrase.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
         int index = getRandomValue(playerLoseRepeatWordPhrase.size());
         return playerLoseRepeatWordPhrase.get(index);
     }
