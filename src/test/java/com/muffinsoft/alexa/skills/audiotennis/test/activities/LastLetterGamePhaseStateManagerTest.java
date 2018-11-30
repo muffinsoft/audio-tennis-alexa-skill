@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.test.activities;
 
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.enums.StateType;
+import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGamePhaseStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
@@ -40,7 +41,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         LastLetterGamePhaseStateManager stateManager = new LastLetterGamePhaseStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
 
-        stateManager.nextResponse();
+        DialogItem dialogItem = stateManager.nextResponse();
 
         stateManager.updateAttributesManager();
 
@@ -48,6 +49,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
         Assertions.assertEquals(resultActivityProgress.getSuccessCounter(), 1);
         Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
+        Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 
     @Test
@@ -71,7 +73,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         LastLetterGamePhaseStateManager stateManager = new LastLetterGamePhaseStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
 
-        stateManager.nextResponse();
+        DialogItem dialogItem = stateManager.nextResponse();
 
         stateManager.updateAttributesManager();
 
@@ -79,6 +81,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
         Assertions.assertEquals(resultActivityProgress.getEnemyScoreCounter(), 1);
         Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
+        Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 
     @Test
@@ -103,7 +106,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
 
         LastLetterGamePhaseStateManager stateManager = new LastLetterGamePhaseStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
 
-        stateManager.nextResponse();
+        DialogItem dialogItem = stateManager.nextResponse();
 
         stateManager.updateAttributesManager();
 
@@ -111,5 +114,6 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
         Assertions.assertEquals(resultActivityProgress.getPlayerScoreCounter(), 1);
         Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
+        Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 }

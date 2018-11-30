@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.test.activities;
 
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
+import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
 import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateManager;
 import org.junit.jupiter.api.Assertions;
@@ -26,11 +27,12 @@ public class InitialGreetingStateManagerTest extends BaseStateManagerTest {
 
         InitialGreetingStateManager stateManager = new InitialGreetingStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
 
-        stateManager.nextResponse();
+        DialogItem dialogItem = stateManager.nextResponse();
 
         stateManager.updateAttributesManager();
 
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         Assertions.assertEquals(sessionAttributes.get(INTENT), IntentType.GAME);
+        Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 }
