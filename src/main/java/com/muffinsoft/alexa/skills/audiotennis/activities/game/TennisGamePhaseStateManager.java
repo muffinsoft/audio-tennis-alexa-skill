@@ -34,44 +34,33 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         iterateEnemyWinRoundCounter(builder);
 
+        BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
+        builder.addResponse(getDialogTranslator().translate(randomPhrase));
+
         if (checkIfTwoInRow()) {
-
             handleTwoInRow(builder);
-
-            return builder;
         }
         else {
-
-            BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
-
-            builder.replaceResponse(getDialogTranslator().translate(randomPhrase));
-
             handleRoundEnd(builder);
-
-            return builder;
         }
+        return builder;
     }
 
     @Override
     protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
 
-        this.activityProgress.iteratePlayerWinRoundCounter();
+        iteratePlayerWinRoundCounter(builder);
+
+        BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWonOnceAtFirstOrThirdAct();
+        builder.addResponse(getDialogTranslator().translate(randomPhrase));
 
         if (checkIfTwoInRow()) {
-
             handleTwoInRow(builder);
-
-            return builder;
         }
         else {
-            BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWonOnceAtFirstOrThirdAct();
-
-            builder.replaceResponse(getDialogTranslator().translate(randomPhrase));
-
             handleRoundEnd(builder);
-
-            return builder;
         }
+        return builder;
     }
 
     private boolean checkIfTwoInRow() {
@@ -87,10 +76,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private void handleRoundEnd(DialogItem.Builder builder) {
-
-        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow();
-
-        builder.addResponse(getDialogTranslator().translate(scores));
 
         String restart = "Do you want to restart?";
 
@@ -108,6 +93,12 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             this.activityProgress.setPossibleActivity(nextActivity);
             this.activityProgress.addUnlockedActivity(nextActivity);
         }
+    }
+
+    void iteratePlayerWinRoundCounter(DialogItem.Builder builder) {
+        this.activityProgress.iterateEnemyWinRoundCounter();
+        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow() + ".";
+        builder.addResponseToBegining(getDialogTranslator().translate(scores));
     }
 
     void iterateEnemyWinRoundCounter(DialogItem.Builder builder) {
