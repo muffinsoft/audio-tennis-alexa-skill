@@ -129,4 +129,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         String scores = "Ben Round Scores " + this.activityProgress.getEnemyScoreCounter() + ", Your Round Scores " + this.activityProgress.getPlayerScoreCounter();
         builder.addResponse(getDialogTranslator().translate(scores));
     }
+
+    boolean isWordAlreadyUser() {
+        return activityProgress.getUsedWords().contains(getUserReply());
+    }
 }

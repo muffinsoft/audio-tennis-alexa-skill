@@ -9,9 +9,9 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 
 import java.util.Map;
 
-abstract class DictionaryGameStateManager extends TennisGamePhaseStateManager {
+abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
-    DictionaryGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
+    CompetitionGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
     }
 
@@ -60,10 +60,6 @@ abstract class DictionaryGameStateManager extends TennisGamePhaseStateManager {
         builder.addResponse(getDialogTranslator().translate(nextWord));
 
         return builder.withSlotName(actionSlotName);
-    }
-
-    boolean isWordAlreadyUser() {
-        return activityProgress.getUsedWords().contains(getUserReply());
     }
 
     protected abstract void addNextWordAfterEnemyWrongAnswer(DialogItem.Builder builder, String nextWord);

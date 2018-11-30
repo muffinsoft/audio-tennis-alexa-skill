@@ -11,7 +11,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 import java.util.Map;
 import java.util.Objects;
 
-public class LastLetterGameStateManager extends DictionaryGameStateManager {
+public class LastLetterGameStateManager extends CompetitionGameStateManager {
 
     public LastLetterGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
@@ -47,7 +47,7 @@ public class LastLetterGameStateManager extends DictionaryGameStateManager {
     protected String getNextWrongWordForActivity() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
         char wrongLetter = activityManager.getRandomLetterExcept(lastLetter);
-        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForActivityFromLetter(this.currentActivityType, wrongLetter, this.activityProgress.getUsedWords());
+        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(wrongLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
         this.activityProgress.iterateEnemyAnswerCounter();
         this.activityProgress.addUsedWord(word);
@@ -57,7 +57,7 @@ public class LastLetterGameStateManager extends DictionaryGameStateManager {
     @Override
     protected String getNextRightWordForActivity() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
-        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForActivityFromLetter(this.currentActivityType, lastLetter, this.activityProgress.getUsedWords());
+        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(lastLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
         this.activityProgress.iterateEnemyAnswerCounter();
         this.activityProgress.addUsedWord(word);

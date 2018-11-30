@@ -1,7 +1,8 @@
 package com.muffinsoft.alexa.skills.audiotennis.models;
 
 import com.muffinsoft.alexa.skills.audiotennis.components.DictionaryFileLoader;
-import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,49 +10,48 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.ALPHABET_RACE;
-import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.LAST_LETTER;
-
 public class DictionaryManager {
 
-    private static final String LETTER_AND_ALPHABET_WORDS_TXT = "settings/vocabularies/lastLetterAndAlphabetWords.txt";
+    protected static final Logger logger = LogManager.getLogger(DictionaryManager.class);
 
-    private final Map<ActivityType, Map<Character, HashSet<String>>> vocabularies = new HashMap<>();
+    private static final String LETTER_AND_ALPHABET_WORDS_TXT = "settings/vocabularies/lastLetterAndAlphabetWords.txt";
+    private static final String RHYME_MATCH_WORDS_CSV = "settings/vocabularies/rhymeMatchWords.csv";
+
+    private final Map<Character, HashSet<String>> competitionsVocabulary = new HashMap<>();
+    private final Map<String, String> wordToRhymes = new HashMap<>();
 
     public DictionaryManager() {
 
         DictionaryFileLoader dictionaryFileLoader = new DictionaryFileLoader();
 
         try {
-            Set<String> words = dictionaryFileLoader.upload(LETTER_AND_ALPHABET_WORDS_TXT);
+            Set<String> words = dictionaryFileLoader.uploadCollection(LETTER_AND_ALPHABET_WORDS_TXT);
             for (String word : words) {
                 char firstLetter = word.charAt(0);
-                if (!vocabularies.containsKey(ALPHABET_RACE)) {
-                    vocabularies.put(ALPHABET_RACE, new HashMap<>());
+                if (!competitionsVocabulary.containsKey(firstLetter)) {
+                    competitionsVocabulary.put(firstLetter, new HashSet<>());
                 }
-                Map<Character, HashSet<String>> alphabetRaceVocabulary = vocabularies.get(ALPHABET_RACE);
-                if (!alphabetRaceVocabulary.containsKey(firstLetter)) {
-                    alphabetRaceVocabulary.put(firstLetter, new HashSet<>());
-                }
-                alphabetRaceVocabulary.get(firstLetter).add(word);
-
-                char lastLetter = word.charAt(0); //TODO this is first letter
-                if (!vocabularies.containsKey(LAST_LETTER)) {
-                    vocabularies.put(LAST_LETTER, new HashMap<>());
-                }
-                Map<Character, HashSet<String>> lastLetterVocabulary = vocabularies.get(LAST_LETTER);
-                if (!lastLetterVocabulary.containsKey(lastLetter)) {
-                    lastLetterVocabulary.put(lastLetter, new HashSet<>());
-                }
-                lastLetterVocabulary.get(lastLetter).add(word);
+                competitionsVocabulary.get(firstLetter).add(word);
             }
+            Map<String, String> wordsAndRhymes = dictionaryFileLoader.uploadMap(RHYME_MATCH_WORDS_CSV);
+            for (Map.Entry<String, String> entry : wordsAndRhymes.entrySet()) {
+                String rhyme = entry.getValue().replace("-", "").trim();
+                String word = entry.getKey().trim();
+                wordToRhymes.put(word, rhyme);
+            }
+            logger.info("Dictionaries filled with words: competitions - " + words.size() + "; rhymes - " + wordToRhymes.size());
         }
         catch (IOException e) {
             System.exit(1);
         }
     }
 
-    public Map<Character, HashSet<String>> getForActivity(ActivityType type) {
-        return vocabularies.get(type);
+    public Map<Character, HashSet<String>> getForCompetitionActivity() {
+        return competitionsVocabulary;
+    }
+
+
+    public Map<String, String> getForRhymeMathActivity() {
+        return wordToRhymes;
     }
 }

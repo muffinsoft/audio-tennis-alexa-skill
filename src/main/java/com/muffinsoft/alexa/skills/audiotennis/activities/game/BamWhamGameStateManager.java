@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BamWhamGameStateManager extends TennisGamePhaseStateManager {
+public class BamWhamGameStateManager extends OneSideGameStateManager {
 
     protected static final Logger logger = LogManager.getLogger(BamWhamGameStateManager.class);
 
@@ -42,49 +42,5 @@ public class BamWhamGameStateManager extends TennisGamePhaseStateManager {
         boolean result = one.trim().equalsIgnoreCase(two.trim());
         logger.debug("Compare " + one + " and " + two + ". Are equals: " + result);
         return result;
-    }
-
-    @Override
-    protected DialogItem.Builder handleSuccessAnswer(DialogItem.Builder builder) {
-
-        this.activityProgress.iterateSuccessCounter();
-
-        if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
-            iteratePlayerScoreCounter(builder);
-        }
-
-        List<String> words = new ArrayList<>();
-        List<String> reactions = new ArrayList<>();
-
-        for (int i = 0; i < this.activityProgress.getComplexity(); i++) {
-            WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
-            words.add(nextWord.getWord());
-            reactions.add(nextWord.getUserReaction());
-        }
-
-        builder.addResponse(getDialogTranslator().translate(String.join(" ", words)));
-
-        this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));
-
-        return builder.withSlotName(actionSlotName);
-    }
-
-    @Override
-    protected DialogItem.Builder handleMistakeAnswer(DialogItem.Builder builder) {
-
-        this.activityProgress.iterateMistakeCount();
-
-        if (this.activityProgress.getMistakeCount() >= settingsForActivity.getAvailableLives()) {
-            iterateEnemyScoreCounter(builder);
-        }
-
-        WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
-
-        builder.addResponse(getDialogTranslator().translate(nextWord.getWord()));
-
-        this.activityProgress.setPreviousWord(nextWord.getWord());
-        this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());
-
-        return builder.withSlotName(actionSlotName);
     }
 }

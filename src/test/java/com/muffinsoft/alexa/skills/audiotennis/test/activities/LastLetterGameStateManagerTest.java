@@ -12,6 +12,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ class LastLetterGameStateManagerTest extends BaseStateManagerTest {
         ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
 
-        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForActivityFromLetter(ActivityType.LAST_LETTER, firstWord.charAt(firstWord.length() - 1));
+        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromLetter.getWord();
         Map<String, Slot> slots = createSlotsForValue(secondWord);
 
@@ -63,7 +64,7 @@ class LastLetterGameStateManagerTest extends BaseStateManagerTest {
         ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
 
-        WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForActivityFromLetter(ActivityType.LAST_LETTER, firstWord.charAt(0));
+        WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(0), Collections.emptySet());
         String secondWord = randomWordForActivityFromWrongLetter.getWord();
         Map<String, Slot> slots = createSlotsForValue(secondWord);
 
@@ -96,7 +97,7 @@ class LastLetterGameStateManagerTest extends BaseStateManagerTest {
         activityProgress.setPreviousWord(firstWord);
         activityProgress.setEnemyAnswerCounter(2);
 
-        WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForActivityFromLetter(ActivityType.LAST_LETTER, firstWord.charAt(firstWord.length() - 1));
+        WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromWrongLetter.getWord();
         Map<String, Slot> slots = createSlotsForValue(secondWord);
 

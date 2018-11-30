@@ -57,10 +57,20 @@ public class ActivityManager {
             String userReaction = wordsToReactions.get(word);
             return new WordContainer(word, userReaction);
         }
+        else if (activityType == ActivityType.RHYME_MATCH) {
+            return getRandomWordForRhymeMatchActivityFromLetter(Collections.emptySet());
+        }
         else {
             char character = getRandomCharFromString(alphabet);
-            return getRandomWordForActivityFromLetter(activityType, character);
+            return getRandomWordForCompetitionActivityFromLetter(character, Collections.emptySet());
         }
+    }
+
+    private WordContainer getRandomWordForRhymeMatchActivityFromLetter(Set<Object> usedWords) {
+        Map<String, String> activityWords = dictionaryManager.getForRhymeMathActivity();
+        String word = getRandomWordFromCollection(activityWords.keySet());
+        String rhyme = activityWords.get(word);
+        return new WordContainer(word, rhyme);
     }
 
     private char getRandomCharFromString(String input) {
@@ -74,17 +84,11 @@ public class ActivityManager {
         return getRandomCharFromString(replace);
     }
 
-    public WordContainer getRandomWordForActivityFromLetter(ActivityType activityType, char lastLetter) {
-        return getRandomWordForActivityFromLetter(activityType, lastLetter, Collections.emptySet());
-    }
-
-    public WordContainer getRandomWordForActivityFromLetter(ActivityType activityType, char lastLetter, Set<String> usedWords) {
+    public WordContainer getRandomWordForCompetitionActivityFromLetter(char lastLetter, Set<String> usedWords) {
         String word;
+        Map<Character, HashSet<String>> activityWords = dictionaryManager.getForCompetitionActivity();
+        HashSet<String> wordsByRule = activityWords.get(lastLetter);
         do {
-            Map<Character, HashSet<String>> activityWords = dictionaryManager.getForActivity(activityType);
-
-            HashSet<String> wordsByRule = activityWords.get(lastLetter);
-
             word = getRandomWordFromCollection(wordsByRule);
         }
         while (usedWords.contains(word));
@@ -100,10 +104,6 @@ public class ActivityManager {
                 .orElse(null);
     }
 
-    public boolean isWordAvailableForActivity(String word) {
-        return false;
-    }
-
     public char getNextLetter(char letter) {
         int index = alphabet.indexOf(letter);
         int nextIndex = index + 1;
@@ -111,5 +111,10 @@ public class ActivityManager {
             nextIndex = 0;
         }
         return alphabet.charAt(nextIndex);
+    }
+
+    public String findRhymeForWord(String word) {
+        Map<String, String> forRhymeMathActivity = dictionaryManager.getForRhymeMathActivity();
+        return forRhymeMathActivity.get(word);
     }
 }
