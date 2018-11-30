@@ -19,7 +19,7 @@ import java.util.Map;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 
-class LastLetterGameStateManagerTest extends BaseStateManagerTest {
+class LastLetterGameTest extends BaseTest {
 
     @Test
     void testActivePhaseRightAnswer() {

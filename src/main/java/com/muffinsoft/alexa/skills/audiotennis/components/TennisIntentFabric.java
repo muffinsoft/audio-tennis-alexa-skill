@@ -69,23 +69,13 @@ public class TennisIntentFabric implements IntentFactory {
 
     private StateManager getNextGameState(Map<String, Slot> inputSlots, AttributesManager attributesManager) {
 
-        ActivityProgress activityProgress = getCurrentGameActivity(attributesManager);
-
-        ActivityType currentActivity;
+        ActivityProgress activityProgress = getCurrentActivityProgress(attributesManager);
 
         if (attributesManager.getSessionAttributes().containsKey(SWITCH_ACTIVITY_STEP)) {
-            if (isPositiveReply(inputSlots)) {
-                currentActivity = activityProgress.getPossibleActivity();
-                attributesManager.getSessionAttributes().remove(STATE_TYPE);
-            }
-            else {
-                currentActivity = activityProgress.getCurrentActivity();
-            }
-            attributesManager.getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
+            interceptActivityProgress(inputSlots, attributesManager, activityProgress);
         }
-        else {
-            currentActivity = activityProgress.getCurrentActivity();
-        }
+
+        ActivityType currentActivity = activityProgress.getCurrentActivity();
 
         switch (currentActivity) {
             case ALPHABET_RACE:
@@ -101,6 +91,19 @@ public class TennisIntentFabric implements IntentFactory {
         }
     }
 
+    private void interceptActivityProgress(Map<String, Slot> inputSlots, AttributesManager attributesManager, ActivityProgress activityProgress) {
+        Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
+        if (isPositiveReply(inputSlots)) {
+            ActivityType possibleActivity = activityProgress.getPossibleActivity();
+            ActivityType currentActivity = activityProgress.getCurrentActivity();
+            activityProgress.setCurrentActivity(possibleActivity);
+            activityProgress.setPreviousActivity(currentActivity);
+            sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
+            sessionAttributes.remove(STATE_TYPE);
+        }
+        sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
+    }
+
     private boolean isPositiveReply(Map<String, Slot> inputSlots) {
         List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
         for (String reply : userReplies) {
@@ -111,7 +114,7 @@ public class TennisIntentFabric implements IntentFactory {
         return false;
     }
 
-    private ActivityProgress getCurrentGameActivity(AttributesManager attributesManager) {
+    private ActivityProgress getCurrentActivityProgress(AttributesManager attributesManager) {
         Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
         ActivityProgress activityProgress;
         if (sessionAttributes.containsKey(ACTIVITY_PROGRESS)) {

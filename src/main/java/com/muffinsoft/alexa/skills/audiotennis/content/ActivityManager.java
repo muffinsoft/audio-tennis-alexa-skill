@@ -115,6 +115,6 @@ public class ActivityManager {
 
     public String findRhymeForWord(String word) {
         Map<String, String> forRhymeMathActivity = dictionaryManager.getForRhymeMathActivity();
-        return forRhymeMathActivity.get(word);
+        return forRhymeMathActivity.get(word.toLowerCase());
     }
 }

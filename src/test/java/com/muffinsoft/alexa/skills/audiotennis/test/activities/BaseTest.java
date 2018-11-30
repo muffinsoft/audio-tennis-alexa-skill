@@ -11,7 +11,7 @@ import com.amazon.ask.model.slu.entityresolution.Resolution;
 import com.amazon.ask.model.slu.entityresolution.Resolutions;
 import com.amazon.ask.model.slu.entityresolution.Status;
 import com.amazon.ask.model.slu.entityresolution.StatusCode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.muffinsoft.alexa.skills.audiotennis.components.ObjectConvert;
 import com.muffinsoft.alexa.skills.audiotennis.test.MockPersistenceAdapter;
 
 import java.util.Collections;
@@ -19,9 +19,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-class BaseStateManagerTest {
+public class BaseTest {
 
-    AttributesManager createAttributesManager(Map<String, Slot> slots, Map<String, Object> attributes) {
+    public AttributesManager createAttributesManager(Map<String, Slot> slots, Map<String, Object> attributes) {
 
         return AttributesManager.builder()
                 .withRequestEnvelope(RequestEnvelope.builder()
@@ -43,18 +43,17 @@ class BaseStateManagerTest {
                 .build();
     }
 
-    LinkedHashMap toMap(Object progress) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(progress, LinkedHashMap.class);
+    public LinkedHashMap toMap(Object progress) {
+        return ObjectConvert.toMap(progress);
     }
 
-    Map<String, Slot> createSlotsForValue(String value) {
+    public Map<String, Slot> createSlotsForValue(String value) {
         Map<String, Slot> slots = new HashMap<>();
         slots.put("action", createSlotForValue(value));
         return slots;
     }
 
-    Slot createSlotForValue(String value) {
+    public Slot createSlotForValue(String value) {
         return Slot.builder()
                 .withValue(value)
                 .withResolutions(Resolutions.builder()

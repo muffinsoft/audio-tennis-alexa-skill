@@ -14,7 +14,7 @@ import java.util.Map;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
 
-public class InitialGreetingStateManagerTest extends BaseStateManagerTest {
+class InitialGreetingTest extends BaseTest {
 
     @Test
     void goldenPath() {

@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
 
-class LaunchStateManagerTest extends BaseStateManagerTest {
+class LaunchTest extends BaseTest {
 
     @Test
     void goldenPath() {
