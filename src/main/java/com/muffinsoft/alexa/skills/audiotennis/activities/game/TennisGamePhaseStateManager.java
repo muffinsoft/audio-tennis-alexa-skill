@@ -21,18 +21,18 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     @Override
     protected boolean isEndWinActivityState() {
-        return this.activityProgress.getPlayerScoreCounter() == settingsForActivity.getScoresToWinRoundValue();
+        return this.activityProgress.getPlayerPointCounter() == settingsForActivity.getScoresToWinRoundValue();
     }
 
     @Override
     protected boolean isEndLoseActivityState() {
-        return this.activityProgress.getEnemyScoreCounter() == settingsForActivity.getScoresToWinRoundValue();
+        return this.activityProgress.getEnemyPointCounter() == settingsForActivity.getScoresToWinRoundValue();
     }
 
     @Override
     protected DialogItem.Builder handleLoseAnswerOfActivity(DialogItem.Builder builder) {
 
-        iterateEnemyWinRoundCounter(builder);
+        iterateEnemyGameCounter(builder);
 
         BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
         builder.addResponse(getDialogTranslator().translate(randomPhrase));
@@ -49,7 +49,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     @Override
     protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
 
-        iteratePlayerWinRoundCounter(builder);
+        iteratePlayerGameCounter(builder);
 
         BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWonOnceAtFirstOrThirdAct();
         builder.addResponse(getDialogTranslator().translate(randomPhrase));
@@ -64,11 +64,11 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private boolean checkIfTwoInRow() {
-        if (this.activityProgress.getEnemyRoundWinInRow() != 0) {
-            return this.activityProgress.getEnemyRoundWinInRow() % 2 == 0;
+        if (this.activityProgress.getEnemyGameWinInRow() != 0) {
+            return this.activityProgress.getEnemyGameWinInRow() % 2 == 0;
         }
-        else if (this.activityProgress.getPlayerRoundWinInRow() != 0) {
-            return this.activityProgress.getPlayerRoundWinInRow() % 2 == 0;
+        else if (this.activityProgress.getPlayerGameWinInRow() != 0) {
+            return this.activityProgress.getPlayerGameWinInRow() % 2 == 0;
         }
         else {
             return false;
@@ -95,30 +95,36 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         }
     }
 
-    void iteratePlayerWinRoundCounter(DialogItem.Builder builder) {
-        this.activityProgress.iterateEnemyWinRoundCounter();
-        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow() + ".";
-        builder.addResponseToBegining(getDialogTranslator().translate(scores));
+    private void iteratePlayerGameCounter(DialogItem.Builder builder) {
+        this.activityProgress.iteratePlayerGameCounter();
+        addGameScores(builder);
     }
 
-    void iterateEnemyWinRoundCounter(DialogItem.Builder builder) {
-        this.activityProgress.iterateEnemyWinRoundCounter();
-        String scores = "Ben Total Scores " + this.activityProgress.getEnemyWinRoundCounter() + ", Your Total Scores " + this.activityProgress.getPlayerRoundWinInRow() + ".";
-        builder.addResponseToBegining(getDialogTranslator().translate(scores));
+    private void iterateEnemyGameCounter(DialogItem.Builder builder) {
+        this.activityProgress.iterateEnemyGameCounter();
+        addGameScores(builder);
+    }
+
+    private void addGameScores(DialogItem.Builder builder) {
+        String scores = "Game win: Ben - " + this.activityProgress.getEnemyGameCounter() + ", Player - " + this.activityProgress.getPlayerGameCounter() + ".";
+        builder.addResponse(getDialogTranslator().translate(scores));
+    }
+
+    private void addPointScores(DialogItem.Builder builder) {
+        String scores = "Game points: Ben - " + this.activityProgress.getEnemyPointCounter() + ", Player " + this.activityProgress.getPlayerPointCounter() + ".";
+        builder.addResponse(getDialogTranslator().translate(scores));
     }
 
     void iteratePlayerScoreCounter(DialogItem.Builder builder) {
-        this.activityProgress.iteratePlayerScoreCounter();
-        builder.addResponse(getDialogTranslator().translate("Score goes to Player."));
-        String scores = "Ben Round Scores " + this.activityProgress.getEnemyScoreCounter() + ", Your Round Scores " + this.activityProgress.getPlayerScoreCounter();
-        builder.addResponse(getDialogTranslator().translate(scores));
+        this.activityProgress.iteratePlayerPointCounter();
+        builder.addResponse(getDialogTranslator().translate("Point goes to Player."));
+        addPointScores(builder);
     }
 
     void iterateEnemyScoreCounter(DialogItem.Builder builder) {
-        this.activityProgress.iterateEnemyScoreCounter();
-        builder.addResponse(getDialogTranslator().translate("Score goes to Ben."));
-        String scores = "Ben Round Scores " + this.activityProgress.getEnemyScoreCounter() + ", Your Round Scores " + this.activityProgress.getPlayerScoreCounter();
-        builder.addResponse(getDialogTranslator().translate(scores));
+        this.activityProgress.iterateEnemyPointCounter();
+        builder.addResponse(getDialogTranslator().translate("Point goes to Ben."));
+        addPointScores(builder);
     }
 
     boolean isWordAlreadyUser() {

@@ -31,7 +31,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
 
             String neededRhyme = activityProgress.getRequiredUserReaction();
 
-            if (CharacterIntersectionCalculator.calculate(neededRhyme, repliesRhyme) > 50) {
+            if (CharacterIntersectionCalculator.calculate(neededRhyme, repliesRhyme) <= 50f) {
                 return false;
             }
 

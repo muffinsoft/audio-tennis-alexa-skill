@@ -80,7 +80,7 @@ class LastLetterGameTest extends BaseTest {
 
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
-        Assertions.assertEquals(resultActivityProgress.getEnemyScoreCounter(), 1);
+        Assertions.assertEquals(resultActivityProgress.getEnemyPointCounter(), 1);
         Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
@@ -113,7 +113,7 @@ class LastLetterGameTest extends BaseTest {
 
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
-        Assertions.assertEquals(resultActivityProgress.getPlayerScoreCounter(), 1);
+        Assertions.assertEquals(resultActivityProgress.getPlayerPointCounter(), 1);
         Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }

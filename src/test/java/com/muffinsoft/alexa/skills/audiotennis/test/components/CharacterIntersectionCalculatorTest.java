@@ -9,8 +9,8 @@ class CharacterIntersectionCalculatorTest {
     @Test
     void goldenPath() {
 
-        float result = CharacterIntersectionCalculator.calculate("help", "elp");
+        float result = CharacterIntersectionCalculator.calculate("help", "help");
 
-        Assertions.assertEquals(result, 75);
+        Assertions.assertEquals(result, 100);
     }
 }

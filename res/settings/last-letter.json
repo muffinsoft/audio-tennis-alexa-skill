@@ -2,6 +2,6 @@
   "name": "LAST_LETTER",
   "startComplexityValue": 2,
   "iterateComplexityEveryScoresValue": 2,
-  "addToComplexityValue": 1,
-  "scoresToWinRoundValue": 3
+  "addToComplexityValue": 2,
+  "scoresToWinRoundValue": 4
 }

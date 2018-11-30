@@ -18,7 +18,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     @Override
     protected DialogItem.Builder handleSuccessAnswer(DialogItem.Builder builder) {
 
-        this.activityProgress.iterateSuccessCounter();
+        this.activityProgress.iterateSuccessAnswerCounter();
 
         String nextWord;
         if (this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getComplexity() == 0) {
