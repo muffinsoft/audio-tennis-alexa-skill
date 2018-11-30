@@ -1,3 +1,36 @@
 {
-  "intro": []
+  "intro": [
+    {
+      "content": "For this round, I'll serve the ball by saying one or more words. To return the shot, you must say a word or words that rhyme with my words.",
+      "role": "Ben"
+    },
+    {
+      "content": "Look how Ben and Lily do it!",
+      "role": "Alexa"
+    },
+    {
+      "content": "pear",
+      "role": "Ben"
+    },
+    {
+      "content": "bear",
+      "role": "Lily"
+    },
+    {
+      "content": "cow, book",
+      "role": "Ben"
+    },
+    {
+      "content": "how, took",
+      "role": "Lily"
+    },
+    {
+      "content": "cheese, egg, jam!",
+      "role": "Ben"
+    },
+    {
+      "content": "please, beg, spam!",
+      "role": "Lily"
+    }
+  ]
 }

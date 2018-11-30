@@ -22,7 +22,7 @@ public class ActivityManager {
     private static final String ONOMATOPOEIA = "settings/bam-wham.json";
     private static final String RHYME_MATCH = "settings/rhyme-match.json";
 
-    private static final String alphabet = "abcdefjhijklmnopqrstuvwxyz";
+    private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     private final DictionaryManager dictionaryManager;
 

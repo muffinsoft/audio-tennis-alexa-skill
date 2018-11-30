@@ -1,8 +1,8 @@
 {
   "activitiesOrder": {
     "ALPHABET_RACE": 1,
-    "LAST_LETTER": 3,
+    "LAST_LETTER": 0,
     "BAM_WHAM": 2,
-    "RHYME_MATCH": 0
+    "RHYME_MATCH": 3
   }
 }
