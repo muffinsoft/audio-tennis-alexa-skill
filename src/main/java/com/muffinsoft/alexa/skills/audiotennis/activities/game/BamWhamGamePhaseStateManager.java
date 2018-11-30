@@ -2,7 +2,6 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
-import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
@@ -20,16 +19,6 @@ public class BamWhamGamePhaseStateManager extends TennisGamePhaseStateManager {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.BAM_WHAM;
     }
-
-//    @Override
-//    protected boolean isEndWinActivityState() {
-//        return this.activityProgress.getSuccessCounter() == settingsForActivity.getScoresToWinRoundValue();
-//    }
-//
-//    @Override
-//    protected boolean isEndLoseActivityState() {
-//        return this.activityProgress.getMistakeCount() > settingsForActivity.getAvailableLives();
-//    }
 
     @Override
     protected boolean isSuccessAnswer() {
@@ -91,17 +80,5 @@ public class BamWhamGamePhaseStateManager extends TennisGamePhaseStateManager {
         this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());
 
         return builder.withSlotName(actionSlotName);
-    }
-
-    @Override
-    protected DialogItem.Builder handleLoseAnswerOfActivity(DialogItem.Builder builder) {
-
-        iterateEnemyWinRoundCounter(builder);
-
-        BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerLoseTwice();
-
-        builder.addResponseToBegining(getDialogTranslator().translate(randomPhrase));
-
-        return builder;
     }
 }

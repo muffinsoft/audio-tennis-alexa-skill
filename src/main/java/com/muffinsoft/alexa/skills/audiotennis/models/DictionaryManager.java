@@ -26,7 +26,7 @@ public class DictionaryManager {
             Set<String> words = dictionaryFileLoader.upload(LETTER_AND_ALPHABET_WORDS_TXT);
             for (String word : words) {
                 char firstLetter = word.charAt(0);
-                if(!vocabularies.containsKey(ALPHABET_RACE)) {
+                if (!vocabularies.containsKey(ALPHABET_RACE)) {
                     vocabularies.put(ALPHABET_RACE, new HashMap<>());
                 }
                 Map<Character, HashSet<String>> alphabetRaceVocabulary = vocabularies.get(ALPHABET_RACE);
@@ -36,7 +36,7 @@ public class DictionaryManager {
                 alphabetRaceVocabulary.get(firstLetter).add(word);
 
                 char lastLetter = word.charAt(0); //TODO this is first letter
-                if(!vocabularies.containsKey(LAST_LETTER)) {
+                if (!vocabularies.containsKey(LAST_LETTER)) {
                     vocabularies.put(LAST_LETTER, new HashMap<>());
                 }
                 Map<Character, HashSet<String>> lastLetterVocabulary = vocabularies.get(LAST_LETTER);
