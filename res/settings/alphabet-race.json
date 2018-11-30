@@ -1,8 +1,7 @@
 {
   "name": "ALPHABET_RACE",
-  "startWrongPointPositionValue": 3,
-  "iterateWrongPointPositionEveryLevels": 2,
-  "addendToWrongPointPosition": 2,
-  "scoresToWinRoundCounter": 5,
-  "availableLives": 2
+  "startComplexityValue": 2,
+  "iterateComplexityEveryScoresValue": 2,
+  "addToComplexityValue": 1,
+  "scoresToWinRoundValue": 3
 }

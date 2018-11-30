@@ -1,3 +1,29 @@
 {
-  "intro": []
+  "intro": [
+    {
+      "content": "To play this round, you need to keep in mind the order of ABCs.  Pay attention to the first letter of my word.  Then think of the next letter of the alphabet and hit back with a word that starts with it. We'll keep going until one of us misses.",
+      "role": "Ben"
+    },
+    {
+      "content": "Dinosaur!",
+      "role": "Ben"
+    },
+    {
+      "content": "Egg!",
+      "role": "Lily"
+    },
+    {
+      "content": "Flower!",
+      "role": "Ben"
+    },
+    {
+      "content": "Goat!",
+      "role": "Lily"
+    }
+  ],
+  "opponentFirstPhrase": [
+  ]
 }
+
+
+

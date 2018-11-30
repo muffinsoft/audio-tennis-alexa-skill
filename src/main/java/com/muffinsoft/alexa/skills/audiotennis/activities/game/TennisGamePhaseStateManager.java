@@ -32,7 +32,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     @Override
     protected DialogItem.Builder handleLoseAnswerOfActivity(DialogItem.Builder builder) {
 
-        this.activityProgress.iterateEnemyWinRoundCounter();
+        iterateEnemyWinRoundCounter(builder);
 
         if (checkIfTwoInRow()) {
 

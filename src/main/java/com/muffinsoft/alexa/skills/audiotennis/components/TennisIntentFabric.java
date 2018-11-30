@@ -14,10 +14,10 @@ import com.muffinsoft.alexa.skills.audiotennis.activities.HelpStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetConfirmationStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.game.AlphabetRaceGamePhaseStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGamePhaseStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGamePhaseStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.game.RhymeMatchGamePhaseStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.game.AlphabetRaceGameStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGameStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGameStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.game.RhymeMatchGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
@@ -89,13 +89,13 @@ public class TennisIntentFabric implements IntentFactory {
 
         switch (currentActivity) {
             case ALPHABET_RACE:
-                return new AlphabetRaceGamePhaseStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+                return new AlphabetRaceGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case LAST_LETTER:
-                return new LastLetterGamePhaseStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+                return new LastLetterGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case RHYME_MATCH:
-                return new RhymeMatchGamePhaseStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+                return new RhymeMatchGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case BAM_WHAM:
-                return new BamWhamGamePhaseStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+                return new BamWhamGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             default:
                 throw new IllegalArgumentException("Can't create instance of activity handler for type " + currentActivity);
         }

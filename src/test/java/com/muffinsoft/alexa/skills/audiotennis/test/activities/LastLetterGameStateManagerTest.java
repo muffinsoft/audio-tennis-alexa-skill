@@ -4,7 +4,7 @@ import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
-import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGamePhaseStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
@@ -18,7 +18,7 @@ import java.util.Map;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 
-class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
+class LastLetterGameStateManagerTest extends BaseStateManagerTest {
 
     @Test
     void testActivePhaseRightAnswer() {
@@ -39,7 +39,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
         attributes.put(STATE_TYPE, StateType.GAME_PHASE_1);
 
-        LastLetterGamePhaseStateManager stateManager = new LastLetterGamePhaseStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
+        LastLetterGameStateManager stateManager = new LastLetterGameStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
 
         DialogItem dialogItem = stateManager.nextResponse();
 
@@ -71,7 +71,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
         attributes.put(STATE_TYPE, StateType.GAME_PHASE_1);
 
-        LastLetterGamePhaseStateManager stateManager = new LastLetterGamePhaseStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
+        LastLetterGameStateManager stateManager = new LastLetterGameStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
 
         DialogItem dialogItem = stateManager.nextResponse();
 
@@ -104,7 +104,7 @@ class LastLetterGamePhaseStateManagerTest extends BaseStateManagerTest {
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
         attributes.put(STATE_TYPE, StateType.GAME_PHASE_1);
 
-        LastLetterGamePhaseStateManager stateManager = new LastLetterGamePhaseStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
+        LastLetterGameStateManager stateManager = new LastLetterGameStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
 
         DialogItem dialogItem = stateManager.nextResponse();
 

@@ -103,4 +103,13 @@ public class ActivityManager {
     public boolean isWordAvailableForActivity(String word) {
         return false;
     }
+
+    public char getNextLetter(char letter) {
+        int index = alphabet.indexOf(letter);
+        int nextIndex = index + 1;
+        if (nextIndex > alphabet.length() - 1) {
+            nextIndex = 0;
+        }
+        return alphabet.charAt(nextIndex);
+    }
 }

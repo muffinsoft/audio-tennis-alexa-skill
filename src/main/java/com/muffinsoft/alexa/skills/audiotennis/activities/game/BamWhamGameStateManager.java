@@ -7,15 +7,18 @@ import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class BamWhamGamePhaseStateManager extends TennisGamePhaseStateManager {
+public class BamWhamGameStateManager extends TennisGamePhaseStateManager {
 
-    public BamWhamGamePhaseStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
+    protected static final Logger logger = LogManager.getLogger(BamWhamGameStateManager.class);
+
+    public BamWhamGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.BAM_WHAM;
     }
@@ -23,16 +26,22 @@ public class BamWhamGamePhaseStateManager extends TennisGamePhaseStateManager {
     @Override
     protected boolean isSuccessAnswer() {
         if (getUserMultipleReplies().isEmpty()) {
-            return Objects.equals(getUserReply().toLowerCase(), this.activityProgress.getRequiredUserReaction().toLowerCase());
+            return areEquals(getUserReply(), this.activityProgress.getRequiredUserReaction());
         }
         else {
             for (String reply : getUserMultipleReplies()) {
-                if (Objects.equals(reply.toLowerCase(), this.activityProgress.getRequiredUserReaction().toLowerCase())) {
+                if (areEquals(reply, this.activityProgress.getRequiredUserReaction())) {
                     return true;
                 }
             }
             return false;
         }
+    }
+
+    private boolean areEquals(String one, String two) {
+        boolean result = one.trim().equalsIgnoreCase(two.trim());
+        logger.debug("Compare " + one + " and " + two + ". Are equals: " + result);
+        return result;
     }
 
     @Override

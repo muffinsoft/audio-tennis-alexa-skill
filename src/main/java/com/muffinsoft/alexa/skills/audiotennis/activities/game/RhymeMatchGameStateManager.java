@@ -8,9 +8,9 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 
 import java.util.Map;
 
-public class RhymeMatchGamePhaseStateManager extends TennisGamePhaseStateManager {
+public class RhymeMatchGameStateManager extends TennisGamePhaseStateManager {
 
-    public RhymeMatchGamePhaseStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
+    public RhymeMatchGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.RHYME_MATCH;
     }

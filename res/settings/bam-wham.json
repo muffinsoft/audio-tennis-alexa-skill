@@ -7,14 +7,14 @@
   "availableLives": 1,
   "successAnswersToGetScoreValue": 3,
   "wordsToReactions": {
-    "Bam": "Wham",
-    "Bap": " Wap",
-    "Boom": "Whoom",
-    "Bomp": "Womp",
-    "Bonk ": "Wonk",
-    "Bop": " Wop",
-    "Boosh": "Woosh",
-    "Bump": "Wump"
+    "Bam": "wham",
+    "Bap": "wap",
+    "Boom": "whoom",
+    "Bomp": "womp",
+    "Bonk ": "wonk",
+    "Bop": "wop",
+    "Boosh": "woosh",
+    "Bump": "wump"
   }
 }
 
