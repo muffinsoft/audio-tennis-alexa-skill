@@ -20,6 +20,11 @@ public class TennisStopIntentHandler extends StopIntentHandler {
     }
 
     @Override
+    protected boolean shouldEnd() {
+        return true;
+    }
+
+    @Override
     protected List<PhraseContainer> getPhrase() {
         return regularPhraseManager.getValueByKey(EXIT_PHRASE);
     }

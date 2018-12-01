@@ -14,11 +14,11 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.SELECT_MISSION_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_EXIT_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
 
@@ -41,7 +41,8 @@ public class CancelStateManager extends BaseStateManager {
         List<PhraseContainer> dialog;
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            dialog = regularPhraseManager.getValueByKey(SELECT_MISSION_PHRASE);
+            // TODO: random activity
+            dialog = Collections.emptyList();
 
             getSessionAttributes().put(INTENT, IntentType.GAME);
         }

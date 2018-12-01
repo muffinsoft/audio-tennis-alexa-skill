@@ -16,10 +16,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.RETURN_TO_GAME_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_MISSION_FROM_BEGINNING_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
 
 public class ResetStateManager extends BaseStateManager {
@@ -46,8 +46,9 @@ public class ResetStateManager extends BaseStateManager {
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
         }
         else if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_MISSION_FROM_BEGINNING_PHRASE)));
-            getSessionAttributes().put(INTENT, IntentType.RESET_CONFIRMATION);
+            getSessionAttributes().remove(ACTIVITY_PROGRESS);
+            getSessionAttributes().put(INTENT, IntentType.GAME);
+            getSessionAttributes().put(STATE_TYPE, StateType.ACTIVITY_INTRO);
         }
         else {
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE)));

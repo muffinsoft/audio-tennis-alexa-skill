@@ -13,19 +13,19 @@
   ],
   "wantStartMissionPhrase": [
     {
-      "content": "Do you want to start a new mission?",
+      "content": "Okay, but I'm sorry to hear you go. Would you like to switch a different activity instead?",
       "role": "Alexa"
     }
   ],
   "wantResetProgressPhrase": [
     {
-      "content": "Are you sure you want to discontinue the mission and lose all your progress?",
+      "content": "Are you sure you want to discontinue the game and lose all your progress and score?",
       "role": "Alexa"
     }
   ],
   "wantExitPhrase": [
     {
-      "content": "Do you want to quit the game?",
+      "content": "Are you done playing this game for today?",
       "role": "Alexa"
     }
   ],
@@ -38,6 +38,12 @@
   "repeatLastPhrase": [
     {
       "content": "I don't understand you. Please, repeat last command",
+      "role": "Alexa"
+    }
+  ],
+  "exitPhraseAfterCancel": [
+    {
+      "content": "Alright, hope to see you again soon",
       "role": "Alexa"
     }
   ],
@@ -56,6 +62,12 @@
   "wantMissionFromBeginningPhrase": [
     {
       "content": "Do you want to start mission from the beginning?",
+      "role": "Alexa"
+    }
+  ],
+  "generalHelpPhrase": [
+    {
+      "content": "You are competing against your friend Ben. The game is played until 11 points. During each round, you will be playing one of 5 fun activities.",
       "role": "Alexa"
     }
   ]
