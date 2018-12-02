@@ -11,6 +11,8 @@ import java.util.Map;
 
 abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
+    protected char characterWithMistake;
+
     CompetitionGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
     }
@@ -29,12 +31,18 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             addNextWordAfterEnemyWrongAnswer(builder, nextWord);
         }
         else {
-            BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
+
+            BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
             builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
+
             nextWord = nextRightWord;
             this.activityProgress.addUsedWord(nextWord);
             builder.addResponse(getDialogTranslator().translate(nextWord));
         }
+
+        BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
+        builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
+
         this.activityProgress.setPreviousWord(nextWord);
 
         return builder.withSlotName(actionSlotName);
@@ -51,6 +59,9 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         else {
             playerLosePhrase = phrasesForActivity.getRandomPlayerLoseWrongWordPhrase();
         }
+
+        String newContent = replaceWordPlaceholders(playerLosePhrase.getContent(), getUserReply(), characterWithMistake, null);
+        playerLosePhrase.setContent(newContent);
 
         builder.addResponse(getDialogTranslator().translate(playerLosePhrase));
 

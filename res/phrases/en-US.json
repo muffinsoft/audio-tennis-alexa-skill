@@ -76,5 +76,41 @@
       "content": "You are competing against your friend Ben. The game is played until 11 points. During each round, you will be playing one of 5 fun activities.",
       "role": "Alexa"
     }
+  ],
+  "activityLastLetterHelpPhrase": [
+    {
+      "content": "In Last Letter, pay attention to the last letter of the word because to hit back, your word has to start with that letter. So if I say dog, you say goat or grass.",
+      "role": "Alexa"
+    }
+  ],
+  "activityBamWhamHelpPhrase": [
+    {
+      "content": "In BAM WHAM, I'll say words that start with 'B' and you have to respond with the correct rhyming word that starts with 'W'. So if i say 'bomp', you say 'whomp'",
+      "role": "Alexa"
+    }
+  ],
+  "activityAlphabetRaceHelpPhrase": [
+    {
+      "content": "In ALPHABET RACE, pay attention to the first letter of the word and then respond with a word that starts with the next letter in the alphabet. So if I say Lamp, you say Monkey because M comes after L.",
+      "role": "Alexa"
+    }
+  ],
+  "activityRhymeMatchHelpPhrase": [
+    {
+      "content": "In RHYME MATCH we have to respond with a word that rhymes with the last word. So if I say hug, you say bug.",
+      "role": "Alexa"
+    }
+  ],
+  "redirectionToUnknownActivityPhrase": [
+    {
+      "content": "You will be redirected to next activity",
+      "role": "Alexa"
+    }
+  ],
+  "trySomethingElsePhrase": [
+    {"content": "Would you like to try something else?"}
+  ],
+  "newActivityUnlockedPhrase": [
+    {"content": "Congrats! You are now ready for a new activity called %activity%. Do you want to play it now?"}
   ]
 }

@@ -33,6 +33,8 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
             char firstEnemyLetter = previousWord.charAt(0);
             char nextLetter = activityManager.getNextLetter(firstEnemyLetter);
 
+            this.characterWithMistake = nextLetter;
+
             String userReply = getUserReply().toLowerCase();
             char firstPlayerLetter = userReply.charAt(0);
 

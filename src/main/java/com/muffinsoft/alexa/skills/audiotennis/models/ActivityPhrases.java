@@ -15,6 +15,7 @@ public class ActivityPhrases {
     private List<BasePhraseContainer> opponentReactionAfterXWordsPhrase = Collections.emptyList();
     private List<BasePhraseContainer> playerLoseWrongWordPhrase = Collections.emptyList();
     private List<BasePhraseContainer> playerLoseRepeatWordPhrase = Collections.emptyList();
+    private List<BasePhraseContainer> playerWonOnceAtGame = Collections.emptyList();
 
     public List<BasePhraseContainer> getIntro() {
         return intro;
@@ -64,6 +65,14 @@ public class ActivityPhrases {
         this.opponentReactionAfterXWordsPhrase = opponentReactionAfterXWordsPhrase;
     }
 
+    public List<BasePhraseContainer> getPlayerWonOnceAtGame() {
+        return playerWonOnceAtGame;
+    }
+
+    public void setPlayerWonOnceAtGame(List<BasePhraseContainer> playerWonOnceAtGame) {
+        this.playerWonOnceAtGame = playerWonOnceAtGame;
+    }
+
     @JsonIgnore
     public BasePhraseContainer getRandomOpponentAfterWordPhrase() {
         if (opponentAfterWordPhrase.isEmpty()) {
@@ -92,8 +101,13 @@ public class ActivityPhrases {
         if (opponentReactionAfterXWordsPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(opponentReactionAfterXWordsPhrase.size());
-        return opponentReactionAfterXWordsPhrase.get(index);
+        int index = getRandomValue(opponentReactionAfterXWordsPhrase.size() * 3);
+        if (index > opponentReactionAfterXWordsPhrase.size() - 1) {
+            return BasePhraseContainer.empty();
+        }
+        else {
+            return opponentReactionAfterXWordsPhrase.get(index);
+        }
     }
 
     @JsonIgnore
@@ -112,6 +126,15 @@ public class ActivityPhrases {
         }
         int index = getRandomValue(playerLoseRepeatWordPhrase.size());
         return playerLoseRepeatWordPhrase.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomPlayerWonOnceAtGamePhrase() {
+        if (playerWonOnceAtGame.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
+        int index = getRandomValue(playerWonOnceAtGame.size());
+        return playerWonOnceAtGame.get(index);
     }
 
     @JsonIgnore

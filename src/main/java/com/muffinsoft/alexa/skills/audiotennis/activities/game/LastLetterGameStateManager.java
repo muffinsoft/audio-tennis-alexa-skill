@@ -33,6 +33,8 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
             String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
             char lastLetter = previousWord.charAt(previousWord.length() - 1);
 
+            this.characterWithMistake = lastLetter;
+
             String userReply = getUserReply().toLowerCase();
             char firstLetter = userReply.charAt(0);
 

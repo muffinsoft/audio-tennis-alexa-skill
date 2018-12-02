@@ -15,10 +15,14 @@ public class ActivitiesPhraseManager {
     private static final String LAST_LETTER = "phrases/last-letter-phrases.json";
     private static final String BAM_WHAM = "phrases/bam-wham-phrases.json";
     private static final String RHYME_MATCH = "phrases/rhyme-match-phrases.json";
+    private static final String COMPETITION_ACTIVITY = "phrases/competition-activity-phrases.json";
+    private static final String ONE_SIDE_ACTIVITY = "phrases/one-side-activity-phrases.json";
 
     private final ContentLoader contentLoader = new ContentLoader(new ObjectMapper());
 
     private final Map<ActivityType, ActivityPhrases> containerByActivity;
+    private final ActivityPhrases competitionPhrases;
+    private final ActivityPhrases oneSidePhrases;
 
     public ActivitiesPhraseManager() {
 
@@ -32,9 +36,24 @@ public class ActivitiesPhraseManager {
         }));
         containerByActivity.put(ActivityType.RHYME_MATCH, contentLoader.loadContent(new ActivityPhrases(), RHYME_MATCH, new TypeReference<ActivityPhrases>() {
         }));
+
+        competitionPhrases = contentLoader.loadContent(new ActivityPhrases(), COMPETITION_ACTIVITY, new TypeReference<ActivityPhrases>() {
+        });
+        oneSidePhrases = contentLoader.loadContent(new ActivityPhrases(), ONE_SIDE_ACTIVITY, new TypeReference<ActivityPhrases>() {
+        });
     }
 
     public ActivityPhrases getPhrasesForActivity(ActivityType type) {
         return containerByActivity.get(type);
+    }
+
+    public ActivityPhrases getGeneralPhrasesForActivity(ActivityType type) {
+
+        if (type == ActivityType.LAST_LETTER || type == ActivityType.ALPHABET_RACE) {
+            return competitionPhrases;
+        }
+        else {
+            return oneSidePhrases;
+        }
     }
 }

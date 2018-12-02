@@ -8,28 +8,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GeneralActivityPhrases {
 
-    private List<BasePhraseContainer> playerWonOnceAtFirstOrThirdAct;
-    private List<BasePhraseContainer> playerWonOnceAtSecondOrFourthAct;
     private List<BasePhraseContainer> enemyWonOnce;
     private List<BasePhraseContainer> playerLoseTwice;
-    private List<BasePhraseContainer> playerWonTwice;
+    private List<BasePhraseContainer> playerWonTwiceInRow;
     private List<BasePhraseContainer> totalScore;
-
-    public List<BasePhraseContainer> getPlayerWonOnceAtFirstOrThirdAct() {
-        return playerWonOnceAtFirstOrThirdAct;
-    }
-
-    public void setPlayerWonOnceAtFirstOrThirdAct(List<BasePhraseContainer> playerWonOnceAtFirstOrThirdAct) {
-        this.playerWonOnceAtFirstOrThirdAct = playerWonOnceAtFirstOrThirdAct;
-    }
-
-    public List<BasePhraseContainer> getPlayerWonOnceAtSecondOrFourthAct() {
-        return playerWonOnceAtSecondOrFourthAct;
-    }
-
-    public void setPlayerWonOnceAtSecondOrFourthAct(List<BasePhraseContainer> playerWonOnceAtSecondOrFourthAct) {
-        this.playerWonOnceAtSecondOrFourthAct = playerWonOnceAtSecondOrFourthAct;
-    }
+    private List<BasePhraseContainer> nextRound;
+    private List<BasePhraseContainer> playerWinScore;
+    private List<BasePhraseContainer> playerWinGame;
+    private List<BasePhraseContainer> enemyWinScore;
+    private List<BasePhraseContainer> enemyWinGame;
+    private List<BasePhraseContainer> defeatPhrase;
 
     public List<BasePhraseContainer> getEnemyWonOnce() {
         return enemyWonOnce;
@@ -47,12 +35,12 @@ public class GeneralActivityPhrases {
         this.playerLoseTwice = playerLoseTwice;
     }
 
-    public List<BasePhraseContainer> getPlayerWonTwice() {
-        return playerWonTwice;
+    public List<BasePhraseContainer> getPlayerWonTwiceInRow() {
+        return playerWonTwiceInRow;
     }
 
-    public void setPlayerWonTwice(List<BasePhraseContainer> playerWonTwice) {
-        this.playerWonTwice = playerWonTwice;
+    public void setPlayerWonTwiceInRow(List<BasePhraseContainer> playerWonTwiceInRow) {
+        this.playerWonTwiceInRow = playerWonTwiceInRow;
     }
 
     public List<BasePhraseContainer> getTotalScore() {
@@ -63,16 +51,52 @@ public class GeneralActivityPhrases {
         this.totalScore = totalScore;
     }
 
-    @JsonIgnore
-    public BasePhraseContainer getRandomPlayerWonOnceAtFirstOrThirdAct() {
-        int index = getRandomValue(playerWonOnceAtFirstOrThirdAct.size());
-        return playerWonOnceAtFirstOrThirdAct.get(index);
+    public List<BasePhraseContainer> getNextRound() {
+        return nextRound;
     }
 
-    @JsonIgnore
-    public BasePhraseContainer getRandomPlayerWonOnceAtSecondOrFourthAct() {
-        int index = getRandomValue(playerWonOnceAtSecondOrFourthAct.size());
-        return playerWonOnceAtSecondOrFourthAct.get(index);
+    public void setNextRound(List<BasePhraseContainer> nextRound) {
+        this.nextRound = nextRound;
+    }
+
+    public List<BasePhraseContainer> getPlayerWinScore() {
+        return playerWinScore;
+    }
+
+    public void setPlayerWinScore(List<BasePhraseContainer> playerWinScore) {
+        this.playerWinScore = playerWinScore;
+    }
+
+    public List<BasePhraseContainer> getPlayerWinGame() {
+        return playerWinGame;
+    }
+
+    public void setPlayerWinGame(List<BasePhraseContainer> playerWinGame) {
+        this.playerWinGame = playerWinGame;
+    }
+
+    public List<BasePhraseContainer> getEnemyWinScore() {
+        return enemyWinScore;
+    }
+
+    public void setEnemyWinScore(List<BasePhraseContainer> enemyWinScore) {
+        this.enemyWinScore = enemyWinScore;
+    }
+
+    public List<BasePhraseContainer> getEnemyWinGame() {
+        return enemyWinGame;
+    }
+
+    public void setEnemyWinGame(List<BasePhraseContainer> enemyWinGame) {
+        this.enemyWinGame = enemyWinGame;
+    }
+
+    public List<BasePhraseContainer> getDefeatPhrase() {
+        return defeatPhrase;
+    }
+
+    public void setDefeatPhrase(List<BasePhraseContainer> defeatPhrase) {
+        this.defeatPhrase = defeatPhrase;
     }
 
     @JsonIgnore
@@ -88,15 +112,45 @@ public class GeneralActivityPhrases {
     }
 
     @JsonIgnore
+    public BasePhraseContainer getRandomNextRound() {
+        int index = getRandomValue(nextRound.size());
+        return nextRound.get(index);
+    }
+
+    @JsonIgnore
     public BasePhraseContainer getRandomPlayerWonTwice() {
-        int index = getRandomValue(playerWonTwice.size());
-        return playerWonTwice.get(index);
+        int index = getRandomValue(playerWonTwiceInRow.size());
+        return playerWonTwiceInRow.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomTotalScore() {
         int index = getRandomValue(totalScore.size());
         return totalScore.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomEnemyWinGame() {
+        int index = getRandomValue(enemyWinGame.size());
+        return enemyWinGame.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomPlayerWinGame() {
+        int index = getRandomValue(playerWinGame.size());
+        return playerWinGame.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomEnemyWinScore() {
+        int index = getRandomValue(enemyWinScore.size());
+        return enemyWinScore.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomPlayerWinScore() {
+        int index = getRandomValue(playerWinScore.size());
+        return playerWinScore.get(index);
     }
 
     @JsonIgnore

@@ -18,9 +18,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REDIRECTION_TO_RANDOM_ACTIVITY_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_EXIT_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 
 public class CancelStateManager extends BaseStateManager {
 
@@ -41,8 +43,8 @@ public class CancelStateManager extends BaseStateManager {
         List<PhraseContainer> dialog;
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            // TODO: random activity
-            dialog = Collections.emptyList();
+            getSessionAttributes().put(RANDOM_SWITCH_ACTIVITY_STEP, true);
+            dialog = regularPhraseManager.getValueByKey(REDIRECTION_TO_RANDOM_ACTIVITY_PHRASE);
 
             getSessionAttributes().put(INTENT, IntentType.GAME);
         }

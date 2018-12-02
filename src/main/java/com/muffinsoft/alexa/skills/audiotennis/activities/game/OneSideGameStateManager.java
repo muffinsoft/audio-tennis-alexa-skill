@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
@@ -32,6 +33,9 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
             reactions.add(nextWord.getUserReaction());
         }
 
+        BasePhraseContainer randomOpponentAfterXWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
+        builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
+
         this.activityProgress.iterateSuccessAnswerCounter();
 
         if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
@@ -41,6 +45,9 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
         builder.addResponse(getDialogTranslator().translate(String.join(" ", words)));
 
         this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));
+
+        BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
+        builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
 
         return builder.withSlotName(actionSlotName);
     }

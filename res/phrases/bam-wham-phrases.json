@@ -32,28 +32,6 @@
       "content": "I think you got the idea.  Now let’s go ahead and play.",
       "role": "Ben"
     }
-  ],
-  "opponentFirstPhrase": [
-    {
-      "content": "I'll go ahead and start.,",
-      "role": "Ben"
-    },
-    {
-      "content": "I'll serve this time.,",
-      "role": "Ben"
-    },
-    {
-      "content": "It's my turn to serve.,",
-      "role": "Ben"
-    },
-    {
-      "content": "I'm serving. Here I go!,",
-      "role": "Ben"
-    },
-    {
-      "content": "Get ready for my serve!",
-      "role": "Ben"
-    }
   ]
 }
 

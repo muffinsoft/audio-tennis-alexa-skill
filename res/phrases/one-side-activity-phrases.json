@@ -1,0 +1,126 @@
+{
+  "opponentFirstPhrase": [
+    {
+      "content": "I'll go ahead and start.",
+      "role": "Ben"
+    },
+    {
+      "content": "I'll serve this time.",
+      "role": "Ben"
+    },
+    {
+      "content": "It's my turn to serve.",
+      "role": "Ben"
+    },
+    {
+      "content": "I'm serving. Here I go!",
+      "role": "Ben"
+    },
+    {
+      "content": "Get ready for my serve!",
+      "role": "Ben"
+    }
+  ],
+  "opponentAfterWordPhrase": [
+    {
+      "content": "Your turn!,",
+      "role": "Ben"
+    },
+    {
+      "content": "Hit it back!,",
+      "role": "Ben"
+    },
+    {
+      "content": "You're next!,",
+      "role": "Ben"
+    },
+    {
+      "content": "Give me your best shot!,",
+      "role": "Ben"
+    },
+    {
+      "content": "Go!",
+      "role": "Ben"
+    }
+  ],
+  "opponentReactionAfterXWordsPhrase": [
+    {
+      "content": "Good one. How about %word%?",
+      "role": "Ben"
+    },
+    {
+      "content": "I'm going with %word%!,",
+      "role": "Ben"
+    },
+    {
+      "content": "Hitting back with %word%!,",
+      "role": "Ben"
+    },
+    {
+      "content": "My next response is %word%!,",
+      "role": "Ben"
+    },
+    {
+      "content": "I'll hit back with %word%!",
+      "role": "Ben"
+    }
+  ],
+  "playerLoseWrongWordPhrase": [
+    {
+      "content": "Sorry, %word% doesn't rhyme with %rhyme%",
+      "role": "Ben"
+    }
+  ],
+  "playerLoseRepeatWordPhrase": [
+    {
+      "content": "%word% was already used,",
+      "role": "Ben"
+    },
+    {
+      "content": "we already said %word%,",
+      "role": "Ben"
+    },
+    {
+      "content": "we can't say %word% again,",
+      "role": "Ben"
+    },
+    {
+      "content": "%word% can't be used again,",
+      "role": "Ben"
+    },
+    {
+      "content": "you already said %word%!,",
+      "role": "Ben"
+    },
+    {
+      "content": "I already said %word%!,",
+      "role": "Ben"
+    },
+    {
+      "content": "%word% can't be repeated!",
+      "role": "Ben"
+    }
+  ],
+  "playerWonOnceAtGame": [
+    {
+      "content": "You're too good.",
+      "role": "Ben"
+    },
+    {
+      "content": "You're not bad.",
+      "role": "Ben"
+    },
+    {
+      "content": "You got me this time!",
+      "role": "Ben"
+    },
+    {
+      "content": "I'll do better next time!",
+      "role": "Ben"
+    },
+    {
+      "content": "Great job!",
+      "role": "Ben"
+    }
+  ]
+}

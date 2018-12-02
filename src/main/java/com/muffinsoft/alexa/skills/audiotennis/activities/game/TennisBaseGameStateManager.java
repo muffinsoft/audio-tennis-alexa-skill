@@ -94,7 +94,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     @Override
     protected DialogItem.Builder populateResponse(DialogItem.Builder builder) {
 
-        phrasesForActivity = activitiesPhraseManager.getPhrasesForActivity(this.currentActivityType);
+        phrasesForActivity = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType);
         settingsForActivity = activityManager.getSettingsForActivity(this.currentActivityType);
 
         if (!activityProgress.isUpdateForLevel()) {
@@ -141,6 +141,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             builder.addResponse(getDialogTranslator().translate("Here will be exit"));
         }
         else {
+            appendNextRoundPhrase(builder);
             initGameStatePhrase(builder);
         }
         return builder.withSlotName(actionSlotName);
@@ -204,11 +205,16 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         return word;
     }
 
+    private void appendNextRoundPhrase(DialogItem.Builder builder) {
+        BasePhraseContainer randomOpponentFirstPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomNextRound();
+        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+    }
+
     private void initGameStatePhrase(DialogItem.Builder builder) {
         this.stateType = StateType.GAME_PHASE_1;
         this.activityProgress.reset();
 
-        BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
+        BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
 
         String word = generateRandomWord();
