@@ -10,6 +10,7 @@ import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.sdk.util.SlotComputer;
 import com.muffinsoft.alexa.skills.audiotennis.activities.CancelStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ExitStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.FallbackStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.HelpStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetConfirmationStateManager;
@@ -66,6 +67,8 @@ public class TennisIntentFabric implements IntentFactory {
                 return new CancelStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case GAME:
                 return getNextGameState(inputSlots, attributesManager);
+            case FALLBACK:
+                return new FallbackStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             default:
                 throw new IllegalArgumentException("Can't create new Intent State object for type " + intent);
         }
