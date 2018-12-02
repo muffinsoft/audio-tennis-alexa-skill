@@ -49,7 +49,7 @@ class LastLetterGameTest extends BaseTest {
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
         Assertions.assertEquals(resultActivityProgress.getSuccessCounter(), 1);
-        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
+        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 2);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 
@@ -81,7 +81,7 @@ class LastLetterGameTest extends BaseTest {
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
         Assertions.assertEquals(resultActivityProgress.getEnemyPointCounter(), 1);
-        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
+        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 2);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 
@@ -95,7 +95,7 @@ class LastLetterGameTest extends BaseTest {
 
         ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
-        activityProgress.setEnemyAnswerCounter(3);
+        activityProgress.setEnemyAnswerCounter(2);
 
         WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromWrongLetter.getWord();
@@ -114,7 +114,7 @@ class LastLetterGameTest extends BaseTest {
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
         Assertions.assertEquals(resultActivityProgress.getPlayerPointCounter(), 1);
-        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 1);
+        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 2);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 }

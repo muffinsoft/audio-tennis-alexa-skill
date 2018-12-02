@@ -26,6 +26,8 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     @Override
     protected boolean isSuccessAnswer() {
 
+        boolean isSuccess = false;
+
         if (getUserMultipleReplies().isEmpty()) {
 
             String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
@@ -35,12 +37,15 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
             char firstLetter = userReply.charAt(0);
 
             if (!Objects.equals(lastLetter, firstLetter)) {
+                activityProgress.addUsedWord(getUserReply());
                 return false;
             }
 
-            return !isWordAlreadyUser();
+            isSuccess = !isWordAlreadyUser();
+
+            activityProgress.addUsedWord(getUserReply());
         }
-        return false;
+        return isSuccess;
     }
 
     @Override
