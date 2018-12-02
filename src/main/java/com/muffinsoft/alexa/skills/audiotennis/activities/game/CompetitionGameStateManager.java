@@ -21,7 +21,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         this.activityProgress.iterateSuccessAnswerCounter();
 
         String nextWord;
-        if (this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getComplexity() == 0) {
+        String nextRightWord = getNextRightWordForActivity();
+        if (nextRightWord.isEmpty() || this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getComplexity() == 0) {
             nextWord = getNextWrongWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
             iteratePlayerScoreCounter(builder);
@@ -30,7 +31,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         else {
             BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
             builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
-            nextWord = getNextRightWordForActivity();
+            nextWord = nextRightWord;
+            this.activityProgress.addUsedWord(nextWord);
             builder.addResponse(getDialogTranslator().translate(nextWord));
         }
         this.activityProgress.setPreviousWord(nextWord);
@@ -55,6 +57,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         iterateEnemyScoreCounter(builder);
 
         String nextWord = getNextRightWordForActivity();
+        this.activityProgress.addUsedWord(nextWord);
         this.activityProgress.setPreviousWord(nextWord);
 
         builder.addResponse(getDialogTranslator().translate(nextWord));

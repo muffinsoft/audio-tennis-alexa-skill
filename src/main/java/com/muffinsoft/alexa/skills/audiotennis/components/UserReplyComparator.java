@@ -13,8 +13,23 @@ public class UserReplyComparator {
 
     public static boolean compare(String userReply, UserReplies expectedValue) {
         List<String> values = IoC.provideUserReplyManager().getValueByKey(expectedValue.name());
+        if (userReply == null) {
+            return false;
+        }
+
         boolean contains = values.contains(userReply.toLowerCase());
+
         logger.debug("Comparing user input '" + userReply + "' with values [" + String.join(", ", values) + "] returns " + contains);
-        return contains;
+        if (contains) {
+            return true;
+        }
+        else {
+            for (String value : values) {
+                if (userReply.contains(value)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

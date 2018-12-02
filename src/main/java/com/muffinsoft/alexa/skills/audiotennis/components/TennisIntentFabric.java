@@ -26,12 +26,16 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public class TennisIntentFabric implements IntentFactory {
@@ -71,8 +75,13 @@ public class TennisIntentFabric implements IntentFactory {
 
         ActivityProgress activityProgress = getCurrentActivityProgress(attributesManager);
 
-        if (attributesManager.getSessionAttributes().containsKey(SWITCH_ACTIVITY_STEP)) {
-            interceptActivityProgress(inputSlots, attributesManager, activityProgress);
+        Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
+
+        if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
+            interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
+        }
+        else if (sessionAttributes.containsKey(RANDOM_SWITCH_ACTIVITY_STEP)) {
+            interceptRandomActivityProgress(sessionAttributes, activityProgress);
         }
 
         ActivityType currentActivity = activityProgress.getCurrentActivity();
@@ -91,8 +100,25 @@ public class TennisIntentFabric implements IntentFactory {
         }
     }
 
-    private void interceptActivityProgress(Map<String, Slot> inputSlots, AttributesManager attributesManager, ActivityProgress activityProgress) {
-        Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
+    private void interceptRandomActivityProgress(Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+        ActivityType currentActivity = activityProgress.getCurrentActivity();
+        Set<ActivityType> unlockedActivities = new HashSet<>(activityProgress.getUnlockedActivities());
+        unlockedActivities.remove(currentActivity);
+        if (unlockedActivities.isEmpty()) {
+            return;
+        }
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        ActivityType newActivity = unlockedActivities.stream().skip(random.nextInt(unlockedActivities.size())).findFirst().orElse(null);
+        activityProgress.setPreviousActivity(currentActivity);
+        activityProgress.setCurrentActivity(newActivity);
+        sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
+        sessionAttributes.remove(STATE_TYPE);
+        sessionAttributes.remove(RANDOM_SWITCH_ACTIVITY_STEP);
+    }
+
+    private void interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+        ActivityType type = getActivityFromReply(inputSlots);
+
         if (isPositiveReply(inputSlots)) {
             ActivityType possibleActivity = activityProgress.getPossibleActivity();
             ActivityType currentActivity = activityProgress.getCurrentActivity();
@@ -101,7 +127,33 @@ public class TennisIntentFabric implements IntentFactory {
             sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
             sessionAttributes.remove(STATE_TYPE);
         }
+        else if (type != null) {
+            ActivityType currentActivity = activityProgress.getCurrentActivity();
+            activityProgress.setCurrentActivity(type);
+            activityProgress.setPreviousActivity(currentActivity);
+            sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
+            sessionAttributes.remove(STATE_TYPE);
+        }
         sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
+    }
+
+    private ActivityType getActivityFromReply(Map<String, Slot> inputSlots) {
+        List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
+        for (String reply : userReplies) {
+            if (UserReplyComparator.compare(reply, UserReplies.LAST_LETTER)) {
+                return ActivityType.LAST_LETTER;
+            }
+            else if (UserReplyComparator.compare(reply, UserReplies.BAM_WHAM)) {
+                return ActivityType.BAM_WHAM;
+            }
+            else if (UserReplyComparator.compare(reply, UserReplies.ALPHABET_RACE)) {
+                return ActivityType.ALPHABET_RACE;
+            }
+            else if (UserReplyComparator.compare(reply, UserReplies.RHYME_MATCH)) {
+                return ActivityType.RHYME_MATCH;
+            }
+        }
+        return null;
     }
 
     private boolean isPositiveReply(Map<String, Slot> inputSlots) {

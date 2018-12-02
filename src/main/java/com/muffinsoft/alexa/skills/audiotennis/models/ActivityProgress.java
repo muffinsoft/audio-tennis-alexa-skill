@@ -23,6 +23,7 @@ public class ActivityProgress {
     private int enemyGameCounter;
     private int playerGameWinInRow;
     private int enemyGameWinInRow;
+    private int amountOfGameInRow;
     private String previousWord;
     private String requiredUserReaction;
 
@@ -61,6 +62,14 @@ public class ActivityProgress {
         this.previousWord = null;
         this.requiredUserReaction = null;
         this.usedWords = new HashSet<>();
+    }
+
+    public int getAmountOfGameInRow() {
+        return amountOfGameInRow;
+    }
+
+    public void setAmountOfGameInRow(int amountOfGameInRow) {
+        this.amountOfGameInRow = amountOfGameInRow;
     }
 
     public ActivityType getCurrentActivity() {
@@ -129,6 +138,10 @@ public class ActivityProgress {
         this.playerPointCounter += 1;
         this.successCounter = 0;
         this.updateForLevel = false;
+    }
+
+    public void iterateAmountOfGameInRow() {
+        this.amountOfGameInRow += 1;
     }
 
     public void iterateEnemyGameCounter() {

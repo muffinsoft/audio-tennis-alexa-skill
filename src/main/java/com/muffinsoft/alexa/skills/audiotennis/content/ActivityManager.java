@@ -53,7 +53,12 @@ public class ActivityManager {
         if (activityType == ActivityType.BAM_WHAM) {
             ActivitySettings activitySettings = containerByActivity.get(activityType);
             Map<String, String> wordsToReactions = activitySettings.getWordsToReactions();
-            String word = getRandomWordFromCollection(wordsToReactions.keySet());
+
+            Set<String> strings = wordsToReactions.keySet();
+            if (strings.isEmpty()) {
+                return WordContainer.empty();
+            }
+            String word = getRandomWordFromCollection(strings);
             String userReaction = wordsToReactions.get(word);
             return new WordContainer(word, userReaction);
         }
@@ -66,9 +71,18 @@ public class ActivityManager {
         }
     }
 
-    private WordContainer getRandomWordForRhymeMatchActivityFromLetter(Set<Object> usedWords) {
+    private WordContainer getRandomWordForRhymeMatchActivityFromLetter(Set<String> usedWords) {
         Map<String, String> activityWords = dictionaryManager.getForRhymeMathActivity();
-        String word = getRandomWordFromCollection(activityWords.keySet());
+
+
+        HashSet<String> words = new HashSet<>(activityWords.keySet());
+        words.removeAll(usedWords);
+
+        if (words.isEmpty()) {
+            return WordContainer.empty();
+        }
+
+        String word = getRandomWordFromCollection(words);
         String rhyme = activityWords.get(word);
         return new WordContainer(word, rhyme);
     }
@@ -85,13 +99,16 @@ public class ActivityManager {
     }
 
     public WordContainer getRandomWordForCompetitionActivityFromLetter(char lastLetter, Set<String> usedWords) {
-        String word;
         Map<Character, HashSet<String>> activityWords = dictionaryManager.getForCompetitionActivity();
-        HashSet<String> wordsByRule = activityWords.get(lastLetter);
-        do {
-            word = getRandomWordFromCollection(wordsByRule);
+
+        HashSet<String> wordsByRule = new HashSet<>(activityWords.get(lastLetter));
+        wordsByRule.removeAll(usedWords);
+
+        if (wordsByRule.isEmpty()) {
+            return WordContainer.empty();
         }
-        while (usedWords.contains(word));
+
+        String word = getRandomWordFromCollection(wordsByRule);
 
         return new WordContainer(word);
     }

@@ -20,19 +20,22 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
     @Override
     protected DialogItem.Builder handleSuccessAnswer(DialogItem.Builder builder) {
 
-        this.activityProgress.iterateSuccessAnswerCounter();
-
-        if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
-            iteratePlayerScoreCounter(builder);
-        }
-
         List<String> words = new ArrayList<>();
         List<String> reactions = new ArrayList<>();
 
         for (int i = 0; i < this.activityProgress.getComplexity(); i++) {
             WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
+            if(nextWord.isEmpty()) {
+                return handleMistakeAnswer(builder);
+            }
             words.add(nextWord.getWord());
             reactions.add(nextWord.getUserReaction());
+        }
+
+        this.activityProgress.iterateSuccessAnswerCounter();
+
+        if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
+            iteratePlayerScoreCounter(builder);
         }
 
         builder.addResponse(getDialogTranslator().translate(String.join(" ", words)));

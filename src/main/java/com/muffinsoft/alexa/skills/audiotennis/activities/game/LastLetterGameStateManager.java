@@ -60,7 +60,6 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(lastLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
         this.activityProgress.iterateEnemyAnswerCounter();
-        this.activityProgress.addUsedWord(word);
         return word;
     }
 }

@@ -5,7 +5,7 @@
   "addToComplexityValue": 1,
   "scoresToWinRoundValue": 2,
   "availableLives": 1,
-  "successAnswersToGetScoreValue": 5,
+  "successAnswersToGetScoreValue": 7,
   "wordsToReactions": {
     "Bam": "wham",
     "Bap": "wap",

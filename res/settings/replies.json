@@ -1,24 +1,40 @@
 {
   "NO": [
     "no",
-    "oh no",
-    "no no",
     "nope",
-    "I do not",
-    "no thank you"
+    "not"
   ],
   "YES": [
     "ok",
     "yes",
     "yep",
     "yeah",
-    "I do",
-    "yes please",
+    "do",
+    "please",
     "you know it",
     "of course"
   ],
   "AGAIN": [
-    "again",
-    "try again"
+    "again"
+  ],
+  "LAST_LETTER": [
+    "last letter",
+    "last",
+    "letter"
+  ],
+  "BAM_WHAM": [
+    "bam wham",
+    "bam",
+    "wham"
+  ],
+  "ALPHABET_RACE": [
+    "alphabet race",
+    "alphabet",
+    "race"
+  ],
+  "RHYME_MATCH": [
+    "rhyme match",
+    "rhyme",
+    "match"
   ]
 }

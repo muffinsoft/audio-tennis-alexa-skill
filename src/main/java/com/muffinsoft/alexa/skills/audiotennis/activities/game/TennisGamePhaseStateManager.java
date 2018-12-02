@@ -40,6 +40,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         if (checkIfTwoInRow()) {
             handleTwoInRow(builder);
         }
+        else if (checkIfThirdTwoInRow()) {
+            handleThirdTwoInRow(builder);
+        }
         else {
             handleRoundEnd(builder);
         }
@@ -63,6 +66,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         return builder;
     }
 
+    private boolean checkIfThirdTwoInRow() {
+        return this.activityProgress.getAmountOfGameInRow() != 0 && this.activityProgress.getAmountOfGameInRow() % 3 == 0;
+    }
+
     private boolean checkIfTwoInRow() {
         if (this.activityProgress.getEnemyGameWinInRow() != 0) {
             return this.activityProgress.getEnemyGameWinInRow() % 2 == 0;
@@ -84,7 +91,15 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         builder.addResponse(getDialogTranslator().translate(restart));
     }
 
+    private void handleThirdTwoInRow(DialogItem.Builder builder) {
+
+        this.getSessionAttributes().put(SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP, true);
+        builder.addResponse(getDialogTranslator().translate("Would you like to switch activity?"));
+    }
+
     private void handleTwoInRow(DialogItem.Builder builder) {
+
+        this.activityProgress.iterateAmountOfGameInRow();
 
         ActivityType nextActivity = progressManager.getNextActivity(this.currentActivityType);
         if (nextActivity != null) {
