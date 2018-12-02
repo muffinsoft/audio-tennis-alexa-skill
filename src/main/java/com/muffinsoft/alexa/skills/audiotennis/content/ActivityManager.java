@@ -98,6 +98,11 @@ public class ActivityManager {
         return getRandomCharFromString(replace);
     }
 
+    public boolean isKnownWord(String word) {
+        Set<String> totalWords = dictionaryManager.getTotalWords();
+        return totalWords.contains(word);
+    }
+
     public WordContainer getRandomWordForCompetitionActivityFromLetter(char lastLetter, Set<String> usedWords) {
         Map<Character, HashSet<String>> activityWords = dictionaryManager.getForCompetitionActivity();
 

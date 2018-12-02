@@ -37,6 +37,7 @@ import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
 import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
 import static com.muffinsoft.alexa.sdk.enums.StateType.READY;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.UNKNOWN_WORD_PHRASE;
 
 public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
@@ -105,6 +106,20 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         // here I will modify response
 
         return builder;
+    }
+
+    @Override
+    protected boolean isIntercepted() {
+        String userReply = getUserReply();
+        return !activityManager.isKnownWord(userReply);
+    }
+
+    @Override
+    protected DialogItem.Builder handleInterception(DialogItem.Builder builder) {
+
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(UNKNOWN_WORD_PHRASE)));
+
+        return builder.withSlotName(actionSlotName);
     }
 
     @Override

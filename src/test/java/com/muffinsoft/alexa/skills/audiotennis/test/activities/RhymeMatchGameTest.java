@@ -30,7 +30,7 @@ class RhymeMatchGameTest extends BaseTest {
         activityProgress.setPreviousWord(wordForActivity.getWord());
         activityProgress.setRequiredUserReaction(wordForActivity.getUserReaction());
 
-        Map<String, Slot> slots = createSlotsForValue("Test");
+        Map<String, Slot> slots = createSlotsForValue("test");
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));

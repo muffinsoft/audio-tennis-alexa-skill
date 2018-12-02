@@ -121,12 +121,12 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private void addGameScores(DialogItem.Builder builder) {
-        String scores = "Game win: Ben - " + this.activityProgress.getEnemyGameCounter() + ", Player - " + this.activityProgress.getPlayerGameCounter() + ".";
+        String scores = "Game scores: Ben - " + this.activityProgress.getEnemyGameCounter() + ", Player - " + this.activityProgress.getPlayerGameCounter() + ".";
         builder.addResponse(getDialogTranslator().translate(scores));
     }
 
     private void addPointScores(DialogItem.Builder builder) {
-        String scores = "Game points: Ben - " + this.activityProgress.getEnemyPointCounter() + ", Player " + this.activityProgress.getPlayerPointCounter() + ".";
+        String scores = "Points: Ben - " + this.activityProgress.getEnemyPointCounter() + ", Player " + this.activityProgress.getPlayerPointCounter() + ".";
         builder.addResponse(getDialogTranslator().translate(scores));
     }
 

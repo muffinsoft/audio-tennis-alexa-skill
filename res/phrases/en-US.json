@@ -41,7 +41,13 @@
       "role": "Alexa"
     }
   ],
-  "exitPhraseAfterCancel": [
+  "unknownWordPhrase": [
+    {
+      "content": "I didn't catch that",
+      "role": "Alexa"
+    }
+  ],
+  "exitAfterCancelPhrase": [
     {
       "content": "Alright, hope to see you again soon",
       "role": "Alexa"

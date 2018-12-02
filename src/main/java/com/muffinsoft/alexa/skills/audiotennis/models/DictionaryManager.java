@@ -18,6 +18,7 @@ public class DictionaryManager {
     private static final String RHYME_MATCH_WORDS_CSV = "settings/vocabularies/rhymeMatchWords.csv";
 
     private final Map<Character, HashSet<String>> competitionsVocabulary = new HashMap<>();
+    private final Set<String> totalWords = new HashSet<>();
     private final Map<String, String> wordToRhymes = new HashMap<>();
 
     public DictionaryManager() {
@@ -38,6 +39,7 @@ public class DictionaryManager {
                 String rhyme = entry.getValue().replace("-", "").trim();
                 String word = entry.getKey().trim();
                 wordToRhymes.put(word, rhyme);
+                totalWords.add(word);
             }
             logger.info("Dictionaries filled with words: competitions - " + words.size() + "; rhymes - " + wordToRhymes.size());
         }
@@ -50,6 +52,9 @@ public class DictionaryManager {
         return competitionsVocabulary;
     }
 
+    public Set<String> getTotalWords() {
+        return totalWords;
+    }
 
     public Map<String, String> getForRhymeMathActivity() {
         return wordToRhymes;

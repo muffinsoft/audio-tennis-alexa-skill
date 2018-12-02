@@ -20,6 +20,11 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
     }
 
     @Override
+    protected boolean isIntercepted() {
+        return false;
+    }
+
+    @Override
     protected boolean isSuccessAnswer() {
         if (getUserMultipleReplies().isEmpty()) {
             return areEquals(getUserReply(), this.activityProgress.getRequiredUserReaction());
