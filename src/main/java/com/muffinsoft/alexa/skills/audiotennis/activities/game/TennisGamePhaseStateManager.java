@@ -178,10 +178,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         logger.debug("Current activity progress: " + this.activityProgress);
 
         if (isPlayerScores) {
-            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getPlayerGameCounter(), "Player", this.activityProgress.getEnemyGameCounter());
+            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getPlayerPointCounter(), "Player", this.activityProgress.getEnemyPointCounter());
         }
         else {
-            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyGameCounter(), "Ben", this.activityProgress.getPlayerGameCounter());
+            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyPointCounter(), "Ben", this.activityProgress.getPlayerPointCounter());
         }
 
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomGameScore.getRole());

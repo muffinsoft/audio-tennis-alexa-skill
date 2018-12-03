@@ -18,7 +18,9 @@ public class UserProgress {
     }
 
     public UserProgress(ActivityType unlockedActivity) {
-        this.unlockedActivities.add(unlockedActivity.name());
+        if (unlockedActivity != null) {
+            this.unlockedActivities.add(unlockedActivity.name());
+        }
     }
 
     public int getWins() {
