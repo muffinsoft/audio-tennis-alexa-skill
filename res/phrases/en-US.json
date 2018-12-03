@@ -108,9 +108,31 @@
     }
   ],
   "trySomethingElsePhrase": [
-    {"content": "Would you like to try something else?"}
+    {
+      "content": "Would you like to try something else?"
+    }
   ],
   "newActivityUnlockedPhrase": [
-    {"content": "Congrats! You are now ready for a new activity called %activity%. Do you want to play it now?"}
+    {
+      "content": "Congrats! You are now ready for a new activity called %activity%. Do you want to play it now?"
+    }
+  ],
+  "selectActivityBetweenTwoPhrase": [
+    {
+      "content": "Do you want to play A or B?",
+      "role": "Alexa"
+    }
+  ],
+  "selectActivityBetweenThreePhrase": [
+    {
+      "content": "Do you want to play A, B or C?",
+      "role": "Alexa"
+    }
+  ],
+  "selectActivityBetweenAllPhrase": [
+    {
+      "content": "Do you want to play A, B or Something Else?",
+      "role": "Alexa"
+    }
   ]
 }

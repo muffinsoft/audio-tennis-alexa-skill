@@ -32,12 +32,18 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         }
         else {
 
-            BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
-            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
-
             nextWord = nextRightWord;
+
+            BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
+
+            if (randomOpponentAfterWordPhrase.isEmpty()) {
+                replaceWordPlaceholders(randomOpponentAfterWordPhrase.getContent(), nextWord, null, null);
+                builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
+            }
+            else {
+                builder.addResponse(getDialogTranslator().translate(nextWord));
+            }
             this.activityProgress.addUsedWord(nextWord);
-            builder.addResponse(getDialogTranslator().translate(nextWord));
         }
 
         BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();

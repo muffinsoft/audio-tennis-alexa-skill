@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muffinsoft.alexa.sdk.util.ContentLoader;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityPhrases;
+import com.muffinsoft.alexa.skills.audiotennis.models.GreetingsPhrases;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,12 +18,14 @@ public class ActivitiesPhraseManager {
     private static final String RHYME_MATCH = "phrases/rhyme-match-phrases.json";
     private static final String COMPETITION_ACTIVITY = "phrases/competition-activity-phrases.json";
     private static final String ONE_SIDE_ACTIVITY = "phrases/one-side-activity-phrases.json";
+    private static final String GREETINGS_PHRASES = "phrases/greetings-phrases.json";
 
     private final ContentLoader contentLoader = new ContentLoader(new ObjectMapper());
 
     private final Map<ActivityType, ActivityPhrases> containerByActivity;
     private final ActivityPhrases competitionPhrases;
     private final ActivityPhrases oneSidePhrases;
+    private final GreetingsPhrases greetingsPhrases;
 
     public ActivitiesPhraseManager() {
 
@@ -41,6 +44,8 @@ public class ActivitiesPhraseManager {
         });
         oneSidePhrases = contentLoader.loadContent(new ActivityPhrases(), ONE_SIDE_ACTIVITY, new TypeReference<ActivityPhrases>() {
         });
+        greetingsPhrases = contentLoader.loadContent(new GreetingsPhrases(), GREETINGS_PHRASES, new TypeReference<GreetingsPhrases>() {
+        });
     }
 
     public ActivityPhrases getPhrasesForActivity(ActivityType type) {
@@ -55,5 +60,9 @@ public class ActivitiesPhraseManager {
         else {
             return oneSidePhrases;
         }
+    }
+
+    public GreetingsPhrases getGreetingsPhrases() {
+        return this.greetingsPhrases;
     }
 }

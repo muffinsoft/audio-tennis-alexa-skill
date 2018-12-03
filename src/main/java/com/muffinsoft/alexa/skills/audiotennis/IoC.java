@@ -10,7 +10,6 @@ import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CharactersManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.GeneralActivityPhraseManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.GreetingsPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ProgressManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.UserReplyManager;
@@ -26,7 +25,6 @@ public class IoC {
     private static final UserReplyManager USER_REPLY_MANAGER;
     private static final ProgressManager PROGRESS_MANAGER;
     private static final AliasManager ALIAS_MANAGER;
-    private static final GreetingsPhraseManager GREETINGS_PHRASE_MANAGER;
     private static final SettingsDependencyContainer SETTINGS_DEPENDENCY_CONTAINER;
     private static final PhraseDependencyContainer PHRASE_DEPENDENCY_CONTAINER;
     private static final TennisIntentFabric INTENT_FABRIC;
@@ -42,14 +40,13 @@ public class IoC {
         USER_REPLY_MANAGER = new UserReplyManager("settings/replies.json");
         ALIAS_MANAGER = new AliasManager("settings/aliases.json");
         PROGRESS_MANAGER = new ProgressManager("settings/defaults.json");
-        GREETINGS_PHRASE_MANAGER = new GreetingsPhraseManager("phrases/greetings-phrases.json");
         CHARACTERS_MANAGER = new CharactersManager("phrases/characters.json");
         BASE_DIALOG_TRANSLATOR = new BaseDialogTranslator(CHARACTERS_MANAGER.getContainer());
         ACTIVITIES_PHRASE_MANAGER = new ActivitiesPhraseManager();
         GENERAL_ACTIVITY_PHRASE_MANAGER = new GeneralActivityPhraseManager();
         DICTIONARY_MANAGER = new DictionaryManager();
         ACTIVITY_MANAGER = new ActivityManager(DICTIONARY_MANAGER);
-        PHRASE_DEPENDENCY_CONTAINER = new PhraseDependencyContainer(REGULAR_PHRASE_MANAGER, GREETINGS_PHRASE_MANAGER, ACTIVITIES_PHRASE_MANAGER, GENERAL_ACTIVITY_PHRASE_MANAGER);
+        PHRASE_DEPENDENCY_CONTAINER = new PhraseDependencyContainer(REGULAR_PHRASE_MANAGER, ACTIVITIES_PHRASE_MANAGER, GENERAL_ACTIVITY_PHRASE_MANAGER);
         SETTINGS_DEPENDENCY_CONTAINER = new SettingsDependencyContainer(CARD_MANAGER, USER_REPLY_MANAGER, ALIAS_MANAGER, BASE_DIALOG_TRANSLATOR, ACTIVITY_MANAGER, PROGRESS_MANAGER);
         INTENT_FABRIC = new TennisIntentFabric(SETTINGS_DEPENDENCY_CONTAINER, PHRASE_DEPENDENCY_CONTAINER);
     }
@@ -70,7 +67,7 @@ public class IoC {
         return PHRASE_DEPENDENCY_CONTAINER;
     }
 
-    public static IntentFactory provideIntentFactory() {
+    static IntentFactory provideIntentFactory() {
         return INTENT_FABRIC;
     }
 }

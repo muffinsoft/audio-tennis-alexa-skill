@@ -26,15 +26,12 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         for (int i = 0; i < this.activityProgress.getComplexity(); i++) {
             WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
-            if(nextWord.isEmpty()) {
+            if (nextWord.isEmpty()) {
                 return handleMistakeAnswer(builder);
             }
             words.add(nextWord.getWord());
             reactions.add(nextWord.getUserReaction());
         }
-
-        BasePhraseContainer randomOpponentAfterXWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
-        builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
 
         this.activityProgress.iterateSuccessAnswerCounter();
 
@@ -42,7 +39,18 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
             iteratePlayerScoreCounter(builder);
         }
 
-        builder.addResponse(getDialogTranslator().translate(String.join(" ", words)));
+        BasePhraseContainer randomOpponentAfterXWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
+
+        String nextWord = String.join(" ", words);
+
+        if (randomOpponentAfterXWordPhrase.isEmpty()) {
+            builder.addResponse(getDialogTranslator().translate(nextWord));
+        }
+        else {
+            String newContent = replaceWordPlaceholders(randomOpponentAfterXWordPhrase.getContent(), nextWord, null, null);
+            randomOpponentAfterXWordPhrase.setContent(newContent);
+            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
+        }
 
         this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));
 

@@ -51,6 +51,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         else {
             handleRoundEnd(builder);
         }
+        savePersistentAttributes();
         return builder;
     }
 
@@ -78,6 +79,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         else {
             handleRoundEnd(builder);
         }
+        savePersistentAttributes();
         return builder;
     }
 
@@ -129,11 +131,13 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             builder.addResponse(getDialogTranslator().translate(valueByKey));
             this.activityProgress.setPossibleActivity(nextActivity);
             this.activityProgress.addUnlockedActivity(nextActivity);
+            this.userProgress.addUnlockedActivity(nextActivity);
         }
     }
 
     private void iteratePlayerGameCounter(DialogItem.Builder builder) {
         this.activityProgress.iteratePlayerGameCounter();
+        this.userProgress.iterateWinCounter();
         BasePhraseContainer randomPlayerWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinScore();
         String newContent = replaceScoresPlaceholders(randomPlayerWinScore.getContent(), this.activityProgress.getPlayerGameCounter());
         randomPlayerWinScore.setContent(newContent);
@@ -143,6 +147,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     private void iterateEnemyGameCounter(DialogItem.Builder builder) {
         this.activityProgress.iterateEnemyGameCounter();
+        this.userProgress.iterateLoseCounter();
         BasePhraseContainer randomEnemyWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinScore();
         String newContent = replaceScoresPlaceholders(randomEnemyWinScore.getContent(), this.activityProgress.getPlayerGameCounter());
         randomEnemyWinScore.setContent(newContent);
@@ -207,7 +212,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         return inputString;
     }
 
-    String replaceActivityPlaceholders(String inputString, String activity) {
+    private String replaceActivityPlaceholders(String inputString, String activity) {
         if (activity != null) {
             inputString = inputString.replace("%activity%", activity);
         }

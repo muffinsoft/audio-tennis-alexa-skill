@@ -7,6 +7,7 @@ import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
+import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
@@ -76,8 +77,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
         this.activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress(this.currentActivityType);
 
-        LinkedHashMap rawUserProgress = (LinkedHashMap) getSessionAttributes().get(USER_PROGRESS);
-        this.userProgress = rawUserProgress != null ? mapper.convertValue(rawUserProgress, UserProgress.class) : new UserProgress();
+        this.userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
     }
 
     @Override
@@ -88,7 +88,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected void updatePersistentAttributes() {
-        super.updatePersistentAttributes();
+        String json = UserProgressConverter.toJson(this.userProgress);
+        if (json != null) {
+            this.getPersistentAttributes().put(SessionConstants.USER_PROGRESS, json);
+        }
     }
 
     @Override
