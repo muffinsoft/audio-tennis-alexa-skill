@@ -173,9 +173,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             randomGameScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinGame();
         }
 
-        logger.debug("Going to fill score placeholder at phrase: " + randomGameScore.getContent());
-        logger.debug("Current activity progress: " + this.activityProgress);
-
         if (isPlayerScores) {
             newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getPlayerPointCounter(), "Player", this.activityProgress.getEnemyPointCounter());
         }
@@ -185,8 +182,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomGameScore.getRole());
 
-        logger.debug("Result content: " + newPhraseContainer.getContent());
-
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
@@ -194,8 +189,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         BasePhraseContainer randomTotalScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomTotalScore();
         String newContent;
 
-        logger.debug("Going to fill score placeholder at phrase: " + randomTotalScore.getContent());
-        logger.debug("Current activity progress: " + this.activityProgress);
         if (isPlayerScores) {
             newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getPlayerPointCounter(), "Player", this.activityProgress.getEnemyPointCounter());
         }
@@ -204,7 +197,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         }
 
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomTotalScore.getRole());
-        logger.debug("Result content: " + newPhraseContainer.getContent());
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
