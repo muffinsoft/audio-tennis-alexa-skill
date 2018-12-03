@@ -113,15 +113,15 @@ public class LaunchStateManager extends BaseStateManager {
     private void appendEnemyWinsResult(DialogItem.Builder builder) {
         BasePhraseContainer randomEnemyLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomEnemyLastScore();
         String newContent = replaceScoresPlaceholders(randomEnemyLastScore.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
-        randomEnemyLastScore.setContent(newContent);
-        builder.addResponse(getDialogTranslator().translate(randomEnemyLastScore));
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomEnemyLastScore.getRole());
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
     private void appendPlayerWindResult(DialogItem.Builder builder) {
         BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
         String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
-        randomPlayerLastScore.setContent(newContent);
-        builder.addResponse(getDialogTranslator().translate(randomPlayerLastScore));
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
     private void buildInitialGreeting(DialogItem.Builder builder) {
@@ -150,8 +150,7 @@ public class LaunchStateManager extends BaseStateManager {
         List<PhraseContainer> newDialog = new ArrayList<>();
         for (BasePhraseContainer phraseContainer : dialog) {
             String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
-            phraseContainer.setContent(newContent);
-            newDialog.add(phraseContainer);
+            newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
         }
         builder.addResponse(getDialogTranslator().translate(newDialog));
     }
@@ -162,8 +161,7 @@ public class LaunchStateManager extends BaseStateManager {
         for (BasePhraseContainer phraseContainer : dialog) {
             String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
             newContent = replaceAwardsPlaceholders(newContent, this.userProgress.getAchievements());
-            phraseContainer.setContent(newContent);
-            newDialog.add(phraseContainer);
+            newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
         }
         builder.addResponse(getDialogTranslator().translate(newDialog));
     }

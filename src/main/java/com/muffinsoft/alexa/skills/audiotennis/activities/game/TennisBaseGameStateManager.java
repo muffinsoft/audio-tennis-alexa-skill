@@ -77,7 +77,8 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
         this.activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress(this.currentActivityType);
 
-        this.userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
+        UserProgress userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
+        this.userProgress = userProgress != null ? userProgress : new UserProgress(this.currentActivityType);
     }
 
     @Override
@@ -141,7 +142,9 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected DialogItem.Builder handleRestartState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+            //TODO implement logic
             builder.addResponse(getDialogTranslator().translate("Here will be exit"));
+            builder.withShouldEnd(true);
         }
         else {
             appendNextRoundPhrase(builder);

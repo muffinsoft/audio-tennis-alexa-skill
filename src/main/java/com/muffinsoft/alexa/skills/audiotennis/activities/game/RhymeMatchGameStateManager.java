@@ -49,9 +49,10 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
         BasePhraseContainer playerLosePhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerLoseWrongWordPhrase();
 
         String newContent = replaceWordPlaceholders(playerLosePhrase.getContent(), getUserReply(), null, this.activityProgress.getPreviousWord());
-        playerLosePhrase.setContent(newContent);
 
-        builder.addResponse(getDialogTranslator().translate(playerLosePhrase));
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, playerLosePhrase.getRole());
+
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
 
         this.activityProgress.iterateMistakeCount();
 

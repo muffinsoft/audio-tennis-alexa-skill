@@ -6,11 +6,12 @@ import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 public class UserProgressConverter {
 
     public static UserProgress fromJson(String json) {
-        if (json != null && !json.isEmpty()) {
+        if (json != null && !json.isEmpty() || !Objects.equals(json, "null")) {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 LinkedHashMap rawUserProgress = mapper.readValue(json, LinkedHashMap.class);

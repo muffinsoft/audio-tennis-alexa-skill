@@ -56,7 +56,6 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
         char wrongLetter = activityManager.getRandomLetterExcept(lastLetter);
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(wrongLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
-        this.activityProgress.iterateEnemyAnswerCounter();
         this.activityProgress.addUsedWord(word);
         return word;
     }
@@ -65,8 +64,9 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     protected String getNextRightWordForActivity() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(lastLetter, this.activityProgress.getUsedWords());
-        String word = randomWordForActivityFromLetter.getWord();
-        this.activityProgress.iterateEnemyAnswerCounter();
-        return word;
+        if (randomWordForActivityFromLetter.isEmpty()) {
+            return null;
+        }
+        return randomWordForActivityFromLetter.getWord();
     }
 }

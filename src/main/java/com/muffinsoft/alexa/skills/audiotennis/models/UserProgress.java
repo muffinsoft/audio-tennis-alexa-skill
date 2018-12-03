@@ -11,10 +11,14 @@ public class UserProgress {
 
     private int wins;
     private int losses;
-    private Set<String> unlockedActivities;
-    private Set<String> achievements;
+    private Set<String> unlockedActivities = new HashSet<>();
+    private Set<String> achievements = new HashSet<>();
 
     public UserProgress() {
+    }
+
+    public UserProgress(ActivityType unlockedActivity) {
+        this.unlockedActivities.add(unlockedActivity.name());
     }
 
     public int getWins() {
@@ -61,14 +65,14 @@ public class UserProgress {
     }
 
     public void iterateLoseCounter() {
-
+        this.losses += 1;
     }
 
     public void iterateWinCounter() {
-
+        this.wins += 1;
     }
 
     public void addUnlockedActivity(ActivityType activity) {
-
+        this.unlockedActivities.add(activity.name());
     }
 }

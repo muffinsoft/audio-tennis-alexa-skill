@@ -53,7 +53,6 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
         char wrongLetter = activityManager.getRandomLetterExcept(firstLetter);
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(wrongLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
-        this.activityProgress.iterateEnemyAnswerCounter();
         this.activityProgress.addUsedWord(word);
         return word;
     }
@@ -64,7 +63,6 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
         char nextLetter = activityManager.getNextLetter(firstLetter);
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(nextLetter, this.activityProgress.getUsedWords());
         String word = randomWordForActivityFromLetter.getWord();
-        this.activityProgress.iterateEnemyAnswerCounter();
         this.activityProgress.addUsedWord(word);
         return word;
     }

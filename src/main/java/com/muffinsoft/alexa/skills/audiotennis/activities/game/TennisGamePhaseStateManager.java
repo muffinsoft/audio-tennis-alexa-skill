@@ -10,7 +10,10 @@ import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +21,8 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
+
+    protected static final Logger logger = LogManager.getLogger(TennisGamePhaseStateManager.class);
 
     TennisGamePhaseStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
@@ -122,13 +127,16 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         if (nextActivity != null) {
             this.getSessionAttributes().put(SessionConstants.SWITCH_ACTIVITY_STEP, true);
 
-            List<PhraseContainer> valueByKey = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE);
-            for (PhraseContainer phrase : valueByKey) {
+            List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE);
+            List<PhraseContainer> replacesDialog = new ArrayList<>();
+
+            for (PhraseContainer phrase : dialog) {
                 String newContent = replaceActivityPlaceholders(phrase.getContent(), aliasManager.getValueByKey(nextActivity.name()));
-                ((BasePhraseContainer) phrase).setContent(newContent);
+                BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phrase.getRole());
+                replacesDialog.add(newPhraseContainer);
             }
 
-            builder.addResponse(getDialogTranslator().translate(valueByKey));
+            builder.addResponse(getDialogTranslator().translate(replacesDialog));
             this.activityProgress.setPossibleActivity(nextActivity);
             this.activityProgress.addUnlockedActivity(nextActivity);
             this.userProgress.addUnlockedActivity(nextActivity);
@@ -140,8 +148,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.iterateWinCounter();
         BasePhraseContainer randomPlayerWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinScore();
         String newContent = replaceScoresPlaceholders(randomPlayerWinScore.getContent(), this.activityProgress.getPlayerGameCounter());
-        randomPlayerWinScore.setContent(newContent);
-        builder.addResponse(getDialogTranslator().translate(randomPlayerWinScore));
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerWinScore.getRole());
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
         addGameScores(builder, true);
     }
 
@@ -150,39 +158,56 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.iterateLoseCounter();
         BasePhraseContainer randomEnemyWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinScore();
         String newContent = replaceScoresPlaceholders(randomEnemyWinScore.getContent(), this.activityProgress.getPlayerGameCounter());
-        randomEnemyWinScore.setContent(newContent);
-        builder.addResponse(getDialogTranslator().translate(randomEnemyWinScore));
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomEnemyWinScore.getRole());
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
         addGameScores(builder, false);
     }
 
     private void addGameScores(DialogItem.Builder builder, boolean isPlayerScores) {
         BasePhraseContainer randomGameScore;
         String newContent;
+
         if (isPlayerScores) {
             randomGameScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinGame();
-            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getPlayerGameCounter());
         }
         else {
             randomGameScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinGame();
-            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyGameCounter());
         }
 
-        randomGameScore.setContent(newContent);
+        logger.debug("Going to fill score placeholder at phrase: " + randomGameScore.getContent());
+        logger.debug("Current activity progress: " + this.activityProgress);
 
-        builder.addResponse(getDialogTranslator().translate(randomGameScore));
+        if (isPlayerScores) {
+            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getPlayerGameCounter(), "Player", this.activityProgress.getEnemyGameCounter());
+        }
+        else {
+            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyGameCounter(), "Ben", this.activityProgress.getPlayerGameCounter());
+        }
+
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomGameScore.getRole());
+
+        logger.debug("Result content: " + newPhraseContainer.getContent());
+
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
     private void addPointScores(DialogItem.Builder builder, boolean isPlayerScores) {
         BasePhraseContainer randomTotalScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomTotalScore();
         String newContent;
+
+        logger.debug("Going to fill score placeholder at phrase: " + randomTotalScore.getContent());
+        logger.debug("Current activity progress: " + this.activityProgress);
         if (isPlayerScores) {
-            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getPlayerPointCounter(), "Player", null);
+            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getPlayerPointCounter(), "Player", this.activityProgress.getEnemyPointCounter());
         }
         else {
-            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getEnemyPointCounter(), "Ben", null);
+            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getEnemyPointCounter(), "Ben", this.activityProgress.getPlayerPointCounter());
         }
-        randomTotalScore.setContent(newContent);
-        builder.addResponse(getDialogTranslator().translate(randomTotalScore));
+
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomTotalScore.getRole());
+        logger.debug("Result content: " + newPhraseContainer.getContent());
+
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
     void iteratePlayerScoreCounter(DialogItem.Builder builder) {
@@ -200,36 +225,37 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private String replaceScoresPlaceholders(String inputString, Integer scores, String favour, Integer enemyScores) {
-        if (scores != null) {
-            inputString = inputString.replace("%scores%", String.valueOf(scores));
+
+        if (inputString == null) {
+            return null;
         }
+
+        String result = inputString.replace("%scores%", String.valueOf(scores));
         if (enemyScores != null) {
-            inputString = inputString.replace("%enemyScore%", String.valueOf(enemyScores));
+            result = result.replace("%enemyScore%", String.valueOf(enemyScores));
         }
         if (favour != null) {
-            inputString = inputString.replace("%favour%", String.valueOf(favour));
+            result = result.replace("%favour%", String.valueOf(favour));
         }
-        return inputString;
+        return result;
     }
 
     private String replaceActivityPlaceholders(String inputString, String activity) {
-        if (activity != null) {
-            inputString = inputString.replace("%activity%", activity);
-        }
-        return inputString;
+        return inputString.replace("%activity%", activity);
     }
 
     String replaceWordPlaceholders(String inputString, String word, Character character, String rhyme) {
-        if (word != null) {
-            inputString = inputString.replace("%word%", word);
+        if (inputString == null || word == null) {
+            return inputString;
         }
+        String result = inputString.replace("%word%", word);
         if (character != null) {
-            inputString = inputString.replace("%letter%", String.valueOf(character));
+            result = result.replace("%letter%", String.valueOf(character));
         }
         if (rhyme != null) {
-            inputString = inputString.replace("%rhyme%", rhyme);
+            result = result.replace("%rhyme%", rhyme);
         }
-        return inputString;
+        return result;
     }
 
     boolean isWordAlreadyUser() {
