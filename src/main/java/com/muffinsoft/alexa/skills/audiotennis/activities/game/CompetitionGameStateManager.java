@@ -29,16 +29,14 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         String nextRightWord = getNextRightWordForActivity();
 
         if (nextRightWord.isEmpty()) {
-            logger.debug("Can't find word by rule");
+            iteratePlayerScoreCounter(builder);
             nextWord = getNextWrongWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
-            iteratePlayerScoreCounter(builder);
         }
         else if (this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getComplexity() == 0) {
-            logger.debug("It's time to make a mistake");
+            iteratePlayerScoreCounter(builder);
             nextWord = getNextWrongWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
-            iteratePlayerScoreCounter(builder);
         }
         else {
 
@@ -80,12 +78,12 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             playerLosePhrase = phrasesForActivity.getRandomPlayerLoseWrongWordPhrase();
         }
 
+        iterateEnemyScoreCounter(builder);
+
         String newContent = replaceWordPlaceholders(playerLosePhrase.getContent(), getUserReply(), characterWithMistake, null);
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, playerLosePhrase.getRole());
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
-
-        iterateEnemyScoreCounter(builder);
 
         this.activityProgress.addUsedWord(getUserReply());
 
@@ -97,8 +95,6 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         return builder.withSlotName(actionSlotName);
     }
-
-    protected abstract void addNextWordAfterEnemyWrongAnswer(DialogItem.Builder builder, String nextWord);
 
     protected abstract String getNextRightWordForActivity();
 

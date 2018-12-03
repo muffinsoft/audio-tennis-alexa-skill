@@ -43,8 +43,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         iterateEnemyGameCounter(builder);
 
-        BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
-        builder.addResponse(getDialogTranslator().translate(randomPhrase));
+
 
         if (checkIfTwoInRow()) {
             handleTwoInRow(builder);
@@ -64,20 +63,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         iteratePlayerGameCounter(builder);
 
-        boolean isTwoInRow = checkIfTwoInRow();
 
-        BasePhraseContainer randomPhrase;
-
-        if (isTwoInRow) {
-            randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWonTwice();
-        }
-        else {
-            randomPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerWonOnceAtGamePhrase();
-        }
-
-        builder.addResponse(getDialogTranslator().translate(randomPhrase));
-
-        if (isTwoInRow) {
+        if (checkIfTwoInRow()) {
             handleTwoInRow(builder);
         }
         else {
@@ -104,7 +91,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private void handleRoundEnd(DialogItem.Builder builder) {
-        appendNextRoundPhrase(builder);
         initGameStatePhrase(builder);
     }
 
@@ -198,14 +184,20 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     void iteratePlayerScoreCounter(DialogItem.Builder builder) {
+        BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerWonOnceAtGamePhrase();
+        builder.addResponse(getDialogTranslator().translate(phraseContainer));
         this.activityProgress.iteratePlayerPointCounter();
         addPointScores(builder, true);
+        appendNextRoundPhrase(builder);
         savePersistentAttributes();
     }
 
     void iterateEnemyScoreCounter(DialogItem.Builder builder) {
+        BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
+        builder.addResponse(getDialogTranslator().translate(randomPhrase));
         this.activityProgress.iterateEnemyPointCounter();
         addPointScores(builder, false);
+        appendNextRoundPhrase(builder);
         savePersistentAttributes();
     }
 

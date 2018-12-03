@@ -74,6 +74,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
         this.activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress(this.currentActivityType);
+        this.activityProgress.getUnlockedActivities().remove(null);
 
         UserProgress userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
         this.userProgress = userProgress != null ? userProgress : new UserProgress(this.currentActivityType);

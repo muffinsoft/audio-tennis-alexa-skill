@@ -19,11 +19,6 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     }
 
     @Override
-    protected void addNextWordAfterEnemyWrongAnswer(DialogItem.Builder builder, String nextWord) {
-        builder.addResponse(getDialogTranslator().translate("Your word should starts from " + nextWord.charAt(nextWord.length() - 1)));
-    }
-
-    @Override
     protected boolean isSuccessAnswer() {
 
         boolean isSuccess = false;

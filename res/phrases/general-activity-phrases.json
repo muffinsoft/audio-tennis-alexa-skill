@@ -72,23 +72,23 @@
   "totalScore": [
     {
       "content": "Now the score is %enemyScore% : %scores%. In %favour% Favour",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "The score is now %enemyScore% : %scores%. In %favour% Favour",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "Current score %enemyScore% : %scores%. In %favour% Favour",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "Here's the current score %enemyScore% : %scores%. In %favour% Favour",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "That makes it %enemyScore% : %scores%. In %favour% Favour",
-      "role": "Ben"
+      "role": "Alexa"
     }
   ],
   "nextRound": [

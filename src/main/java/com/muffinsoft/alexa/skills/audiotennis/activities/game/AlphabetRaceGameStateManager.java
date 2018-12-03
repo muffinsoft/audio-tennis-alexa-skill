@@ -19,12 +19,6 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
     }
 
     @Override
-    protected void addNextWordAfterEnemyWrongAnswer(DialogItem.Builder builder, String nextWord) {
-        char nextLetter = activityManager.getNextLetter(nextWord.charAt(0));
-        builder.addResponse(getDialogTranslator().translate("Your word should starts from " + nextLetter));
-    }
-
-    @Override
     protected boolean isSuccessAnswer() {
 
         if (getUserMultipleReplies().isEmpty()) {
