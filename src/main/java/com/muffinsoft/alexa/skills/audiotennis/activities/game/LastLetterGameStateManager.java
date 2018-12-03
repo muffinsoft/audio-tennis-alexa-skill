@@ -39,13 +39,10 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
             char firstLetter = userReply.charAt(0);
 
             if (!Objects.equals(lastLetter, firstLetter)) {
-                activityProgress.addUsedWord(getUserReply());
                 return false;
             }
 
             isSuccess = !isWordAlreadyUser();
-
-            activityProgress.addUsedWord(getUserReply());
         }
         return isSuccess;
     }

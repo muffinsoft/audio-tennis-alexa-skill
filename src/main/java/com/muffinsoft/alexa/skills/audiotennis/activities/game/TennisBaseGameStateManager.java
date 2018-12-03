@@ -89,6 +89,14 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected void updatePersistentAttributes() {
+
+        this.userProgress.setLastGameEnemyPoint(this.activityProgress.getEnemyPointCounter());
+        this.userProgress.setLastGamePlayerPoint(this.activityProgress.getPlayerPointCounter());
+
+        if (!this.userProgress.getUnlockedActivities().contains(this.currentActivityType.name())) {
+            this.userProgress.addUnlockedActivity(this.currentActivityType);
+        }
+
         String json = UserProgressConverter.toJson(this.userProgress);
         if (json != null) {
             this.getPersistentAttributes().put(SessionConstants.USER_PROGRESS, json);

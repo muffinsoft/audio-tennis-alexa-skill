@@ -54,7 +54,7 @@
     }
   ],
   "returnEnemyLastScore": [
-    {"content": "I really creamed you %enemyScores% to %scores% to %enemyScores% last time!", "role": "Ben"},
+    {"content": "I really creamed you %enemyScores% to %scores% last time!", "role": "Ben"},
     {"content": "I won %enemyScores% to %scores% last time. You need some practice!", "role": "Ben"},
     {"content": "I outplayed you big time last game! The score was %enemyScores% to %scores%.", "role": "Ben"},
     {"content": "I beat you %enemyScores% to %scores% last game. Am I good or what?", "role": "Ben"},

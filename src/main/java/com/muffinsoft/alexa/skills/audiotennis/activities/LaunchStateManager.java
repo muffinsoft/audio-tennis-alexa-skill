@@ -96,6 +96,9 @@ public class LaunchStateManager extends BaseStateManager {
     private void appendActivitySelection(DialogItem.Builder builder) {
         List<PhraseContainer> dialog;
         switch (this.userProgress.getUnlockedActivities().size()) {
+            case 1:
+                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_ONE_PHRASE);
+                break;
             case 2:
                 dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_TWO_PHRASE);
                 break;
@@ -112,14 +115,14 @@ public class LaunchStateManager extends BaseStateManager {
 
     private void appendEnemyWinsResult(DialogItem.Builder builder) {
         BasePhraseContainer randomEnemyLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomEnemyLastScore();
-        String newContent = replaceScoresPlaceholders(randomEnemyLastScore.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
+        String newContent = replaceScoresPlaceholders(randomEnemyLastScore.getContent(), this.userProgress.getLastGameEnemyPoint(), this.userProgress.getLastGamePlayerPoint());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomEnemyLastScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
     private void appendPlayerWindResult(DialogItem.Builder builder) {
         BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
-        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
+        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGamePlayerPoint(), this.userProgress.getLastGameEnemyPoint());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }

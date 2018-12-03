@@ -89,6 +89,10 @@ public class TennisIntentFabric implements IntentFactory {
 
         ActivityType currentActivity = activityProgress.getCurrentActivity();
 
+        if (currentActivity == null) {
+            currentActivity = ActivityProgress.getDefaultActivity();
+        }
+
         switch (currentActivity) {
             case ALPHABET_RACE:
                 return new AlphabetRaceGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
@@ -110,13 +114,17 @@ public class TennisIntentFabric implements IntentFactory {
         if (unlockedActivities.isEmpty()) {
             return;
         }
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        ActivityType newActivity = unlockedActivities.stream().skip(random.nextInt(unlockedActivities.size())).findFirst().orElse(null);
+        ActivityType newActivity = getRandomActivity(unlockedActivities);
         activityProgress.setPreviousActivity(currentActivity);
         activityProgress.setCurrentActivity(newActivity);
         sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
         sessionAttributes.remove(STATE_TYPE);
         sessionAttributes.remove(RANDOM_SWITCH_ACTIVITY_STEP);
+    }
+
+    private ActivityType getRandomActivity(Set<ActivityType> unlockedActivities) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        return unlockedActivities.stream().skip(random.nextInt(unlockedActivities.size())).findFirst().orElse(null);
     }
 
     private void interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {

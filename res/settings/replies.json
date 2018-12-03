@@ -36,5 +36,9 @@
     "rhyme match",
     "rhyme",
     "match"
+  ],
+  "SOMETHING_ELSE": [
+    "something else",
+    "else"
   ]
 }

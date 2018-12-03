@@ -23,22 +23,22 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         this.activityProgress.iterateSuccessAnswerCounter();
         this.activityProgress.iterateEnemyAnswerCounter();
 
+        this.activityProgress.addUsedWord(getUserReply());
+
         String nextWord;
         String nextRightWord = getNextRightWordForActivity();
 
-        if(nextRightWord.isEmpty()) {
+        if (nextRightWord.isEmpty()) {
             logger.debug("Can't find word by rule");
             nextWord = getNextWrongWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
             iteratePlayerScoreCounter(builder);
-//            addNextWordAfterEnemyWrongAnswer(builder, nextWord);
         }
         else if (this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getComplexity() == 0) {
             logger.debug("It's time to make a mistake");
             nextWord = getNextWrongWordForActivity();
             builder.addResponse(getDialogTranslator().translate(nextWord));
             iteratePlayerScoreCounter(builder);
-//            addNextWordAfterEnemyWrongAnswer(builder, nextWord);
         }
         else {
 
@@ -86,6 +86,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
 
         iterateEnemyScoreCounter(builder);
+
+        this.activityProgress.addUsedWord(getUserReply());
 
         String nextWord = getNextRightWordForActivity();
         this.activityProgress.addUsedWord(nextWord);

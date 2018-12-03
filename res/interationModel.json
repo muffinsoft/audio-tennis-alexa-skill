@@ -74,6 +74,68 @@
                   "of course"
                 ]
               }
+            },{
+              "name": {
+                "value": "no",
+                "synonyms": [
+                  "no",
+                  "nope",
+                  "not"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "last letter",
+                "synonyms": [
+                  "a",
+                  "last letter",
+                  "last",
+                  "letter"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "bam wham",
+                "synonyms": [
+                  "b",
+                  "bam wham",
+                  "bam",
+                  "wham"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "alphabet race",
+                "synonyms": [
+                  "c",
+                  "alphabet race",
+                  "alphabet",
+                  "race"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "rhyme match",
+                "synonyms": [
+                  "d",
+                  "rhyme match",
+                  "rhyme",
+                  "match"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "else",
+                "synonyms": [
+                  "else",
+                  "something else"
+                ]
+              }
             }
           ]
         },

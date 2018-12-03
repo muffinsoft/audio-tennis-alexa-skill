@@ -42,7 +42,7 @@ public class ActivityProgress {
     }
 
     @JsonIgnore
-    private static ActivityType getDefaultActivity() {
+    public static ActivityType getDefaultActivity() {
         return IoC.provideProgressManager().getFirstActivity();
     }
 

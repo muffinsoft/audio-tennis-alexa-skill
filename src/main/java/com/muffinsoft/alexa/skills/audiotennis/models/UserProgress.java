@@ -11,6 +11,8 @@ public class UserProgress {
 
     private int wins;
     private int losses;
+    private int lastGamePlayerPoint;
+    private int lastGameEnemyPoint;
     private Set<String> unlockedActivities = new HashSet<>();
     private Set<String> achievements = new HashSet<>();
 
@@ -55,12 +57,30 @@ public class UserProgress {
         this.achievements = new HashSet<>(Arrays.asList(achievements));
     }
 
+    public int getLastGamePlayerPoint() {
+        return lastGamePlayerPoint;
+    }
+
+    public void setLastGamePlayerPoint(int lastGamePlayerPoint) {
+        this.lastGamePlayerPoint = lastGamePlayerPoint;
+    }
+
+    public int getLastGameEnemyPoint() {
+        return lastGameEnemyPoint;
+    }
+
+    public void setLastGameEnemyPoint(int lastGameEnemyPoint) {
+        this.lastGameEnemyPoint = lastGameEnemyPoint;
+    }
+
     @Override
     @JsonIgnore
     public String toString() {
         return "UserProgress{" +
                 "wins=" + wins +
                 ", losses=" + losses +
+                ", lastGamePlayerPoint=" + lastGamePlayerPoint +
+                ", lastGameEnemyPoint=" + lastGameEnemyPoint +
                 ", unlockedActivities=" + unlockedActivities +
                 ", achievements=" + achievements +
                 '}';

@@ -19,6 +19,7 @@ import java.util.Map;
 
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_RESTART_PHRASE;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
 
@@ -106,11 +107,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     private void handleRoundEnd(DialogItem.Builder builder) {
 
-        String restart = "Do you want to restart?";
-
         this.stateType = StateType.RESTART;
 
-        builder.addResponse(getDialogTranslator().translate(restart));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE)));
     }
 
     private void handleThirdTwoInRow(DialogItem.Builder builder) {
@@ -213,11 +212,13 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     void iteratePlayerScoreCounter(DialogItem.Builder builder) {
         this.activityProgress.iteratePlayerPointCounter();
         addPointScores(builder, true);
+        savePersistentAttributes();
     }
 
     void iterateEnemyScoreCounter(DialogItem.Builder builder) {
         this.activityProgress.iterateEnemyPointCounter();
         addPointScores(builder, false);
+        savePersistentAttributes();
     }
 
     private String replaceScoresPlaceholders(String inputString, Integer scores) {

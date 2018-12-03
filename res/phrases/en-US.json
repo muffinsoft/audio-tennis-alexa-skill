@@ -117,6 +117,12 @@
       "content": "Congrats! You are now ready for a new activity called %activity%. Do you want to play it now?"
     }
   ],
+  "selectActivityBetweenOnePhrase": [
+    {
+      "content": "Are you ready to start?",
+      "role": "Alexa"
+    }
+  ],
   "selectActivityBetweenTwoPhrase": [
     {
       "content": "Do you want to play A or B?",
@@ -132,6 +138,12 @@
   "selectActivityBetweenAllPhrase": [
     {
       "content": "Do you want to play A, B or Something Else?",
+      "role": "Alexa"
+    }
+  ],
+  "wantRestartPhrase": [
+    {
+      "content": "Do you want to restart?",
       "role": "Alexa"
     }
   ]

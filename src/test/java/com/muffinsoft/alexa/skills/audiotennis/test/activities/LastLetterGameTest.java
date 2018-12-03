@@ -95,7 +95,7 @@ class LastLetterGameTest extends BaseTest {
 
         ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
-        activityProgress.setEnemyAnswerCounter(2);
+        activityProgress.setEnemyAnswerCounter(3);
 
         WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromWrongLetter.getWord();
