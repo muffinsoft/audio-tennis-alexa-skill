@@ -93,6 +93,7 @@ public class LaunchStateManager extends BaseStateManager {
                 .build();
     }
 
+    @SuppressWarnings("Duplicates")
     private void appendActivitySelection(DialogItem.Builder builder) {
         List<PhraseContainer> dialog;
         switch (this.userProgress.getUnlockedActivities().size()) {

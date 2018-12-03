@@ -38,6 +38,7 @@ import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BRE
 import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
 import static com.muffinsoft.alexa.sdk.enums.StateType.READY;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.UNKNOWN_WORD_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
@@ -149,12 +150,34 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected DialogItem.Builder handleReadyToPlayState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
-            builder.addResponse(getDialogTranslator().translate("Here will be redirection to activity's selection"));
+            appendActivitySelection(builder);
         }
         else {
             initGameStatePhrase(builder);
         }
         return builder.withSlotName(actionSlotName);
+    }
+
+    @SuppressWarnings("Duplicates")
+    private void appendActivitySelection(DialogItem.Builder builder) {
+        List<PhraseContainer> dialog;
+        switch (this.userProgress.getUnlockedActivities().size()) {
+            case 1:
+                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_ONE_PHRASE);
+                break;
+            case 2:
+                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_TWO_PHRASE);
+                break;
+            case 3:
+                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_THREE_PHRASE);
+                break;
+            default:
+                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_ALL_PHRASE);
+                break;
+        }
+
+        getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
+        builder.addResponse(getDialogTranslator().translate(dialog));
     }
 
     @Override

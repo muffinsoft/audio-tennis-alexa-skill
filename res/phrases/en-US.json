@@ -125,19 +125,19 @@
   ],
   "selectActivityBetweenTwoPhrase": [
     {
-      "content": "Do you want to play A or B?",
+      "content": "Do you want to play Last Letter or Bam Wham?",
       "role": "Alexa"
     }
   ],
   "selectActivityBetweenThreePhrase": [
     {
-      "content": "Do you want to play A, B or C?",
+      "content": "Do you want to play Last Letter, Bam Wham or Alphabet Race?",
       "role": "Alexa"
     }
   ],
   "selectActivityBetweenAllPhrase": [
     {
-      "content": "Do you want to play A, B or Something Else?",
+      "content": "Do you want to play Last Letter, Bam Wham or Something Else?",
       "role": "Alexa"
     }
   ],
