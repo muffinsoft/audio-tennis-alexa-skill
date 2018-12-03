@@ -71,6 +71,11 @@ public class HelpStateManager extends BaseStateManager {
             builder.addResponse(getDialogTranslator().translate(activityHelp));
         }
 
+        // TODO : do smth with this
+//        if (this.activityProgress != null && this.activityProgress.getPreviousWord() != null) {
+//            builder.addResponse(getDialogTranslator().translate(this.activityProgress.getPreviousWord()));
+//        }
+
         getSessionAttributes().put(SessionConstants.INTENT, IntentType.GAME);
 
         return builder.build();

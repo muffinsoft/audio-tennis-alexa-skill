@@ -71,23 +71,23 @@
   ],
   "totalScore": [
     {
-      "content": "Now the score is %scores%. In %favour% Favour",
+      "content": "Now the score is %enemyScore% : %scores%. In %favour% Favour",
       "role": "Ben"
     },
     {
-      "content": "The score is now %scores%. In %favour% Favour",
+      "content": "The score is now %enemyScore% : %scores%. In %favour% Favour",
       "role": "Ben"
     },
     {
-      "content": "Current score %scores%. In %favour% Favour",
+      "content": "Current score %enemyScore% : %scores%. In %favour% Favour",
       "role": "Ben"
     },
     {
-      "content": "Here's the current score %scores%. In %favour% Favour",
+      "content": "Here's the current score %enemyScore% : %scores%. In %favour% Favour",
       "role": "Ben"
     },
     {
-      "content": "That makes it %scores%. In %favour% Favour",
+      "content": "That makes it %enemyScore% : %scores%. In %favour% Favour",
       "role": "Ben"
     }
   ],

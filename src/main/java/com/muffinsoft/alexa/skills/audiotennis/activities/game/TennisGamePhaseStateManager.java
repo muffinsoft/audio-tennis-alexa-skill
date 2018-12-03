@@ -2,7 +2,6 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
-import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
@@ -19,7 +18,6 @@ import java.util.Map;
 
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_RESTART_PHRASE;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
 
@@ -106,10 +104,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private void handleRoundEnd(DialogItem.Builder builder) {
-
-        this.stateType = StateType.RESTART;
-
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE)));
+        appendNextRoundPhrase(builder);
+        initGameStatePhrase(builder);
     }
 
     private void handleThirdTwoInRow(DialogItem.Builder builder) {
@@ -146,7 +142,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.activityProgress.iteratePlayerGameCounter();
         this.userProgress.iterateWinCounter();
         BasePhraseContainer randomPlayerWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinScore();
-        String newContent = replaceScoresPlaceholders(randomPlayerWinScore.getContent(), this.activityProgress.getPlayerGameCounter());
+        String newContent = replaceScoresPlaceholders(randomPlayerWinScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerGameCounter());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerWinScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
         addGameScores(builder, true);
@@ -156,7 +152,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.activityProgress.iterateEnemyGameCounter();
         this.userProgress.iterateLoseCounter();
         BasePhraseContainer randomEnemyWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinScore();
-        String newContent = replaceScoresPlaceholders(randomEnemyWinScore.getContent(), this.activityProgress.getPlayerGameCounter());
+        String newContent = replaceScoresPlaceholders(randomEnemyWinScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerGameCounter());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomEnemyWinScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
         addGameScores(builder, false);
@@ -174,10 +170,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         }
 
         if (isPlayerScores) {
-            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getPlayerPointCounter(), "Player", this.activityProgress.getEnemyPointCounter());
+            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter());
         }
         else {
-            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyPointCounter(), "Ben", this.activityProgress.getPlayerPointCounter());
+            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter());
         }
 
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomGameScore.getRole());
@@ -190,10 +186,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         String newContent;
 
         if (isPlayerScores) {
-            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getPlayerPointCounter(), "Player", this.activityProgress.getEnemyPointCounter());
+            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter());
         }
         else {
-            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getEnemyPointCounter(), "Ben", this.activityProgress.getPlayerPointCounter());
+            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter());
         }
 
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomTotalScore.getRole());
@@ -213,23 +209,19 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         savePersistentAttributes();
     }
 
-    private String replaceScoresPlaceholders(String inputString, Integer scores) {
-        return replaceScoresPlaceholders(inputString, scores, null, null);
-    }
-
-    private String replaceScoresPlaceholders(String inputString, Integer scores, String favour, Integer enemyScores) {
+    private String replaceScoresPlaceholders(String inputString, int enemyScores, int scores) {
 
         if (inputString == null) {
             return null;
         }
 
         String result = inputString.replace("%scores%", String.valueOf(scores));
-        if (enemyScores != null) {
-            result = result.replace("%enemyScore%", String.valueOf(enemyScores));
-        }
-        if (favour != null) {
-            result = result.replace("%favour%", String.valueOf(favour));
-        }
+
+        result = result.replace("%enemyScore%", String.valueOf(enemyScores));
+
+        String favour = (enemyScores >= scores) ? "Ben" : "Player";
+        result = result.replace("%favour%", String.valueOf(favour));
+
         return result;
     }
 
