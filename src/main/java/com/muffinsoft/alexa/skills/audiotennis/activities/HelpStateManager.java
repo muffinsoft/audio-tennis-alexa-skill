@@ -4,6 +4,7 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
+import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
@@ -25,6 +26,7 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ACTIVITY_LAST_LETTER_HELP_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ACTIVITY_RHYME_MATCH_HELP_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.GENERAL_HELP_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.READY_TO_PLAY_PHRASE;
 
 public class HelpStateManager extends BaseStateManager {
 
@@ -71,12 +73,10 @@ public class HelpStateManager extends BaseStateManager {
             builder.addResponse(getDialogTranslator().translate(activityHelp));
         }
 
-        // TODO : do smth with this
-//        if (this.activityProgress != null && this.activityProgress.getPreviousWord() != null) {
-//            builder.addResponse(getDialogTranslator().translate(this.activityProgress.getPreviousWord()));
-//        }
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(READY_TO_PLAY_PHRASE)));
 
         getSessionAttributes().put(SessionConstants.INTENT, IntentType.GAME);
+        getSessionAttributes().put(SessionConstants.STATE_TYPE, StateType.RETURN_TO_GAME);
 
         return builder.build();
     }

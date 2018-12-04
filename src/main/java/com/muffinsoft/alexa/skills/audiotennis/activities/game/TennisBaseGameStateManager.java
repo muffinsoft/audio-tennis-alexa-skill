@@ -159,6 +159,22 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     }
 
     @Override
+    protected DialogItem.Builder handleReturnToGameState(DialogItem.Builder builder) {
+        this.stateType = StateType.GAME_PHASE_1;
+
+        String word;
+        if (this.activityProgress.getPreviousWord() == null) {
+            word = generateRandomWord();
+        }
+        else {
+            word = this.activityProgress.getPreviousWord();
+        }
+        builder.addResponse(getDialogTranslator().translate(word));
+
+        return builder.withSlotName(actionSlotName);
+    }
+
+    @Override
     protected DialogItem.Builder handleRestartState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
@@ -256,7 +272,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
     }
 
-    void initGameStatePhrase(DialogItem.Builder builder) {
+    private void initGameStatePhrase(DialogItem.Builder builder) {
         this.stateType = StateType.GAME_PHASE_1;
         this.activityProgress.reset();
 

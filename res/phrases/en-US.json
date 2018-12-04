@@ -158,5 +158,11 @@
       "content": "In Ben's favour.",
       "role": "Alexa"
     }
+  ],
+  "readyToPlay": [
+    {
+      "content": "Ready to play?",
+      "role": "Alexa"
+    }
   ]
 }
