@@ -14,7 +14,9 @@ public class ActivityPhrases {
     private List<BasePhraseContainer> opponentAfterWordPhrase = Collections.emptyList();
     private List<BasePhraseContainer> opponentReactionAfterXWordsPhrase = Collections.emptyList();
     private List<BasePhraseContainer> playerLoseWrongWordPhrase = Collections.emptyList();
+    private List<BasePhraseContainer> enemyLoseWrongWordPhrase = Collections.emptyList();
     private List<BasePhraseContainer> playerLoseRepeatWordPhrase = Collections.emptyList();
+    private List<BasePhraseContainer> enemyLoseRepeatWordPhrase = Collections.emptyList();
     private List<BasePhraseContainer> playerWonOnceAtGame = Collections.emptyList();
 
     public List<BasePhraseContainer> getIntro() {
@@ -73,6 +75,22 @@ public class ActivityPhrases {
         this.playerWonOnceAtGame = playerWonOnceAtGame;
     }
 
+    public List<BasePhraseContainer> getEnemyLoseWrongWordPhrase() {
+        return enemyLoseWrongWordPhrase;
+    }
+
+    public void setEnemyLoseWrongWordPhrase(List<BasePhraseContainer> enemyLoseWrongWordPhrase) {
+        this.enemyLoseWrongWordPhrase = enemyLoseWrongWordPhrase;
+    }
+
+    public List<BasePhraseContainer> getEnemyLoseRepeatWordPhrase() {
+        return enemyLoseRepeatWordPhrase;
+    }
+
+    public void setEnemyLoseRepeatWordPhrase(List<BasePhraseContainer> enemyLoseRepeatWordPhrase) {
+        this.enemyLoseRepeatWordPhrase = enemyLoseRepeatWordPhrase;
+    }
+
     @JsonIgnore
     public BasePhraseContainer getRandomOpponentAfterWordPhrase() {
         if (opponentAfterWordPhrase.isEmpty()) {
@@ -120,12 +138,30 @@ public class ActivityPhrases {
     }
 
     @JsonIgnore
+    public BasePhraseContainer getRandomEnemyLoseWrongWordPhrase() {
+        if (enemyLoseWrongWordPhrase.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
+        int index = getRandomValue(enemyLoseWrongWordPhrase.size());
+        return enemyLoseWrongWordPhrase.get(index);
+    }
+
+    @JsonIgnore
     public BasePhraseContainer getRandomPlayerLoseRepeatWordPhrase() {
         if (playerLoseRepeatWordPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
         int index = getRandomValue(playerLoseRepeatWordPhrase.size());
         return playerLoseRepeatWordPhrase.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomEnemyLoseRepeatWordPhrase() {
+        if (enemyLoseRepeatWordPhrase.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
+        int index = getRandomValue(enemyLoseRepeatWordPhrase.size());
+        return enemyLoseRepeatWordPhrase.get(index);
     }
 
     @JsonIgnore

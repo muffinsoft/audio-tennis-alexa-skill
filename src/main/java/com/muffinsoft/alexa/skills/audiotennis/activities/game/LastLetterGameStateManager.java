@@ -2,14 +2,18 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
-import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LastLetterGameStateManager extends CompetitionGameStateManager {
 
@@ -50,6 +54,22 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
         String word = randomWordForActivityFromLetter.getWord();
         this.activityProgress.addUsedWord(word);
         return word;
+    }
+
+    @Override
+    protected String getAlreadyUsedWordByActivityRules() {
+        char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
+        Set<String> usedWords = this.activityProgress.getUsedWords();
+        List<String> usedWordsOnLetter = new ArrayList<>();
+        for (String word : usedWords) {
+            if (word.startsWith(String.valueOf(lastLetter))) {
+                usedWordsOnLetter.add(word);
+            }
+        }
+        if(usedWordsOnLetter.isEmpty()) {
+            return null;
+        }
+        return usedWordsOnLetter.get(ThreadLocalRandom.current().nextInt(usedWordsOnLetter.size()));
     }
 
     @Override

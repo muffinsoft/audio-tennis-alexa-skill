@@ -8,6 +8,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
@@ -29,14 +30,18 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         String nextRightWord = getNextRightWordForActivity();
 
         if (nextRightWord.isEmpty()) {
-            iteratePlayerScoreCounter(builder);
-            nextWord = getNextWrongWordForActivity();
-            builder.addResponse(getDialogTranslator().translate(nextWord));
+            nextWord = appendNextRepeatedWord(builder);
         }
         else if (this.activityProgress.getEnemyAnswerCounter() != 0 && this.activityProgress.getEnemyAnswerCounter() % this.activityProgress.getComplexity() == 0) {
-            iteratePlayerScoreCounter(builder);
-            nextWord = getNextWrongWordForActivity();
-            builder.addResponse(getDialogTranslator().translate(nextWord));
+            ThreadLocalRandom random = ThreadLocalRandom.current();
+            boolean isAlreadyUsedMistake = random.nextBoolean();
+            String alreadyUserWord = getAlreadyUsedWordByActivityRules();
+            if (isAlreadyUsedMistake && alreadyUserWord != null) {
+                nextWord = appendNextRepeatedWord(builder);
+            }
+            else {
+                nextWord = appendNextWrongWord(builder);
+            }
         }
         else {
 
@@ -78,12 +83,12 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             playerLosePhrase = phrasesForActivity.getRandomPlayerLoseWrongWordPhrase();
         }
 
-        iterateEnemyScoreCounter(builder);
-
         String newContent = replaceWordPlaceholders(playerLosePhrase.getContent(), getUserReply(), characterWithMistake, null);
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, playerLosePhrase.getRole());
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+
+        iterateEnemyScoreCounter(builder);
 
         this.activityProgress.addUsedWord(getUserReply());
 
@@ -99,4 +104,38 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     protected abstract String getNextRightWordForActivity();
 
     protected abstract String getNextWrongWordForActivity();
+
+    protected abstract String getAlreadyUsedWordByActivityRules();
+
+    private String appendNextWrongWord(DialogItem.Builder builder) {
+        iteratePlayerScoreCounter(builder);
+        String nextWord = getNextWrongWordForActivity();
+        builder.addResponse(getDialogTranslator().translate(nextWord));
+
+
+        BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseWrongWordPhrase();
+
+        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), getUserReply(), characterWithMistake, null);
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phraseContainer.getRole());
+
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+
+        return nextWord;
+    }
+
+    private String appendNextRepeatedWord(DialogItem.Builder builder) {
+        iteratePlayerScoreCounter(builder);
+        String nextWord = getNextWrongWordForActivity();
+        builder.addResponse(getDialogTranslator().translate(nextWord));
+
+
+        BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseRepeatWordPhrase();
+
+        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), getUserReply(), characterWithMistake, null);
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phraseContainer.getRole());
+
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+
+        return nextWord;
+    }
 }

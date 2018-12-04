@@ -72,23 +72,23 @@
   "playerLoseWrongWordPhrase": [
     {
       "content": "%word% doesn't start with %letter%,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "%word% doesn't begin with %letter%,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "%letter% isn't the the first letter of %word%,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "Your word had to start with %letter%,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "Your word was supposed to start with %letter%",
-      "role": "Ben"
+      "role": "Alexa"
     }
   ],
   "playerLoseRepeatWordPhrase": [
@@ -98,27 +98,27 @@
     },
     {
       "content": "we already said %word%,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "we can't say %word% again,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "%word% can't be used again,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "you already said %word%!,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "I already said %word%!,",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "%word% can't be repeated!",
-      "role": "Ben"
+      "role": "Alexa"
     }
   ],
   "playerWonOnceAtGame": [
@@ -182,5 +182,16 @@
       "content": "Bummer!",
       "role": "Ben"
     }
+  ],
+  "enemyLoseWrongWordPhrase": [
+    {"content":"SORRY, Ben.  %word% doesn’t start with %letter%!", "role":"Alexa"}
+  ],
+  "enemyLoseRepeatWordPhrase": [
+    {"content":"%word% was already used", "role":"Alexa"},
+    {"content":"Hey Ben, you already said %word%", "role":"Alexa"},
+    {"content":"Nice try, Ben - you can't say %word% again", "role":"Alexa"},
+    {"content":"%word% can't be used again ", "role":"Alexa"},
+    {"content":"Hmm, Ben - you already said %word%!", "role":"Alexa"},
+    {"content":"%word% can't be repeated!", "role":"c"}
   ]
 }

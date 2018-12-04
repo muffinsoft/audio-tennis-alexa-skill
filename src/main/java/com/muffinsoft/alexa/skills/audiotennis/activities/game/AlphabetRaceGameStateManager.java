@@ -8,8 +8,12 @@ import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
 
@@ -49,6 +53,23 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
         String word = randomWordForActivityFromLetter.getWord();
         this.activityProgress.addUsedWord(word);
         return word;
+    }
+
+    @Override
+    protected String getAlreadyUsedWordByActivityRules() {
+        char firstLetter = getUserReply().charAt(0);
+        char nextLetter = activityManager.getNextLetter(firstLetter);
+        Set<String> usedWords = this.activityProgress.getUsedWords();
+        List<String> usedWordsOnLetter = new ArrayList<>();
+        for (String word : usedWords) {
+            if (word.startsWith(String.valueOf(nextLetter))) {
+                usedWordsOnLetter.add(word);
+            }
+        }
+        if(usedWordsOnLetter.isEmpty()) {
+            return null;
+        }
+        return usedWordsOnLetter.get(ThreadLocalRandom.current().nextInt(usedWordsOnLetter.size()));
     }
 
     @Override

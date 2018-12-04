@@ -119,7 +119,7 @@
   ],
   "selectActivityBetweenOnePhrase": [
     {
-      "content": "Are you ready to start?",
+      "content": "Would you like to continue?",
       "role": "Alexa"
     }
   ],
