@@ -28,6 +28,7 @@ public class ActivityProgress {
     private String requiredUserReaction;
 
     private int complexity;
+    private boolean isNew;
 
     private boolean updateForLevel;
     private Set<String> usedWords = new HashSet<>();
@@ -37,6 +38,11 @@ public class ActivityProgress {
     }
 
     public ActivityProgress(ActivityType currentActivity) {
+        this(currentActivity, true);
+    }
+
+    public ActivityProgress(ActivityType currentActivity, boolean isNew) {
+        this.isNew = isNew;
         this.currentActivity = currentActivity;
         this.unlockedActivities.add(currentActivity);
     }
@@ -49,7 +55,7 @@ public class ActivityProgress {
     @JsonIgnore
     public static ActivityProgress createDefault() {
         ActivityType activityType = getDefaultActivity();
-        return new ActivityProgress(activityType);
+        return new ActivityProgress(activityType, true);
     }
 
     public void reset() {
@@ -62,6 +68,14 @@ public class ActivityProgress {
         this.previousWord = null;
         this.requiredUserReaction = null;
         this.usedWords = new HashSet<>();
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 
     public int getAmountOfGameInRow() {
@@ -266,6 +280,7 @@ public class ActivityProgress {
 
     public void updateWithDifficultSettings(ActivitySettings settingsForActivity) {
         this.updateForLevel = true;
+        this.isNew = false;
         this.enemyAnswerCounter = 0;
         if (this.playerPointCounter < settingsForActivity.getIterateComplexityEveryScoresValue()) {
             this.complexity = settingsForActivity.getStartComplexityValue();
@@ -294,5 +309,37 @@ public class ActivityProgress {
                 ", complexity=" + complexity +
                 ", possibleActivity=" + possibleActivity +
                 '}';
+    }
+
+    public ActivityProgress fromUserProgress(UserProgress userProgress) {
+
+        if (this.playerGameCounter == 0 && userProgress.getWins() != 0) {
+            this.playerGameCounter = userProgress.getWins();
+        }
+        if (this.enemyGameCounter == 0 && userProgress.getLosses() != 0) {
+            this.enemyGameCounter = userProgress.getLosses();
+        }
+        if (this.playerPointCounter == 0 && userProgress.getLastGamePlayerPoint() != 0) {
+            this.playerPointCounter = userProgress.getLastGamePlayerPoint();
+        }
+        if (this.enemyPointCounter == 0 && userProgress.getLastGameEnemyPoint() != 0) {
+            this.enemyPointCounter = userProgress.getLastGameEnemyPoint();
+        }
+        if (this.enemyGameWinInRow == 0 && userProgress.getEnemyGameWinInRow() != 0) {
+            this.enemyGameWinInRow = userProgress.getEnemyGameWinInRow();
+        }
+        if (this.playerGameWinInRow == 0 && userProgress.getPlayerGameWinInRow() != 0) {
+            this.playerGameWinInRow = userProgress.getPlayerGameWinInRow();
+        }
+
+        if (this.getUnlockedActivities() == null || this.getUnlockedActivities().isEmpty() || this.getUnlockedActivities().size() == 1) {
+            if (userProgress.getUnlockedActivities() != null && !userProgress.getUnlockedActivities().isEmpty()) {
+                for (String activity : userProgress.getUnlockedActivities()) {
+                    this.addUnlockedActivity(ActivityType.valueOf(activity));
+                }
+            }
+        }
+        this.isNew = false;
+        return this;
     }
 }

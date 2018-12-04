@@ -184,15 +184,36 @@
     }
   ],
   "enemyLoseWrongWordPhrase": [
-    {"content":"SORRY, Ben.  %word% doesn’t start with %letter%!", "role":"Alexa"}
+    {
+      "content": "SORRY, Ben.  %word% doesn’t start with %letter%!",
+      "role": "Alexa"
+    }
   ],
   "enemyLoseRepeatWordPhrase": [
-    {"content":"%word% was already used", "role":"Alexa"},
-    {"content":"Hey Ben, you already said %word%", "role":"Alexa"},
-    {"content":"Nice try, Ben - you can't say %word% again", "role":"Alexa"},
-    {"content":"%word% can't be used again ", "role":"Alexa"},
-    {"content":"Hmm, Ben - you already said %word%!", "role":"Alexa"},
-    {"content":"%word% can't be repeated!", "role":"c"}
+    {
+      "content": "%word% was already used",
+      "role": "Alexa"
+    },
+    {
+      "content": "Hey Ben, you already said %word%",
+      "role": "Alexa"
+    },
+    {
+      "content": "Nice try, Ben - you can't say %word% again",
+      "role": "Alexa"
+    },
+    {
+      "content": "%word% can't be used again ",
+      "role": "Alexa"
+    },
+    {
+      "content": "Hmm, Ben - you already said %word%!",
+      "role": "Alexa"
+    },
+    {
+      "content": "%word% can't be repeated!",
+      "role": "c"
+    }
   ],
   "playerTurnAfterEnemyMistake": [
     {

@@ -75,26 +75,21 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         this.userReplyBreakpointPosition = (Integer) this.getSessionAttributes().getOrDefault(USER_REPLY_BREAKPOINT, null);
 
         LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
-        this.activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress(this.currentActivityType);
-        this.activityProgress.getUnlockedActivities().remove(null);
+        ActivityProgress activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress(this.currentActivityType, true);
+        activityProgress.getUnlockedActivities().remove(null);
 
         UserProgress userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
         this.userProgress = userProgress != null ? userProgress : new UserProgress(this.currentActivityType);
 
-        // TODO: update progress
-//        if (this.activityProgress.getUnlockedActivities() == null || this.activityProgress.getUnlockedActivities().isEmpty() || this.activityProgress.getUnlockedActivities().size() == 1) {
-//            if (this.userProgress.getUnlockedActivities() != null && !this.userProgress.getUnlockedActivities().isEmpty()) {
-//                for (String activity : this.userProgress.getUnlockedActivities()) {
-//                    this.activityProgress.addUnlockedActivity(ActivityType.valueOf(activity));
-//                }
-//            }
-//        }
-//        if (this.activityProgress.getPlayerGameCounter() == 0 && this.userProgress.getWins() != 0) {
-//            this.activityProgress.setPlayerGameCounter(this.userProgress.getWins());
-//        }
-//        if (this.activityProgress.getEnemyGameCounter() == 0 && this.userProgress.getLosses() != 0) {
-//            this.activityProgress.setEnemyGameCounter(this.userProgress.getLosses());
-//        }
+        this.activityProgress = mergeActivityWithUserProgress(activityProgress, this.userProgress);
+    }
+
+    private ActivityProgress mergeActivityWithUserProgress(ActivityProgress activityProgress, UserProgress userProgress) {
+
+        if (activityProgress.isNew()) {
+            return activityProgress.fromUserProgress(userProgress);
+        }
+        return activityProgress;
     }
 
     @Override

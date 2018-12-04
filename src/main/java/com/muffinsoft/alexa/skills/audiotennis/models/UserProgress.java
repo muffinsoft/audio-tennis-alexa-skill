@@ -13,6 +13,8 @@ public class UserProgress {
     private int losses;
     private int lastGamePlayerPoint;
     private int lastGameEnemyPoint;
+    private int playerGameWinInRow;
+    private int enemyGameWinInRow;
     private Set<String> unlockedActivities = new HashSet<>();
     private Set<String> achievements = new HashSet<>();
 
@@ -73,6 +75,22 @@ public class UserProgress {
         this.lastGameEnemyPoint = lastGameEnemyPoint;
     }
 
+    public int getPlayerGameWinInRow() {
+        return playerGameWinInRow;
+    }
+
+    public void setPlayerGameWinInRow(int playerGameWinInRow) {
+        this.playerGameWinInRow = playerGameWinInRow;
+    }
+
+    public int getEnemyGameWinInRow() {
+        return enemyGameWinInRow;
+    }
+
+    public void setEnemyGameWinInRow(int enemyGameWinInRow) {
+        this.enemyGameWinInRow = enemyGameWinInRow;
+    }
+
     @Override
     @JsonIgnore
     public String toString() {
@@ -81,6 +99,8 @@ public class UserProgress {
                 ", losses=" + losses +
                 ", lastGamePlayerPoint=" + lastGamePlayerPoint +
                 ", lastGameEnemyPoint=" + lastGameEnemyPoint +
+                ", playerGameWinInRow=" + playerGameWinInRow +
+                ", enemyGameWinInRow=" + enemyGameWinInRow +
                 ", unlockedActivities=" + unlockedActivities +
                 ", achievements=" + achievements +
                 '}';
