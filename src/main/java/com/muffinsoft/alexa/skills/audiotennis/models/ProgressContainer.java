@@ -1,7 +1,8 @@
 package com.muffinsoft.alexa.skills.audiotennis.models;
 
+import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Set;
 
 public class ProgressContainer {
 
@@ -33,14 +34,28 @@ public class ProgressContainer {
         return null;
     }
 
-    public String getNextActivity(String key) {
-        Integer currentOrder = activitiesOrder.get(key);
-        Integer searchedValue = currentOrder + 1;
-        for (Map.Entry<String, Integer> entry : this.activitiesOrder.entrySet()) {
-            if (Objects.equals(entry.getValue(), searchedValue)) {
-                return entry.getKey();
+    public String getNextActivity(String key, Set<String> unlockedActivities) {
+
+        HashSet<String> allActivities = new HashSet<>(this.activitiesOrder.keySet());
+        allActivities.removeAll(unlockedActivities);
+
+        if (allActivities.isEmpty()) {
+            return null;
+        }
+
+        String iterActivity = null;
+        Integer minValue = null;
+
+        for (String activity : allActivities) {
+            Integer value = this.activitiesOrder.get(activity);
+            if (minValue == null) {
+                minValue = value;
+            }
+            if (value <= minValue) {
+                value = minValue;
+                iterActivity = activity;
             }
         }
-        return null;
+        return iterActivity;
     }
 }

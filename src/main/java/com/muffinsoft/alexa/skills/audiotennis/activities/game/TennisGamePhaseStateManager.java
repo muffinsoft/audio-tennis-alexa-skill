@@ -67,11 +67,22 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         if (checkIfTwoInRow()) {
             this.activityProgress.iterateAmountOfPointInRow();
             int iterationValue = this.activityProgress.getAmountOfPointInRow() - 1;
+            ActivityType nextActivity = progressManager.getNextActivity(this.currentActivityType, this.userProgress.getUnlockedActivities());
             if (this.activityProgress.getAmountOfPointInRow() == 0) {
-                return ActivityUnlokingStatus.UNLOCKED;
+                if (nextActivity != null) {
+                    return ActivityUnlokingStatus.UNLOCKED;
+                }
+                else {
+                    return ActivityUnlokingStatus.CONTINUE;
+                }
             }
             else if (iterationValue % 3 == 0) {
-                return ActivityUnlokingStatus.UNLOCKED;
+                if (nextActivity != null) {
+                    return ActivityUnlokingStatus.UNLOCKED;
+                }
+                else {
+                    return ActivityUnlokingStatus.CONTINUE;
+                }
             }
             else {
                 return ActivityUnlokingStatus.CONTINUE;
@@ -108,7 +119,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     void handleEnterNewActivity(DialogItem.Builder builder) {
 
-        ActivityType nextActivity = progressManager.getNextActivity(this.currentActivityType);
+        ActivityType nextActivity = progressManager.getNextActivity(this.currentActivityType, this.userProgress.getUnlockedActivities());
 
         if (nextActivity != null) {
 
@@ -122,7 +133,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             }
 
             builder.addResponse(getDialogTranslator().translate(replacesDialog));
+            this.activityProgress.setCurrentActivity(this.currentActivityType);
             this.activityProgress.setPossibleActivity(nextActivity);
+            this.activityProgress.addUnlockedActivity(this.currentActivityType);
             this.activityProgress.addUnlockedActivity(nextActivity);
             this.userProgress.addUnlockedActivity(nextActivity);
             savePersistentAttributes();

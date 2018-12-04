@@ -6,6 +6,8 @@ import com.muffinsoft.alexa.sdk.util.ContentLoader;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.ProgressContainer;
 
+import java.util.Set;
+
 public class ProgressManager {
 
     private ProgressContainer container;
@@ -20,8 +22,8 @@ public class ProgressManager {
         return ActivityType.valueOf(container.getDefaultActivity());
     }
 
-    public ActivityType getNextActivity(ActivityType activityType) {
-        String nextActivity = container.getNextActivity(activityType.name());
+    public ActivityType getNextActivity(ActivityType activityType, Set<String> unlockedActivities) {
+        String nextActivity = container.getNextActivity(activityType.name(), unlockedActivities);
         if (nextActivity == null) {
             return null;
         }

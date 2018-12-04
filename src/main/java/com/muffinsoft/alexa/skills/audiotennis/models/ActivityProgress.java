@@ -66,6 +66,8 @@ public class ActivityProgress {
         this.previousWord = null;
         this.requiredUserReaction = null;
         this.usedWords = new HashSet<>();
+        this.playerPointCounter = 0;
+        this.enemyPointCounter = 0;
     }
 
     public boolean isNew() {
@@ -142,16 +144,16 @@ public class ActivityProgress {
 
     public void iterateEnemyPointCounter() {
         this.enemyPointCounter += 1;
-        this.playerPointWinInRow += 1;
-        this.enemyPointWinInRow = 0;
+        this.enemyPointWinInRow += 1;
+        this.playerPointWinInRow = 0;
         this.mistakeCount = 0;
         this.updateForLevel = false;
     }
 
     public void iteratePlayerPointCounter() {
         this.playerPointCounter += 1;
-        this.playerPointWinInRow += 0;
-        this.enemyPointWinInRow += 1;
+        this.playerPointWinInRow += 1;
+        this.enemyPointWinInRow = 0;
         this.successCounter = 0;
         this.updateForLevel = false;
     }

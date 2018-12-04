@@ -178,7 +178,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected DialogItem.Builder handleRestartState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
-            builder.addResponse(getDialogTranslator().translate(EXIT_PHRASE));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_PHRASE)));
             builder.withShouldEnd(true);
         }
         else {

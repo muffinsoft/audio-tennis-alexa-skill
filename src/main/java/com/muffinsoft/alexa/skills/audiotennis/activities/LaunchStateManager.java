@@ -123,7 +123,7 @@ public class LaunchStateManager extends BaseStateManager {
 
     private void appendPlayerWindResult(DialogItem.Builder builder) {
         BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
-        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGamePlayerPoint(), this.userProgress.getLastGameEnemyPoint());
+        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameEnemyPoint(), this.userProgress.getLastGamePlayerPoint());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
