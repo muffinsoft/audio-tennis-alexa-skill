@@ -29,4 +29,8 @@ public class ProgressManager {
             return ActivityType.valueOf(nextActivity);
         }
     }
+
+    public String getEnemyRole() {
+        return container.getEnemyRole();
+    }
 }

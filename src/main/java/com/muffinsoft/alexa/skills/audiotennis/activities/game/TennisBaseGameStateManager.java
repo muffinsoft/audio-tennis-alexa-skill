@@ -48,6 +48,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     final ProgressManager progressManager;
     final ActivityManager activityManager;
     final GeneralActivityPhraseManager generalActivityPhraseManager;
+    final String enemyRole;
     UserProgress userProgress;
     ActivityProgress activityProgress;
     ActivityType currentActivityType;
@@ -64,6 +65,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         this.activityManager = settingsDependencyContainer.getActivityManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
         this.generalActivityPhraseManager = phraseDependencyContainer.getGeneralActivityPhraseManager();
+        this.enemyRole = progressManager.getEnemyRole();
     }
 
     @Override
@@ -79,19 +81,20 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         UserProgress userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
         this.userProgress = userProgress != null ? userProgress : new UserProgress(this.currentActivityType);
 
-        if (this.activityProgress.getUnlockedActivities() == null || this.activityProgress.getUnlockedActivities().isEmpty() || this.activityProgress.getUnlockedActivities().size() == 1) {
-            if (this.userProgress.getUnlockedActivities() != null && !this.userProgress.getUnlockedActivities().isEmpty()) {
-                for (String activity : this.userProgress.getUnlockedActivities()) {
-                    this.activityProgress.addUnlockedActivity(ActivityType.valueOf(activity));
-                }
-            }
-        }
-        if (this.activityProgress.getPlayerGameCounter() == 0 && this.userProgress.getWins() != 0) {
-            this.activityProgress.setPlayerGameCounter(this.userProgress.getWins());
-        }
-        if (this.activityProgress.getEnemyGameCounter() == 0 && this.userProgress.getLosses() != 0) {
-            this.activityProgress.setEnemyGameCounter(this.userProgress.getLosses());
-        }
+        // TODO: update progress
+//        if (this.activityProgress.getUnlockedActivities() == null || this.activityProgress.getUnlockedActivities().isEmpty() || this.activityProgress.getUnlockedActivities().size() == 1) {
+//            if (this.userProgress.getUnlockedActivities() != null && !this.userProgress.getUnlockedActivities().isEmpty()) {
+//                for (String activity : this.userProgress.getUnlockedActivities()) {
+//                    this.activityProgress.addUnlockedActivity(ActivityType.valueOf(activity));
+//                }
+//            }
+//        }
+//        if (this.activityProgress.getPlayerGameCounter() == 0 && this.userProgress.getWins() != 0) {
+//            this.activityProgress.setPlayerGameCounter(this.userProgress.getWins());
+//        }
+//        if (this.activityProgress.getEnemyGameCounter() == 0 && this.userProgress.getLosses() != 0) {
+//            this.activityProgress.setEnemyGameCounter(this.userProgress.getLosses());
+//        }
     }
 
     @Override

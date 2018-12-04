@@ -43,8 +43,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         iterateEnemyGameCounter(builder);
 
-
-
         if (checkIfTwoInRow()) {
             handleTwoInRow(builder);
         }
@@ -62,7 +60,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
 
         iteratePlayerGameCounter(builder);
-
 
         if (checkIfTwoInRow()) {
             handleTwoInRow(builder);

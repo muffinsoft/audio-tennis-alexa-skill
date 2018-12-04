@@ -4,5 +4,6 @@
     "LAST_LETTER": 0,
     "BAM_WHAM": 1,
     "RHYME_MATCH": 3
-  }
+  },
+  "enemyRole": "Ben"
 }
