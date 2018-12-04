@@ -5,7 +5,7 @@ import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
-import com.muffinsoft.alexa.skills.audiotennis.activities.game.RhymeMatchGameStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.components.TennisIntentFabric;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
@@ -29,8 +29,8 @@ class TennisIntentFabricTest extends BaseTest {
 
         Map<String, Slot> slots = createSlotsForValue("yes");
 
-        ActivityProgress activityProgress = new ActivityProgress(ActivityType.BAM_WHAM);
-        activityProgress.setPossibleActivity(ActivityType.RHYME_MATCH);
+        ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
+        activityProgress.setPossibleActivity(ActivityType.BAM_WHAM);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
@@ -39,6 +39,6 @@ class TennisIntentFabricTest extends BaseTest {
 
         StateManager nextState = intentFabric.getNextState(IntentType.GAME, slots, createAttributesManager(slots, attributes));
 
-        Assertions.assertEquals(nextState.getClass(), RhymeMatchGameStateManager.class);
+        Assertions.assertEquals(nextState.getClass(), BamWhamGameStateManager.class);
     }
 }
