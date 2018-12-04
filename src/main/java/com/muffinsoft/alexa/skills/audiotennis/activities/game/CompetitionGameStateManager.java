@@ -114,7 +114,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseWrongWordPhrase();
 
-        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), getUserReply(), characterWithMistake, null);
+        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), nextWord, characterWithMistake, null);
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phraseContainer.getRole());
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
@@ -130,7 +130,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseRepeatWordPhrase();
 
-        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), getUserReply(), characterWithMistake, null);
+        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), alreadyUserWord, characterWithMistake, null);
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phraseContainer.getRole());
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
