@@ -31,6 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.sdk.constants.PhraseConstants.EXIT_PHRASE;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
@@ -54,7 +55,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     ActivityType currentActivityType;
     ActivityPhrases phrasesForActivity;
     ActivitySettings settingsForActivity;
-    private StateType stateType;
+    StateType stateType;
     private Integer userReplyBreakpointPosition;
 
     TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
@@ -150,6 +151,19 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
             appendActivitySelection(builder);
+        }
+        else {
+            initGameStatePhrase(builder);
+        }
+        return builder.withSlotName(actionSlotName);
+    }
+
+    @Override
+    protected DialogItem.Builder handleRestartState(DialogItem.Builder builder) {
+
+        if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+            builder.addResponse(getDialogTranslator().translate(EXIT_PHRASE));
+            builder.withShouldEnd(true);
         }
         else {
             initGameStatePhrase(builder);

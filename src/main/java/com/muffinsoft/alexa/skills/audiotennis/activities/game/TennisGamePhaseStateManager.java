@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
@@ -21,6 +22,7 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.PLAYER_FAVOR_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_RESTART_PHRASE;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
 
@@ -88,7 +90,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private void handleRoundEnd(DialogItem.Builder builder) {
-        initGameStatePhrase(builder);
+        this.stateType = StateType.RESTART;
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE)));
     }
 
     private void handleThirdTwoInRow(DialogItem.Builder builder) {
