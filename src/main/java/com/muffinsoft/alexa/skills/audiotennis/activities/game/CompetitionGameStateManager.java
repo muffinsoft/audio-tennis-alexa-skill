@@ -4,6 +4,7 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityUnlokingStatus;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 
@@ -85,7 +86,9 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         this.activityProgress.addUsedWord(nextWord);
         this.activityProgress.addUsedWord(getUserReply());
 
-        switch (getUnlockingStatus()) {
+        ActivityUnlokingStatus unlockingStatus = getUnlockingStatus();
+        logger.debug("Current Status: " + unlockingStatus);
+        switch (unlockingStatus) {
             case UNLOCKED:
                 handleEnterNewActivity(builder);
                 break;
@@ -142,7 +145,9 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     }
 
     private void handleUnlockingStatusAfterEnemyMistake(DialogItem.Builder builder, String alreadyUserWord) {
-        switch (getUnlockingStatus()) {
+        ActivityUnlokingStatus unlockingStatus = getUnlockingStatus();
+        logger.debug("Current status: " + unlockingStatus);
+        switch (unlockingStatus) {
             case UNLOCKED:
                 handleEnterNewActivity(builder);
                 break;

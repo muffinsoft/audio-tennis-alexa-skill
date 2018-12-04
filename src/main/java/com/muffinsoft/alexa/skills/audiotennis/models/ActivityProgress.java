@@ -29,6 +29,7 @@ public class ActivityProgress {
 
     private int complexity;
     private boolean isNew;
+    private boolean isTransition;
 
     private boolean updateForLevel;
     private Set<String> usedWords = new HashSet<>();
@@ -66,8 +67,11 @@ public class ActivityProgress {
         this.previousWord = null;
         this.requiredUserReaction = null;
         this.usedWords = new HashSet<>();
-        this.playerPointCounter = 0;
-        this.enemyPointCounter = 0;
+        if (!isTransition) {
+            this.playerPointCounter = 0;
+            this.enemyPointCounter = 0;
+        }
+        this.isTransition = false;
     }
 
     public boolean isNew() {
@@ -76,6 +80,14 @@ public class ActivityProgress {
 
     public void setNew(boolean aNew) {
         isNew = aNew;
+    }
+
+    public boolean isTransition() {
+        return isTransition;
+    }
+
+    public void setTransition(boolean transition) {
+        isTransition = transition;
     }
 
     public int getAmountOfPointInRow() {

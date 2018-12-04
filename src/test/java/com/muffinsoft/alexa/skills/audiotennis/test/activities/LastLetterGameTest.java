@@ -179,4 +179,48 @@ class LastLetterGameTest extends BaseTest {
         Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 2);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
+
+    @Test
+    void testActivePhaseAnswer() {
+
+        ActivityManager activityManager = IoC.provideSettingsDependencyContainer().getActivityManager();
+        WordContainer randomWordForActivity = activityManager.getRandomWordForActivity(ActivityType.LAST_LETTER);
+
+        String firstWord = randomWordForActivity.getWord();
+
+        ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
+        activityProgress.setPreviousWord(firstWord);
+
+        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
+        String secondWord = randomWordForActivityFromLetter.getWord();
+        Map<String, Slot> slots = createSlotsForValue(secondWord);
+        activityProgress.setPreviousWord(firstWord);
+        activityProgress.setPreviousActivity(ActivityType.LAST_LETTER);
+        activityProgress.setUnlockedActivities(new ActivityType[]{ActivityType.BAM_WHAM, ActivityType.LAST_LETTER});
+        activityProgress.setSuccessCounter(2);
+        activityProgress.setMistakeCount(0);
+        activityProgress.setEnemyAnswerCounter(2);
+        activityProgress.setEnemyPointCounter(0);
+        activityProgress.setPlayerPointCounter(1);
+        activityProgress.setPlayerGameCounter(0);
+        activityProgress.setEnemyGameCounter(0);
+        activityProgress.setPlayerPointWinInRow(1);
+        activityProgress.setEnemyPointWinInRow(0);
+        activityProgress.setAmountOfPointInRow(0);
+        activityProgress.setComplexity(3);
+        activityProgress.setUpdateForLevel(true);
+        activityProgress.setNew(false);
+
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
+        attributes.put(STATE_TYPE, StateType.GAME_PHASE_1);
+
+        LastLetterGameStateManager stateManager = new LastLetterGameStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
+
+        DialogItem dialogItem = stateManager.nextResponse();
+
+        stateManager.updateAttributesManager();
+
+        Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
+    }
 }

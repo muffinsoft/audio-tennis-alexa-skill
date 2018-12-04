@@ -1,5 +1,7 @@
 package com.muffinsoft.alexa.skills.audiotennis.models;
 
+import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -34,10 +36,12 @@ public class ProgressContainer {
         return null;
     }
 
-    public String getNextActivity(String key, Set<String> unlockedActivities) {
+    public String getNextActivity(Set<ActivityType> unlockedActivities) {
 
         HashSet<String> allActivities = new HashSet<>(this.activitiesOrder.keySet());
-        allActivities.removeAll(unlockedActivities);
+        for(ActivityType activityType : unlockedActivities) {
+            allActivities.remove(activityType.name());
+        }
 
         if (allActivities.isEmpty()) {
             return null;

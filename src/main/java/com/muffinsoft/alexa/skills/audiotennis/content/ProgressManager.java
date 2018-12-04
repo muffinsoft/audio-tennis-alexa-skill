@@ -22,8 +22,8 @@ public class ProgressManager {
         return ActivityType.valueOf(container.getDefaultActivity());
     }
 
-    public ActivityType getNextActivity(ActivityType activityType, Set<String> unlockedActivities) {
-        String nextActivity = container.getNextActivity(activityType.name(), unlockedActivities);
+    public ActivityType getNextActivity(Set<ActivityType> unlockedActivities) {
+        String nextActivity = container.getNextActivity(unlockedActivities);
         if (nextActivity == null) {
             return null;
         }

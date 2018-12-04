@@ -120,6 +120,7 @@ public class TennisIntentFabric implements IntentFactory {
             return;
         }
         ActivityType newActivity = getRandomActivity(unlockedActivities);
+        activityProgress.setTransition(true);
         activityProgress.setPreviousActivity(currentActivity);
         activityProgress.setCurrentActivity(newActivity);
         sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
@@ -148,6 +149,7 @@ public class TennisIntentFabric implements IntentFactory {
         if (isPositiveReply(inputSlots)) {
             ActivityType possibleActivity = activityProgress.getPossibleActivity();
             ActivityType currentActivity = activityProgress.getCurrentActivity();
+            activityProgress.setTransition(true);
             activityProgress.setCurrentActivity(possibleActivity);
             activityProgress.setPreviousActivity(currentActivity);
             sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
@@ -157,6 +159,7 @@ public class TennisIntentFabric implements IntentFactory {
             ActivityType currentActivity = activityProgress.getCurrentActivity();
             activityProgress.setCurrentActivity(type);
             activityProgress.setPreviousActivity(currentActivity);
+            activityProgress.setTransition(true);
             sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
             sessionAttributes.remove(STATE_TYPE);
         }

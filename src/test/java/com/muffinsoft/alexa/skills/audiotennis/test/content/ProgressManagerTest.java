@@ -14,11 +14,11 @@ class ProgressManagerTest {
     void getNextActivity() {
         ProgressManager progressManager = IoC.provideProgressManager();
 
-        HashSet<String> unlockedActivities = new HashSet<>();
-        unlockedActivities.add(ActivityType.LAST_LETTER.name());
-        unlockedActivities.add(ActivityType.BAM_WHAM.name());
+        HashSet<ActivityType> unlockedActivities = new HashSet<>();
+        unlockedActivities.add(ActivityType.LAST_LETTER);
+        unlockedActivities.add(ActivityType.BAM_WHAM);
 
-        ActivityType nextActivity = progressManager.getNextActivity(ActivityType.LAST_LETTER, unlockedActivities);
+        ActivityType nextActivity = progressManager.getNextActivity(unlockedActivities);
 
         Assertions.assertEquals(nextActivity, ActivityType.ALPHABET_RACE);
     }

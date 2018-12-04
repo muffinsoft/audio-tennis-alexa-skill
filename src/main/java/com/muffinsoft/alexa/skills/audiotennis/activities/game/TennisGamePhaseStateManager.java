@@ -37,12 +37,12 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     @Override
     protected boolean isEndWinActivityState() {
-        return this.activityProgress.getPlayerPointCounter() == settingsForActivity.getScoresToWinRoundValue();
+        return this.activityProgress.getPlayerPointCounter() >= settingsForActivity.getScoresToWinRoundValue();
     }
 
     @Override
     protected boolean isEndLoseActivityState() {
-        return this.activityProgress.getEnemyPointCounter() == settingsForActivity.getScoresToWinRoundValue();
+        return this.activityProgress.getEnemyPointCounter() >= settingsForActivity.getScoresToWinRoundValue();
     }
 
     @Override
@@ -67,8 +67,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         if (checkIfTwoInRow()) {
             this.activityProgress.iterateAmountOfPointInRow();
             int iterationValue = this.activityProgress.getAmountOfPointInRow() - 1;
-            ActivityType nextActivity = progressManager.getNextActivity(this.currentActivityType, this.userProgress.getUnlockedActivities());
-            if (this.activityProgress.getAmountOfPointInRow() == 0) {
+            ActivityType nextActivity = progressManager.getNextActivity(this.activityProgress.getUnlockedActivities());
+            if (iterationValue == 0) {
                 if (nextActivity != null) {
                     return ActivityUnlokingStatus.UNLOCKED;
                 }
@@ -119,7 +119,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     void handleEnterNewActivity(DialogItem.Builder builder) {
 
-        ActivityType nextActivity = progressManager.getNextActivity(this.currentActivityType, this.userProgress.getUnlockedActivities());
+        ActivityType nextActivity = progressManager.getNextActivity(this.activityProgress.getUnlockedActivities());
 
         if (nextActivity != null) {
 
@@ -139,6 +139,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             this.activityProgress.addUnlockedActivity(nextActivity);
             this.userProgress.addUnlockedActivity(nextActivity);
             savePersistentAttributes();
+        }
+        else {
+            logger.error("Activity progress before error " + this.activityProgress);
+            throw new IllegalArgumentException("Can't create unlocking dialog without next activity");
         }
     }
 
