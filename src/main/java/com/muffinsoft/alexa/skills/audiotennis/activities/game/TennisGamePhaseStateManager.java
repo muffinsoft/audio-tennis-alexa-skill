@@ -9,6 +9,7 @@ import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
+import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityUnlokingStatus;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +24,7 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.PLAYER_FAVOR_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_RESTART_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
 
@@ -48,7 +50,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         Speech mistake = builder.popFirstSpeech();
         iterateEnemyGameCounter(builder);
         builder.addResponseToBegining(mistake);
-        handleNextStepAfterRoundEnd(builder);
+        handleRoundEnd(builder);
         savePersistentAttributes();
         return builder;
     }
@@ -56,37 +58,39 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     @Override
     protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
         iteratePlayerGameCounter(builder);
-        handleNextStepAfterRoundEnd(builder);
+        handleRoundEnd(builder);
         savePersistentAttributes();
         return builder;
     }
 
-    private void handleNextStepAfterRoundEnd(DialogItem.Builder builder) {
+    ActivityUnlokingStatus getUnlockingStatus() {
         if (checkIfTwoInRow()) {
-            handleTwoInRow(builder);
-        }
-        else if (checkIfThirdTwoInRow()) {
-            handleThirdTwoInRow(builder);
+            this.activityProgress.iterateAmountOfPointInRow();
+            int iterationValue = this.activityProgress.getAmountOfPointInRow() - 1;
+            if (this.activityProgress.getAmountOfPointInRow() == 0) {
+                return ActivityUnlokingStatus.UNLOCKED;
+            }
+            else if (iterationValue % 3 == 0) {
+                return ActivityUnlokingStatus.UNLOCKED;
+            }
+            else {
+                return ActivityUnlokingStatus.CONTINUE;
+            }
         }
         else {
-            handleRoundEnd(builder);
+            return ActivityUnlokingStatus.PROCEED;
         }
-    }
-
-    private boolean checkIfThirdTwoInRow() {
-        return this.activityProgress.getAmountOfGameInRow() != 0 && this.activityProgress.getAmountOfGameInRow() % 3 == 0;
     }
 
     private boolean checkIfTwoInRow() {
-        if (this.activityProgress.getEnemyGameWinInRow() != 0) {
-            return this.activityProgress.getEnemyGameWinInRow() % 2 == 0;
+        boolean result = false;
+        if (this.activityProgress.getEnemyPointWinInRow() != 0) {
+            result = this.activityProgress.getEnemyPointWinInRow() % 2 == 0;
         }
-        else if (this.activityProgress.getPlayerGameWinInRow() != 0) {
-            return this.activityProgress.getPlayerGameWinInRow() % 2 == 0;
+        else if (this.activityProgress.getPlayerPointWinInRow() != 0) {
+            result = this.activityProgress.getPlayerPointWinInRow() % 2 == 0;
         }
-        else {
-            return false;
-        }
+        return result;
     }
 
     private void handleRoundEnd(DialogItem.Builder builder) {
@@ -94,18 +98,20 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE)));
     }
 
-    private void handleThirdTwoInRow(DialogItem.Builder builder) {
+    void handlerContinueRePrompt(DialogItem.Builder builder) {
 
-        this.getSessionAttributes().put(SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP, true);
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(TRY_SOMETHING_ELSE_PHRASE)));
+        getSessionAttributes().put(ASK_RANDOM_SWITCH_ACTIVITY_STEP, true);
+
+        List<PhraseContainer> valueByKey = regularPhraseManager.getValueByKey(TRY_SOMETHING_ELSE_PHRASE);
+        builder.addResponse(getDialogTranslator().translate(valueByKey));
     }
 
-    private void handleTwoInRow(DialogItem.Builder builder) {
-
-        this.activityProgress.iterateAmountOfGameInRow();
+    void handleEnterNewActivity(DialogItem.Builder builder) {
 
         ActivityType nextActivity = progressManager.getNextActivity(this.currentActivityType);
+
         if (nextActivity != null) {
+
             this.getSessionAttributes().put(SessionConstants.SWITCH_ACTIVITY_STEP, true);
 
             List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE);
@@ -119,6 +125,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             this.activityProgress.setPossibleActivity(nextActivity);
             this.activityProgress.addUnlockedActivity(nextActivity);
             this.userProgress.addUnlockedActivity(nextActivity);
+            savePersistentAttributes();
         }
     }
 

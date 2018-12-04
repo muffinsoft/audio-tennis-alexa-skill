@@ -58,9 +58,6 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             this.activityProgress.addUsedWord(nextWord);
         }
 
-        BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
-        builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
-
         this.activityProgress.setPreviousWord(nextWord);
 
         return builder.withSlotName(actionSlotName);
@@ -83,13 +80,22 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         iterateEnemyScoreCounter(builder);
 
+        String nextWord = getNextRightWordForActivity();
+        this.activityProgress.setPreviousWord(nextWord);
+        this.activityProgress.addUsedWord(nextWord);
         this.activityProgress.addUsedWord(getUserReply());
 
-        String nextWord = getNextRightWordForActivity();
-        this.activityProgress.addUsedWord(nextWord);
-        this.activityProgress.setPreviousWord(nextWord);
-
-        builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
+        switch (getUnlockingStatus()) {
+            case UNLOCKED:
+                handleEnterNewActivity(builder);
+                break;
+            case CONTINUE:
+                handlerContinueRePrompt(builder);
+                break;
+            case PROCEED:
+                builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
+                break;
+        }
 
         return builder.withSlotName(actionSlotName);
     }
@@ -115,7 +121,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         iteratePlayerScoreCounter(builder);
 
-        appendHintAfterEnemyMistake(builder, nextWord);
+        handleUnlockingStatusAfterEnemyMistake(builder, nextWord);
 
         return nextWord;
     }
@@ -130,13 +136,30 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         iteratePlayerScoreCounter(builder);
 
-        appendHintAfterEnemyMistake(builder, alreadyUserWord);
+        handleUnlockingStatusAfterEnemyMistake(builder, alreadyUserWord);
 
         return alreadyUserWord;
+    }
+
+    private void handleUnlockingStatusAfterEnemyMistake(DialogItem.Builder builder, String alreadyUserWord) {
+        switch (getUnlockingStatus()) {
+            case UNLOCKED:
+                handleEnterNewActivity(builder);
+                break;
+            case CONTINUE:
+                handlerContinueRePrompt(builder);
+                break;
+            case PROCEED:
+                appendHintAfterEnemyMistake(builder, alreadyUserWord);
+                break;
+        }
     }
 
     private void appendHintAfterEnemyMistake(DialogItem.Builder builder, String nextWord) {
         BasePhraseContainer randomPlayerHint = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerTurnAfterEnemyMistake();
         builder.addResponse(getDialogTranslator().translate(replaceCharacterPlaceholders(randomPlayerHint, getNextReplyCharacter(nextWord))));
+
+        BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
+        builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
     }
 }

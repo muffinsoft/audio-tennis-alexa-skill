@@ -57,11 +57,20 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
         }
 
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
-
-        builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
-
         this.activityProgress.setPreviousWord(nextWord.getWord());
         this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());
+
+        switch (getUnlockingStatus()) {
+            case UNLOCKED:
+                handleEnterNewActivity(builder);
+                break;
+            case CONTINUE:
+                handlerContinueRePrompt(builder);
+                break;
+            case PROCEED:
+                builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
+                break;
+        }
 
         return builder.withSlotName(actionSlotName);
     }

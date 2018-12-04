@@ -21,9 +21,9 @@ public class ActivityProgress {
     private int playerPointCounter;
     private int playerGameCounter;
     private int enemyGameCounter;
-    private int playerGameWinInRow;
-    private int enemyGameWinInRow;
-    private int amountOfGameInRow;
+    private int playerPointWinInRow;
+    private int enemyPointWinInRow;
+    private int amountOfPointInRow;
     private String previousWord;
     private String requiredUserReaction;
 
@@ -63,8 +63,6 @@ public class ActivityProgress {
         this.successCounter = 0;
         this.mistakeCount = 0;
         this.enemyAnswerCounter = 0;
-        this.enemyPointCounter = 0;
-        this.playerPointCounter = 0;
         this.previousWord = null;
         this.requiredUserReaction = null;
         this.usedWords = new HashSet<>();
@@ -78,12 +76,12 @@ public class ActivityProgress {
         isNew = aNew;
     }
 
-    public int getAmountOfGameInRow() {
-        return amountOfGameInRow;
+    public int getAmountOfPointInRow() {
+        return amountOfPointInRow;
     }
 
-    public void setAmountOfGameInRow(int amountOfGameInRow) {
-        this.amountOfGameInRow = amountOfGameInRow;
+    public void setAmountOfPointInRow(int amountOfPointInRow) {
+        this.amountOfPointInRow = amountOfPointInRow;
     }
 
     public ActivityType getCurrentActivity() {
@@ -144,50 +142,52 @@ public class ActivityProgress {
 
     public void iterateEnemyPointCounter() {
         this.enemyPointCounter += 1;
+        this.playerPointWinInRow += 1;
+        this.enemyPointWinInRow = 0;
         this.mistakeCount = 0;
         this.updateForLevel = false;
     }
 
     public void iteratePlayerPointCounter() {
         this.playerPointCounter += 1;
+        this.playerPointWinInRow += 0;
+        this.enemyPointWinInRow += 1;
         this.successCounter = 0;
         this.updateForLevel = false;
     }
 
-    public void iterateAmountOfGameInRow() {
-        this.amountOfGameInRow += 1;
+    public void iterateAmountOfPointInRow() {
+        this.amountOfPointInRow += 1;
+        this.enemyPointWinInRow = 0;
+        this.playerPointWinInRow = 0;
     }
 
     public void iterateEnemyGameCounter() {
         this.enemyGameCounter += 1;
-        this.playerGameWinInRow += 0;
-        this.enemyGameWinInRow += 1;
     }
 
     public void iteratePlayerGameCounter() {
         this.playerGameCounter += 1;
-        this.playerGameWinInRow += 1;
-        this.enemyGameWinInRow = 0;
     }
 
     public void iterateMistakeCount() {
         this.mistakeCount += 1;
     }
 
-    public int getPlayerGameWinInRow() {
-        return playerGameWinInRow;
+    public int getPlayerPointWinInRow() {
+        return playerPointWinInRow;
     }
 
-    public void setPlayerGameWinInRow(int playerGameWinInRow) {
-        this.playerGameWinInRow = playerGameWinInRow;
+    public void setPlayerPointWinInRow(int playerPointWinInRow) {
+        this.playerPointWinInRow = playerPointWinInRow;
     }
 
-    public int getEnemyGameWinInRow() {
-        return enemyGameWinInRow;
+    public int getEnemyPointWinInRow() {
+        return enemyPointWinInRow;
     }
 
-    public void setEnemyGameWinInRow(int enemyGameWinInRow) {
-        this.enemyGameWinInRow = enemyGameWinInRow;
+    public void setEnemyPointWinInRow(int enemyPointWinInRow) {
+        this.enemyPointWinInRow = enemyPointWinInRow;
     }
 
     public String getPreviousWord() {
@@ -304,8 +304,8 @@ public class ActivityProgress {
                 ", playerPointCounter=" + playerPointCounter +
                 ", playerGameCounter=" + playerGameCounter +
                 ", enemyGameCounter=" + enemyGameCounter +
-                ", playerGameWinInRow=" + playerGameWinInRow +
-                ", enemyGameWinInRow=" + enemyGameWinInRow +
+                ", playerPointWinInRow=" + playerPointWinInRow +
+                ", enemyPointWinInRow=" + enemyPointWinInRow +
                 ", complexity=" + complexity +
                 ", possibleActivity=" + possibleActivity +
                 '}';
@@ -325,11 +325,11 @@ public class ActivityProgress {
         if (this.enemyPointCounter == 0 && userProgress.getLastGameEnemyPoint() != 0) {
             this.enemyPointCounter = userProgress.getLastGameEnemyPoint();
         }
-        if (this.enemyGameWinInRow == 0 && userProgress.getEnemyGameWinInRow() != 0) {
-            this.enemyGameWinInRow = userProgress.getEnemyGameWinInRow();
+        if (this.enemyPointWinInRow == 0 && userProgress.getEnemyGameWinInRow() != 0) {
+            this.enemyPointWinInRow = userProgress.getEnemyGameWinInRow();
         }
-        if (this.playerGameWinInRow == 0 && userProgress.getPlayerGameWinInRow() != 0) {
-            this.playerGameWinInRow = userProgress.getPlayerGameWinInRow();
+        if (this.playerPointWinInRow == 0 && userProgress.getPlayerGameWinInRow() != 0) {
+            this.playerPointWinInRow = userProgress.getPlayerGameWinInRow();
         }
 
         if (this.getUnlockedActivities() == null || this.getUnlockedActivities().isEmpty() || this.getUnlockedActivities().size() == 1) {

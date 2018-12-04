@@ -279,7 +279,6 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
 
-        String word = generateRandomWord();
-        builder.addResponse(getDialogTranslator().translate(word));
+        builder.addResponse(getDialogTranslator().translate(generateRandomWord(), enemyRole));
     }
 }

@@ -39,6 +39,22 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
             iteratePlayerScoreCounter(builder);
         }
 
+        switch (getUnlockingStatus()) {
+            case UNLOCKED:
+                handleEnterNewActivity(builder);
+                break;
+            case CONTINUE:
+                handlerContinueRePrompt(builder);
+                break;
+            case PROCEED:
+                appendSuccessFlow(builder, words, reactions);
+                break;
+        }
+
+        return builder.withSlotName(actionSlotName);
+    }
+
+    private void appendSuccessFlow(DialogItem.Builder builder, List<String> words, List<String> reactions) {
         BasePhraseContainer randomOpponentAfterXWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
 
         String nextWord = String.join(" ", words);
@@ -54,8 +70,6 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
-
-        return builder.withSlotName(actionSlotName);
     }
 
     @Override
@@ -67,13 +81,27 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
             iterateEnemyScoreCounter(builder);
         }
 
+        switch (getUnlockingStatus()) {
+            case UNLOCKED:
+                handleEnterNewActivity(builder);
+                break;
+            case CONTINUE:
+                handlerContinueRePrompt(builder);
+                break;
+            case PROCEED:
+                handleMistakeFlow(builder);
+                break;
+        }
+
+        return builder.withSlotName(actionSlotName);
+    }
+
+    private void handleMistakeFlow(DialogItem.Builder builder) {
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
 
         builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
 
         this.activityProgress.setPreviousWord(nextWord.getWord());
         this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());
-
-        return builder.withSlotName(actionSlotName);
     }
 }

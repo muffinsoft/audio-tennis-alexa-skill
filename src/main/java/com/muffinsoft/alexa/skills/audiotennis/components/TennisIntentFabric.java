@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
+import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.sdk.util.SlotComputer;
 import com.muffinsoft.alexa.skills.audiotennis.activities.CancelStateManager;
@@ -36,6 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
@@ -86,6 +88,9 @@ public class TennisIntentFabric implements IntentFactory {
         else if (sessionAttributes.containsKey(RANDOM_SWITCH_ACTIVITY_STEP)) {
             interceptRandomActivityProgress(sessionAttributes, activityProgress);
         }
+        else if (sessionAttributes.containsKey(ASK_RANDOM_SWITCH_ACTIVITY_STEP)) {
+            interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
+        }
 
         ActivityType currentActivity = activityProgress.getCurrentActivity();
 
@@ -127,6 +132,16 @@ public class TennisIntentFabric implements IntentFactory {
         return unlockedActivities.stream().skip(random.nextInt(unlockedActivities.size())).findFirst().orElse(null);
     }
 
+    private void interceptAskRandomActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+        if (isPositiveReply(inputSlots)) {
+            interceptRandomActivityProgress(sessionAttributes, activityProgress);
+        }
+        else {
+            sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
+        }
+        sessionAttributes.remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
+    }
+
     private void interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
         ActivityType type = getActivityFromReply(inputSlots);
 
@@ -144,6 +159,9 @@ public class TennisIntentFabric implements IntentFactory {
             activityProgress.setPreviousActivity(currentActivity);
             sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
             sessionAttributes.remove(STATE_TYPE);
+        }
+        else {
+            sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
         }
         sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
     }
