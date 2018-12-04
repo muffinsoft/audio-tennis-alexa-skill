@@ -107,6 +107,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
     protected abstract String getAlreadyUsedWordByActivityRules();
 
+    protected abstract Character getCharWithMistakeForEnemy();
+
     private String appendNextWrongWord(DialogItem.Builder builder) {
 
         String nextWord = getNextWrongWordForActivity();
@@ -114,7 +116,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseWrongWordPhrase();
 
-        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), nextWord, characterWithMistake, null);
+        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), nextWord, getCharWithMistakeForEnemy(), null);
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phraseContainer.getRole());
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
@@ -130,7 +132,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseRepeatWordPhrase();
 
-        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), alreadyUserWord, characterWithMistake, null);
+        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), alreadyUserWord, null, null);
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phraseContainer.getRole());
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));

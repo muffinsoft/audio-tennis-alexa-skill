@@ -73,6 +73,11 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     }
 
     @Override
+    protected Character getCharWithMistakeForEnemy() {
+        return getUserReply().charAt(getUserReply().length() - 1);
+    }
+
+    @Override
     protected String getNextRightWordForActivity() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(lastLetter, this.activityProgress.getUsedWords());
