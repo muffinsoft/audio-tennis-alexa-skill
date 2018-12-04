@@ -71,16 +71,22 @@
                   "I do",
                   "yes please",
                   "you know it",
-                  "of course"
+                  "of course",
+                  "ya",
+                  "ready",
+                  "go"
                 ]
               }
-            },{
+            },
+            {
               "name": {
                 "value": "no",
                 "synonyms": [
                   "no",
                   "nope",
-                  "not"
+                  "not",
+                  "nah",
+                  "neh"
                 ]
               }
             },

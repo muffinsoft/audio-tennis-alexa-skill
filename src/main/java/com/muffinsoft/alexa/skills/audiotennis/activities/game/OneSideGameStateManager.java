@@ -47,11 +47,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
             builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
         }
         else {
-            String newContent = replaceWordPlaceholders(randomOpponentAfterXWordPhrase.getContent(), nextWord, null, null);
-
-            BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomOpponentAfterXWordPhrase.getRole());
-
-            builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+            builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(randomOpponentAfterXWordPhrase, nextWord, null, null)));
         }
 
         this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));

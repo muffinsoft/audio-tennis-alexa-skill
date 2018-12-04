@@ -146,5 +146,17 @@
       "content": "Do you want to restart?",
       "role": "Alexa"
     }
+  ],
+  "playerFavorPhrase": [
+    {
+      "content": "In your favour.",
+      "role": "Alexa"
+    }
+  ],
+  "enemyFavorPhrase": [
+    {
+      "content": "In Ben's favour.",
+      "role": "Alexa"
+    }
   ]
 }

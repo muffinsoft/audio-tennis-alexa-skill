@@ -71,23 +71,23 @@
   ],
   "totalScore": [
     {
-      "content": "Now the score is %enemyScore% : %scores%. In %favour% Favour",
+      "content": "Now the score is %enemyScore% : %scores%",
       "role": "Alexa"
     },
     {
-      "content": "The score is now %enemyScore% : %scores%. In %favour% Favour",
+      "content": "The score is now %enemyScore% : %scores%",
       "role": "Alexa"
     },
     {
-      "content": "Current score %enemyScore% : %scores%. In %favour% Favour",
+      "content": "Current score %enemyScore% : %scores%",
       "role": "Alexa"
     },
     {
-      "content": "Here's the current score %enemyScore% : %scores%. In %favour% Favour",
+      "content": "Here's the current score %enemyScore% : %scores%",
       "role": "Alexa"
     },
     {
-      "content": "That makes it %enemyScore% : %scores%. In %favour% Favour",
+      "content": "That makes it %enemyScore% : %scores%",
       "role": "Alexa"
     }
   ],
@@ -151,6 +151,16 @@
     {
       "content": "Nice try. Ben won 11 to %scores%",
       "role": "Alexa"
+    }
+  ],
+  "victoryPhrase": [
+    {
+      "content": "Hey you really creamed me",
+      "role": "Ben"
+    },
+    {
+      "content": "Hey that was really close",
+      "role": "Ben"
     }
   ],
   "defeatPhrase": [

@@ -18,6 +18,7 @@ public class GeneralActivityPhrases {
     private List<BasePhraseContainer> enemyWinScore;
     private List<BasePhraseContainer> enemyWinGame;
     private List<BasePhraseContainer> defeatPhrase;
+    private List<BasePhraseContainer> victoryPhrase;
 
     public List<BasePhraseContainer> getEnemyWonOnce() {
         return enemyWonOnce;
@@ -99,6 +100,14 @@ public class GeneralActivityPhrases {
         this.defeatPhrase = defeatPhrase;
     }
 
+    public List<BasePhraseContainer> getVictoryPhrase() {
+        return victoryPhrase;
+    }
+
+    public void setVictoryPhrase(List<BasePhraseContainer> victoryPhrase) {
+        this.victoryPhrase = victoryPhrase;
+    }
+
     @JsonIgnore
     public BasePhraseContainer getRandomEnemyWonOnce() {
         int index = getRandomValue(enemyWonOnce.size());
@@ -151,6 +160,18 @@ public class GeneralActivityPhrases {
     public BasePhraseContainer getRandomPlayerWinScore() {
         int index = getRandomValue(playerWinScore.size());
         return playerWinScore.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomVictoryPhrase() {
+        int index = getRandomValue(victoryPhrase.size());
+        return victoryPhrase.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomDefeatPhrase() {
+        int index = getRandomValue(defeatPhrase.size());
+        return defeatPhrase.get(index);
     }
 
     @JsonIgnore

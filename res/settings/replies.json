@@ -2,17 +2,21 @@
   "NO": [
     "no",
     "nope",
-    "not"
+    "not",
+    "nah",
+    "neh"
   ],
   "YES": [
     "ok",
-    "yes",
     "yep",
     "yeah",
-    "do",
-    "please",
+    "I do",
+    "yes please",
     "you know it",
-    "of course"
+    "of course",
+    "ya",
+    "ready",
+    "go"
   ],
   "AGAIN": [
     "again"

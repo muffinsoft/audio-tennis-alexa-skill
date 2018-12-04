@@ -5,6 +5,7 @@ import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
+import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
@@ -16,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ENEMY_FAVOR_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.PLAYER_FAVOR_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
@@ -40,9 +43,23 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     @Override
     protected DialogItem.Builder handleLoseAnswerOfActivity(DialogItem.Builder builder) {
-
+        Speech mistake = builder.popFirstSpeech();
         iterateEnemyGameCounter(builder);
+        builder.addResponseToBegining(mistake);
+        handleNextStepAfterRoundEnd(builder);
+        savePersistentAttributes();
+        return builder;
+    }
 
+    @Override
+    protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
+        iteratePlayerGameCounter(builder);
+        handleNextStepAfterRoundEnd(builder);
+        savePersistentAttributes();
+        return builder;
+    }
+
+    private void handleNextStepAfterRoundEnd(DialogItem.Builder builder) {
         if (checkIfTwoInRow()) {
             handleTwoInRow(builder);
         }
@@ -52,23 +69,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         else {
             handleRoundEnd(builder);
         }
-        savePersistentAttributes();
-        return builder;
-    }
-
-    @Override
-    protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
-
-        iteratePlayerGameCounter(builder);
-
-        if (checkIfTwoInRow()) {
-            handleTwoInRow(builder);
-        }
-        else {
-            handleRoundEnd(builder);
-        }
-        savePersistentAttributes();
-        return builder;
     }
 
     private boolean checkIfThirdTwoInRow() {
@@ -109,9 +109,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             List<PhraseContainer> replacesDialog = new ArrayList<>();
 
             for (PhraseContainer phrase : dialog) {
-                String newContent = replaceActivityPlaceholders(phrase.getContent(), aliasManager.getValueByKey(nextActivity.name()));
-                BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phrase.getRole());
-                replacesDialog.add(newPhraseContainer);
+                replacesDialog.add(replaceActivityPlaceholders(phrase, aliasManager.getValueByKey(nextActivity.name())));
             }
 
             builder.addResponse(getDialogTranslator().translate(replacesDialog));
@@ -122,60 +120,42 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private void iteratePlayerGameCounter(DialogItem.Builder builder) {
+
         this.activityProgress.iteratePlayerGameCounter();
+
         this.userProgress.iterateWinCounter();
+
+        BasePhraseContainer randomVictoryPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomVictoryPhrase();
+        builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomVictoryPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false)));
+
+        BasePhraseContainer randomPlayerWinGame = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinGame();
+        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false)));
+
         BasePhraseContainer randomPlayerWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinScore();
-        String newContent = replaceScoresPlaceholders(randomPlayerWinScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerGameCounter());
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerWinScore.getRole());
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
-        addGameScores(builder, true);
+        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false)));
     }
 
     private void iterateEnemyGameCounter(DialogItem.Builder builder) {
         this.activityProgress.iterateEnemyGameCounter();
         this.userProgress.iterateLoseCounter();
-        BasePhraseContainer randomEnemyWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinScore();
-        String newContent = replaceScoresPlaceholders(randomEnemyWinScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerGameCounter());
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomEnemyWinScore.getRole());
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
-        addGameScores(builder, false);
-    }
 
-    private void addGameScores(DialogItem.Builder builder, boolean isPlayerScores) {
-        BasePhraseContainer randomGameScore;
-        String newContent;
+        BasePhraseContainer randomEnemyWinGame = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinGame();
+        builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false)));
 
-        if (isPlayerScores) {
-            randomGameScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinGame();
-        }
-        else {
-            randomGameScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinGame();
-        }
-
-        if (isPlayerScores) {
-            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter());
-        }
-        else {
-            newContent = replaceScoresPlaceholders(randomGameScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter());
-        }
-
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomGameScore.getRole());
-
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+        BasePhraseContainer randomDefeatPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomDefeatPhrase();
+        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomDefeatPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false)));
     }
 
     private void addPointScores(DialogItem.Builder builder, boolean isPlayerScores) {
         BasePhraseContainer randomTotalScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomTotalScore();
-        String newContent;
+        BasePhraseContainer newPhraseContainer;
 
         if (isPlayerScores) {
-            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter());
+            newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true);
         }
         else {
-            newContent = replaceScoresPlaceholders(randomTotalScore.getContent(), this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter());
+            newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true);
         }
-
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomTotalScore.getRole());
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
@@ -198,31 +178,52 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         savePersistentAttributes();
     }
 
-    private String replaceScoresPlaceholders(String inputString, int enemyScores, int scores) {
+    private BasePhraseContainer replaceScoresPlaceholders(BasePhraseContainer inputContainer, int enemyScores, int scores, boolean withFavor) {
+        String newContent = replaceScoresPlaceholders(inputContainer.getContent(), enemyScores, scores, withFavor);
+        return new BasePhraseContainer(newContent, inputContainer.getRole());
+    }
 
-        if (inputString == null) {
-            return null;
-        }
+    private String replaceScoresPlaceholders(String inputString, int enemyScores, int scores, boolean withFavor) {
 
         String result = inputString.replace("%scores%", String.valueOf(scores));
-
         result = result.replace("%enemyScore%", String.valueOf(enemyScores));
 
-        String favour = (enemyScores >= scores) ? "Ben" : "Player";
-        result = result.replace("%favour%", String.valueOf(favour));
+        if (withFavor) {
+            if (enemyScores > scores) {
+                result += regularPhraseManager.getValueByKey(ENEMY_FAVOR_PHRASE).get(0).getContent();
+            }
+            else if (scores > enemyScores) {
+                result += regularPhraseManager.getValueByKey(PLAYER_FAVOR_PHRASE).get(0).getContent();
+            }
+        }
 
         return result;
+    }
+
+    private BasePhraseContainer replaceActivityPlaceholders(PhraseContainer inputContainer, String activity) {
+        String newContent = replaceActivityPlaceholders(inputContainer.getContent(), activity);
+        return new BasePhraseContainer(newContent, inputContainer.getRole());
     }
 
     private String replaceActivityPlaceholders(String inputString, String activity) {
         return inputString.replace("%activity%", activity);
     }
 
-    String replaceCharacterPlaceholders(String inputString, Character character) {
+    BasePhraseContainer replaceCharacterPlaceholders(PhraseContainer inputContainer, Character character) {
+        String newContent = replaceCharacterPlaceholders(inputContainer.getContent(), character);
+        return new BasePhraseContainer(newContent, inputContainer.getRole());
+    }
+
+    private String replaceCharacterPlaceholders(String inputString, Character character) {
         return inputString.replace("%letter%", String.valueOf(character));
     }
 
-    String replaceWordPlaceholders(String inputString, String word, Character character, String rhyme) {
+    BasePhraseContainer replaceWordPlaceholders(PhraseContainer inputContainer, String word, Character character, String rhyme) {
+        String newContent = replaceWordPlaceholders(inputContainer.getContent(), word, character, rhyme);
+        return new BasePhraseContainer(newContent, inputContainer.getRole());
+    }
+
+    private String replaceWordPlaceholders(String inputString, String word, Character character, String rhyme) {
         if (inputString == null || word == null) {
             return inputString;
         }

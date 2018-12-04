@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
-    protected char characterWithMistake;
+    char characterWithMistake;
 
     CompetitionGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
@@ -50,11 +50,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
 
             if (!randomOpponentAfterWordPhrase.isEmpty()) {
-                String newContent = replaceWordPlaceholders(randomOpponentAfterWordPhrase.getContent(), nextWord, null, null);
-
-                BasePhraseContainer phraseContainer = new BasePhraseContainer(newContent, randomOpponentAfterWordPhrase.getRole());
-
-                builder.addResponse(getDialogTranslator().translate(phraseContainer));
+                builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(randomOpponentAfterWordPhrase, nextWord, null, null)));
             }
             else {
                 builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
@@ -83,10 +79,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             playerLosePhrase = phrasesForActivity.getRandomPlayerLoseWrongWordPhrase();
         }
 
-        String newContent = replaceWordPlaceholders(playerLosePhrase.getContent(), getUserReply(), characterWithMistake, null);
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, playerLosePhrase.getRole());
-
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getUserReply(), characterWithMistake, null)));
 
         iterateEnemyScoreCounter(builder);
 
@@ -118,10 +111,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseWrongWordPhrase();
 
-        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), nextWord, getCharWithMistakeForEnemy(), null);
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phraseContainer.getRole());
-
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(phraseContainer, nextWord, getCharWithMistakeForEnemy(), null)));
 
         iteratePlayerScoreCounter(builder);
 
@@ -136,10 +126,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseRepeatWordPhrase();
 
-        String newContent = replaceWordPlaceholders(phraseContainer.getContent(), alreadyUserWord, null, null);
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, phraseContainer.getRole());
-
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(phraseContainer, alreadyUserWord, null, null)));
 
         iteratePlayerScoreCounter(builder);
 
@@ -149,12 +136,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     }
 
     private void appendHintAfterEnemyMistake(DialogItem.Builder builder, String nextWord) {
-
         BasePhraseContainer randomPlayerHint = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerTurnAfterEnemyMistake();
-
-        String newHintContent = replaceCharacterPlaceholders(randomPlayerHint.getContent(), getNextReplyCharacter(nextWord));
-        BasePhraseContainer newHintPhraseContainer = new BasePhraseContainer(newHintContent, randomPlayerHint.getRole());
-
-        builder.addResponse(getDialogTranslator().translate(newHintPhraseContainer));
+        builder.addResponse(getDialogTranslator().translate(replaceCharacterPlaceholders(randomPlayerHint, getNextReplyCharacter(nextWord))));
     }
 }
