@@ -3,7 +3,7 @@
   "startComplexityValue": 1,
   "iterateComplexityEveryScoresValue": 4,
   "addToComplexityValue": 1,
-  "scoresToWinRoundValue": 11,
+  "scoresToWinRoundValue": 4,
   "availableLives": 1,
   "successAnswersToGetScoreValue": 3,
   "wordsToReactions": {
