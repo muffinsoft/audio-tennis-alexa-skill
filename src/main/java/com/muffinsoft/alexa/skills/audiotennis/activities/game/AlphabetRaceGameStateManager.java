@@ -77,6 +77,12 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
     }
 
     @Override
+    protected Character getNextReplyCharacter(String word) {
+        char currentChar = word.charAt(0);
+        return activityManager.getNextLetter(currentChar);
+    }
+
+    @Override
     protected String getNextRightWordForActivity() {
         char firstLetter = getUserReply().charAt(0);
         char nextLetter = activityManager.getNextLetter(firstLetter);

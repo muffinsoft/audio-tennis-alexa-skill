@@ -109,6 +109,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
     protected abstract Character getCharWithMistakeForEnemy();
 
+    protected abstract Character getNextReplyCharacter(String word);
+
     private String appendNextWrongWord(DialogItem.Builder builder) {
 
         String nextWord = getNextWrongWordForActivity();
@@ -122,6 +124,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
 
         iteratePlayerScoreCounter(builder);
+
+        appendHintAfterEnemyMistake(builder, nextWord);
 
         return nextWord;
     }
@@ -139,6 +143,18 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         iteratePlayerScoreCounter(builder);
 
+        appendHintAfterEnemyMistake(builder, alreadyUserWord);
+
         return alreadyUserWord;
+    }
+
+    private void appendHintAfterEnemyMistake(DialogItem.Builder builder, String nextWord) {
+
+        BasePhraseContainer randomPlayerHint = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerTurnAfterEnemyMistake();
+
+        String newHintContent = replaceCharacterPlaceholders(randomPlayerHint.getContent(), getNextReplyCharacter(nextWord));
+        BasePhraseContainer newHintPhraseContainer = new BasePhraseContainer(newHintContent, randomPlayerHint.getRole());
+
+        builder.addResponse(getDialogTranslator().translate(newHintPhraseContainer));
     }
 }

@@ -218,6 +218,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         return inputString.replace("%activity%", activity);
     }
 
+    String replaceCharacterPlaceholders(String inputString, Character character) {
+        return inputString.replace("%letter%", String.valueOf(character));
+    }
+
     String replaceWordPlaceholders(String inputString, String word, Character character, String rhyme) {
         if (inputString == null || word == null) {
             return inputString;

@@ -8,7 +8,6 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -66,7 +65,7 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
                 usedWordsOnLetter.add(word);
             }
         }
-        if(usedWordsOnLetter.isEmpty()) {
+        if (usedWordsOnLetter.isEmpty()) {
             return null;
         }
         return usedWordsOnLetter.get(ThreadLocalRandom.current().nextInt(usedWordsOnLetter.size()));
@@ -75,6 +74,11 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     @Override
     protected Character getCharWithMistakeForEnemy() {
         return getUserReply().charAt(getUserReply().length() - 1);
+    }
+
+    @Override
+    protected Character getNextReplyCharacter(String word) {
+        return word.charAt(word.length() - 1);
     }
 
     @Override

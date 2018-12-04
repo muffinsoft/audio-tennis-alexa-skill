@@ -18,6 +18,7 @@ public class ActivityPhrases {
     private List<BasePhraseContainer> playerLoseRepeatWordPhrase = Collections.emptyList();
     private List<BasePhraseContainer> enemyLoseRepeatWordPhrase = Collections.emptyList();
     private List<BasePhraseContainer> playerWonOnceAtGame = Collections.emptyList();
+    private List<BasePhraseContainer> playerTurnAfterEnemyMistake = Collections.emptyList();
 
     public List<BasePhraseContainer> getIntro() {
         return intro;
@@ -89,6 +90,14 @@ public class ActivityPhrases {
 
     public void setEnemyLoseRepeatWordPhrase(List<BasePhraseContainer> enemyLoseRepeatWordPhrase) {
         this.enemyLoseRepeatWordPhrase = enemyLoseRepeatWordPhrase;
+    }
+
+    public List<BasePhraseContainer> getPlayerTurnAfterEnemyMistake() {
+        return playerTurnAfterEnemyMistake;
+    }
+
+    public void setPlayerTurnAfterEnemyMistake(List<BasePhraseContainer> playerTurnAfterEnemyMistake) {
+        this.playerTurnAfterEnemyMistake = playerTurnAfterEnemyMistake;
     }
 
     @JsonIgnore
@@ -171,6 +180,15 @@ public class ActivityPhrases {
         }
         int index = getRandomValue(playerWonOnceAtGame.size());
         return playerWonOnceAtGame.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomPlayerTurnAfterEnemyMistake() {
+        if (playerTurnAfterEnemyMistake.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
+        int index = getRandomValue(playerTurnAfterEnemyMistake.size());
+        return playerTurnAfterEnemyMistake.get(index);
     }
 
     @JsonIgnore

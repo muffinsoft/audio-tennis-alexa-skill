@@ -193,5 +193,11 @@
     {"content":"%word% can't be used again ", "role":"Alexa"},
     {"content":"Hmm, Ben - you already said %word%!", "role":"Alexa"},
     {"content":"%word% can't be repeated!", "role":"c"}
+  ],
+  "playerTurnAfterEnemyMistake": [
+    {
+      "content": "Your word should starts from %letter%",
+      "role": "Ben"
+    }
   ]
 }
