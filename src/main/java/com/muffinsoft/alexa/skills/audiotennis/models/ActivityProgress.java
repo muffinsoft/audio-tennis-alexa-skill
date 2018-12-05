@@ -23,7 +23,7 @@ public class ActivityProgress {
     private int enemyGameCounter;
     private int playerPointWinInRow;
     private int enemyPointWinInRow;
-    private int amountOfPointInRow;
+    private int amountOfTwoPointsInRow;
     private String previousWord;
     private String requiredUserReaction;
 
@@ -89,12 +89,12 @@ public class ActivityProgress {
         isTransition = transition;
     }
 
-    public int getAmountOfPointInRow() {
-        return amountOfPointInRow;
+    public int getAmountOfTwoPointsInRow() {
+        return amountOfTwoPointsInRow;
     }
 
-    public void setAmountOfPointInRow(int amountOfPointInRow) {
-        this.amountOfPointInRow = amountOfPointInRow;
+    public void setAmountOfTwoPointsInRow(int amountOfTwoPointsInRow) {
+        this.amountOfTwoPointsInRow = amountOfTwoPointsInRow;
     }
 
     public ActivityType getCurrentActivity() {
@@ -167,8 +167,8 @@ public class ActivityProgress {
         this.successCounter = 0;
     }
 
-    public void iterateAmountOfPointInRow() {
-        this.amountOfPointInRow += 1;
+    public void iterateAmountOfTwoPointInRow() {
+        this.amountOfTwoPointsInRow += 1;
         this.enemyPointWinInRow = 0;
         this.playerPointWinInRow = 0;
     }
@@ -308,6 +308,9 @@ public class ActivityProgress {
             int multiplication = this.playerGameCounter / settingsForActivity.getIterateComplexityEveryScoresValue();
             multiplication = multiplication * settingsForActivity.getAddToComplexityValue();
             this.complexity = settingsForActivity.getStartComplexityValue() + multiplication;
+            if (settingsForActivity.getMaxComplexityValue() != 0 && this.complexity > settingsForActivity.getMaxComplexityValue()) {
+                this.complexity = settingsForActivity.getMaxComplexityValue();
+            }
         }
     }
 
@@ -330,7 +333,7 @@ public class ActivityProgress {
                 '}';
     }
 
-    public ActivityProgress fromUserProgress(UserProgress userProgress) {
+    public void fromUserProgress(UserProgress userProgress) {
 
         if (this.playerGameCounter == 0 && userProgress.getWins() != 0) {
             this.playerGameCounter = userProgress.getWins();
@@ -344,11 +347,17 @@ public class ActivityProgress {
         if (this.enemyPointCounter == 0 && userProgress.getLastGameEnemyPoint() != 0) {
             this.enemyPointCounter = userProgress.getLastGameEnemyPoint();
         }
-        if (this.enemyPointWinInRow == 0 && userProgress.getEnemyGameWinInRow() != 0) {
-            this.enemyPointWinInRow = userProgress.getEnemyGameWinInRow();
+        if (this.enemyPointWinInRow == 0 && userProgress.getEnemyPointWinInRow() != 0) {
+            this.enemyPointWinInRow = userProgress.getEnemyPointWinInRow();
         }
-        if (this.playerPointWinInRow == 0 && userProgress.getPlayerGameWinInRow() != 0) {
-            this.playerPointWinInRow = userProgress.getPlayerGameWinInRow();
+        if (this.playerPointWinInRow == 0 && userProgress.getPlayerPointWinInRow() != 0) {
+            this.playerPointWinInRow = userProgress.getPlayerPointWinInRow();
+        }
+        if (this.currentNickNameLevel == 0 && userProgress.getNickNameLevel() != 0) {
+            this.currentNickNameLevel = userProgress.getNickNameLevel();
+        }
+        if (this.amountOfTwoPointsInRow == 0 && userProgress.getAmountOfTwoPointsInRow() != 0) {
+            this.amountOfTwoPointsInRow = userProgress.getAmountOfTwoPointsInRow();
         }
 
         if (this.getUnlockedActivities() == null || this.getUnlockedActivities().isEmpty() || this.getUnlockedActivities().size() == 1) {
@@ -359,7 +368,6 @@ public class ActivityProgress {
             }
         }
         this.isNew = false;
-        return this;
     }
 
     public int getCurrentNickNameLevel() {

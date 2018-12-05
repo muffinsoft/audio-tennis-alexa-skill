@@ -204,9 +204,43 @@ class LastLetterGameTest extends BaseTest {
         activityProgress.setEnemyGameCounter(0);
         activityProgress.setPlayerPointWinInRow(1);
         activityProgress.setEnemyPointWinInRow(0);
-        activityProgress.setAmountOfPointInRow(0);
+        activityProgress.setAmountOfTwoPointsInRow(0);
         activityProgress.setComplexity(3);
         activityProgress.setNew(false);
+
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
+        attributes.put(STATE_TYPE, StateType.GAME_PHASE_1);
+
+        LastLetterGameStateManager stateManager = new LastLetterGameStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
+
+        DialogItem dialogItem = stateManager.nextResponse();
+
+        stateManager.updateAttributesManager();
+
+        Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
+    }
+
+
+    @Test
+    void testActivePhaseWinWithPromotionAnswer() {
+
+        ActivityManager activityManager = IoC.provideSettingsDependencyContainer().getActivityManager();
+        WordContainer randomWordForActivity = activityManager.getRandomWordForActivity(ActivityType.LAST_LETTER);
+
+        String firstWord = randomWordForActivity.getWord();
+
+        ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
+        activityProgress.setPreviousWord(firstWord);
+        activityProgress.setComplexity(1);
+        activityProgress.setCurrentNickNameLevel(1);
+        activityProgress.setNew(false);
+        activityProgress.setPlayerGameCounter(2);
+        activityProgress.setPlayerPointCounter(10);
+
+        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
+        String secondWord = randomWordForActivityFromLetter.getWord();
+        Map<String, Slot> slots = createSlotsForValue(secondWord);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));

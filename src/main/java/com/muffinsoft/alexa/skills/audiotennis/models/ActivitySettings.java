@@ -13,6 +13,7 @@ public class ActivitySettings {
     private int successAnswersToGetScoreValue;
     private Map<String, String> wordsToReactions;
     private int startIterationIndex;
+    private int maxComplexityValue;
 
     public String getName() {
         return name;
@@ -84,5 +85,13 @@ public class ActivitySettings {
 
     public void setStartIterationIndex(int startIterationIndex) {
         this.startIterationIndex = startIterationIndex;
+    }
+
+    public int getMaxComplexityValue() {
+        return maxComplexityValue;
+    }
+
+    public void setMaxComplexityValue(int maxComplexityValue) {
+        this.maxComplexityValue = maxComplexityValue;
     }
 }

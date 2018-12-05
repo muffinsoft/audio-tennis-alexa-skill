@@ -96,8 +96,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
                 handlerContinueRePrompt(builder);
                 break;
             case PROCEED:
-                builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
                 appendNextRoundPhrase(builder);
+                builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
                 break;
         }
 

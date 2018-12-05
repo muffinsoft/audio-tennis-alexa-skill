@@ -1,10 +1,11 @@
 {
   "name": "RHYME_MATCH",
-  "startComplexityValue": 4,
+  "startComplexityValue": 1,
   "iterateComplexityEveryScoresValue": 2,
-  "addToComplexityValue": 2,
-  "scoresToWinRoundValue": 3,
+  "addToComplexityValue": 1,
+  "scoresToWinRoundValue": 4,
   "startIterationIndex": 3,
   "availableLives": 1,
-  "successAnswersToGetScoreValue": 5
+  "successAnswersToGetScoreValue": 4,
+  "maxComplexityValue": 3
 }

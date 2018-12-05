@@ -66,8 +66,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     ActivityUnlokingStatus getUnlockingStatus() {
         if (checkIfTwoInRow()) {
-            this.activityProgress.iterateAmountOfPointInRow();
-            int iterationValue = this.activityProgress.getAmountOfPointInRow() - 1;
+            this.activityProgress.iterateAmountOfTwoPointInRow();
+            this.userProgress.setAmountOfTwoPointsInRow(this.activityProgress.getAmountOfTwoPointsInRow());
+            savePersistentAttributes();
+            int iterationValue = this.activityProgress.getAmountOfTwoPointsInRow() - 1;
             ActivityType nextActivity = progressManager.getNextActivity(this.activityProgress.getUnlockedActivities());
             if (iterationValue == 0) {
                 if (nextActivity != null) {
@@ -119,6 +121,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     void handleEnterNewActivity(DialogItem.Builder builder) {
+
+        if (!this.activityProgress.getUnlockedActivities().contains(this.currentActivityType)) {
+            this.activityProgress.addUnlockedActivity(this.currentActivityType);
+        }
 
         ActivityType nextActivity = progressManager.getNextActivity(this.activityProgress.getUnlockedActivities());
 

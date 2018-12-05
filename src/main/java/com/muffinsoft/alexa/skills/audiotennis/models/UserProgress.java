@@ -13,8 +13,9 @@ public class UserProgress {
     private int losses;
     private int lastGamePlayerPoint;
     private int lastGameEnemyPoint;
-    private int playerGameWinInRow;
-    private int enemyGameWinInRow;
+    private int playerPointWinInRow;
+    private int enemyPointWinInRow;
+    private int amountOfTwoPointsInRow;
     private Set<String> unlockedActivities = new HashSet<>();
     private Set<String> achievements = new HashSet<>();
     private int nickNameLevel;
@@ -76,35 +77,20 @@ public class UserProgress {
         this.lastGameEnemyPoint = lastGameEnemyPoint;
     }
 
-    public int getPlayerGameWinInRow() {
-        return playerGameWinInRow;
+    public int getPlayerPointWinInRow() {
+        return playerPointWinInRow;
     }
 
-    public void setPlayerGameWinInRow(int playerGameWinInRow) {
-        this.playerGameWinInRow = playerGameWinInRow;
+    public void setPlayerPointWinInRow(int playerPointWinInRow) {
+        this.playerPointWinInRow = playerPointWinInRow;
     }
 
-    public int getEnemyGameWinInRow() {
-        return enemyGameWinInRow;
+    public int getEnemyPointWinInRow() {
+        return enemyPointWinInRow;
     }
 
-    public void setEnemyGameWinInRow(int enemyGameWinInRow) {
-        this.enemyGameWinInRow = enemyGameWinInRow;
-    }
-
-    @Override
-    @JsonIgnore
-    public String toString() {
-        return "UserProgress{" +
-                "wins=" + wins +
-                ", losses=" + losses +
-                ", lastGamePlayerPoint=" + lastGamePlayerPoint +
-                ", lastGameEnemyPoint=" + lastGameEnemyPoint +
-                ", playerGameWinInRow=" + playerGameWinInRow +
-                ", enemyGameWinInRow=" + enemyGameWinInRow +
-                ", unlockedActivities=" + unlockedActivities +
-                ", achievements=" + achievements +
-                '}';
+    public void setEnemyPointWinInRow(int enemyPointWinInRow) {
+        this.enemyPointWinInRow = enemyPointWinInRow;
     }
 
     public void iterateLoseCounter() {
@@ -119,11 +105,36 @@ public class UserProgress {
         this.unlockedActivities.add(activity.name());
     }
 
+    public int getNickNameLevel() {
+        return nickNameLevel;
+    }
+
     public void setNickNameLevel(int nickNameLevel) {
         this.nickNameLevel = nickNameLevel;
     }
 
-    public int getNickNameLevel() {
-        return nickNameLevel;
+    public int getAmountOfTwoPointsInRow() {
+        return amountOfTwoPointsInRow;
+    }
+
+    public void setAmountOfTwoPointsInRow(int amountOfTwoPointsInRow) {
+        this.amountOfTwoPointsInRow = amountOfTwoPointsInRow;
+    }
+
+    @Override
+    @JsonIgnore
+    public String toString() {
+        return "UserProgress{" +
+                "wins=" + wins +
+                ", losses=" + losses +
+                ", lastGamePlayerPoint=" + lastGamePlayerPoint +
+                ", lastGameEnemyPoint=" + lastGameEnemyPoint +
+                ", playerPointWinInRow=" + playerPointWinInRow +
+                ", enemyPointWinInRow=" + enemyPointWinInRow +
+                ", amountOfTwoPointsInRow=" + amountOfTwoPointsInRow +
+                ", unlockedActivities=" + unlockedActivities +
+                ", achievements=" + achievements +
+                ", nickNameLevel=" + nickNameLevel +
+                '}';
     }
 }

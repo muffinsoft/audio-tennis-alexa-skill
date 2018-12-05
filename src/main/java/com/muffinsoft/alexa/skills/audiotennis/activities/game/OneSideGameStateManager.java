@@ -47,8 +47,8 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
                 handlerContinueRePrompt(builder);
                 break;
             case PROCEED:
-                appendSuccessFlow(builder, words, reactions);
                 appendNextRoundPhrase(builder);
+                appendSuccessFlow(builder, words, reactions);
                 break;
         }
 
@@ -90,8 +90,8 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
                 handlerContinueRePrompt(builder);
                 break;
             case PROCEED:
-                handleMistakeFlow(builder);
                 appendNextRoundPhrase(builder);
+                handleMistakeFlow(builder);
                 break;
         }
 
