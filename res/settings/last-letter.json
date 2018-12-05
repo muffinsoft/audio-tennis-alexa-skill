@@ -1,8 +1,8 @@
 {
   "name": "LAST_LETTER",
-  "startComplexityValue": 3,
+  "startComplexityValue": 4,
   "iterateComplexityEveryScoresValue": 2,
   "addToComplexityValue": 2,
-  "scoresToWinRoundValue": 4,
+  "scoresToWinRoundValue": 3,
   "startIterationIndex": 3
 }

@@ -212,7 +212,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         builder.addResponse(getDialogTranslator().translate(phraseContainer));
         this.activityProgress.iteratePlayerPointCounter();
         addPointScores(builder, true);
-        appendNextRoundPhrase(builder);
+//        appendNextRoundPhrase(builder);
         savePersistentAttributes();
     }
 
@@ -221,7 +221,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         builder.addResponse(getDialogTranslator().translate(randomPhrase));
         this.activityProgress.iterateEnemyPointCounter();
         addPointScores(builder, false);
-        appendNextRoundPhrase(builder);
+//        appendNextRoundPhrase(builder);
         savePersistentAttributes();
     }
 

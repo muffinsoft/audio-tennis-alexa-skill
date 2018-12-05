@@ -3,10 +3,10 @@
   "startComplexityValue": 1,
   "iterateComplexityEveryScoresValue": 2,
   "addToComplexityValue": 2,
-  "scoresToWinRoundValue": 4,
+  "scoresToWinRoundValue": 3,
   "startIterationIndex": 3,
   "availableLives": 1,
-  "successAnswersToGetScoreValue": 3,
+  "successAnswersToGetScoreValue": 4,
   "wordsToReactions": {
     "Bam": "wham",
     "Bap": "wap",
