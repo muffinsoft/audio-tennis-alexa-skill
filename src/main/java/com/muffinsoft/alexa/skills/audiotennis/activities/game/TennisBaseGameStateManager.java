@@ -172,6 +172,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             builder.withShouldEnd(true);
         }
         else {
+            this.activityProgress.setTransition(false);
             initGameStatePhrase(builder);
         }
         return builder.withSlotName(actionSlotName);

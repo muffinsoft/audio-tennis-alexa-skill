@@ -134,13 +134,30 @@ public class TennisIntentFabric implements IntentFactory {
     }
 
     private void interceptAskRandomActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+
+        ActivityType type = getActivityFromReply(inputSlots);
+
         if (isPositiveReply(inputSlots)) {
             interceptRandomActivityProgress(sessionAttributes, activityProgress);
         }
         else {
-            sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
+            movingBetweenActivities(sessionAttributes, activityProgress, type);
         }
         sessionAttributes.remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
+    }
+
+    private void movingBetweenActivities(Map<String, Object> sessionAttributes, ActivityProgress activityProgress, ActivityType type) {
+        if (type != null) {
+            ActivityType currentActivity = activityProgress.getCurrentActivity();
+            activityProgress.setCurrentActivity(type);
+            activityProgress.setPreviousActivity(currentActivity);
+            activityProgress.setTransition(true);
+            sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
+            sessionAttributes.remove(STATE_TYPE);
+        }
+        else {
+            sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
+        }
     }
 
     private void interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
@@ -155,16 +172,8 @@ public class TennisIntentFabric implements IntentFactory {
             sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
             sessionAttributes.remove(STATE_TYPE);
         }
-        else if (type != null) {
-            ActivityType currentActivity = activityProgress.getCurrentActivity();
-            activityProgress.setCurrentActivity(type);
-            activityProgress.setPreviousActivity(currentActivity);
-            activityProgress.setTransition(true);
-            sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
-            sessionAttributes.remove(STATE_TYPE);
-        }
         else {
-            sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
+            movingBetweenActivities(sessionAttributes, activityProgress, type);
         }
         sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
     }
