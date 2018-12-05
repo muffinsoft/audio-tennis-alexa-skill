@@ -124,9 +124,9 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         iteratePlayerScoreCounter(builder);
 
-        handleUnlockingStatusAfterEnemyMistake(builder);
+        String newWord = handleUnlockingStatusAfterEnemyMistake(builder);
 
-        return nextWord;
+        return newWord != null ? newWord : nextWord;
     }
 
     private String appendNextRepeatedWord(DialogItem.Builder builder, String alreadyUserWord) {
@@ -139,31 +139,35 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         iteratePlayerScoreCounter(builder);
 
-        handleUnlockingStatusAfterEnemyMistake(builder);
+        String newWord = handleUnlockingStatusAfterEnemyMistake(builder);
 
-        return alreadyUserWord;
+        return newWord != null ? newWord : alreadyUserWord;
     }
 
-    private void handleUnlockingStatusAfterEnemyMistake(DialogItem.Builder builder) {
+    private String handleUnlockingStatusAfterEnemyMistake(DialogItem.Builder builder) {
         ActivityUnlokingStatus unlockingStatus = getUnlockingStatus();
         logger.debug("Current status: " + unlockingStatus);
         switch (unlockingStatus) {
             case UNLOCKED:
                 handleEnterNewActivity(builder);
-                break;
+                return null;
             case CONTINUE:
                 handlerContinueRePrompt(builder);
-                break;
+                return null;
             case PROCEED:
-                appendHintAfterEnemyMistake(builder);
-                break;
+                return appendHintAfterEnemyMistake(builder);
         }
+        return null;
     }
 
-    private void appendHintAfterEnemyMistake(DialogItem.Builder builder) {
+    private String appendHintAfterEnemyMistake(DialogItem.Builder builder) {
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
 
-        builder.addResponse(getDialogTranslator().translate(generateRandomWord(), enemyRole));
+        String newWord = generateRandomWord();
+
+        builder.addResponse(getDialogTranslator().translate(newWord, enemyRole));
+
+        return newWord;
     }
 }
