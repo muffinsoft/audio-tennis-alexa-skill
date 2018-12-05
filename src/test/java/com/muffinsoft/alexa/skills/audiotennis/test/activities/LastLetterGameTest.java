@@ -141,8 +141,6 @@ class LastLetterGameTest extends BaseTest {
 
         stateManager.updateAttributesManager();
 
-        Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
-        ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 

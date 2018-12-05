@@ -75,22 +75,13 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         this.userReplyBreakpointPosition = (Integer) this.getSessionAttributes().getOrDefault(USER_REPLY_BREAKPOINT, null);
 
-        LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
-        ActivityProgress activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress(this.currentActivityType, true);
-        activityProgress.getUnlockedActivities().remove(null);
-
         UserProgress userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
         this.userProgress = userProgress != null ? userProgress : new UserProgress(this.currentActivityType);
 
-        this.activityProgress = mergeActivityWithUserProgress(activityProgress, this.userProgress);
-    }
-
-    private ActivityProgress mergeActivityWithUserProgress(ActivityProgress activityProgress, UserProgress userProgress) {
-
-        if (activityProgress.isNew()) {
-            return activityProgress.fromUserProgress(userProgress);
-        }
-        return activityProgress;
+        LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
+        ActivityProgress activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : new ActivityProgress(this.currentActivityType, true);
+        activityProgress.getUnlockedActivities().remove(null);
+        this.activityProgress = activityProgress;
     }
 
     @Override
@@ -121,9 +112,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         phrasesForActivity = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType);
         settingsForActivity = activityManager.getSettingsForActivity(this.currentActivityType);
 
-        builder = handleStateAction(stateType, builder);
+        if (activityProgress.isNew()) {
+            activityProgress.fromUserProgress(userProgress);
+            activityProgress.updateWithDifficultSettings(settingsForActivity);
+        }
 
-        // here I will modify response
+        builder = handleStateAction(stateType, builder);
 
         return builder;
     }
@@ -247,7 +241,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         return index;
     }
 
-    private String generateRandomWord() {
+    String generateRandomWord() {
 
         WordContainer wordContainer = activityManager.getRandomWordForActivity(this.currentActivityType);
 
