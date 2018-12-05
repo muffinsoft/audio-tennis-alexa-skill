@@ -68,7 +68,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
                 handlerContinueRePrompt(builder);
                 break;
             case PROCEED:
-                appendNextRoundPhrase(builder);
+//                appendNextRoundPhrase(builder);
                 builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
                 break;
         }

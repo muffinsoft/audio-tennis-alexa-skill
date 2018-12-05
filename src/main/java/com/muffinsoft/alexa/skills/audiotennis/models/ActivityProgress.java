@@ -300,7 +300,6 @@ public class ActivityProgress {
 
     public void updateWithDifficultSettings(ActivitySettings settingsForActivity) {
         this.isNew = false;
-        this.enemyAnswerCounter = 0;
         if (this.playerGameCounter < settingsForActivity.getStartIterationIndex()) {
             this.complexity = settingsForActivity.getStartComplexityValue();
         }

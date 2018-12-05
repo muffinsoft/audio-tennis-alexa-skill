@@ -114,8 +114,9 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         if (activityProgress.isNew()) {
             activityProgress.fromUserProgress(userProgress);
-            activityProgress.updateWithDifficultSettings(settingsForActivity);
         }
+
+        activityProgress.updateWithDifficultSettings(settingsForActivity);
 
         builder = handleStateAction(stateType, builder);
 
