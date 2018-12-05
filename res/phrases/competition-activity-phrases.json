@@ -1,23 +1,23 @@
 {
   "opponentFirstPhrase": [
     {
-      "content": "Let me start.,",
+      "content": "Let me start.",
       "role": "Ben"
     },
     {
-      "content": "I'll go first.,",
+      "content": "I'll go first.",
       "role": "Ben"
     },
     {
-      "content": "I'll serve.,",
+      "content": "I'll serve.",
       "role": "Ben"
     },
     {
-      "content": "I'll start.,",
+      "content": "I'll start.",
       "role": "Ben"
     },
     {
-      "content": "Me first",
+      "content": "Me first.",
       "role": "Ben"
     },
     {
@@ -27,19 +27,19 @@
   ],
   "opponentAfterWordPhrase": [
     {
-      "content": "Your turn!,",
+      "content": "Your turn!",
       "role": "Ben"
     },
     {
-      "content": "Hit it back!,",
+      "content": "Hit it back!",
       "role": "Ben"
     },
     {
-      "content": "You're next!,",
+      "content": "You're next!",
       "role": "Ben"
     },
     {
-      "content": "Give me your best shot!,",
+      "content": "Give me your best shot!",
       "role": "Ben"
     },
     {
@@ -53,15 +53,15 @@
       "role": "Ben"
     },
     {
-      "content": "I'm going with %word%!,",
+      "content": "I'm going with %word%!",
       "role": "Ben"
     },
     {
-      "content": "Hitting back with %word%!,",
+      "content": "Hitting back with %word%!",
       "role": "Ben"
     },
     {
-      "content": "My next response is %word%!,",
+      "content": "My next response is %word%!",
       "role": "Ben"
     },
     {
@@ -71,49 +71,49 @@
   ],
   "playerLoseWrongWordPhrase": [
     {
-      "content": "%word% doesn't start with %letter%,",
+      "content": "%word% doesn't start with %letter%.",
       "role": "Alexa"
     },
     {
-      "content": "%word% doesn't begin with %letter%,",
+      "content": "%word% doesn't begin with %letter%.",
       "role": "Alexa"
     },
     {
-      "content": "%letter% isn't the the first letter of %word%,",
+      "content": "%letter% isn't the the first letter of %word%.",
       "role": "Alexa"
     },
     {
-      "content": "Your word had to start with %letter%,",
+      "content": "Your word had to start with %letter%.",
       "role": "Alexa"
     },
     {
-      "content": "Your word was supposed to start with %letter%",
+      "content": "Your word was supposed to start with %letter%.",
       "role": "Alexa"
     }
   ],
   "playerLoseRepeatWordPhrase": [
     {
-      "content": "%word% was already used,",
+      "content": "%word% was already used.",
       "role": "Ben"
     },
     {
-      "content": "we already said %word%,",
+      "content": "we already said %word%.",
       "role": "Alexa"
     },
     {
-      "content": "we can't say %word% again,",
+      "content": "we can't say %word% again.",
       "role": "Alexa"
     },
     {
-      "content": "%word% can't be used again,",
+      "content": "%word% can't be used again.",
       "role": "Alexa"
     },
     {
-      "content": "you already said %word%!,",
+      "content": "you already said %word%!.",
       "role": "Alexa"
     },
     {
-      "content": "I already said %word%!,",
+      "content": "I already said %word%!",
       "role": "Alexa"
     },
     {
@@ -123,23 +123,23 @@
   ],
   "playerWonOnceAtGame": [
     {
-      "content": "Man... you won",
+      "content": "Man... you won!",
       "role": "Ben"
     },
     {
-      "content": "Aw man, you beat me",
+      "content": "Aw man, you beat me!",
       "role": "Ben"
     },
     {
-      "content": "Nice job! You won",
+      "content": "Nice job! You won!",
       "role": "Ben"
     },
     {
-      "content": "Looks like you got me this time",
+      "content": "Looks like you got me this time!",
       "role": "Ben"
     },
     {
-      "content": "Hey! You defeated me fair and square with a score of",
+      "content": "Hey! You defeated me fair and square with a score of!",
       "role": "Ben"
     },
     {
@@ -191,19 +191,19 @@
   ],
   "enemyLoseRepeatWordPhrase": [
     {
-      "content": "%word% was already used",
+      "content": "%word% was already used.",
       "role": "Alexa"
     },
     {
-      "content": "Hey Ben, you already said %word%",
+      "content": "Hey Ben, you already said %word%.",
       "role": "Alexa"
     },
     {
-      "content": "Nice try, Ben - you can't say %word% again",
+      "content": "Nice try, Ben - you can't say %word% again.",
       "role": "Alexa"
     },
     {
-      "content": "%word% can't be used again ",
+      "content": "%word% can't be used again.",
       "role": "Alexa"
     },
     {
@@ -217,7 +217,7 @@
   ],
   "playerTurnAfterEnemyMistake": [
     {
-      "content": "Your word should starts from %letter%",
+      "content": "Your word should starts from %letter%.",
       "role": "Ben"
     }
   ]

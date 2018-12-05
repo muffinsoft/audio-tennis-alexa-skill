@@ -5,32 +5,66 @@
       "role": "Ben"
     },
     {
-      "content": "Look how Ben and Lily do it!",
+      "content": "You know what? Let me play with my sis Lilly so you’ll see how it is done.",
       "role": "Alexa"
+    },
+    {
+      "role": "Sound",
+      "audio": null
     },
     {
       "content": "pear",
       "role": "Ben"
     },
     {
+      "_comment": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "bear",
       "role": "Lily"
+    },
+    {
+      "_comment": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
     },
     {
       "content": "cow, book",
       "role": "Ben"
     },
     {
+      "_comment": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "how, took",
       "role": "Lily"
+    },
+    {
+      "_comment": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
     },
     {
       "content": "cheese, egg, jam!",
       "role": "Ben"
     },
     {
+      "_comment": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "please, beg, spam!",
       "role": "Lily"
+    },
+    {
+      "_comment": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
     }
   ]
 }

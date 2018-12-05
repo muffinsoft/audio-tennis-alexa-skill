@@ -43,51 +43,51 @@
       "role": "Ben"
     },
     {
-      "content": "Yes! I won",
+      "content": "Yes! I won!",
       "role": "Ben"
     },
     {
-      "content": "Sweet! beat you",
+      "content": "Sweet! beat you!",
       "role": "Ben"
     },
     {
-      "content": "Oh yeah! I defeated you",
+      "content": "Oh yeah! I defeated you!",
       "role": "Ben"
     },
     {
-      "content": "Woohoo! I won",
+      "content": "Woohoo! I won!",
       "role": "Ben"
     },
     {
-      "content": "I got you this time! I won",
+      "content": "I got you this time! I won!",
       "role": "Ben"
     }
   ],
   "playerLoseTwice": [
     {
-      "content": "I beat you twice in a round",
+      "content": "I beat you twice in a round!",
       "role": "Ben"
     }
   ],
   "totalScore": [
     {
-      "content": "Now the score is %enemyScore% : %scores%",
+      "content": "Now the score is %enemyScore% : %scores% ",
       "role": "Alexa"
     },
     {
-      "content": "The score is now %enemyScore% : %scores%",
+      "content": "The score is now %enemyScore% : %scores% ",
       "role": "Alexa"
     },
     {
-      "content": "Current score %enemyScore% : %scores%",
+      "content": "Current score %enemyScore% : %scores% ",
       "role": "Alexa"
     },
     {
-      "content": "Here's the current score %enemyScore% : %scores%",
+      "content": "Here's the current score %enemyScore% : %scores% ",
       "role": "Alexa"
     },
     {
-      "content": "That makes it %enemyScore% : %scores%",
+      "content": "That makes it %enemyScore% : %scores% ",
       "role": "Alexa"
     }
   ],
@@ -155,11 +155,11 @@
   ],
   "victoryPhrase": [
     {
-      "content": "Hey you really creamed me",
+      "content": "Hey you really creamed me.",
       "role": "Ben"
     },
     {
-      "content": "Hey that was really close",
+      "content": "Hey that was really close.",
       "role": "Ben"
     }
   ],

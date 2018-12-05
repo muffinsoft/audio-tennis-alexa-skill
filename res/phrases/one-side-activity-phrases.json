@@ -23,19 +23,19 @@
   ],
   "opponentAfterWordPhrase": [
     {
-      "content": "Your turn!,",
+      "content": "Your turn!",
       "role": "Ben"
     },
     {
-      "content": "Hit it back!,",
+      "content": "Hit it back!",
       "role": "Ben"
     },
     {
-      "content": "You're next!,",
+      "content": "You're next!",
       "role": "Ben"
     },
     {
-      "content": "Give me your best shot!,",
+      "content": "Give me your best shot!",
       "role": "Ben"
     },
     {
@@ -49,15 +49,15 @@
       "role": "Ben"
     },
     {
-      "content": "I'm going with %word%!,",
+      "content": "I'm going with %word%!",
       "role": "Ben"
     },
     {
-      "content": "Hitting back with %word%!,",
+      "content": "Hitting back with %word%!",
       "role": "Ben"
     },
     {
-      "content": "My next response is %word%!,",
+      "content": "My next response is %word%!",
       "role": "Ben"
     },
     {
@@ -73,27 +73,27 @@
   ],
   "playerLoseRepeatWordPhrase": [
     {
-      "content": "%word% was already used,",
+      "content": "%word% was already used.",
       "role": "Ben"
     },
     {
-      "content": "we already said %word%,",
+      "content": "we already said %word%.",
       "role": "Ben"
     },
     {
-      "content": "we can't say %word% again,",
+      "content": "we can't say %word% again.",
       "role": "Ben"
     },
     {
-      "content": "%word% can't be used again,",
+      "content": "%word% can't be used again.",
       "role": "Ben"
     },
     {
-      "content": "you already said %word%!,",
+      "content": "you already said %word%!",
       "role": "Ben"
     },
     {
-      "content": "I already said %word%!,",
+      "content": "I already said %word%!",
       "role": "Ben"
     },
     {

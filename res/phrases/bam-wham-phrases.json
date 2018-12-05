@@ -1,39 +1,66 @@
 {
   "intro": [
     {
-      "content": "I love this round! I'm going to use one of my serving words to hit the ball to you. If I say Bam, you say Wham.  If I say Boom, you say Whoom.  If I say Boom Bap, you say Whoom Whap.",
+      "content": "I love this round! I'm going to use one of my serving words to hit the ball to you. If I say Bam, you say Wham.  If I say Boom, you say Whoom.  If I say Boom Bap, you say Whoom Whap. You know what? Let me play with my sis Lilly so you�ll see how it is done.",
       "role": "Ben"
+    },
+    {
+      "role": "Sound",
+      "audio": null
     },
     {
       "content": "Boom!",
       "role": "Ben"
     },
     {
+      "_comment": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "Whoom!",
       "role": "Lily"
+    },
+    {
+      "_comment": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
     },
     {
       "content": "Bomp, Bap!",
       "role": "Ben"
     },
     {
+      "_comment": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "Whomp, Whap!",
       "role": "Lily"
+    },
+    {
+      "_comment": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
     },
     {
       "content": "Whonk, Whoom, Wham!",
       "role": "Ben"
     },
     {
+      "_comment": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "Bonk, Boom, Bam",
       "role": "Lily"
     },
     {
-      "content": "I think you got the idea.  Now let’s go ahead and play.",
-      "role": "Ben"
+      "_comment": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
     }
   ]
 }
-
-
-

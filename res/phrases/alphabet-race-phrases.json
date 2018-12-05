@@ -5,20 +5,48 @@
       "role": "Ben"
     },
     {
+      "content": "Look how ben and Lily do it!",
+      "role": "Alexa"
+    },
+    {
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "Dinosaur!",
       "role": "Ben"
+    },
+    {
+      "_comment": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
     },
     {
       "content": "Egg!",
       "role": "Lily"
     },
     {
+      "_comment": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "Flower!",
       "role": "Ben"
     },
     {
+      "_comment": "<ball hits the racket (from far)>",
+      "role": "Sound",
+      "audio": null
+    },
+    {
       "content": "Goat!",
       "role": "Lily"
+    },
+    {
+      "_comment": "<balls hits the racket (up close)>",
+      "role": "Sound",
+      "audio": null
     }
   ]
 }

@@ -31,7 +31,7 @@
   ],
   "returnToGamePhrase": [
     {
-      "content": "You'll be returned to game process",
+      "content": "You'll be returned to game process.",
       "role": "Alexa"
     }
   ],
@@ -55,7 +55,7 @@
   ],
   "exitPhrase": [
     {
-      "content": "We had fun together. Let's do this again soon.",
+      "content": "Alright, hope to see you again soon",
       "role": "Alexa"
     }
   ],
@@ -143,7 +143,7 @@
   ],
   "wantRestartPhrase": [
     {
-      "content": "Do you want to restart?",
+      "content": "Would you like to try another game?",
       "role": "Alexa"
     }
   ],
@@ -167,7 +167,7 @@
   ],
   "fireworksWhistles": [
     {
-      "content": "What a great idea, Ben. Here we go.?",
+      "content": "Ready to play?",
       "role": "Alexa"
     },
     {
