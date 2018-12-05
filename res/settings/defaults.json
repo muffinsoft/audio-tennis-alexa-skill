@@ -5,5 +5,28 @@
     "BAM_WHAM": 1,
     "RHYME_MATCH": 3
   },
-  "enemyRole": "Ben"
+  "enemyRole": "Ben",
+  "nickNamesByLevel": {
+    "0": "",
+    "1": "Rookie",
+    "2": "Trainee",
+    "3": "Up-and-comer",
+    "4": "Rising star",
+    "5": "Expert",
+    "6": "Ace",
+    "7": "Pro",
+    "8": "Crackerjack",
+    "9": "Champion",
+    "10": "Legend"
+  }
 }
+
+
+
+
+
+
+
+
+
+

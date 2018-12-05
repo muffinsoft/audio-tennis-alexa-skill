@@ -31,6 +31,7 @@ class LastLetterGameTest extends BaseTest {
 
         ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPreviousWord(firstWord);
+        activityProgress.setPlayerGameCounter(3);
 
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromLetter.getWord();
@@ -157,7 +158,6 @@ class LastLetterGameTest extends BaseTest {
         activityProgress.setPreviousWord(firstWord);
         activityProgress.setEnemyAnswerCounter(3);
         activityProgress.setComplexity(4);
-        activityProgress.setUpdateForLevel(true);
 
         WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromWrongLetter.getWord();
@@ -208,7 +208,6 @@ class LastLetterGameTest extends BaseTest {
         activityProgress.setEnemyPointWinInRow(0);
         activityProgress.setAmountOfPointInRow(0);
         activityProgress.setComplexity(3);
-        activityProgress.setUpdateForLevel(true);
         activityProgress.setNew(false);
 
         Map<String, Object> attributes = new HashMap<>();

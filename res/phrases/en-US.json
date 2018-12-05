@@ -164,5 +164,15 @@
       "content": "Ready to play?",
       "role": "Alexa"
     }
+  ],
+  "fireworksWhistles": [
+    {
+      "content": "What a great idea, Ben. Here we go.?",
+      "role": "Alexa"
+    },
+    {
+      "audio": "soundbank://soundlibrary/impacts/amzn_sfx_fireworks_whistles_01",
+      "role": "Audio"
+    }
   ]
 }

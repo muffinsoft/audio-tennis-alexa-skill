@@ -31,9 +31,9 @@ public class ActivityProgress {
     private boolean isNew;
     private boolean isTransition;
 
-    private boolean updateForLevel;
     private Set<String> usedWords = new HashSet<>();
     private ActivityType possibleActivity;
+    private int currentNickNameLevel;
 
     private ActivityProgress() {
     }
@@ -60,7 +60,6 @@ public class ActivityProgress {
     }
 
     public void reset() {
-        this.updateForLevel = false;
         this.successCounter = 0;
         this.mistakeCount = 0;
         this.enemyAnswerCounter = 0;
@@ -159,7 +158,6 @@ public class ActivityProgress {
         this.enemyPointWinInRow += 1;
         this.playerPointWinInRow = 0;
         this.mistakeCount = 0;
-        this.updateForLevel = false;
     }
 
     public void iteratePlayerPointCounter() {
@@ -167,7 +165,6 @@ public class ActivityProgress {
         this.playerPointWinInRow += 1;
         this.enemyPointWinInRow = 0;
         this.successCounter = 0;
-        this.updateForLevel = false;
     }
 
     public void iterateAmountOfPointInRow() {
@@ -218,14 +215,6 @@ public class ActivityProgress {
 
     public void setRequiredUserReaction(String reaction) {
         this.requiredUserReaction = reaction;
-    }
-
-    public boolean isUpdateForLevel() {
-        return updateForLevel;
-    }
-
-    public void setUpdateForLevel(boolean updateForLevel) {
-        this.updateForLevel = updateForLevel;
     }
 
     public int getMistakeCount() {
@@ -292,15 +281,31 @@ public class ActivityProgress {
         this.possibleActivity = possibleActivity;
     }
 
+    @JsonIgnore
+    public boolean isTimeToAddNickName() {
+        int temp = this.playerGameCounter - 1;
+        return temp % 2 == 0;
+    }
+
+    @JsonIgnore
+    public boolean isTimeToLevelUp(ActivitySettings settingsForActivity) {
+        if (this.playerGameCounter < settingsForActivity.getStartIterationIndex()) {
+            return false;
+        }
+        else {
+            int temp = this.playerGameCounter - 1;
+            return temp % 2 == 0;
+        }
+    }
+
     public void updateWithDifficultSettings(ActivitySettings settingsForActivity) {
-        this.updateForLevel = true;
         this.isNew = false;
         this.enemyAnswerCounter = 0;
-        if (this.playerPointCounter < settingsForActivity.getIterateComplexityEveryScoresValue()) {
+        if (this.playerGameCounter < settingsForActivity.getStartIterationIndex()) {
             this.complexity = settingsForActivity.getStartComplexityValue();
         }
         else {
-            int multiplication = this.playerPointCounter / settingsForActivity.getIterateComplexityEveryScoresValue();
+            int multiplication = this.playerGameCounter / settingsForActivity.getIterateComplexityEveryScoresValue();
             multiplication = multiplication * settingsForActivity.getAddToComplexityValue();
             this.complexity = settingsForActivity.getStartComplexityValue() + multiplication;
         }
@@ -355,5 +360,17 @@ public class ActivityProgress {
         }
         this.isNew = false;
         return this;
+    }
+
+    public int getCurrentNickNameLevel() {
+        return currentNickNameLevel;
+    }
+
+    public void setCurrentNickNameLevel(int currentNickNameLevel) {
+        this.currentNickNameLevel = currentNickNameLevel;
+    }
+
+    public void iterateNickNameCounter() {
+        this.currentNickNameLevel += 1;
     }
 }

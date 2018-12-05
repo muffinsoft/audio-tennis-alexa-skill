@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ENEMY_FAVOR_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.FIREWORK_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.PLAYER_FAVOR_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
@@ -160,6 +161,25 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         BasePhraseContainer randomPlayerWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinScore();
         builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false)));
+
+        BasePhraseContainer randomCallToCelebrate = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomCallToCelebrate();
+        builder.addResponse(getDialogTranslator().translate(randomCallToCelebrate));
+
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(FIREWORK_PHRASE)));
+
+        if (activityProgress.isTimeToLevelUp(settingsForActivity)) {
+            activityProgress.updateWithDifficultSettings(settingsForActivity);
+            BasePhraseContainer randomLevelUps = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomLevelUps();
+            builder.addResponse(getDialogTranslator().translate(randomLevelUps));
+        }
+
+        if (activityProgress.isTimeToAddNickName()) {
+            activityProgress.iterateNickNameCounter();
+            userProgress.setNickNameLevel(activityProgress.getCurrentNickNameLevel());
+            String nextNickName = progressManager.findNextNickName(this.activityProgress.getCurrentNickNameLevel());
+            BasePhraseContainer randomPromotions = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPromotions();
+            builder.addResponse(getDialogTranslator().translate(replaceNickName(randomPromotions, nextNickName)));
+        }
     }
 
     private void iterateEnemyGameCounter(DialogItem.Builder builder) {
@@ -203,6 +223,11 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         addPointScores(builder, false);
         appendNextRoundPhrase(builder);
         savePersistentAttributes();
+    }
+
+    private BasePhraseContainer replaceNickName(BasePhraseContainer inputContainer, String rookie) {
+        String newContent = inputContainer.getContent().replace("%rookie%", rookie);
+        return new BasePhraseContainer(newContent, inputContainer.getRole());
     }
 
     private BasePhraseContainer replaceScoresPlaceholders(BasePhraseContainer inputContainer, int enemyScores, int scores, boolean withFavor) {

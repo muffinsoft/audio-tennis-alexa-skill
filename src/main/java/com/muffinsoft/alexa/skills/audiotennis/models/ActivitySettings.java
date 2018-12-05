@@ -12,6 +12,7 @@ public class ActivitySettings {
     private int availableLives;
     private int successAnswersToGetScoreValue;
     private Map<String, String> wordsToReactions;
+    private int startIterationIndex;
 
     public String getName() {
         return name;
@@ -75,5 +76,13 @@ public class ActivitySettings {
 
     public void setWordsToReactions(Map<String, String> wordsToReactions) {
         this.wordsToReactions = wordsToReactions;
+    }
+
+    public int getStartIterationIndex() {
+        return startIterationIndex;
+    }
+
+    public void setStartIterationIndex(int startIterationIndex) {
+        this.startIterationIndex = startIterationIndex;
     }
 }

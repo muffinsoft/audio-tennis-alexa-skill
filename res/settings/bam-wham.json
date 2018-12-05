@@ -1,9 +1,10 @@
 {
   "name": "BAM_WHAM",
   "startComplexityValue": 1,
-  "iterateComplexityEveryScoresValue": 4,
-  "addToComplexityValue": 1,
+  "iterateComplexityEveryScoresValue": 2,
+  "addToComplexityValue": 2,
   "scoresToWinRoundValue": 4,
+  "startIterationIndex": 3,
   "availableLives": 1,
   "successAnswersToGetScoreValue": 3,
   "wordsToReactions": {

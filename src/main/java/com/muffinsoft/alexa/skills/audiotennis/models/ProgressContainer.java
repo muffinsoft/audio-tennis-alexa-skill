@@ -9,6 +9,7 @@ import java.util.Set;
 public class ProgressContainer {
 
     private Map<String, Integer> activitiesOrder;
+    private Map<String, String> nickNamesByLevel;
     private String enemyRole;
 
     public String getEnemyRole() {
@@ -36,10 +37,18 @@ public class ProgressContainer {
         return null;
     }
 
+    public Map<String, String> getNickNamesByLevel() {
+        return nickNamesByLevel;
+    }
+
+    public void setNickNamesByLevel(Map<String, String> nickNamesByLevel) {
+        this.nickNamesByLevel = nickNamesByLevel;
+    }
+
     public String getNextActivity(Set<ActivityType> unlockedActivities) {
 
         HashSet<String> allActivities = new HashSet<>(this.activitiesOrder.keySet());
-        for(ActivityType activityType : unlockedActivities) {
+        for (ActivityType activityType : unlockedActivities) {
             allActivities.remove(activityType.name());
         }
 
@@ -61,5 +70,9 @@ public class ProgressContainer {
             }
         }
         return iterActivity;
+    }
+
+    public String getNextNick(int number) {
+        return nickNamesByLevel.get(String.valueOf(number));
     }
 }

@@ -17,6 +17,7 @@ public class UserProgress {
     private int enemyGameWinInRow;
     private Set<String> unlockedActivities = new HashSet<>();
     private Set<String> achievements = new HashSet<>();
+    private int nickNameLevel;
 
     public UserProgress() {
     }
@@ -116,5 +117,13 @@ public class UserProgress {
 
     public void addUnlockedActivity(ActivityType activity) {
         this.unlockedActivities.add(activity.name());
+    }
+
+    public void setNickNameLevel(int nickNameLevel) {
+        this.nickNameLevel = nickNameLevel;
+    }
+
+    public int getNickNameLevel() {
+        return nickNameLevel;
     }
 }

@@ -2,6 +2,7 @@
   "name": "ALPHABET_RACE",
   "startComplexityValue": 3,
   "iterateComplexityEveryScoresValue": 2,
-  "addToComplexityValue": 1,
-  "scoresToWinRoundValue": 4
+  "addToComplexityValue": 2,
+  "scoresToWinRoundValue": 4,
+  "startIterationIndex": 3
 }

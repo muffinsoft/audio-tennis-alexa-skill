@@ -172,5 +172,71 @@
       "content": "Hey that was really close",
       "role": "Ben"
     }
+  ],
+  "callToCelebrate": [
+    {
+      "content": "Alexa, let's celebrate the winner with some fireworks!",
+      "role": "Ben"
+    },
+    {
+      "content": "Alexa, let's launch some fireworks in honor of the winner!",
+      "role": "Ben"
+    },
+    {
+      "content": "Alexa, I think the winner deserves an awesome fireworks show!",
+      "role": "Ben"
+    },
+    {
+      "content": "Alexa, time for some fireworks to celebrate the winner's victory!",
+      "role": "Ben"
+    }
+  ],
+  "promotions": [
+    {
+      "content": "You now have the nickname %rookie%!",
+      "role": "Ben"
+    },
+    {
+      "content": "You've earned the nickname %rookie%!",
+      "role": "Ben"
+    },
+    {
+      "content": "Your new nickname is %rookie%!",
+      "role": "Ben"
+    },
+    {
+      "content": "You made it to %rookie%!",
+      "role": "Ben"
+    },
+    {
+      "content": "You've reached the nickname %rookie%!",
+      "role": "Ben"
+    },
+    {
+      "content": "You won! That means you got the nickname %rookie%!",
+      "role": "Ben"
+    },
+    {
+      "content": "For winning you'll now be called %rookie%! Congrats!",
+      "role": "Ben"
+    },
+    {
+      "content": "Now we're going to start calling you %rookie%! ",
+      "role": "Ben"
+    }
+  ],
+  "levelUps": [
+    {
+      "content": "I'm going to to start trying even harder now!",
+      "role": "Ben"
+    },
+    {
+      "content": "I'm ready to really show you what I've got!",
+      "role": "Ben"
+    },
+    {
+      "content": "Time for me to try my best! Hope you're ready!",
+      "role": "Ben"
+    }
   ]
 }

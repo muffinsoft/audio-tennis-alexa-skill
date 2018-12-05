@@ -121,10 +121,6 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         phrasesForActivity = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType);
         settingsForActivity = activityManager.getSettingsForActivity(this.currentActivityType);
 
-        if (!activityProgress.isUpdateForLevel()) {
-            activityProgress.updateWithDifficultSettings(settingsForActivity);
-        }
-
         builder = handleStateAction(stateType, builder);
 
         // here I will modify response

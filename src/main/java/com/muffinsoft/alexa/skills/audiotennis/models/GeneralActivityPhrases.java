@@ -19,6 +19,9 @@ public class GeneralActivityPhrases {
     private List<BasePhraseContainer> enemyWinGame;
     private List<BasePhraseContainer> defeatPhrase;
     private List<BasePhraseContainer> victoryPhrase;
+    private List<BasePhraseContainer> callToCelebrate;
+    private List<BasePhraseContainer> promotions;
+    private List<BasePhraseContainer> levelUps;
 
     public List<BasePhraseContainer> getEnemyWonOnce() {
         return enemyWonOnce;
@@ -108,6 +111,30 @@ public class GeneralActivityPhrases {
         this.victoryPhrase = victoryPhrase;
     }
 
+    public List<BasePhraseContainer> getCallToCelebrate() {
+        return callToCelebrate;
+    }
+
+    public void setCallToCelebrate(List<BasePhraseContainer> callToCelebrate) {
+        this.callToCelebrate = callToCelebrate;
+    }
+
+    public List<BasePhraseContainer> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<BasePhraseContainer> promotions) {
+        this.promotions = promotions;
+    }
+
+    public List<BasePhraseContainer> getLevelUps() {
+        return levelUps;
+    }
+
+    public void setLevelUps(List<BasePhraseContainer> levelUps) {
+        this.levelUps = levelUps;
+    }
+
     @JsonIgnore
     public BasePhraseContainer getRandomEnemyWonOnce() {
         int index = getRandomValue(enemyWonOnce.size());
@@ -172,6 +199,24 @@ public class GeneralActivityPhrases {
     public BasePhraseContainer getRandomDefeatPhrase() {
         int index = getRandomValue(defeatPhrase.size());
         return defeatPhrase.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomCallToCelebrate() {
+        int index = getRandomValue(callToCelebrate.size());
+        return callToCelebrate.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomPromotions() {
+        int index = getRandomValue(promotions.size());
+        return promotions.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomLevelUps() {
+        int index = getRandomValue(levelUps.size());
+        return levelUps.get(index);
     }
 
     @JsonIgnore

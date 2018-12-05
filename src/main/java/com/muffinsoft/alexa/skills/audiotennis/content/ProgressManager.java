@@ -35,4 +35,8 @@ public class ProgressManager {
     public String getEnemyRole() {
         return container.getEnemyRole();
     }
+
+    public String findNextNickName(int currentNickNameLevel) {
+        return container.getNextNick(currentNickNameLevel);
+    }
 }
