@@ -35,7 +35,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         this.activityProgress.iterateSuccessAnswerCounter();
 
-        if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
+        if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getSuccessAnswersToGetScoreValue()) {
             iteratePlayerScoreCounter(builder);
             this.activityProgress.setSuccessCounter(0);
             this.activityProgress.setMistakeCount(0);
