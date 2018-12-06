@@ -58,7 +58,21 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     @Override
     protected DialogItem.Builder handleWinAnswerOfActivity(DialogItem.Builder builder) {
+        Speech wrongWord = null;
+        Speech mistakeDescription = null;
+        if (builder.getSpeechSize() >= 2) {
+            wrongWord = builder.popFirstSpeech();
+            mistakeDescription = builder.popFirstSpeech();
+        }
         iteratePlayerGameCounter(builder);
+        if (builder.getSpeechSize() >= 2) {
+            if (mistakeDescription != null) {
+                builder.addResponseToBegining(mistakeDescription);
+            }
+            if (wrongWord != null) {
+                builder.addResponseToBegining(wrongWord);
+            }
+        }
         handleRoundEnd(builder);
         savePersistentAttributes();
         return builder;
@@ -109,6 +123,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     private void handleRoundEnd(DialogItem.Builder builder) {
         this.stateType = StateType.RESTART;
+
+        getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
+
         builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE)));
     }
 
