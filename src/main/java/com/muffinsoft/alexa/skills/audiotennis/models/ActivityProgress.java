@@ -303,8 +303,11 @@ public class ActivityProgress {
         if (this.playerGameCounter < settingsForActivity.getStartIterationIndex()) {
             this.complexity = settingsForActivity.getStartComplexityValue();
         }
+        else if (this.playerGameCounter < (settingsForActivity.getStartIterationIndex() + settingsForActivity.getIterateComplexityEveryScoresValue())) {
+            this.complexity = settingsForActivity.getStartComplexityValue() + settingsForActivity.getAddToComplexityValue();
+        }
         else {
-            int multiplication = this.playerGameCounter / settingsForActivity.getIterateComplexityEveryScoresValue();
+            int multiplication = (this.playerGameCounter - 1) / settingsForActivity.getIterateComplexityEveryScoresValue();
             multiplication = multiplication * settingsForActivity.getAddToComplexityValue();
             this.complexity = settingsForActivity.getStartComplexityValue() + multiplication;
             if (settingsForActivity.getMaxComplexityValue() != 0 && this.complexity > settingsForActivity.getMaxComplexityValue()) {
