@@ -15,6 +15,7 @@ public class PhraseConstants extends com.muffinsoft.alexa.sdk.constants.PhraseCo
     public static final String SELECT_ACTIVITY_BETWEEN_ONE_PHRASE = "selectActivityBetweenOnePhrase";
     public static final String SELECT_ACTIVITY_BETWEEN_THREE_PHRASE = "selectActivityBetweenThreePhrase";
     public static final String SELECT_ACTIVITY_BETWEEN_ALL_PHRASE = "selectActivityBetweenAllPhrase";
+    public static final String SELECT_ACTIVITY_BETWEEN_OTHERS = "selectActivityBetweenOthersPhrase";
     public static final String WANT_RESTART_PHRASE = "wantRestartPhrase";
     public static final String PLAYER_FAVOR_PHRASE = "playerFavorPhrase";
     public static final String ENEMY_FAVOR_PHRASE = "enemyFavorPhrase";

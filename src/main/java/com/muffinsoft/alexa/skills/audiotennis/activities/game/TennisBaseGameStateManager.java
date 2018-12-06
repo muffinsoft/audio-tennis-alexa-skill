@@ -86,6 +86,9 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected void updateSessionAttributes() {
+        if(this.activityProgress.getCurrentActivity() == null) {
+            this.activityProgress.setCurrentActivity(this.currentActivityType);
+        }
         this.getSessionAttributes().put(STATE_TYPE, this.stateType);
         this.getSessionAttributes().put(ACTIVITY_PROGRESS, this.activityProgress);
     }
@@ -161,6 +164,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         else {
             word = this.activityProgress.getPreviousWord();
         }
+
+        BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
+        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+
         builder.addResponse(getDialogTranslator().translate(word, enemyRole));
 
         return builder.withSlotName(actionSlotName);

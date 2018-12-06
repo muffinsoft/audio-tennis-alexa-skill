@@ -16,6 +16,7 @@ import com.muffinsoft.alexa.skills.audiotennis.activities.HelpStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetConfirmationStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.SelectMoreActivitiesStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.AlphabetRaceGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGameStateManager;
@@ -59,8 +60,8 @@ public class TennisIntentFabric implements IntentFactory {
         if (attributesManager.getSessionAttributes().containsKey(EXIT_FROM_HELP)) {
             if (isNegativeReply(inputSlots)) {
                 intent = IntentType.HELP;
-                attributesManager.getSessionAttributes().remove(EXIT_FROM_HELP);
             }
+            attributesManager.getSessionAttributes().remove(EXIT_FROM_HELP);
         }
 
         switch (intent) {
@@ -91,14 +92,20 @@ public class TennisIntentFabric implements IntentFactory {
 
         Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
 
+        boolean isIntercepted = false;
+
         if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
-            interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            isIntercepted = interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
         }
         else if (sessionAttributes.containsKey(RANDOM_SWITCH_ACTIVITY_STEP)) {
             interceptRandomActivityProgress(sessionAttributes, activityProgress);
         }
         else if (sessionAttributes.containsKey(ASK_RANDOM_SWITCH_ACTIVITY_STEP)) {
             interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
+        }
+
+        if(isIntercepted) {
+            return new SelectMoreActivitiesStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         }
 
         ActivityType currentActivity = activityProgress.getCurrentActivity();
@@ -165,14 +172,19 @@ public class TennisIntentFabric implements IntentFactory {
             sessionAttributes.remove(STATE_TYPE);
         }
         else {
-            sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
+            if(sessionAttributes.containsKey(STATE_TYPE)) {
+                sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
+            }
+            else {
+                sessionAttributes.put(STATE_TYPE, StateType.ACTIVITY_INTRO);
+            }
         }
     }
 
-    private void interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private boolean interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
         ActivityType type = getActivityFromReply(inputSlots);
 
-        if (isPositiveReply(inputSlots)) {
+        if (isPositiveReply(inputSlots) && activityProgress.getPossibleActivity() != null) {
             ActivityType possibleActivity = activityProgress.getPossibleActivity();
             ActivityType currentActivity = activityProgress.getCurrentActivity();
             activityProgress.setTransition(true);
@@ -180,11 +192,16 @@ public class TennisIntentFabric implements IntentFactory {
             activityProgress.setPreviousActivity(currentActivity);
             sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
             sessionAttributes.remove(STATE_TYPE);
+            sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
+        }
+        else if (isSomethingElseReply(inputSlots)) {
+            return true;
         }
         else {
             movingBetweenActivities(sessionAttributes, activityProgress, type);
+            sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
         }
-        sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
+        return false;
     }
 
     private ActivityType getActivityFromReply(Map<String, Slot> inputSlots) {
@@ -210,6 +227,17 @@ public class TennisIntentFabric implements IntentFactory {
         List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
         for (String reply : userReplies) {
             if (UserReplyComparator.compare(reply, UserReplies.NO)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private boolean isSomethingElseReply(Map<String, Slot> inputSlots) {
+        List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
+        for (String reply : userReplies) {
+            if (UserReplyComparator.compare(reply, UserReplies.SOMETHING_ELSE)) {
                 return true;
             }
         }

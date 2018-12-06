@@ -82,6 +82,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         if (checkIfTwoInRow()) {
             this.activityProgress.iterateAmountOfTwoPointInRow();
             this.userProgress.setAmountOfTwoPointsInRow(this.activityProgress.getAmountOfTwoPointsInRow());
+            this.userProgress.setEnemyPointWinInRow(this.activityProgress.getEnemyPointWinInRow());
+            this.userProgress.setPlayerPointWinInRow(this.activityProgress.getPlayerPointWinInRow());
             savePersistentAttributes();
             int iterationValue = this.activityProgress.getAmountOfTwoPointsInRow() - 1;
             ActivityType nextActivity = progressManager.getNextActivity(this.activityProgress.getUnlockedActivities());

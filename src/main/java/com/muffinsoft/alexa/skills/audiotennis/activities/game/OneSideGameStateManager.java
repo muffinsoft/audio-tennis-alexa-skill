@@ -90,6 +90,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
             builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(randomOpponentAfterXWordPhrase, nextWord, null, null)));
         }
 
+        this.activityProgress.setPreviousWord(nextWord);
         this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));
 
         BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();

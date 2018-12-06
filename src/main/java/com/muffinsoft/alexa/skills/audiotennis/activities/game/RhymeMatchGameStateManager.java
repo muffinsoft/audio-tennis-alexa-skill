@@ -4,7 +4,6 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
-import com.muffinsoft.alexa.skills.audiotennis.components.CharacterIntersectionCalculator;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
@@ -34,7 +33,11 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
 
             String neededRhyme = activityProgress.getRequiredUserReaction();
 
-            if (CharacterIntersectionCalculator.calculate(neededRhyme, repliesRhyme) <= 50f) {
+            if (neededRhyme == null) {
+                return false;
+            }
+
+            if (!neededRhyme.equalsIgnoreCase(repliesRhyme)) {
                 return false;
             }
 

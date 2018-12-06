@@ -31,6 +31,7 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 public class HelpStateManager extends BaseStateManager {
 
     private static final Logger logger = LogManager.getLogger(HelpStateManager.class);
+
     private final RegularPhraseManager regularPhraseManager;
     private ActivityProgress activityProgress;
 

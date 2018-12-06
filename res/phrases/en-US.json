@@ -141,6 +141,12 @@
       "role": "Alexa"
     }
   ],
+  "selectActivityBetweenOthersPhrase": [
+    {
+      "content": "Do you want to play Alphabet Race or Rhyme Match?",
+      "role": "Alexa"
+    }
+  ],
   "wantRestartPhrase": [
     {
       "content": "Would you like to try another game?",
