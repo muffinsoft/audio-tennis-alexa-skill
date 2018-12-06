@@ -38,6 +38,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
@@ -54,6 +55,14 @@ public class TennisIntentFabric implements IntentFactory {
     }
 
     public StateManager getNextState(IntentType intent, Map<String, Slot> inputSlots, AttributesManager attributesManager) {
+
+        if (attributesManager.getSessionAttributes().containsKey(EXIT_FROM_HELP)) {
+            if (isNegativeReply(inputSlots)) {
+                intent = IntentType.HELP;
+                attributesManager.getSessionAttributes().remove(EXIT_FROM_HELP);
+            }
+        }
+
         switch (intent) {
             case INITIAL_GREETING:
                 return new InitialGreetingStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
@@ -195,6 +204,16 @@ public class TennisIntentFabric implements IntentFactory {
             }
         }
         return null;
+    }
+
+    private boolean isNegativeReply(Map<String, Slot> inputSlots) {
+        List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
+        for (String reply : userReplies) {
+            if (UserReplyComparator.compare(reply, UserReplies.NO)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isPositiveReply(Map<String, Slot> inputSlots) {

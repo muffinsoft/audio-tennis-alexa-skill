@@ -38,6 +38,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
         if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
             iteratePlayerScoreCounter(builder);
             this.activityProgress.setSuccessCounter(0);
+            this.activityProgress.setMistakeCount(0);
             appendNextRoundPhrase(builder);
         }
 
@@ -54,6 +55,27 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
         }
 
         return builder.withSlotName(actionSlotName);
+    }
+
+    @Override
+    String generateRandomWord() {
+
+        List<String> words = new ArrayList<>();
+        List<String> reactions = new ArrayList<>();
+
+        for (int i = 0; i < this.activityProgress.getComplexity(); i++) {
+            WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
+            words.add(nextWord.getWord());
+            reactions.add(nextWord.getUserReaction());
+        }
+
+        String nextWord = String.join(" ", words);
+        String requestedReactions = String.join(" ", reactions);
+
+        this.activityProgress.setPreviousWord(nextWord);
+        this.activityProgress.setRequiredUserReaction(requestedReactions);
+
+        return nextWord;
     }
 
     private void appendSuccessFlow(DialogItem.Builder builder, List<String> words, List<String> reactions) {
@@ -103,6 +125,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         if (this.activityProgress.getMistakeCount() >= settingsForActivity.getAvailableLives()) {
             this.activityProgress.setMistakeCount(0);
+            this.activityProgress.setSuccessCounter(0);
 
             BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
             builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));

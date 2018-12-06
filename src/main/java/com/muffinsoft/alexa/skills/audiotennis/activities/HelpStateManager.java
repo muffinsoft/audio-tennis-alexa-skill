@@ -78,6 +78,8 @@ public class HelpStateManager extends BaseStateManager {
         getSessionAttributes().put(SessionConstants.INTENT, IntentType.GAME);
         getSessionAttributes().put(SessionConstants.STATE_TYPE, StateType.RETURN_TO_GAME);
 
+        getSessionAttributes().put(SessionConstants.EXIT_FROM_HELP, true);
+
         return builder.build();
     }
 }
