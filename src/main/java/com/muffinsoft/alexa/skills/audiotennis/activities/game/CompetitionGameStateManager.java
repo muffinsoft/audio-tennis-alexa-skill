@@ -98,6 +98,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
                 break;
             case PROCEED:
                 appendNextRoundPhrase(builder);
+                BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
+                builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
                 builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
                 break;
         }
@@ -158,12 +160,12 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
                 return null;
             case PROCEED:
                 appendNextRoundPhrase(builder);
-                return appendHintAfterEnemyMistake(builder);
+                return appendHintAfterMistake(builder);
         }
         return null;
     }
 
-    private String appendHintAfterEnemyMistake(DialogItem.Builder builder) {
+    private String appendHintAfterMistake(DialogItem.Builder builder) {
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
 

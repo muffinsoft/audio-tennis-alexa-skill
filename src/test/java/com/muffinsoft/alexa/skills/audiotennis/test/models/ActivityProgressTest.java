@@ -16,7 +16,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testIsTimeToLevelUpForFirstIntersection() {
+    void testIsTimeToLevelUpForFirstIntersectionForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -30,7 +30,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testIsTimeToLevelUpForWrongCase() {
+    void testIsTimeToLevelUpForWrongCaseForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -44,7 +44,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testIsTimeToLevelUpForTooLowValue() {
+    void testIsTimeToLevelUpForTooLowValueForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -58,7 +58,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor0GameCounter() {
+    void testComplexityFor0GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -72,7 +72,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor1GameCounter() {
+    void testComplexityFor1GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -86,7 +86,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor2GameCounter() {
+    void testComplexityFor2GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -100,7 +100,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor3GameCounter() {
+    void testComplexityFor3GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -113,7 +113,7 @@ class ActivityProgressTest {
         Assertions.assertEquals(6, defaultActivity.getComplexity());
     }
     @Test
-    void testComplexityFor4GameCounter() {
+    void testComplexityFor4GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -127,7 +127,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor5GameCounter() {
+    void testComplexityFor5GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -141,7 +141,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor6GameCounter() {
+    void testComplexityFor6GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -155,7 +155,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor7GameCounter() {
+    void testComplexityFor7GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -169,7 +169,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor8GameCounter() {
+    void testComplexityFor8GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -183,7 +183,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor9GameCounter() {
+    void testComplexityFor9GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -197,7 +197,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor10GameCounter() {
+    void testComplexityFor10GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -211,7 +211,7 @@ class ActivityProgressTest {
     }
 
     @Test
-    void testComplexityFor11GameCounter() {
+    void testComplexityFor11GameCounterForCompetition() {
 
         ActivityType type = ActivityType.LAST_LETTER;
 
@@ -222,5 +222,172 @@ class ActivityProgressTest {
 
         defaultActivity.updateWithDifficultSettings(settings);
         Assertions.assertEquals(14, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor0GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(0);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(1, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor1GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(1);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(1, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor2GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(2);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(1, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor3GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(3);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(2, defaultActivity.getComplexity());
+    }
+    @Test
+    void testComplexityFor4GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(4);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(2, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor5GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(5);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(3, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor6GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(6);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(3, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor7GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(7);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(3, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor8GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(8);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(3, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor9GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(9);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(3, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor10GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(10);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(3, defaultActivity.getComplexity());
+    }
+
+    @Test
+    void testComplexityFor11GameCounterForOneSide() {
+
+        ActivityType type = ActivityType.BAM_WHAM;
+
+        ActivityProgress defaultActivity = new ActivityProgress(type);
+        defaultActivity.setPlayerGameCounter(11);
+
+        ActivitySettings settings = IoC.provideSettingsDependencyContainer().getActivityManager().getSettingsForActivity(type);
+
+        defaultActivity.updateWithDifficultSettings(settings);
+        Assertions.assertEquals(3, defaultActivity.getComplexity());
     }
 }

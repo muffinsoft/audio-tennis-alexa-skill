@@ -343,11 +343,14 @@ public class ActivityProgress {
         if (this.enemyGameCounter == 0 && userProgress.getLosses() != 0) {
             this.enemyGameCounter = userProgress.getLosses();
         }
-        if (this.playerPointCounter == 0 && userProgress.getLastGamePlayerPoint() != 0) {
-            this.playerPointCounter = userProgress.getLastGamePlayerPoint();
-        }
-        if (this.enemyPointCounter == 0 && userProgress.getLastGameEnemyPoint() != 0) {
-            this.enemyPointCounter = userProgress.getLastGameEnemyPoint();
+        if (userProgress.isEndRound()) {
+            if (this.playerPointCounter == 0 && userProgress.getLastGamePlayerPoint() != 0) {
+                this.playerPointCounter = userProgress.getLastGamePlayerPoint();
+            }
+            if (this.enemyPointCounter == 0 && userProgress.getLastGameEnemyPoint() != 0) {
+                this.enemyPointCounter = userProgress.getLastGameEnemyPoint();
+            }
+            userProgress.setEndRound(false);
         }
         if (this.enemyPointWinInRow == 0 && userProgress.getEnemyPointWinInRow() != 0) {
             this.enemyPointWinInRow = userProgress.getEnemyPointWinInRow();

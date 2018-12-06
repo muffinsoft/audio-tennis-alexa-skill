@@ -122,7 +122,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     private void handleRoundEnd(DialogItem.Builder builder) {
+
         this.stateType = StateType.RESTART;
+
+        this.userProgress.setEndRound(true);
 
         getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
 
@@ -234,8 +237,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerWonOnceAtGamePhrase();
         builder.addResponse(getDialogTranslator().translate(phraseContainer));
         this.activityProgress.iteratePlayerPointCounter();
+        this.userProgress.setPlayerPointWinInRow(this.activityProgress.getPlayerPointWinInRow());
         addPointScores(builder, true);
-//        appendNextRoundPhrase(builder);
         savePersistentAttributes();
     }
 
@@ -243,8 +246,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
         builder.addResponse(getDialogTranslator().translate(randomPhrase));
         this.activityProgress.iterateEnemyPointCounter();
+        this.userProgress.setEnemyPointWinInRow(this.activityProgress.getEnemyPointWinInRow());
         addPointScores(builder, false);
-//        appendNextRoundPhrase(builder);
         savePersistentAttributes();
     }
 

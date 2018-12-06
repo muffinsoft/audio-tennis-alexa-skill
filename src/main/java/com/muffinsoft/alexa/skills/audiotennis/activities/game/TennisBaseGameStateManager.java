@@ -113,12 +113,13 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         settingsForActivity = activityManager.getSettingsForActivity(this.currentActivityType);
 
         if (activityProgress.isNew()) {
-            activityProgress.fromUserProgress(userProgress);
+            activityProgress.fromUserProgress(this.userProgress);
+            savePersistentAttributes();
         }
 
-        activityProgress.updateWithDifficultSettings(settingsForActivity);
+        activityProgress.updateWithDifficultSettings(this.settingsForActivity);
 
-        builder = handleStateAction(stateType, builder);
+        builder = handleStateAction(this.stateType, builder);
 
         return builder;
     }
@@ -160,7 +161,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         else {
             word = this.activityProgress.getPreviousWord();
         }
-        builder.addResponse(getDialogTranslator().translate(word));
+        builder.addResponse(getDialogTranslator().translate(word, enemyRole));
 
         return builder.withSlotName(actionSlotName);
     }

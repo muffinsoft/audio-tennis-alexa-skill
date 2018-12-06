@@ -3,7 +3,7 @@
   "startComplexityValue": 1,
   "iterateComplexityEveryScoresValue": 2,
   "addToComplexityValue": 1,
-  "scoresToWinRoundValue": 4,
+  "scoresToWinRoundValue": 3,
   "startIterationIndex": 3,
   "availableLives": 1,
   "successAnswersToGetScoreValue": 4,

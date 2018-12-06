@@ -19,6 +19,7 @@ public class UserProgress {
     private Set<String> unlockedActivities = new HashSet<>();
     private Set<String> achievements = new HashSet<>();
     private int nickNameLevel;
+    private boolean endRound = false;
 
     public UserProgress() {
     }
@@ -136,5 +137,13 @@ public class UserProgress {
                 ", achievements=" + achievements +
                 ", nickNameLevel=" + nickNameLevel +
                 '}';
+    }
+
+    public boolean isEndRound() {
+        return endRound;
+    }
+
+    public void setEndRound(boolean endRound) {
+        this.endRound = endRound;
     }
 }

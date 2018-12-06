@@ -37,6 +37,8 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         if (this.activityProgress.getSuccessCounter() >= settingsForActivity.getScoresToWinRoundValue()) {
             iteratePlayerScoreCounter(builder);
+            this.activityProgress.setSuccessCounter(0);
+            appendNextRoundPhrase(builder);
         }
 
         switch (getUnlockingStatus()) {
@@ -47,7 +49,6 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
                 handlerContinueRePrompt(builder);
                 break;
             case PROCEED:
-//                appendNextRoundPhrase(builder);
                 appendSuccessFlow(builder, words, reactions);
                 break;
         }
@@ -80,6 +81,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         if (this.activityProgress.getMistakeCount() >= settingsForActivity.getAvailableLives()) {
             iterateEnemyScoreCounter(builder);
+            appendNextRoundPhrase(builder);
         }
 
         switch (getUnlockingStatus()) {
@@ -90,7 +92,6 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
                 handlerContinueRePrompt(builder);
                 break;
             case PROCEED:
-//                appendNextRoundPhrase(builder);
                 handleMistakeFlow(builder);
                 break;
         }
@@ -99,6 +100,14 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
     }
 
     private void handleMistakeFlow(DialogItem.Builder builder) {
+
+        if (this.activityProgress.getMistakeCount() >= settingsForActivity.getAvailableLives()) {
+            this.activityProgress.setMistakeCount(0);
+
+            BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
+            builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+        }
+
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
 
         builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
