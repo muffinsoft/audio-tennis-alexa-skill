@@ -19,7 +19,7 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "Egg!",
@@ -28,7 +28,7 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "Flower!",
@@ -37,7 +37,7 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "Goat!",
@@ -46,7 +46,7 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     }
   ]
 }

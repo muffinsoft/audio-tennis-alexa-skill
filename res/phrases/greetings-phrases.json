@@ -2,55 +2,46 @@
   "firstTimeGreeting": [
     {
       "content": "Let’s play Audio Tennis! I'm going to hit the ball by saying words. Then you hit it back by responding correctly. Whoever gets 11 points wins the game. Sounds good?",
-      "role": "Ben",
-      "audio": null
+      "role": "Ben"
     },
     {
       "userResponse": true
     },
     {
       "content": "We'll be competing, you know. So let's ask our friend Alexa to help. She's not very good at playing tennis but she's an amazing scorekeeper! What do you say, Alexa?",
-      "role": "Ben",
-      "audio": null
+      "role": "Ben"
     },
     {
       "content": "Of course, Ben. You and your friend can 'count' on me.",
-      "role": "Alexa",
-      "audio": null
+      "role": "Alexa"
     },
     {
       "content": "Alrighty then - let’s start with my favorite activity, called Last Letter.",
-      "role": "Ben",
-      "audio": null
+      "role": "Ben"
     }
   ],
   "playerWithAwardsGreeting": [
     {
       "content": "Welcome back! Alexa, please give our friend a royal greeting!",
-      "role": "Ben",
-      "audio": null
+      "role": "Ben"
     },
     {
       "content": "Introducing %achievements%",
-      "role": "Alexa",
-      "audio": null
+      "role": "Alexa"
     },
     {
       "content": "You have %wins% wins and %losses% losses",
-      "role": "Alexa",
-      "audio": null
+      "role": "Alexa"
     }
   ],
   "playerWithoutAwardsGreeting": [
     {
       "content": "Welcome back! Alexa, please give our friend a royal greeting!",
-      "role": "Ben",
-      "audio": null
+      "role": "Ben"
     },
     {
       "content": "You have %wins% wins and %losses% losses",
-      "role": "Alexa",
-      "audio": null
+      "role": "Alexa"
     }
   ],
   "returnEnemyLastScore": [

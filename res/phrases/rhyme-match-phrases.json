@@ -19,7 +19,7 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "bear",
@@ -28,7 +28,7 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "cow, book",
@@ -37,7 +37,7 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "how, took",
@@ -46,7 +46,7 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "cheese, egg, jam!",
@@ -55,7 +55,7 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "please, beg, spam!",
@@ -64,7 +64,7 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     }
   ]
 }

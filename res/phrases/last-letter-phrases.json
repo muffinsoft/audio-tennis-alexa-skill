@@ -15,7 +15,7 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballHitsTheRacketFromFar"
     },
     {
       "content": "Night!",
@@ -24,7 +24,7 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "Tiger!",
@@ -33,7 +33,7 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballsHitsTheRacketUpClose"
     },
     {
       "content": "Tree!",
@@ -42,7 +42,7 @@
     {
       "_comment": "<ball bouncing away (up close)>",
       "role": "Sound",
-      "audio": null
+      "audio": "ballBouncingAwayUpClose"
     },
     {
       "content": "Oops! Tree doesn’t start with “R”, so Ben wins!",
@@ -51,7 +51,7 @@
     {
       "_comment": "<fanfare sound>",
       "role": "Sound",
-      "audio": null
+      "audio": "fireworksSound"
     }
   ]
 }
