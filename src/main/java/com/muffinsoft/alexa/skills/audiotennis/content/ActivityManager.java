@@ -98,7 +98,11 @@ public class ActivityManager {
         return getRandomCharFromString(replace);
     }
 
-    public boolean isKnownWord(String word) {
+    public boolean isKnownWord(String inputWord) {
+        if (inputWord == null) {
+            return false;
+        }
+        String word = inputWord.toLowerCase().trim();
         Map<Character, HashSet<String>> totalWords = dictionaryManager.getTotalWordsDictionary();
         char firstChar = word.charAt(0);
         HashSet<String> wordsFromLetter = totalWords.get(firstChar);

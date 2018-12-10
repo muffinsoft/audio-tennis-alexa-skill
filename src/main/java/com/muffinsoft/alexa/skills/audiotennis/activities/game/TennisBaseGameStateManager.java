@@ -26,8 +26,8 @@ import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,7 +45,7 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants
 
 public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
-    protected static final Logger logger = LogManager.getLogger(TennisBaseGameStateManager.class);
+    private static final Logger logger = LogManager.getLogger(TennisBaseGameStateManager.class);
 
     protected final RegularPhraseManager regularPhraseManager;
     final ActivitiesPhraseManager activitiesPhraseManager;
@@ -138,9 +138,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     @Override
     protected boolean isIntercepted() {
         String userReply = getUserReply();
+        logger.debug("Going to check word " + getUserReply());
         boolean knownWord = activityManager.isKnownWord(userReply);
         String suffix = knownWord ? "known" : "unknown";
-        logger.info("Going to check word " + getUserReply() + " - word is " + suffix);
+        logger.debug("Word is " + suffix);
         return !knownWord;
     }
 

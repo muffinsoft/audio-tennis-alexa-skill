@@ -78,14 +78,14 @@ public class LaunchStateManager extends BaseStateManager {
             getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
             getSessionAttributes().put(INTENT, IntentType.GAME);
 
-            logger.info("Existing user was started new Game Session. Start Royal Greeting");
+            logger.debug("Existing user was started new Game Session. Start Royal Greeting");
         }
         else {
             buildInitialGreeting(builder);
 
             getSessionAttributes().put(INTENT, IntentType.INITIAL_GREETING);
 
-            logger.info("New user was started new Game Session.");
+            logger.debug("New user was started new Game Session.");
         }
 
         return builder

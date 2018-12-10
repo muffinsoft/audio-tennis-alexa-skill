@@ -22,7 +22,9 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
 
     @Override
     protected void appendDynamicEntities(DialogItem.Builder builder) {
-        builder.addDynamicEntity(this.activityProgress.getRequiredUserReaction());
+        if (this.activityProgress.getRequiredUserReaction() != null && !this.activityProgress.getRequiredUserReaction().isEmpty()) {
+            builder.addDynamicEntity(this.activityProgress.getRequiredUserReaction());
+        }
     }
 
     @Override

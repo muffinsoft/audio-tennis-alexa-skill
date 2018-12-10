@@ -25,9 +25,11 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     @Override
     protected void appendDynamicEntities(DialogItem.Builder builder) {
         String previousWord = this.activityProgress.getPreviousWord();
-        char nextLetter = previousWord.charAt(previousWord.length() - 1);
-        Set<String> words = activityManager.getAllWordsFromLetter(nextLetter);
-        builder.withDynamicEntities(words);
+        if (previousWord != null && !previousWord.isEmpty()) {
+            char nextLetter = previousWord.charAt(previousWord.length() - 1);
+            Set<String> words = activityManager.getAllWordsFromLetter(nextLetter);
+            builder.withDynamicEntities(words);
+        }
     }
 
     @Override

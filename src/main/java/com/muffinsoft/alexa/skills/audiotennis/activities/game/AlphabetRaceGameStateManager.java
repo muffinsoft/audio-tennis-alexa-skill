@@ -25,10 +25,12 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
     @Override
     protected void appendDynamicEntities(DialogItem.Builder builder) {
         String previousWord = this.activityProgress.getPreviousWord();
-        char currentChar = previousWord.charAt(previousWord.length() - 1);
-        char nextLetter = activityManager.getNextLetter(currentChar);
-        Set<String> words = activityManager.getAllWordsFromLetter(nextLetter);
-        builder.withDynamicEntities(words);
+        if (previousWord != null && !previousWord.isEmpty()) {
+            char currentChar = previousWord.charAt(previousWord.length() - 1);
+            char nextLetter = activityManager.getNextLetter(currentChar);
+            Set<String> words = activityManager.getAllWordsFromLetter(nextLetter);
+            builder.withDynamicEntities(words);
+        }
     }
 
     @Override
