@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
@@ -19,6 +20,15 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
     public AlphabetRaceGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.ALPHABET_RACE;
+    }
+
+    @Override
+    protected void appendDynamicEntities(DialogItem.Builder builder) {
+        String previousWord = this.activityProgress.getPreviousWord();
+        char currentChar = previousWord.charAt(previousWord.length() - 1);
+        char nextLetter = activityManager.getNextLetter(currentChar);
+        Set<String> words = activityManager.getAllWordsFromLetter(nextLetter);
+        builder.withDynamicEntities(words);
     }
 
     @Override

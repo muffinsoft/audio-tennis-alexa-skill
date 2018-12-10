@@ -139,4 +139,9 @@ public class ActivityManager {
         Map<String, String> forRhymeMathActivity = dictionaryManager.getForRhymeMathActivity();
         return forRhymeMathActivity.get(word.toLowerCase());
     }
+
+    public Set<String> getAllWordsFromLetter(char nextChar) {
+        Map<Character, HashSet<String>> forCompetitionActivity = dictionaryManager.getForCompetitionActivity();
+        return forCompetitionActivity.get(nextChar);
+    }
 }

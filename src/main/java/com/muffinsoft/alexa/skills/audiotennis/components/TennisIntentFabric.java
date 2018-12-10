@@ -104,7 +104,7 @@ public class TennisIntentFabric implements IntentFactory {
             interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
         }
 
-        if(isIntercepted) {
+        if (isIntercepted) {
             return new SelectMoreActivitiesStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         }
 
@@ -172,7 +172,7 @@ public class TennisIntentFabric implements IntentFactory {
             sessionAttributes.remove(STATE_TYPE);
         }
         else {
-            if(sessionAttributes.containsKey(STATE_TYPE)) {
+            if (sessionAttributes.containsKey(STATE_TYPE)) {
                 sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
             }
             else {

@@ -86,7 +86,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected void updateSessionAttributes() {
-        if(this.activityProgress.getCurrentActivity() == null) {
+        if (this.activityProgress.getCurrentActivity() == null) {
             this.activityProgress.setCurrentActivity(this.currentActivityType);
         }
         this.getSessionAttributes().put(STATE_TYPE, this.stateType);
@@ -124,8 +124,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         builder = handleStateAction(this.stateType, builder);
 
+        appendDynamicEntities(builder);
+
         return builder;
     }
+
+    protected abstract void appendDynamicEntities(DialogItem.Builder builder);
 
     @Override
     protected boolean isIntercepted() {

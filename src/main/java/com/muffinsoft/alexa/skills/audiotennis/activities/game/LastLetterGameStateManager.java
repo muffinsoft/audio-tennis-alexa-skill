@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
@@ -19,6 +20,14 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     public LastLetterGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.LAST_LETTER;
+    }
+
+    @Override
+    protected void appendDynamicEntities(DialogItem.Builder builder) {
+        String previousWord = this.activityProgress.getPreviousWord();
+        char nextLetter = previousWord.charAt(previousWord.length() - 1);
+        Set<String> words = activityManager.getAllWordsFromLetter(nextLetter);
+        builder.withDynamicEntities(words);
     }
 
     @Override
