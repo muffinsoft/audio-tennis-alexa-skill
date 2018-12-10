@@ -17,46 +17,62 @@ public class DictionaryManager {
     private static final String LETTER_AND_ALPHABET_WORDS_TXT = "settings/vocabularies/lastLetterAndAlphabetWords.txt";
     private static final String RHYME_MATCH_WORDS_CSV = "settings/vocabularies/rhymeMatchWords.csv";
 
-    private final Map<Character, HashSet<String>> competitionsVocabulary = new HashMap<>();
-    private final Set<String> totalWords = new HashSet<>();
-    private final Map<String, String> wordToRhymes = new HashMap<>();
+    private final Map<Character, HashSet<String>> enemyCompetitionDictionary = new HashMap<>();
+    private final Map<Character, HashSet<String>> totalWordsDictionary = new HashMap<>();
+    private final Map<String, String> wordToRhymesDictionary = new HashMap<>();
 
     public DictionaryManager() {
 
         DictionaryFileLoader dictionaryFileLoader = new DictionaryFileLoader();
 
         try {
-            Set<String> words = dictionaryFileLoader.uploadCollection(LETTER_AND_ALPHABET_WORDS_TXT);
-            for (String word : words) {
+
+            Set<String> wordsFromFile = dictionaryFileLoader.uploadCollection(LETTER_AND_ALPHABET_WORDS_TXT);
+
+            for (String rawWord : wordsFromFile) {
+                String word = rawWord.toLowerCase().trim().replace(" ", "");
                 char firstLetter = word.charAt(0);
-                if (!competitionsVocabulary.containsKey(firstLetter)) {
-                    competitionsVocabulary.put(firstLetter, new HashSet<>());
+                if (!enemyCompetitionDictionary.containsKey(firstLetter)) {
+                    enemyCompetitionDictionary.put(firstLetter, new HashSet<>());
                 }
-                competitionsVocabulary.get(firstLetter).add(word);
+                if (!totalWordsDictionary.containsKey(firstLetter)) {
+                    totalWordsDictionary.put(firstLetter, new HashSet<>());
+                }
+                enemyCompetitionDictionary.get(firstLetter).add(word);
+                totalWordsDictionary.get(firstLetter).add(word);
             }
-            Map<String, String> wordsAndRhymes = dictionaryFileLoader.uploadMap(RHYME_MATCH_WORDS_CSV);
-            for (Map.Entry<String, String> entry : wordsAndRhymes.entrySet()) {
+
+            Map<String, String> rhymesFromFile = dictionaryFileLoader.uploadMap(RHYME_MATCH_WORDS_CSV);
+            for (Map.Entry<String, String> entry : rhymesFromFile.entrySet()) {
                 String rhyme = entry.getValue().replace("-", "").trim();
-                String word = entry.getKey().trim();
-                wordToRhymes.put(word, rhyme);
-                totalWords.add(word);
+                String word = entry.getKey().toLowerCase().trim().replace(" ", "");
+                wordToRhymesDictionary.put(word, rhyme);
+
+                char firstLetter = word.toLowerCase().charAt(0);
+                if (!totalWordsDictionary.containsKey(firstLetter)) {
+                    totalWordsDictionary.put(firstLetter, new HashSet<>());
+                }
+                totalWordsDictionary.get(firstLetter).add(word);
             }
-            logger.info("Dictionaries filled with words: competitions - " + words.size() + "; rhymes - " + wordToRhymes.size());
         }
         catch (IOException e) {
             System.exit(1);
         }
+
+        logger.info("Dictionaries filled with " + this.totalWordsDictionary.entrySet().stream()
+                .mapToLong(characterHashSetEntry -> characterHashSetEntry.getValue().size())
+                .sum() + " words");
     }
 
     public Map<Character, HashSet<String>> getForCompetitionActivity() {
-        return competitionsVocabulary;
+        return enemyCompetitionDictionary;
     }
 
-    public Set<String> getTotalWords() {
-        return totalWords;
+    public Map<Character, HashSet<String>> getTotalWordsDictionary() {
+        return totalWordsDictionary;
     }
 
     public Map<String, String> getForRhymeMathActivity() {
-        return wordToRhymes;
+        return wordToRhymesDictionary;
     }
 }

@@ -99,8 +99,10 @@ public class ActivityManager {
     }
 
     public boolean isKnownWord(String word) {
-        Set<String> totalWords = dictionaryManager.getTotalWords();
-        return totalWords.contains(word);
+        Map<Character, HashSet<String>> totalWords = dictionaryManager.getTotalWordsDictionary();
+        char firstChar = word.charAt(0);
+        HashSet<String> wordsFromLetter = totalWords.get(firstChar);
+        return wordsFromLetter.contains(word);
     }
 
     public WordContainer getRandomWordForCompetitionActivityFromLetter(char lastLetter, Set<String> usedWords) {
