@@ -34,17 +34,7 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
 
     @Override
     protected boolean isSuccessAnswer() {
-        if (getUserMultipleReplies().isEmpty()) {
-            return areEquals(getUserReply(), this.activityProgress.getRequiredUserReaction());
-        }
-        else {
-            for (String reply : getUserMultipleReplies()) {
-                if (areEquals(reply, this.activityProgress.getRequiredUserReaction())) {
-                    return true;
-                }
-            }
-            return false;
-        }
+        return areEquals(getUserReply(), this.activityProgress.getRequiredUserReaction());
     }
 
     private boolean areEquals(String one, String two) {

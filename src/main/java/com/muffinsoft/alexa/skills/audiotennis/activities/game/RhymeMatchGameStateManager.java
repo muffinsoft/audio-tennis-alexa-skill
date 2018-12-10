@@ -26,29 +26,25 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
     @Override
     protected boolean isSuccessAnswer() {
 
-        if (getUserMultipleReplies().isEmpty()) {
+        String userReply = getUserReply();
 
-            String userReply = getUserReply();
+        String repliesRhyme = activityManager.findRhymeForWord(userReply);
 
-            String repliesRhyme = activityManager.findRhymeForWord(userReply);
-
-            if (repliesRhyme == null) {
-                return false;
-            }
-
-            String neededRhyme = activityProgress.getRequiredUserReaction();
-
-            if (neededRhyme == null) {
-                return false;
-            }
-
-            if (!neededRhyme.equalsIgnoreCase(repliesRhyme)) {
-                return false;
-            }
-
-            return !isWordAlreadyUser();
+        if (repliesRhyme == null) {
+            return false;
         }
-        return false;
+
+        String neededRhyme = activityProgress.getRequiredUserReaction();
+
+        if (neededRhyme == null) {
+            return false;
+        }
+
+        if (!neededRhyme.equalsIgnoreCase(repliesRhyme)) {
+            return false;
+        }
+
+        return !isWordAlreadyUser();
     }
 
     @Override

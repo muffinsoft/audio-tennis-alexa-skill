@@ -36,24 +36,20 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
     @Override
     protected boolean isSuccessAnswer() {
 
-        if (getUserMultipleReplies().isEmpty()) {
+        String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
+        char firstEnemyLetter = previousWord.charAt(0);
+        char nextLetter = activityManager.getNextLetter(firstEnemyLetter);
 
-            String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
-            char firstEnemyLetter = previousWord.charAt(0);
-            char nextLetter = activityManager.getNextLetter(firstEnemyLetter);
+        this.characterWithMistake = nextLetter;
 
-            this.characterWithMistake = nextLetter;
+        String userReply = getUserReply().toLowerCase();
+        char firstPlayerLetter = userReply.charAt(0);
 
-            String userReply = getUserReply().toLowerCase();
-            char firstPlayerLetter = userReply.charAt(0);
-
-            if (!Objects.equals(nextLetter, firstPlayerLetter)) {
-                return false;
-            }
-
-            return !isWordAlreadyUser();
+        if (!Objects.equals(nextLetter, firstPlayerLetter)) {
+            return false;
         }
-        return false;
+
+        return !isWordAlreadyUser();
     }
 
     @Override

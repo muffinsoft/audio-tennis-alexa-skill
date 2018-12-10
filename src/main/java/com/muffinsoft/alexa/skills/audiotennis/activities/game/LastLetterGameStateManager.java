@@ -35,25 +35,19 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     @Override
     protected boolean isSuccessAnswer() {
 
-        boolean isSuccess = false;
+        String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
+        char lastLetter = previousWord.charAt(previousWord.length() - 1);
 
-        if (getUserMultipleReplies().isEmpty()) {
+        this.characterWithMistake = lastLetter;
 
-            String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
-            char lastLetter = previousWord.charAt(previousWord.length() - 1);
+        String userReply = getUserReply().toLowerCase();
+        char firstLetter = userReply.charAt(0);
 
-            this.characterWithMistake = lastLetter;
-
-            String userReply = getUserReply().toLowerCase();
-            char firstLetter = userReply.charAt(0);
-
-            if (!Objects.equals(lastLetter, firstLetter)) {
-                return false;
-            }
-
-            isSuccess = !isWordAlreadyUser();
+        if (!Objects.equals(lastLetter, firstLetter)) {
+            return false;
         }
-        return isSuccess;
+
+        return !isWordAlreadyUser();
     }
 
     @Override
