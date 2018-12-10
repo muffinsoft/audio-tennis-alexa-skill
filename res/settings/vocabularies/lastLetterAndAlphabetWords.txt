@@ -1270,7 +1270,6 @@ hip
 hire
 history
 hit
-hitler
 hitting
 hold
 holding
