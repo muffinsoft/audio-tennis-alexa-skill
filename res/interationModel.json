@@ -280,11 +280,6 @@
             },
             {
               "name": {
-                "value": "yes"
-              }
-            },
-            {
-              "name": {
                 "value": "going"
               }
             },
@@ -461,16 +456,6 @@
             {
               "name": {
                 "value": "god"
-              }
-            },
-            {
-              "name": {
-                "value": "stop"
-              }
-            },
-            {
-              "name": {
-                "value": "help"
               }
             },
             {
@@ -11136,11 +11121,6 @@
             {
               "name": {
                 "value": "nerve"
-              }
-            },
-            {
-              "name": {
-                "value": "cancel"
               }
             },
             {
@@ -36291,11 +36271,6 @@
             {
               "name": {
                 "value": "mirage"
-              }
-            },
-            {
-              "name": {
-                "value": "reset"
               }
             },
             {
