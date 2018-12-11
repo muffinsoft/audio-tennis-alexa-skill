@@ -41,6 +41,8 @@ import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BRE
 import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
 import static com.muffinsoft.alexa.sdk.enums.StateType.READY;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.UNKNOWN_WORD_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
@@ -217,6 +219,8 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         }
 
         getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
+        getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
+        getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
         builder.addResponse(getDialogTranslator().translate(dialog));
     }
 

@@ -26,6 +26,8 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_RESTART_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
 
@@ -130,12 +132,16 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.setEndRound(true);
 
         getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
+        getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
+        getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
 
         builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE)));
     }
 
     void handlerContinueRePrompt(DialogItem.Builder builder) {
 
+        getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
+        getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
         getSessionAttributes().put(ASK_RANDOM_SWITCH_ACTIVITY_STEP, true);
 
         List<PhraseContainer> valueByKey = regularPhraseManager.getValueByKey(TRY_SOMETHING_ELSE_PHRASE);
@@ -152,7 +158,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         if (nextActivity != null) {
 
-            this.getSessionAttributes().put(SessionConstants.SWITCH_ACTIVITY_STEP, true);
+            getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
+            getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
+            getSessionAttributes().put(SessionConstants.SWITCH_ACTIVITY_STEP, true);
 
             List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE);
             List<PhraseContainer> replacesDialog = new ArrayList<>();

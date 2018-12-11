@@ -20,8 +20,10 @@ import java.util.Map;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REDIRECTION_TO_RANDOM_ACTIVITY_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_EXIT_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public class CancelStateManager extends BaseStateManager {
 
@@ -43,6 +45,8 @@ public class CancelStateManager extends BaseStateManager {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
             getSessionAttributes().put(RANDOM_SWITCH_ACTIVITY_STEP, true);
+            getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
+            getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
             dialog = regularPhraseManager.getValueByKey(REDIRECTION_TO_RANDOM_ACTIVITY_PHRASE);
 
             getSessionAttributes().put(INTENT, IntentType.GAME);
