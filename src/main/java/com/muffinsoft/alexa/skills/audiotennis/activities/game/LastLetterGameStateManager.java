@@ -8,12 +8,8 @@ import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class LastLetterGameStateManager extends CompetitionGameStateManager {
 
@@ -37,53 +33,24 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
 
         String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
         char lastLetter = previousWord.charAt(previousWord.length() - 1);
-
-        this.characterWithMistake = lastLetter;
-
-        String userReply = getUserReply().toLowerCase();
-        char firstLetter = userReply.charAt(0);
-
-        if (!Objects.equals(lastLetter, firstLetter)) {
-            return false;
-        }
-
-        return !isWordAlreadyUser();
+        return checkIfSuccess(lastLetter);
     }
 
     @Override
     protected String getNextWrongWordForActivity() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
-        char wrongLetter = activityManager.getRandomLetterExcept(lastLetter);
-        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(wrongLetter, this.activityProgress.getUsedWords());
-        String word = randomWordForActivityFromLetter.getWord();
-        this.activityProgress.addUsedWord(word);
-        return word;
+        return getNextWrongWordForActivityFromLetter(lastLetter);
     }
 
     @Override
     protected String getAlreadyUsedWordByActivityRules() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
-        Set<String> usedWords = this.activityProgress.getUsedWords();
-        List<String> usedWordsOnLetter = new ArrayList<>();
-        for (String word : usedWords) {
-            if (word.startsWith(String.valueOf(lastLetter))) {
-                usedWordsOnLetter.add(word);
-            }
-        }
-        if (usedWordsOnLetter.isEmpty()) {
-            return null;
-        }
-        return usedWordsOnLetter.get(ThreadLocalRandom.current().nextInt(usedWordsOnLetter.size()));
+        return getAlreadyUserWord(lastLetter, this.activityProgress.getUsedWords());
     }
 
     @Override
     protected Character getCharWithMistakeForEnemy() {
         return getUserReply().charAt(getUserReply().length() - 1);
-    }
-
-    @Override
-    protected Character getNextReplyCharacter(String word) {
-        return word.charAt(word.length() - 1);
     }
 
     @Override

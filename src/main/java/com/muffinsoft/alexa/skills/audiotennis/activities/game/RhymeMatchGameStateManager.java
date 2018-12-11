@@ -26,25 +26,32 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
     @Override
     protected boolean isSuccessAnswer() {
 
-        String userReply = getUserReply();
+        String[] possibleWordsInReply = getUserReply().toLowerCase().split(" ");
 
-        String repliesRhyme = activityManager.findRhymeForWord(userReply);
+        for (String word : possibleWordsInReply) {
 
-        if (repliesRhyme == null) {
-            return false;
+            String repliesRhyme = activityManager.findRhymeForWord(word);
+
+            if (repliesRhyme == null) {
+                continue;
+            }
+
+            String neededRhyme = activityProgress.getRequiredUserReaction();
+
+            if (neededRhyme == null) {
+                continue;
+            }
+
+            if (!neededRhyme.equalsIgnoreCase(repliesRhyme)) {
+                continue;
+            }
+
+            if (!isWordAlreadyUsed()) {
+                return true;
+            }
         }
 
-        String neededRhyme = activityProgress.getRequiredUserReaction();
-
-        if (neededRhyme == null) {
-            return false;
-        }
-
-        if (!neededRhyme.equalsIgnoreCase(repliesRhyme)) {
-            return false;
-        }
-
-        return !isWordAlreadyUser();
+        return false;
     }
 
     @Override
@@ -72,7 +79,6 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
                 handlerContinueRePrompt(builder);
                 break;
             case PROCEED:
-//                appendNextRoundPhrase(builder);
                 builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
                 break;
         }

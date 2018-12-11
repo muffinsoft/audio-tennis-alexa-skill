@@ -7,16 +7,62 @@ import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityUnlokingStatus;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
-    char characterWithMistake;
+    private char characterWithMistake;
 
     CompetitionGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+    }
+
+    boolean checkIfSuccess(char letter) {
+        this.characterWithMistake = letter;
+
+        String[] possibleWordsInReply = getUserReply().toLowerCase().split(" ");
+
+        for (String word : possibleWordsInReply) {
+
+            char firstLetter = word.charAt(0);
+
+            if (!Objects.equals(letter, firstLetter)) {
+                continue;
+            }
+
+            if (!isWordAlreadyUsed()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    String getAlreadyUserWord(char nextLetter, Set<String> usedWords) {
+        List<String> usedWordsOnLetter = new ArrayList<>();
+        for (String word : usedWords) {
+            if (word.startsWith(String.valueOf(nextLetter))) {
+                usedWordsOnLetter.add(word);
+            }
+        }
+        if (usedWordsOnLetter.isEmpty()) {
+            return null;
+        }
+        return usedWordsOnLetter.get(ThreadLocalRandom.current().nextInt(usedWordsOnLetter.size()));
+    }
+
+    String getNextWrongWordForActivityFromLetter(char letter) {
+        char wrongLetter = activityManager.getRandomLetterExcept(letter);
+        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(wrongLetter, this.activityProgress.getUsedWords());
+        String word = randomWordForActivityFromLetter.getWord();
+        this.activityProgress.addUsedWord(word);
+        return word;
     }
 
     @Override
@@ -71,7 +117,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         BasePhraseContainer playerLosePhrase;
         this.activityProgress.iterateEnemyAnswerCounter();
 
-        if (isWordAlreadyUser()) {
+        if (isWordAlreadyUsed()) {
             playerLosePhrase = phrasesForActivity.getRandomPlayerLoseRepeatWordPhrase();
         }
         else {
@@ -114,8 +160,6 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     protected abstract String getAlreadyUsedWordByActivityRules();
 
     protected abstract Character getCharWithMistakeForEnemy();
-
-    protected abstract Character getNextReplyCharacter(String word);
 
     private String appendNextWrongWord(DialogItem.Builder builder) {
 
