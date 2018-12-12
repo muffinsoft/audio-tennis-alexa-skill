@@ -72,7 +72,7 @@ public class ResetStateManager extends BaseStateManager {
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
         }
 
-        return builder.build();
+        return builder.withSlotName(actionSlotName).build();
     }
 
     private void addFirstActivityIntro(DialogItem.Builder builder) {

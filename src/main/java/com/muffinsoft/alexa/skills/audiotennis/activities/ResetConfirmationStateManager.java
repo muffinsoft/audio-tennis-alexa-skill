@@ -57,6 +57,6 @@ public class ResetConfirmationStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder().addResponse(getDialogTranslator().translate(dialog));
 
-        return builder.build();
+        return builder.withSlotName(actionSlotName).build();
     }
 }

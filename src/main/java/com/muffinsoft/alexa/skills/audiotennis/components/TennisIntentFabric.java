@@ -38,6 +38,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
@@ -140,6 +141,8 @@ public class TennisIntentFabric implements IntentFactory {
         activityProgress.setPreviousActivity(currentActivity);
         activityProgress.setCurrentActivity(newActivity);
         sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
+        sessionAttributes.put(STATE_TYPE, StateType.ACTIVITY_INTRO);
+        sessionAttributes.remove(USER_REPLY_BREAKPOINT);
         sessionAttributes.remove(STATE_TYPE);
         sessionAttributes.remove(RANDOM_SWITCH_ACTIVITY_STEP);
     }
@@ -260,11 +263,9 @@ public class TennisIntentFabric implements IntentFactory {
         if (sessionAttributes.containsKey(ACTIVITY_PROGRESS)) {
             LinkedHashMap rawActivityProgress = (LinkedHashMap) sessionAttributes.get(ACTIVITY_PROGRESS);
             activityProgress = new ObjectMapper().convertValue(rawActivityProgress, ActivityProgress.class);
-            logger.debug("Current Activity Progress state: " + activityProgress);
         }
         else {
             activityProgress = ActivityProgress.createDefault();
-            logger.debug("Was create default Activity Progress: " + activityProgress);
         }
 
         return activityProgress;

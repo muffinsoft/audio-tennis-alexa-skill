@@ -152,7 +152,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(UNKNOWN_WORD_PHRASE)));
 
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     @Override
@@ -164,7 +164,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         else {
             initGameStatePhrase(builder);
         }
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     @Override
@@ -184,7 +184,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         builder.addResponse(getDialogTranslator().translate(word, enemyRole));
 
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     @Override
@@ -192,12 +192,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_PHRASE)));
-            builder.withShouldEnd(true);
+            builder.shouldEnd();
         }
         else {
             initGameStatePhrase(builder);
         }
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     @SuppressWarnings("Duplicates")
@@ -237,7 +237,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.READY_TO_STATE_PHRASE)));
         }
 
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     private int wrapAnyUserResponse(List<BasePhraseContainer> dialog, DialogItem.Builder builder) {

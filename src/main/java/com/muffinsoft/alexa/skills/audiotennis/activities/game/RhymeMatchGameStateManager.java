@@ -20,7 +20,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
 
     @Override
     protected void appendDynamicEntities(DialogItem.Builder builder) {
-        // TODO: not implemented
+
     }
 
     @Override
@@ -83,6 +83,6 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
                 break;
         }
 
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 }

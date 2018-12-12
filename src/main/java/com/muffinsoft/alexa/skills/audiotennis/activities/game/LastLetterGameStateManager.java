@@ -19,16 +19,6 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     }
 
     @Override
-    protected void appendDynamicEntities(DialogItem.Builder builder) {
-        String previousWord = this.activityProgress.getPreviousWord();
-        if (previousWord != null && !previousWord.isEmpty()) {
-            char nextLetter = previousWord.charAt(previousWord.length() - 1);
-            Set<String> words = activityManager.getAllWordsFromLetter(nextLetter);
-            builder.withDynamicEntities(words);
-        }
-    }
-
-    @Override
     protected boolean isSuccessAnswer() {
 
         String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
@@ -56,10 +46,6 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     @Override
     protected String getNextRightWordForActivity() {
         char lastLetter = getUserReply().charAt(getUserReply().length() - 1);
-        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(lastLetter, this.activityProgress.getUsedWords());
-        if (randomWordForActivityFromLetter.isEmpty()) {
-            return null;
-        }
-        return randomWordForActivityFromLetter.getWord();
+        return getNextRightWordForActivity(lastLetter);
     }
 }

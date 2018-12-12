@@ -38,8 +38,6 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
     }
 
     private boolean areEquals(String one, String two) {
-        boolean result = one.trim().equalsIgnoreCase(two.trim());
-        logger.debug("Compare " + one + " and " + two + ". Are equals: " + result);
-        return result;
+        return one.trim().equalsIgnoreCase(two.trim());
     }
 }

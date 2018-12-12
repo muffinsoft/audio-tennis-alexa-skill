@@ -95,10 +95,7 @@ public class InitialGreetingStateManager extends BaseStateManager {
             addFirstActivityIntro(builder);
         }
 
-        return builder
-                .withSlotName(SlotName.ACTION.text)
-                .turnOffReprompt()
-                .build();
+        return builder.withSlotName(actionSlotName).turnOffReprompt().build();
     }
 
     private void addFirstActivityIntro(DialogItem.Builder builder) {

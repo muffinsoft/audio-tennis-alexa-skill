@@ -81,6 +81,6 @@ public class HelpStateManager extends BaseStateManager {
 
         getSessionAttributes().put(SessionConstants.EXIT_FROM_HELP, true);
 
-        return builder.build();
+        return builder.withSlotName(actionSlotName).build();
     }
 }

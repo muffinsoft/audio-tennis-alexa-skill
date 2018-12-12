@@ -24,6 +24,10 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
     }
 
+    protected void appendDynamicEntities(DialogItem.Builder builder) {
+
+    }
+
     boolean checkIfSuccess(char letter) {
         this.characterWithMistake = letter;
 
@@ -63,6 +67,14 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         String word = randomWordForActivityFromLetter.getWord();
         this.activityProgress.addUsedWord(word);
         return word;
+    }
+
+    String getNextRightWordForActivity(char letter) {
+        WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(letter, this.activityProgress.getUsedWords());
+        if (randomWordForActivityFromLetter.isEmpty()) {
+            return null;
+        }
+        return randomWordForActivityFromLetter.getWord();
     }
 
     @Override
@@ -108,7 +120,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         this.activityProgress.setPreviousWord(nextWord);
 
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     @Override
@@ -150,7 +162,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
                 break;
         }
 
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     protected abstract String getNextRightWordForActivity();

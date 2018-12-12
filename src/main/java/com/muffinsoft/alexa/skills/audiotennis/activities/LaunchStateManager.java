@@ -88,9 +88,7 @@ public class LaunchStateManager extends BaseStateManager {
             logger.debug("New user was started new Game Session.");
         }
 
-        return builder
-                .withCardTitle(cardManager.getValueByKey(WELCOME_CARD))
-                .build();
+        return builder.withSlotName(actionSlotName).build();
     }
 
     @SuppressWarnings("Duplicates")

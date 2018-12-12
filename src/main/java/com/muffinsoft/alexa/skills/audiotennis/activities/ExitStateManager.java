@@ -38,18 +38,15 @@ public class ExitStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder();
 
-        if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_AFTER_CANCEL_PHRASE)));
-            builder.withShouldEnd(true);
-        }
-        else if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+        if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
         }
         else {
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_AFTER_CANCEL_PHRASE)));
+            builder.shouldEnd();
         }
 
-        return builder.build();
+        return builder.withSlotName(actionSlotName).build();
     }
 }

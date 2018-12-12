@@ -54,7 +54,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
                 break;
         }
 
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     @Override
@@ -119,7 +119,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
                 break;
         }
 
-        return builder.withSlotName(actionSlotName);
+        return builder;
     }
 
     private void handleMistakeFlow(DialogItem.Builder builder) {
