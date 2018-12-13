@@ -25,26 +25,26 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
 
     @Override
     protected String getNextWrongWordForActivity() {
-        char firstLetter = getUserReply().charAt(0);
+        char firstLetter = getActionUserReply().charAt(0);
         char wrongLetter = activityManager.getRandomLetterExcept(firstLetter);
         return getNextWrongWordForActivityFromLetter(wrongLetter);
     }
 
     @Override
     protected String getAlreadyUsedWordByActivityRules() {
-        char firstLetter = getUserReply().charAt(0);
+        char firstLetter = getActionUserReply().charAt(0);
         char nextLetter = activityManager.getNextLetter(firstLetter);
         return getAlreadyUserWord(nextLetter, this.activityProgress.getUsedWords());
     }
 
     @Override
     protected Character getCharWithMistakeForEnemy() {
-        return getUserReply().charAt(0);
+        return getActionUserReply().charAt(0);
     }
 
     @Override
     protected String getNextRightWordForActivity() {
-        char firstLetter = getUserReply().charAt(0);
+        char firstLetter = getActionUserReply().charAt(0);
         char nextLetter = activityManager.getNextLetter(firstLetter);
         return getNextRightWordForActivity(nextLetter);
     }

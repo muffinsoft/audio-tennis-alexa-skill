@@ -11,6 +11,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
@@ -98,15 +99,20 @@ public class ActivityManager {
         return getRandomCharFromString(replace);
     }
 
-    public boolean isKnownWord(String inputWord) {
-        if (inputWord == null) {
+    public boolean isKnownWord(List<String> inputWords) {
+        if (inputWords == null || inputWords.isEmpty()) {
             return false;
         }
-        String word = inputWord.toLowerCase().trim();
-        Map<Character, HashSet<String>> totalWords = dictionaryManager.getTotalWordsDictionary();
-        char firstChar = word.charAt(0);
-        HashSet<String> wordsFromLetter = totalWords.get(firstChar);
-        return wordsFromLetter.contains(word);
+        for (String inputWord : inputWords) {
+            String word = inputWord.toLowerCase().trim();
+            Map<Character, HashSet<String>> totalWords = dictionaryManager.getTotalWordsDictionary();
+            char firstChar = word.charAt(0);
+            HashSet<String> wordsFromLetter = totalWords.get(firstChar);
+            if (wordsFromLetter.contains(word)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public WordContainer getRandomWordForCompetitionActivityFromLetter(char lastLetter, Set<String> usedWords) {

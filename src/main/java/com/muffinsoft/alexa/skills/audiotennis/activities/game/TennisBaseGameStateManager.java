@@ -7,6 +7,7 @@ import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
+import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
@@ -75,6 +76,15 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         this.enemyRole = progressManager.getEnemyRole();
     }
 
+    String getActionUserReply() {
+        if (getUserReply(SlotName.ACTION).isEmpty()) {
+            return null;
+        }
+        else {
+            return getUserReply(SlotName.ACTION).get(0);
+        }
+    }
+
     @Override
     protected void populateActivityVariables() {
         this.stateType = StateType.valueOf(String.valueOf(getSessionAttributes().getOrDefault(STATE_TYPE, ACTIVITY_INTRO)));
@@ -139,12 +149,8 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     @Override
     protected boolean isIntercepted() {
-        String userReply = getUserReply();
-        logger.debug("Going to check word " + getUserReply());
-        boolean knownWord = activityManager.isKnownWord(userReply);
-        String suffix = knownWord ? "known" : "unknown";
-        logger.debug("Word is " + suffix);
-        return !knownWord;
+        List<String> userReply = getUserReply(SlotName.ACTION);
+        return !activityManager.isKnownWord(userReply);
     }
 
     @Override
@@ -158,7 +164,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     @Override
     protected DialogItem.Builder handleReadyToPlayState(DialogItem.Builder builder) {
 
-        if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+        if (UserReplyComparator.compare(getUserReply(SlotName.CONFIRMATION), UserReplies.NO)) {
             appendActivitySelection(builder);
         }
         else {
@@ -190,7 +196,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     @Override
     protected DialogItem.Builder handleRestartState(DialogItem.Builder builder) {
 
-        if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+        if (UserReplyComparator.compare(getUserReply(SlotName.CONFIRMATION), UserReplies.NO)) {
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_PHRASE)));
             builder.shouldEnd();
         }

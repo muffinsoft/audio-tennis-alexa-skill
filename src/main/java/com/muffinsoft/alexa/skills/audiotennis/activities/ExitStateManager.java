@@ -15,8 +15,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
+import static com.muffinsoft.alexa.sdk.model.SlotName.CONFIRMATION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.EXIT_AFTER_CANCEL_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.RETURN_TO_GAME_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
 
@@ -38,7 +38,7 @@ public class ExitStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder();
 
-        if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+        if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.NO)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
         }
@@ -47,6 +47,6 @@ public class ExitStateManager extends BaseStateManager {
             builder.shouldEnd();
         }
 
-        return builder.withSlotName(actionSlotName).build();
+        return builder.build();
     }
 }

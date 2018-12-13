@@ -4,6 +4,7 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityUnlokingStatus;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
@@ -31,7 +32,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     boolean checkIfSuccess(char letter) {
         this.characterWithMistake = letter;
 
-        String[] possibleWordsInReply = getUserReply().toLowerCase().split(" ");
+        List<String> possibleWordsInReply = getUserReply(SlotName.ACTION);
 
         for (String word : possibleWordsInReply) {
 
@@ -83,7 +84,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         this.activityProgress.iterateSuccessAnswerCounter();
         this.activityProgress.iterateEnemyAnswerCounter();
 
-        this.activityProgress.addUsedWord(getUserReply());
+        this.activityProgress.addUsedWord(getActionUserReply());
 
         String nextWord;
         String nextRightWord = getNextRightWordForActivity();
@@ -136,14 +137,14 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             playerLosePhrase = phrasesForActivity.getRandomPlayerLoseWrongWordPhrase();
         }
 
-        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getUserReply(), characterWithMistake, null)));
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), characterWithMistake, null)));
 
         iterateEnemyScoreCounter(builder);
 
         String nextWord = getNextRightWordForActivity();
         this.activityProgress.setPreviousWord(nextWord);
         this.activityProgress.addUsedWord(nextWord);
-        this.activityProgress.addUsedWord(getUserReply());
+        this.activityProgress.addUsedWord(getActionUserReply());
 
         ActivityUnlokingStatus unlockingStatus = getUnlockingStatus();
         logger.debug("Current Status: " + unlockingStatus);

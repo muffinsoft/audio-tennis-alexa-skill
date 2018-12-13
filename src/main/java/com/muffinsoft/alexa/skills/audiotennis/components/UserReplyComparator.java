@@ -11,6 +11,15 @@ public class UserReplyComparator {
 
     private static final Logger logger = LogManager.getLogger(UserReplyComparator.class);
 
+    public static boolean compare(List<String> userReply, UserReplies expectedValue) {
+        for (String reply : userReply) {
+            if (compare(reply, expectedValue)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean compare(String userReply, UserReplies expectedValue) {
         List<String> values = IoC.provideUserReplyManager().getValueByKey(expectedValue.name());
         if (userReply == null) {

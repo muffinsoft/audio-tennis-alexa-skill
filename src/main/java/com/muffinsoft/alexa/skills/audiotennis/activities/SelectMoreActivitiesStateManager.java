@@ -30,6 +30,6 @@ public class SelectMoreActivitiesStateManager extends BaseStateManager {
         List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_OTHERS);
         builder.addResponse(getDialogTranslator().translate(dialog));
 
-        return builder.withSlotName(actionSlotName).build();
+        return builder.build();
     }
 }

@@ -2,14 +2,14 @@ package com.muffinsoft.alexa.skills.audiotennis.handlers;
 
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 
-public class TennisActionIntentHandler extends TennisGameIntentHandler {
+public class TennisMissionNavigationIntentHandler extends TennisGameIntentHandler {
 
-    public TennisActionIntentHandler(IntentFactory intentFabric) {
+    public TennisMissionNavigationIntentHandler(IntentFactory intentFabric) {
         super(intentFabric);
     }
 
     @Override
     protected String getIntentName() {
-        return "ActionIntent";
+        return "MissionNavigationIntent";
     }
 }

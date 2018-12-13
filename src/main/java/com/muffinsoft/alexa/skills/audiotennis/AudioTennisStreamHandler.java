@@ -9,8 +9,12 @@ import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisCancelIntentHandle
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisFallbackIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisHelpIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisLaunchRequestHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisMissionNavigationIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisNoIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisResetIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSelectActivityIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisStopIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisYesIntentHandler;
 
 public class AudioTennisStreamHandler extends SkillStreamHandler {
 
@@ -25,6 +29,10 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
         return Skills.standard()
                 .addRequestHandlers(
                         new TennisActionIntentHandler(IoC.provideIntentFactory()),
+                        new TennisMissionNavigationIntentHandler(IoC.provideIntentFactory()),
+                        new TennisSelectActivityIntentHandler(IoC.provideIntentFactory()),
+                        new TennisYesIntentHandler(IoC.provideIntentFactory()),
+                        new TennisNoIntentHandler(IoC.provideIntentFactory()),
                         new TennisCancelIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisFallbackIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisHelpIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),

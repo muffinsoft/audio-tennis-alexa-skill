@@ -27,7 +27,6 @@ import java.util.Set;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.CardConstants.WELCOME_CARD;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public class LaunchStateManager extends BaseStateManager {
@@ -88,7 +87,7 @@ public class LaunchStateManager extends BaseStateManager {
             logger.debug("New user was started new Game Session.");
         }
 
-        return builder.withSlotName(actionSlotName).build();
+        return builder.build();
     }
 
     @SuppressWarnings("Duplicates")

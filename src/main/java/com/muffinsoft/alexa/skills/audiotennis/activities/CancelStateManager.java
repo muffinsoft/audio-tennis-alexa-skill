@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.sdk.model.SlotName.CONFIRMATION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REDIRECTION_TO_RANDOM_ACTIVITY_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_EXIT_PHRASE;
@@ -43,7 +44,7 @@ public class CancelStateManager extends BaseStateManager {
 
         List<PhraseContainer> dialog;
 
-        if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
+        if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.YES)) {
             getSessionAttributes().put(RANDOM_SWITCH_ACTIVITY_STEP, true);
             getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
             getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
@@ -51,7 +52,7 @@ public class CancelStateManager extends BaseStateManager {
 
             getSessionAttributes().put(INTENT, IntentType.GAME);
         }
-        else if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+        else if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.NO)) {
             dialog = regularPhraseManager.getValueByKey(WANT_EXIT_PHRASE);
             getSessionAttributes().put(INTENT, IntentType.EXIT);
         }
@@ -61,6 +62,6 @@ public class CancelStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder().addResponse(getDialogTranslator().translate(dialog));
 
-        return builder.withSlotName(actionSlotName).build();
+        return builder.build();
     }
 }

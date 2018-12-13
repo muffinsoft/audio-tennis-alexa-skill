@@ -7,15 +7,20 @@
           "name": "ActionIntent",
           "slots": [
             {
-              "name": "action",
-              "type": "ACTION",
-              "samples": [
-                "{action}"
-              ]
+              "name": "Action",
+              "type": "ACTION"
+            },
+            {
+              "name": "ActionAlternative",
+              "type": "AMAZON.SearchQuery"
             }
           ],
           "samples": [
-            "{action}"
+            "{Action}",
+            "{Action} {Action}",
+            "{Action} {Action} {Action}",
+            "what about {Action}",
+            "it's {ActionAlternative}"
           ]
         },
         {
@@ -23,6 +28,37 @@
           "slots": [],
           "samples": [
             "reset"
+          ]
+        },
+        {
+          "name": "SelectActivityIntent",
+          "slots": [
+            {
+              "name": "Mission",
+              "type": "MISSION"
+            }
+          ],
+          "samples": [
+            "{Mission}",
+            "{Mission} please",
+            "I'd like {Mission}",
+            "I'm feeling {Mission}",
+            "restart {Mission}",
+            "start {Mission}",
+            "let's play {Mission}",
+            "I'd like to play {Mission}"
+          ]
+        },
+        {
+          "name": "MissionNavigationIntent",
+          "slots": [
+            {
+              "name": "Navigation",
+              "type": "NAVIGATION"
+            }
+          ],
+          "samples": [
+            "{Navigation}"
           ]
         },
         {
@@ -34,67 +70,26 @@
           "samples": []
         },
         {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+        {
           "name": "AMAZON.HelpIntent",
           "samples": []
         },
         {
           "name": "AMAZON.StopIntent",
           "samples": []
-        },
-        {
-          "name": "DummyIntent",
-          "slots": [
-            {
-              "name": "part",
-              "type": "DummyPart",
-              "samples": [
-                "I want some {part}"
-              ]
-            }
-          ],
-          "samples": [
-            "please take me to some {part}"
-          ]
         }
       ],
       "types": [
         {
-          "name": "ACTION",
+          "name": "MISSION",
           "values": [
-            {
-              "name": {
-                "value": "yes",
-                "synonyms": [
-                  "ok",
-                  "yep",
-                  "yeah",
-                  "I do",
-                  "yes please",
-                  "you know it",
-                  "of course",
-                  "ya",
-                  "ready",
-                  "go"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "no",
-                "synonyms": [
-                  "no",
-                  "nope",
-                  "not",
-                  "nah",
-                  "neh",
-                  "oh no",
-                  "no no",
-                  "nope",
-                  "I do not",
-                  "no thank you"
-                ]
-              }
-            },
             {
               "name": {
                 "value": "last letter",
@@ -147,7 +142,45 @@
                   "something else"
                 ]
               }
+            }
+          ]
+        },
+        {
+          "name": "NAVIGATION",
+          "values": [
+            {
+              "name": {
+                "value": "again",
+                "synonyms": [
+                  "again",
+                  "try again"
+                ]
+              }
             },
+            {
+              "name": {
+                "value": "reset",
+                "synonyms": [
+                  "over",
+                  "start this path over"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "new",
+                "synonyms": [
+                  "new mission",
+                  "new"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "ACTION",
+          "values": [
+
             {
               "name": {
                 "value": "wham"
@@ -137844,49 +137877,8 @@
               }
             }
           ]
-        },
-        {
-          "name": "DummyPart",
-          "values": [
-            {
-              "name": {
-                "value": "whatever"
-              }
-            }
-          ]
         }
       ]
-    },
-    "dialog": {
-      "intents": [
-        {
-          "name": "DummyIntent",
-          "confirmationRequired": false,
-          "prompts": {},
-          "slots": [
-            {
-              "name": "part",
-              "type": "DummyPart",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Slot.323516811559.863715167340"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    "prompts": [
-      {
-        "id": "Elicit.Slot.323516811559.863715167340",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Could you please say what you want?"
-          }
-        ]
-      }
-    ]
+    }
   }
 }

@@ -208,7 +208,7 @@ public class TennisIntentFabric implements IntentFactory {
     }
 
     private ActivityType getActivityFromReply(Map<String, Slot> inputSlots) {
-        List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
+        List<String> userReplies = SlotComputer.compute(inputSlots).get(SlotName.MISSION);
         for (String reply : userReplies) {
             if (UserReplyComparator.compare(reply, UserReplies.LAST_LETTER)) {
                 return ActivityType.LAST_LETTER;
@@ -227,7 +227,7 @@ public class TennisIntentFabric implements IntentFactory {
     }
 
     private boolean isNegativeReply(Map<String, Slot> inputSlots) {
-        List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
+        List<String> userReplies = SlotComputer.compute(inputSlots).get(SlotName.CONFIRMATION);
         for (String reply : userReplies) {
             if (UserReplyComparator.compare(reply, UserReplies.NO)) {
                 return true;
@@ -238,7 +238,7 @@ public class TennisIntentFabric implements IntentFactory {
 
 
     private boolean isSomethingElseReply(Map<String, Slot> inputSlots) {
-        List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
+        List<String> userReplies = SlotComputer.compute(inputSlots).get(SlotName.MISSION);
         for (String reply : userReplies) {
             if (UserReplyComparator.compare(reply, UserReplies.SOMETHING_ELSE)) {
                 return true;
@@ -248,7 +248,7 @@ public class TennisIntentFabric implements IntentFactory {
     }
 
     private boolean isPositiveReply(Map<String, Slot> inputSlots) {
-        List<String> userReplies = SlotComputer.compute(inputSlots, SlotName.ACTION.text);
+        List<String> userReplies = SlotComputer.compute(inputSlots).get(SlotName.CONFIRMATION);
         for (String reply : userReplies) {
             if (UserReplyComparator.compare(reply, UserReplies.YES)) {
                 return true;

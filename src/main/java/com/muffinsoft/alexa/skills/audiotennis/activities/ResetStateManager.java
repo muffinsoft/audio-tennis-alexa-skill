@@ -27,6 +27,7 @@ import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGR
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
 import static com.muffinsoft.alexa.sdk.enums.IntentType.GAME;
+import static com.muffinsoft.alexa.sdk.model.SlotName.CONFIRMATION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.RETURN_TO_GAME_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
@@ -56,12 +57,12 @@ public class ResetStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder();
 
-        if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+        if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.NO)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
             getSessionAttributes().put(STATE_TYPE, StateType.ACTIVITY_INTRO);
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
         }
-        else if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
+        else if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.YES)) {
             getSessionAttributes().remove(ACTIVITY_PROGRESS);
             getSessionAttributes().put(INTENT, IntentType.GAME);
             getSessionAttributes().put(STATE_TYPE, StateType.ACTIVITY_INTRO);
@@ -72,7 +73,7 @@ public class ResetStateManager extends BaseStateManager {
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
         }
 
-        return builder.withSlotName(actionSlotName).build();
+        return builder.build();
     }
 
     private void addFirstActivityIntro(DialogItem.Builder builder) {

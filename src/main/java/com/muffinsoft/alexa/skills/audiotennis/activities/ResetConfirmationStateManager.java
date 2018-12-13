@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.sdk.model.SlotName.CONFIRMATION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
 
@@ -41,14 +42,12 @@ public class ResetConfirmationStateManager extends BaseStateManager {
     public DialogItem nextResponse() {
         logger.debug("Available session attributes: " + getSessionAttributes());
 
-        logger.debug("User reply: " + getUserReply());
-
         List<PhraseContainer> dialog = null;
 
-        if (UserReplyComparator.compare(getUserReply(), UserReplies.NO)) {
+        if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.NO)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
         }
-        else if (UserReplyComparator.compare(getUserReply(), UserReplies.YES)) {
+        else if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.YES)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
         }
         else {
@@ -57,6 +56,6 @@ public class ResetConfirmationStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder().addResponse(getDialogTranslator().translate(dialog));
 
-        return builder.withSlotName(actionSlotName).build();
+        return builder.build();
     }
 }

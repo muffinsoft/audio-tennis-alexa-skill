@@ -31,6 +31,6 @@ public class FallbackStateManager extends BaseStateManager {
 
         getSessionAttributes().put(SessionConstants.INTENT, IntentType.GAME);
 
-        return builder.withSlotName(actionSlotName).build();
+        return builder.build();
     }
 }

@@ -11,6 +11,7 @@ import com.amazon.ask.model.slu.entityresolution.Resolution;
 import com.amazon.ask.model.slu.entityresolution.Resolutions;
 import com.amazon.ask.model.slu.entityresolution.Status;
 import com.amazon.ask.model.slu.entityresolution.StatusCode;
+import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.skills.audiotennis.components.ObjectConvert;
 import com.muffinsoft.alexa.skills.audiotennis.test.MockPersistenceAdapter;
 
@@ -49,7 +50,7 @@ public class BaseTest {
 
     public Map<String, Slot> createSlotsForValue(String value) {
         Map<String, Slot> slots = new HashMap<>();
-        slots.put("action", createSlotForValue(value));
+        slots.put(SlotName.ACTION.text, createSlotForValue(value));
         return slots;
     }
 

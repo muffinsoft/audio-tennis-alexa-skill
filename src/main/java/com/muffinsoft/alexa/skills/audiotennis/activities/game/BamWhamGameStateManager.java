@@ -34,10 +34,13 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
 
     @Override
     protected boolean isSuccessAnswer() {
-        return areEquals(getUserReply(), this.activityProgress.getRequiredUserReaction());
+        return areEquals(getActionUserReply(), this.activityProgress.getRequiredUserReaction());
     }
 
     private boolean areEquals(String one, String two) {
+        if (one == null || two == null) {
+            return false;
+        }
         return one.trim().equalsIgnoreCase(two.trim());
     }
 }

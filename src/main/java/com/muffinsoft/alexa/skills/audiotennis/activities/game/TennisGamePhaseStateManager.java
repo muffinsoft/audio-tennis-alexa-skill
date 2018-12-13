@@ -326,6 +326,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     boolean isWordAlreadyUsed() {
-        return activityProgress.getUsedWords().contains(getUserReply());
+        return activityProgress.getUsedWords().contains(getActionUserReply());
     }
 }

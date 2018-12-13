@@ -4,11 +4,13 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
+import java.util.List;
 import java.util.Map;
 
 public class RhymeMatchGameStateManager extends OneSideGameStateManager {
@@ -26,9 +28,9 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
     @Override
     protected boolean isSuccessAnswer() {
 
-        String[] possibleWordsInReply = getUserReply().toLowerCase().split(" ");
+        List<String> userReply = getUserReply(SlotName.ACTION);
 
-        for (String word : possibleWordsInReply) {
+        for (String word : userReply) {
 
             String repliesRhyme = activityManager.findRhymeForWord(word);
 
@@ -59,7 +61,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
 
         BasePhraseContainer playerLosePhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerLoseWrongWordPhrase();
 
-        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getUserReply(), null, this.activityProgress.getPreviousWord())));
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), null, this.activityProgress.getPreviousWord())));
 
         this.activityProgress.iterateMistakeCount();
 
