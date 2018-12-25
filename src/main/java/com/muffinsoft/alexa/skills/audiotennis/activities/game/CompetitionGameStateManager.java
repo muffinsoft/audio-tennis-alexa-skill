@@ -93,8 +93,8 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             String alreadyUserWord = getAlreadyUsedWordByActivityRules();
             nextWord = appendNextRepeatedWord(builder, alreadyUserWord);
         }
-        else if (this.activityProgress.getEnemyAnswerCounter() >= this.activityProgress.getComplexity()) {
-            this.activityProgress.setEnemyAnswerCounter(0);
+        else if (this.activityProgress.getEnemyAnswerCounter() > this.activityProgress.getComplexity()) {
+            this.activityProgress.setEnemyAnswerCounter(1);
             boolean isAlreadyUsedMistake = ThreadLocalRandom.current().nextBoolean();
             String alreadyUserWord = getAlreadyUsedWordByActivityRules();
             if (isAlreadyUsedMistake && alreadyUserWord != null) {

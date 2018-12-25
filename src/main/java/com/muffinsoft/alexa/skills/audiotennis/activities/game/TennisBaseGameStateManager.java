@@ -44,7 +44,6 @@ import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
 import static com.muffinsoft.alexa.sdk.enums.StateType.READY;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.UNKNOWN_WORD_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
@@ -53,12 +52,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     protected final RegularPhraseManager regularPhraseManager;
     final ActivitiesPhraseManager activitiesPhraseManager;
-    final ActivitySelectionAppender activitySelectionAppender;
     final AliasManager aliasManager;
     final ProgressManager progressManager;
     final ActivityManager activityManager;
     final GeneralActivityPhraseManager generalActivityPhraseManager;
     final String enemyRole;
+    private final ActivitySelectionAppender activitySelectionAppender;
     UserProgress userProgress;
     ActivityProgress activityProgress;
     ActivityType currentActivityType;
@@ -170,7 +169,6 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         if (UserReplyComparator.compare(getUserReply(SlotName.CONFIRMATION), UserReplies.NO)) {
             activitySelectionAppender.append(builder, userProgress);
             getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
-            getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
             getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
         }
         else {
@@ -186,6 +184,9 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         String word;
         if (this.activityProgress.getPreviousWord() == null) {
             word = generateRandomWord();
+            if (this.currentActivityType.isCompetition()) {
+                this.activityProgress.iterateEnemyAnswerCounter();
+            }
         }
         else {
             word = this.activityProgress.getPreviousWord();
@@ -278,6 +279,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     private void initGameStatePhrase(DialogItem.Builder builder) {
         this.stateType = StateType.GAME_PHASE_1;
         this.activityProgress.reset();
+
+        if (this.currentActivityType.isCompetition()) {
+            this.activityProgress.iterateEnemyAnswerCounter();
+        }
 
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));

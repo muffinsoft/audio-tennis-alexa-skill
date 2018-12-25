@@ -7,7 +7,6 @@ import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.sdk.model.Speech;
-import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityUnlokingStatus;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
@@ -26,8 +25,8 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_RESTART_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_UNLOCK_ACTIVITY_STEP;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
 
@@ -132,7 +131,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.setEndRound(true);
 
         getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
-        getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
+        getSessionAttributes().remove(SWITCH_UNLOCK_ACTIVITY_STEP);
         getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
 
         builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE)));
@@ -140,8 +139,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     void handlerContinueRePrompt(DialogItem.Builder builder) {
 
-        getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
         getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
+        getSessionAttributes().remove(SWITCH_UNLOCK_ACTIVITY_STEP);
         getSessionAttributes().put(ASK_RANDOM_SWITCH_ACTIVITY_STEP, true);
 
         List<PhraseContainer> valueByKey = regularPhraseManager.getValueByKey(TRY_SOMETHING_ELSE_PHRASE);
@@ -158,9 +157,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         if (nextActivity != null) {
 
-            getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
             getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
-            getSessionAttributes().put(SessionConstants.SWITCH_ACTIVITY_STEP, true);
+            getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
+            getSessionAttributes().put(SWITCH_UNLOCK_ACTIVITY_STEP, true);
 
             List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE);
             List<PhraseContainer> replacesDialog = new ArrayList<>();

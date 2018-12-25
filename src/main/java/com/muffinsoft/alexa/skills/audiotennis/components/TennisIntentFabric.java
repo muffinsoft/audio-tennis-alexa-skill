@@ -45,8 +45,8 @@ import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_MISSION;
 import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_OTHER_MISSION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_UNLOCK_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.ALPHABET_RACE;
 import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.BAM_WHAM;
 import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.LAST_LETTER;
@@ -86,14 +86,14 @@ public class TennisIntentFabric implements IntentFactory {
                 return new ExitStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case CANCEL:
                 return new CancelStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
-            case GAME:
-                return getNextGameState(inputSlots, attributesManager);
             case FALLBACK:
                 return new FallbackStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case SELECT_OTHER_MISSION:
                 return new SelectMoreActivitiesStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case SELECT_MISSION:
                 return new SelectActivityStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+            case GAME:
+                return getNextGameState(inputSlots, attributesManager);
             default:
                 throw new IllegalArgumentException("Can't create new Intent State object for type " + intent);
         }
@@ -110,8 +110,8 @@ public class TennisIntentFabric implements IntentFactory {
         if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
             interceptedIntentType = interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
         }
-        else if (sessionAttributes.containsKey(RANDOM_SWITCH_ACTIVITY_STEP)) {
-            interceptRandomActivityProgress(sessionAttributes, activityProgress);
+        else if (sessionAttributes.containsKey(SWITCH_UNLOCK_ACTIVITY_STEP)) {
+            interceptUnlockedActivityProgress(inputSlots, sessionAttributes, activityProgress);
         }
         else if (sessionAttributes.containsKey(ASK_RANDOM_SWITCH_ACTIVITY_STEP)) {
             interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
@@ -156,7 +156,6 @@ public class TennisIntentFabric implements IntentFactory {
         sessionAttributes.put(STATE_TYPE, StateType.ACTIVITY_INTRO);
         sessionAttributes.remove(USER_REPLY_BREAKPOINT);
         sessionAttributes.remove(STATE_TYPE);
-        sessionAttributes.remove(RANDOM_SWITCH_ACTIVITY_STEP);
     }
 
     private ActivityType getRandomActivity(Set<ActivityType> unlockedActivities) {
@@ -196,18 +195,34 @@ public class TennisIntentFabric implements IntentFactory {
         }
     }
 
+    private void interceptUnlockedActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+        ActivityType type = getActivityFromReply(inputSlots);
+
+        if (isPositiveReply(inputSlots) && activityProgress.getPossibleActivity() != null) {
+            moveToPossibleActivity(sessionAttributes, activityProgress);
+        }
+        else {
+            movingBetweenActivities(sessionAttributes, activityProgress, type);
+        }
+        sessionAttributes.remove(SWITCH_UNLOCK_ACTIVITY_STEP);
+    }
+
+    private void moveToPossibleActivity(Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+        ActivityType possibleActivity = activityProgress.getPossibleActivity();
+        ActivityType currentActivity = activityProgress.getCurrentActivity();
+        activityProgress.setTransition(true);
+        activityProgress.setCurrentActivity(possibleActivity);
+        activityProgress.setPreviousActivity(currentActivity);
+        sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
+        sessionAttributes.remove(STATE_TYPE);
+        sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
+    }
+
     private IntentType interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
         ActivityType type = getActivityFromReply(inputSlots);
 
         if (isPositiveReply(inputSlots) && activityProgress.getPossibleActivity() != null) {
-            ActivityType possibleActivity = activityProgress.getPossibleActivity();
-            ActivityType currentActivity = activityProgress.getCurrentActivity();
-            activityProgress.setTransition(true);
-            activityProgress.setCurrentActivity(possibleActivity);
-            activityProgress.setPreviousActivity(currentActivity);
-            sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
-            sessionAttributes.remove(STATE_TYPE);
-            sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
+            moveToPossibleActivity(sessionAttributes, activityProgress);
         }
         else if (isNegativeReply(inputSlots)) {
             return SELECT_MISSION;

@@ -101,12 +101,6 @@
       "role": "Alexa"
     }
   ],
-  "redirectionToUnknownActivityPhrase": [
-    {
-      "content": "You will be redirected to next activity",
-      "role": "Alexa"
-    }
-  ],
   "trySomethingElsePhrase": [
     {
       "content": "Would you like to try something else?"

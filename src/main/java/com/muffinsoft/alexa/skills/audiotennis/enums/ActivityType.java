@@ -2,11 +2,21 @@ package com.muffinsoft.alexa.skills.audiotennis.enums;
 
 public enum ActivityType {
 
-    ALPHABET_RACE,
+    ALPHABET_RACE(true),
 
-    LAST_LETTER,
+    LAST_LETTER(true),
 
-    BAM_WHAM,
+    BAM_WHAM(false),
 
-    RHYME_MATCH
+    RHYME_MATCH(false);
+
+    private final boolean competition;
+
+    ActivityType(boolean competition) {
+        this.competition = competition;
+    }
+
+    public boolean isCompetition() {
+        return competition;
+    }
 }
