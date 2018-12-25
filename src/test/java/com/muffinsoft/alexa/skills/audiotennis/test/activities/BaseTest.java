@@ -48,9 +48,9 @@ public class BaseTest {
         return ObjectConvert.toMap(progress);
     }
 
-    public Map<String, Slot> createSlotsForValue(String value) {
+    public Map<String, Slot> createSlotsForValue(SlotName slotName, String value) {
         Map<String, Slot> slots = new HashMap<>();
-        slots.put(SlotName.ACTION.text, createSlotForValue(value));
+        slots.put(slotName.text, createSlotForValue(value));
         return slots;
     }
 

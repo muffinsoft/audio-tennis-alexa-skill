@@ -7,8 +7,8 @@ import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
+import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppender;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
-import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
@@ -35,6 +35,7 @@ public class LaunchStateManager extends BaseStateManager {
     private final ActivitiesPhraseManager activitiesPhraseManager;
     private final RegularPhraseManager regularPhraseManager;
     private final CardManager cardManager;
+    private final ActivitySelectionAppender activitySelectionAppender;
 
     private Integer userReplyBreakpointPosition;
     private UserProgress userProgress;
@@ -44,6 +45,7 @@ public class LaunchStateManager extends BaseStateManager {
         this.cardManager = settingsDependencyContainer.getCardManager();
         this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
+        this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
     }
 
     @Override
@@ -72,7 +74,7 @@ public class LaunchStateManager extends BaseStateManager {
                 appendPlayerWindResult(builder);
             }
 
-            appendActivitySelection(builder);
+            activitySelectionAppender.append(builder, userProgress);
 
             getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
             getSessionAttributes().put(INTENT, IntentType.GAME);
@@ -88,27 +90,6 @@ public class LaunchStateManager extends BaseStateManager {
         }
 
         return builder.build();
-    }
-
-    @SuppressWarnings("Duplicates")
-    private void appendActivitySelection(DialogItem.Builder builder) {
-        List<PhraseContainer> dialog;
-        switch (this.userProgress.getUnlockedActivities().size()) {
-            case 1:
-                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_ONE_PHRASE);
-                break;
-            case 2:
-                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_TWO_PHRASE);
-                break;
-            case 3:
-                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_THREE_PHRASE);
-                break;
-            default:
-                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_ALL_PHRASE);
-                break;
-        }
-
-        builder.addResponse(getDialogTranslator().translate(dialog));
     }
 
     private void appendEnemyWinsResult(DialogItem.Builder builder) {

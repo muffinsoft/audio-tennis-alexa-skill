@@ -3,6 +3,7 @@ package com.muffinsoft.alexa.skills.audiotennis.test.activities;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.RhymeMatchGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
@@ -30,7 +31,7 @@ class RhymeMatchGameTest extends BaseTest {
         activityProgress.setPreviousWord(wordForActivity.getWord());
         activityProgress.setRequiredUserReaction(wordForActivity.getUserReaction());
 
-        Map<String, Slot> slots = createSlotsForValue("test");
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, "test");
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));

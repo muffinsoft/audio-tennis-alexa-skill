@@ -4,6 +4,7 @@ import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
+import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.components.TennisIntentFabric;
@@ -27,7 +28,7 @@ class TennisIntentFabricTest extends BaseTest {
 
         TennisIntentFabric intentFabric = new TennisIntentFabric(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
 
-        Map<String, Slot> slots = createSlotsForValue("yes");
+        Map<String, Slot> slots = createSlotsForValue(SlotName.CONFIRMATION, "yes");
 
         ActivityProgress activityProgress = new ActivityProgress(ActivityType.LAST_LETTER);
         activityProgress.setPossibleActivity(ActivityType.BAM_WHAM);

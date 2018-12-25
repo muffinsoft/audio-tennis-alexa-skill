@@ -3,6 +3,7 @@ package com.muffinsoft.alexa.skills.audiotennis;
 
 import com.muffinsoft.alexa.sdk.components.BaseDialogTranslator;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
+import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppender;
 import com.muffinsoft.alexa.skills.audiotennis.components.TennisIntentFabric;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
@@ -35,6 +36,7 @@ public class IoC {
     private static final ActivityManager ACTIVITY_MANAGER;
     private static final DictionaryManager DICTIONARY_MANAGER;
     private static final SoundsManager SOUNDS_MANAGER;
+    private static final ActivitySelectionAppender ACTIVITY_SELECTION_APPENDER;
 
     static {
         REGULAR_PHRASE_MANAGER = new RegularPhraseManager("phrases/en-US.json");
@@ -50,7 +52,8 @@ public class IoC {
         DICTIONARY_MANAGER = new DictionaryManager();
         ACTIVITY_MANAGER = new ActivityManager(DICTIONARY_MANAGER);
         PHRASE_DEPENDENCY_CONTAINER = new PhraseDependencyContainer(REGULAR_PHRASE_MANAGER, ACTIVITIES_PHRASE_MANAGER, GENERAL_ACTIVITY_PHRASE_MANAGER);
-        SETTINGS_DEPENDENCY_CONTAINER = new SettingsDependencyContainer(CARD_MANAGER, USER_REPLY_MANAGER, ALIAS_MANAGER, BASE_DIALOG_TRANSLATOR, ACTIVITY_MANAGER, PROGRESS_MANAGER);
+        ACTIVITY_SELECTION_APPENDER = new ActivitySelectionAppender(PHRASE_DEPENDENCY_CONTAINER, BASE_DIALOG_TRANSLATOR);
+        SETTINGS_DEPENDENCY_CONTAINER = new SettingsDependencyContainer(CARD_MANAGER, USER_REPLY_MANAGER, ALIAS_MANAGER, BASE_DIALOG_TRANSLATOR, ACTIVITY_MANAGER, PROGRESS_MANAGER, ACTIVITY_SELECTION_APPENDER);
         INTENT_FABRIC = new TennisIntentFabric(SETTINGS_DEPENDENCY_CONTAINER, PHRASE_DEPENDENCY_CONTAINER);
     }
 

@@ -8,6 +8,7 @@ import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.sdk.model.SlotName;
+import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppender;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
@@ -52,6 +53,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     protected final RegularPhraseManager regularPhraseManager;
     final ActivitiesPhraseManager activitiesPhraseManager;
+    final ActivitySelectionAppender activitySelectionAppender;
     final AliasManager aliasManager;
     final ProgressManager progressManager;
     final ActivityManager activityManager;
@@ -74,6 +76,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
         this.generalActivityPhraseManager = phraseDependencyContainer.getGeneralActivityPhraseManager();
         this.enemyRole = progressManager.getEnemyRole();
+        this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
     }
 
     String getActionUserReply() {
@@ -165,7 +168,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected DialogItem.Builder handleReadyToPlayState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(SlotName.CONFIRMATION), UserReplies.NO)) {
-            appendActivitySelection(builder);
+            activitySelectionAppender.append(builder, userProgress);
+            getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
+            getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
+            getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
         }
         else {
             initGameStatePhrase(builder);
@@ -204,30 +210,6 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             initGameStatePhrase(builder);
         }
         return builder;
-    }
-
-    @SuppressWarnings("Duplicates")
-    private void appendActivitySelection(DialogItem.Builder builder) {
-        List<PhraseContainer> dialog;
-        switch (this.userProgress.getUnlockedActivities().size()) {
-            case 1:
-                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_ONE_PHRASE);
-                break;
-            case 2:
-                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_TWO_PHRASE);
-                break;
-            case 3:
-                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_THREE_PHRASE);
-                break;
-            default:
-                dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_ALL_PHRASE);
-                break;
-        }
-
-        getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
-        getSessionAttributes().remove(RANDOM_SWITCH_ACTIVITY_STEP);
-        getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
-        builder.addResponse(getDialogTranslator().translate(dialog));
     }
 
     @Override

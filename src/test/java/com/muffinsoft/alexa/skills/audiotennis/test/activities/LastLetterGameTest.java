@@ -3,6 +3,7 @@ package com.muffinsoft.alexa.skills.audiotennis.test.activities;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
@@ -35,7 +36,7 @@ class LastLetterGameTest extends BaseTest {
 
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromLetter.getWord();
-        Map<String, Slot> slots = createSlotsForValue(secondWord);
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, secondWord);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
@@ -68,7 +69,7 @@ class LastLetterGameTest extends BaseTest {
 
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromLetter.getWord();
-        Map<String, Slot> slots = createSlotsForValue(secondWord);
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, secondWord);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
@@ -96,7 +97,7 @@ class LastLetterGameTest extends BaseTest {
 
         WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(0), Collections.emptySet());
         String secondWord = randomWordForActivityFromWrongLetter.getWord();
-        Map<String, Slot> slots = createSlotsForValue(secondWord);
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, secondWord);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
@@ -129,7 +130,7 @@ class LastLetterGameTest extends BaseTest {
 
         WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(0), Collections.emptySet());
         String secondWord = randomWordForActivityFromWrongLetter.getWord();
-        Map<String, Slot> slots = createSlotsForValue(secondWord);
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, secondWord);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
@@ -159,7 +160,7 @@ class LastLetterGameTest extends BaseTest {
 
         WordContainer randomWordForActivityFromWrongLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromWrongLetter.getWord();
-        Map<String, Slot> slots = createSlotsForValue(secondWord);
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, secondWord);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
@@ -191,7 +192,7 @@ class LastLetterGameTest extends BaseTest {
 
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromLetter.getWord();
-        Map<String, Slot> slots = createSlotsForValue(secondWord);
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, secondWord);
         activityProgress.setPreviousWord(firstWord);
         activityProgress.setPreviousActivity(ActivityType.LAST_LETTER);
         activityProgress.setUnlockedActivities(new ActivityType[]{ActivityType.BAM_WHAM, ActivityType.LAST_LETTER});
@@ -240,7 +241,7 @@ class LastLetterGameTest extends BaseTest {
 
         WordContainer randomWordForActivityFromLetter = activityManager.getRandomWordForCompetitionActivityFromLetter(firstWord.charAt(firstWord.length() - 1), Collections.emptySet());
         String secondWord = randomWordForActivityFromLetter.getWord();
-        Map<String, Slot> slots = createSlotsForValue(secondWord);
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, secondWord);
 
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));

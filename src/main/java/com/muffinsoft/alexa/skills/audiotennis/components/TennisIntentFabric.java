@@ -16,6 +16,7 @@ import com.muffinsoft.alexa.skills.audiotennis.activities.HelpStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetConfirmationStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ResetStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.SelectActivityStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.SelectMoreActivitiesStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.AlphabetRaceGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGameStateManager;
@@ -39,10 +40,17 @@ import java.util.concurrent.ThreadLocalRandom;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
+import static com.muffinsoft.alexa.sdk.enums.IntentType.GAME;
+import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_MISSION;
+import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_OTHER_MISSION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.ALPHABET_RACE;
+import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.BAM_WHAM;
+import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.LAST_LETTER;
+import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.RHYME_MATCH;
 
 public class TennisIntentFabric implements IntentFactory {
 
@@ -82,6 +90,10 @@ public class TennisIntentFabric implements IntentFactory {
                 return getNextGameState(inputSlots, attributesManager);
             case FALLBACK:
                 return new FallbackStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+            case SELECT_OTHER_MISSION:
+                return new SelectMoreActivitiesStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+            case SELECT_MISSION:
+                return new SelectActivityStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             default:
                 throw new IllegalArgumentException("Can't create new Intent State object for type " + intent);
         }
@@ -93,10 +105,10 @@ public class TennisIntentFabric implements IntentFactory {
 
         Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
 
-        boolean isIntercepted = false;
+        IntentType interceptedIntentType = GAME;
 
         if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
-            isIntercepted = interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            interceptedIntentType = interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
         }
         else if (sessionAttributes.containsKey(RANDOM_SWITCH_ACTIVITY_STEP)) {
             interceptRandomActivityProgress(sessionAttributes, activityProgress);
@@ -105,8 +117,8 @@ public class TennisIntentFabric implements IntentFactory {
             interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
         }
 
-        if (isIntercepted) {
-            return new SelectMoreActivitiesStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+        if (interceptedIntentType != GAME) {
+            return getNextState(interceptedIntentType, inputSlots, attributesManager);
         }
 
         ActivityType currentActivity = activityProgress.getCurrentActivity();
@@ -184,7 +196,7 @@ public class TennisIntentFabric implements IntentFactory {
         }
     }
 
-    private boolean interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private IntentType interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
         ActivityType type = getActivityFromReply(inputSlots);
 
         if (isPositiveReply(inputSlots) && activityProgress.getPossibleActivity() != null) {
@@ -197,30 +209,33 @@ public class TennisIntentFabric implements IntentFactory {
             sessionAttributes.remove(STATE_TYPE);
             sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
         }
+        else if (isNegativeReply(inputSlots)) {
+            return SELECT_MISSION;
+        }
         else if (isSomethingElseReply(inputSlots)) {
-            return true;
+            return SELECT_OTHER_MISSION;
         }
         else {
             movingBetweenActivities(sessionAttributes, activityProgress, type);
             sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
         }
-        return false;
+        return GAME;
     }
 
     private ActivityType getActivityFromReply(Map<String, Slot> inputSlots) {
         List<String> userReplies = SlotComputer.compute(inputSlots).get(SlotName.MISSION);
         for (String reply : userReplies) {
             if (UserReplyComparator.compare(reply, UserReplies.LAST_LETTER)) {
-                return ActivityType.LAST_LETTER;
+                return LAST_LETTER;
             }
             else if (UserReplyComparator.compare(reply, UserReplies.BAM_WHAM)) {
-                return ActivityType.BAM_WHAM;
+                return BAM_WHAM;
             }
             else if (UserReplyComparator.compare(reply, UserReplies.ALPHABET_RACE)) {
-                return ActivityType.ALPHABET_RACE;
+                return ALPHABET_RACE;
             }
             else if (UserReplyComparator.compare(reply, UserReplies.RHYME_MATCH)) {
-                return ActivityType.RHYME_MATCH;
+                return RHYME_MATCH;
             }
         }
         return null;
