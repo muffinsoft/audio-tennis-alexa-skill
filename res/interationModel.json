@@ -70,6 +70,14 @@
           "samples": []
         },
         {
+          "name": "AMAZON.StartOverIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
           "name": "AMAZON.YesIntent",
           "samples": []
         },

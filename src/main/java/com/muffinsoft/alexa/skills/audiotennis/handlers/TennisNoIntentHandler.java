@@ -24,7 +24,7 @@ public class TennisNoIntentHandler extends TennisGameIntentHandler {
 
     @Override
     protected void appendValuesToSlots(Map<String, Slot> slots) {
-        Slot.Builder slotBuilder = Slot.builder().withValue("yes");
+        Slot.Builder slotBuilder = Slot.builder().withValue("no");
         slots.put(SlotName.CONFIRMATION.text, slotBuilder.build());
     }
 }
