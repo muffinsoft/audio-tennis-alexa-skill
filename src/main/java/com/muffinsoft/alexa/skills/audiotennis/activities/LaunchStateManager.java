@@ -74,7 +74,7 @@ public class LaunchStateManager extends BaseStateManager {
                 appendPlayerWindResult(builder);
             }
 
-            activitySelectionAppender.append(builder, userProgress);
+            activitySelectionAppender.append(builder, userProgress, getSessionAttributes());
 
             getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
             getSessionAttributes().put(INTENT, IntentType.GAME);
@@ -94,14 +94,14 @@ public class LaunchStateManager extends BaseStateManager {
 
     private void appendEnemyWinsResult(DialogItem.Builder builder) {
         BasePhraseContainer randomEnemyLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomEnemyLastScore();
-        String newContent = replaceScoresPlaceholders(randomEnemyLastScore.getContent(), this.userProgress.getLastGameEnemyPoint(), this.userProgress.getLastGamePlayerPoint());
+        String newContent = replaceScoresPlaceholders(randomEnemyLastScore.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomEnemyLastScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
     private void appendPlayerWindResult(DialogItem.Builder builder) {
         BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
-        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameEnemyPoint(), this.userProgress.getLastGamePlayerPoint());
+        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }

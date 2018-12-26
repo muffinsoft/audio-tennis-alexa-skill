@@ -13,6 +13,8 @@ public class UserProgress {
     private int losses;
     private int lastGamePlayerPoint;
     private int lastGameEnemyPoint;
+    private int lastGameHistoryPlayerPoint;
+    private int lastGameHistoryEnemyPoint;
     private int playerPointWinInRow;
     private int enemyPointWinInRow;
     private int amountOfTwoPointsInRow;
@@ -28,6 +30,22 @@ public class UserProgress {
         if (unlockedActivity != null) {
             this.unlockedActivities.add(unlockedActivity.name());
         }
+    }
+
+    public int getLastGameHistoryPlayerPoint() {
+        return lastGameHistoryPlayerPoint;
+    }
+
+    public void setLastGameHistoryPlayerPoint(int lastGameHistoryPlayerPoint) {
+        this.lastGameHistoryPlayerPoint = lastGameHistoryPlayerPoint;
+    }
+
+    public int getLastGameHistoryEnemyPoint() {
+        return lastGameHistoryEnemyPoint;
+    }
+
+    public void setLastGameHistoryEnemyPoint(int lastGameHistoryEnemyPoint) {
+        this.lastGameHistoryEnemyPoint = lastGameHistoryEnemyPoint;
     }
 
     public int getWins() {
@@ -68,6 +86,7 @@ public class UserProgress {
 
     public void setLastGamePlayerPoint(int lastGamePlayerPoint) {
         this.lastGamePlayerPoint = lastGamePlayerPoint;
+        this.lastGameHistoryPlayerPoint = lastGamePlayerPoint;
     }
 
     public int getLastGameEnemyPoint() {
@@ -76,6 +95,7 @@ public class UserProgress {
 
     public void setLastGameEnemyPoint(int lastGameEnemyPoint) {
         this.lastGameEnemyPoint = lastGameEnemyPoint;
+        this.lastGameHistoryEnemyPoint = lastGameEnemyPoint;
     }
 
     public int getPlayerPointWinInRow() {
@@ -130,12 +150,15 @@ public class UserProgress {
                 ", losses=" + losses +
                 ", lastGamePlayerPoint=" + lastGamePlayerPoint +
                 ", lastGameEnemyPoint=" + lastGameEnemyPoint +
+                ", lastGameHistoryPlayerPoint=" + lastGameHistoryPlayerPoint +
+                ", lastGameHistoryEnemyPoint=" + lastGameHistoryEnemyPoint +
                 ", playerPointWinInRow=" + playerPointWinInRow +
                 ", enemyPointWinInRow=" + enemyPointWinInRow +
                 ", amountOfTwoPointsInRow=" + amountOfTwoPointsInRow +
                 ", unlockedActivities=" + unlockedActivities +
                 ", achievements=" + achievements +
                 ", nickNameLevel=" + nickNameLevel +
+                ", endRound=" + endRound +
                 '}';
     }
 
@@ -145,5 +168,14 @@ public class UserProgress {
 
     public void setEndRound(boolean endRound) {
         this.endRound = endRound;
+    }
+
+    public void resetRound() {
+        this.endRound = true;
+        this.lastGamePlayerPoint = 0;
+        this.lastGameEnemyPoint = 0;
+        this.playerPointWinInRow = 0;
+        this.enemyPointWinInRow = 0;
+        this.amountOfTwoPointsInRow = 0;
     }
 }

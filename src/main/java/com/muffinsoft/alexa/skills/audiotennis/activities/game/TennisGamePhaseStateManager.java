@@ -128,7 +128,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         this.stateType = StateType.RESTART;
 
-        this.userProgress.setEndRound(true);
+        this.userProgress.resetRound();
 
         getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
         getSessionAttributes().remove(SWITCH_UNLOCK_ACTIVITY_STEP);

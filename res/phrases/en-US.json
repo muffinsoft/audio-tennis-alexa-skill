@@ -31,7 +31,7 @@
   ],
   "returnToGamePhrase": [
     {
-      "content": "You'll be returned to game process.",
+      "content": "Are you ready to be returned to the game process?",
       "role": "Alexa"
     }
   ],

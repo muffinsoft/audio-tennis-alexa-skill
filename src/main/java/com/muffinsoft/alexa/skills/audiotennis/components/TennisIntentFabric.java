@@ -11,6 +11,7 @@ import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.sdk.util.SlotComputer;
 import com.muffinsoft.alexa.skills.audiotennis.activities.CancelStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.ExitStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.ExitWithoutConfirmationStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.FallbackStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.HelpStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateManager;
@@ -45,6 +46,7 @@ import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_MISSION;
 import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_OTHER_MISSION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_ONE_POSSIBLE_ACTIVITY;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_UNLOCK_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.ALPHABET_RACE;
@@ -73,6 +75,13 @@ public class TennisIntentFabric implements IntentFactory {
             attributesManager.getSessionAttributes().remove(EXIT_FROM_HELP);
         }
 
+        if (attributesManager.getSessionAttributes().containsKey(EXIT_FROM_ONE_POSSIBLE_ACTIVITY)) {
+            if (isNegativeReply(inputSlots)) {
+                intent = IntentType.EXIT_CONFIRMATION;
+            }
+            attributesManager.getSessionAttributes().remove(EXIT_FROM_ONE_POSSIBLE_ACTIVITY);
+        }
+
         switch (intent) {
             case INITIAL_GREETING:
                 return new InitialGreetingStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
@@ -84,6 +93,8 @@ public class TennisIntentFabric implements IntentFactory {
                 return new ResetConfirmationStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case EXIT:
                 return new ExitStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+            case EXIT_CONFIRMATION:
+                return new ExitWithoutConfirmationStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case CANCEL:
                 return new CancelStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case FALLBACK:
