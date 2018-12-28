@@ -111,12 +111,6 @@
       "content": "Congrats! You are now ready for a new activity called %activity%. Do you want to play it now?"
     }
   ],
-  "selectActivityBetweenOnePhrase": [
-    {
-      "content": "Would you like to continue?",
-      "role": "Alexa"
-    }
-  ],
   "selectActivityBetweenTwoPhrase": [
     {
       "content": "Do you want to play Last Letter or Bam Wham?",

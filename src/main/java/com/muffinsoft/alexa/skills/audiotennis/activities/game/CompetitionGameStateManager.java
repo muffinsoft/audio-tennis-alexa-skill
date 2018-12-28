@@ -128,7 +128,6 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     protected DialogItem.Builder handleMistakeAnswer(DialogItem.Builder builder) {
 
         BasePhraseContainer playerLosePhrase;
-        this.activityProgress.iterateEnemyAnswerCounter();
 
         if (isWordAlreadyUsed()) {
             playerLosePhrase = phrasesForActivity.getRandomPlayerLoseRepeatWordPhrase();
@@ -145,6 +144,9 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         this.activityProgress.setPreviousWord(nextWord);
         this.activityProgress.addUsedWord(nextWord);
         this.activityProgress.addUsedWord(getActionUserReply());
+
+        // reset counter and iterate on first word
+        this.activityProgress.setEnemyAnswerCounter(1);
 
         ActivityUnlokingStatus unlockingStatus = getUnlockingStatus();
         logger.debug("Current Status: " + unlockingStatus);
