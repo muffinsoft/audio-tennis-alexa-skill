@@ -1,6 +1,7 @@
 package com.muffinsoft.alexa.skills.audiotennis.handlers;
 
 import com.amazon.ask.attributes.AttributesManager;
+import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.handlers.GameIntentHandler;
@@ -16,9 +17,8 @@ public abstract class TennisGameIntentHandler extends GameIntentHandler {
     }
 
     @Override
-    protected void handleAttributes(AttributesManager attributesManager) {
-        Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
-        Map<String, Object> persistentAttributes = attributesManager.getPersistentAttributes();
+    protected void handleInputAttributes(Map<String, Slot> slots, AttributesManager attributesManager) {
+
     }
 
     @Override

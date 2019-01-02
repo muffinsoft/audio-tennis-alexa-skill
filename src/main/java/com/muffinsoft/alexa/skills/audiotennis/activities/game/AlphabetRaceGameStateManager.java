@@ -39,7 +39,7 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
 
     @Override
     protected Character getCharWithMistakeForEnemy() {
-        return getActionUserReply().charAt(0);
+        return activityManager.getNextLetter(getActionUserReply().charAt(0));
     }
 
     @Override

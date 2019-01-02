@@ -50,6 +50,18 @@
           ]
         },
         {
+          "name": "SwitchActivityIntent",
+          "slots": [
+            {
+              "name": "Mission",
+              "type": "MISSION"
+            }
+          ],
+          "samples": [
+            "play {Mission}"
+          ]
+        },
+        {
           "name": "MissionNavigationIntent",
           "slots": [
             {
