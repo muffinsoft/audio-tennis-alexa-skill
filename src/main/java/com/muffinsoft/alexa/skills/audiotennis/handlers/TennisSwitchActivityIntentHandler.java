@@ -5,18 +5,18 @@ import com.amazon.ask.model.Slot;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
-import com.muffinsoft.alexa.sdk.model.SlotName;
-import com.muffinsoft.alexa.sdk.util.SlotComputer;
+import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.skills.audiotennis.components.ObjectConvert;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
+import static com.muffinsoft.alexa.skills.audiotennis.components.ActivityPuller.getActivityFromReply;
 
 public class TennisSwitchActivityIntentHandler extends TennisGameIntentHandler {
 
@@ -36,9 +36,8 @@ public class TennisSwitchActivityIntentHandler extends TennisGameIntentHandler {
     }
 
     private void switchToActivity(Map<String, Slot> slots, Map<String, Object> sessionAttributes) {
-        Map<SlotName, List<String>> slotsBySlotName = SlotComputer.compute(slots);
-        if (slotsBySlotName.containsKey(SlotName.MISSION)) {
-            ActivityType activityType = ActivityType.valueOf(slotsBySlotName.get(SlotName.MISSION).get(0));
+        ActivityType activityType = getActivityFromReply(slots);
+        if (activityType != null) {
             ActivityProgress activityProgress = null;
             if (sessionAttributes.containsKey(SessionConstants.ACTIVITY_PROGRESS)) {
                 LinkedHashMap rawActivityProgress = (LinkedHashMap) sessionAttributes.get(ACTIVITY_PROGRESS);
@@ -54,6 +53,7 @@ public class TennisSwitchActivityIntentHandler extends TennisGameIntentHandler {
                 activityProgress = new ActivityProgress(activityType, true);
             }
 
+            sessionAttributes.put(STATE_TYPE, StateType.ACTIVITY_INTRO);
             sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
         }
     }

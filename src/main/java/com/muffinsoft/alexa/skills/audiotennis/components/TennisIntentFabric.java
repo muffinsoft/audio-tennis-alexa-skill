@@ -44,15 +44,12 @@ import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BRE
 import static com.muffinsoft.alexa.sdk.enums.IntentType.GAME;
 import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_MISSION;
 import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_OTHER_MISSION;
+import static com.muffinsoft.alexa.skills.audiotennis.components.ActivityPuller.getActivityFromReply;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_ONE_POSSIBLE_ACTIVITY;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_UNLOCK_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.ALPHABET_RACE;
-import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.BAM_WHAM;
-import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.LAST_LETTER;
-import static com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType.RHYME_MATCH;
 
 public class TennisIntentFabric implements IntentFactory {
 
@@ -246,25 +243,6 @@ public class TennisIntentFabric implements IntentFactory {
             sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
         }
         return GAME;
-    }
-
-    private ActivityType getActivityFromReply(Map<String, Slot> inputSlots) {
-        List<String> userReplies = SlotComputer.compute(inputSlots).get(SlotName.MISSION);
-        for (String reply : userReplies) {
-            if (UserReplyComparator.compare(reply, UserReplies.LAST_LETTER)) {
-                return LAST_LETTER;
-            }
-            else if (UserReplyComparator.compare(reply, UserReplies.BAM_WHAM)) {
-                return BAM_WHAM;
-            }
-            else if (UserReplyComparator.compare(reply, UserReplies.ALPHABET_RACE)) {
-                return ALPHABET_RACE;
-            }
-            else if (UserReplyComparator.compare(reply, UserReplies.RHYME_MATCH)) {
-                return RHYME_MATCH;
-            }
-        }
-        return null;
     }
 
     private boolean isNegativeReply(Map<String, Slot> inputSlots) {
