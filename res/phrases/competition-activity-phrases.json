@@ -97,11 +97,11 @@
       "role": "Ben"
     },
     {
-      "content": "we already said %word%.",
+      "content": "you already said %word%.",
       "role": "Alexa"
     },
     {
-      "content": "we can't say %word% again.",
+      "content": "you can't say %word% again.",
       "role": "Alexa"
     },
     {
@@ -109,11 +109,7 @@
       "role": "Alexa"
     },
     {
-      "content": "you already said %word%!.",
-      "role": "Alexa"
-    },
-    {
-      "content": "I already said %word%!",
+      "content": "you already said %word%!",
       "role": "Alexa"
     },
     {

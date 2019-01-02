@@ -1,7 +1,7 @@
 {
   "firstTimeGreeting": [
     {
-      "content": "Let’s play Audio Tennis! I'm going to hit the ball by saying words. Then you hit it back by responding correctly. Whoever gets 11 points wins the game. Sounds good?",
+      "content": "Let’s play Audio Tennis!  I'm going to hit the ball by saying words.  Then you hit it back by responding correctly.  Whoever gets 11 points wins the game. Sounds good?",
       "role": "Ben"
     },
     {
@@ -16,13 +16,13 @@
       "role": "Alexa"
     },
     {
-      "content": "Alrighty then - let’s start with my favorite activity, called Last Letter.",
+      "content": "Alrighty then - let’s start with my favorite activity, called Last Letter",
       "role": "Ben"
     }
   ],
   "playerWithAwardsGreeting": [
     {
-      "content": "Welcome back! Alexa, please give our friend a royal greeting!",
+      "content": "Welcome back to Audio Tennis! Alexa, please give our friend a royal greeting!",
       "role": "Ben"
     },
     {
@@ -30,17 +30,17 @@
       "role": "Alexa"
     },
     {
-      "content": "You have %wins% wins and %losses% losses",
+      "content": "You won %wins% game and lose %losses%",
       "role": "Alexa"
     }
   ],
   "playerWithoutAwardsGreeting": [
     {
-      "content": "Welcome back! Alexa, please give our friend a royal greeting!",
+      "content": "Welcome back to Audio Tennis! Alexa, how's our friend doing on the score these days?",
       "role": "Ben"
     },
     {
-      "content": "You have %wins% wins and %losses% losses",
+      "content": "You won %wins% game and lose %losses%",
       "role": "Alexa"
     }
   ],

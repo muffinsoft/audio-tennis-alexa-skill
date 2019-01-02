@@ -77,28 +77,24 @@
       "role": "Ben"
     },
     {
-      "content": "we already said %word%.",
-      "role": "Ben"
+      "content": "you already said %word%.",
+      "role": "Alexa"
     },
     {
-      "content": "we can't say %word% again.",
-      "role": "Ben"
+      "content": "you can't say %word% again.",
+      "role": "Alexa"
     },
     {
       "content": "%word% can't be used again.",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "you already said %word%!",
-      "role": "Ben"
-    },
-    {
-      "content": "I already said %word%!",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "%word% can't be repeated!",
-      "role": "Ben"
+      "role": "Alexa"
     }
   ],
   "playerWonOnceAtGame": [
