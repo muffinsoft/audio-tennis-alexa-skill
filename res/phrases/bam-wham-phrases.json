@@ -15,7 +15,8 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose"
+      "audio": "ballsHitsTheRacketUpClose",
+      "durationInMillis": 500
     },
     {
       "content": "Whoom!",
@@ -24,7 +25,8 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose"
+      "audio": "ballsHitsTheRacketUpClose",
+      "durationInMillis": 500
     },
     {
       "content": "Bomp, Bap!",
@@ -33,7 +35,8 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose"
+      "audio": "ballsHitsTheRacketUpClose",
+      "durationInMillis": 500
     },
     {
       "content": "Whomp, Whap!",
@@ -42,7 +45,8 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose"
+      "audio": "ballsHitsTheRacketUpClose",
+      "durationInMillis": 500
     },
     {
       "content": "Whonk, Whoom, Wham!",
@@ -51,7 +55,8 @@
     {
       "_comment": "<ball hits the racket (from far)>",
       "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose"
+      "audio": "ballsHitsTheRacketUpClose",
+      "durationInMillis": 500
     },
     {
       "content": "Bonk, Boom, Bam",
@@ -60,7 +65,8 @@
     {
       "_comment": "<balls hits the racket (up close)>",
       "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose"
+      "audio": "ballsHitsTheRacketUpClose",
+      "durationInMillis": 500
     }
   ]
 }
