@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.skills.audiotennis.components.NumberTranslator.translateToOrdinalValue;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ENEMY_FAVOR_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.FIREWORK_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE;
@@ -189,13 +190,13 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.iterateWinCounter();
 
         BasePhraseContainer randomVictoryPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomVictoryPhrase();
-        builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomVictoryPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false)));
+        builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomVictoryPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
 
         BasePhraseContainer randomPlayerWinGame = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinGame();
-        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false)));
+        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
 
         BasePhraseContainer randomPlayerWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinScore();
-        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false)));
+        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false, true)));
 
         BasePhraseContainer randomCallToCelebrate = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomCallToCelebrate();
         builder.addResponse(getDialogTranslator().translate(randomCallToCelebrate));
@@ -222,10 +223,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.iterateLoseCounter();
 
         BasePhraseContainer randomEnemyWinGame = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinGame();
-        builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false)));
+        builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
 
         BasePhraseContainer randomDefeatPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomDefeatPhrase();
-        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomDefeatPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false)));
+        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomDefeatPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
     }
 
     private void addPointScores(DialogItem.Builder builder, boolean isPlayerScores) {
@@ -233,10 +234,10 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         BasePhraseContainer newPhraseContainer;
 
         if (isPlayerScores) {
-            newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true);
+            newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true, false);
         }
         else {
-            newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true);
+            newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true, false);
         }
 
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
@@ -265,15 +266,21 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         return new BasePhraseContainer(newContent, inputContainer.getRole());
     }
 
-    private BasePhraseContainer replaceScoresPlaceholders(BasePhraseContainer inputContainer, int enemyScores, int scores, boolean withFavor) {
-        String newContent = replaceScoresPlaceholders(inputContainer.getContent(), enemyScores, scores, withFavor);
+    private BasePhraseContainer replaceScoresPlaceholders(BasePhraseContainer inputContainer, int enemyScores, int scores, boolean withFavor, boolean toOrdinals) {
+        String newContent = replaceScoresPlaceholders(inputContainer.getContent(), enemyScores, scores, withFavor, toOrdinals);
         return new BasePhraseContainer(newContent, inputContainer.getRole());
     }
 
-    private String replaceScoresPlaceholders(String inputString, int enemyScores, int scores, boolean withFavor) {
-
-        String result = inputString.replace("%scores%", String.valueOf(scores));
-        result = result.replace("%enemyScore%", String.valueOf(enemyScores));
+    private String replaceScoresPlaceholders(String inputString, int enemyScores, int scores, boolean withFavor, boolean toOrdinals) {
+        String result;
+        if (toOrdinals) {
+            result = inputString.replace("%scores%", translateToOrdinalValue(scores));
+            result = result.replace("%enemyScore%", translateToOrdinalValue(enemyScores));
+        }
+        else {
+            result = inputString.replace("%scores%", String.valueOf(scores));
+            result = result.replace("%enemyScore%", String.valueOf(enemyScores));
+        }
 
         if (withFavor) {
             if (enemyScores > scores) {
