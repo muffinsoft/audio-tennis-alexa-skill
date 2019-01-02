@@ -1,12 +1,8 @@
 {
   "intro": [
     {
-      "content": "For this round, I'll serve the ball by saying one or more words. To return the shot, you must say a word or words that rhyme with my words.",
+      "content": "For this round, I'll serve the ball by saying one or more words. To return the shot, you must say a word or words that rhyme with my words. You know what? Let me play with my sister Lilly so you’ll see how it is done. ",
       "role": "Ben"
-    },
-    {
-      "content": "You know what? Let me play with my sis Lilly so you’ll see how it is done.",
-      "role": "Alexa"
     },
     {
       "role": "Sound",
