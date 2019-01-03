@@ -115,9 +115,7 @@
                 "value": "last letter",
                 "synonyms": [
                   "a",
-                  "last letter",
-                  "last",
-                  "letter"
+                  "last letter"
                 ]
               }
             },
@@ -127,8 +125,7 @@
                 "synonyms": [
                   "b",
                   "bam wham",
-                  "bam",
-                  "wham"
+                  "bam"
                 ]
               }
             },
@@ -137,9 +134,7 @@
                 "value": "alphabet race",
                 "synonyms": [
                   "c",
-                  "alphabet race",
-                  "alphabet",
-                  "race"
+                  "alphabet race"
                 ]
               }
             },
@@ -148,9 +143,7 @@
                 "value": "rhyme match",
                 "synonyms": [
                   "d",
-                  "rhyme match",
-                  "rhyme",
-                  "match"
+                  "rhyme match"
                 ]
               }
             },
@@ -1724,11 +1717,6 @@
             {
               "name": {
                 "value": "cool"
-              }
-            },
-            {
-              "name": {
-                "value": "word"
               }
             },
             {
@@ -41128,11 +41116,6 @@
             },
             {
               "name": {
-                "value": "wham"
-              }
-            },
-            {
-              "name": {
                 "value": "franchise"
               }
             },
@@ -56839,11 +56822,6 @@
             {
               "name": {
                 "value": "hogg"
-              }
-            },
-            {
-              "name": {
-                "value": "wop"
               }
             },
             {
@@ -131774,11 +131752,6 @@
             {
               "name": {
                 "value": "runnel"
-              }
-            },
-            {
-              "name": {
-                "value": "woosh"
               }
             },
             {
