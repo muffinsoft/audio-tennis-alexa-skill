@@ -13,6 +13,8 @@ import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.singleton;
+
 public class RhymeMatchGameStateManager extends OneSideGameStateManager {
 
     public RhymeMatchGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
@@ -69,7 +71,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
             iterateEnemyScoreCounter(builder);
         }
 
-        WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
+        WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType, singleton(this.activityProgress.getPreviousWord()));
         this.activityProgress.setPreviousWord(nextWord.getWord());
         this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());
 

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.singleton;
+
 abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
     OneSideGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
@@ -25,7 +27,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
         List<String> reactions = new ArrayList<>();
 
         for (int i = 0; i < this.activityProgress.getComplexity(); i++) {
-            WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
+            WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType, singleton(this.activityProgress.getPreviousWord()));
             if (nextWord.isEmpty()) {
                 return handleMistakeAnswer(builder);
             }

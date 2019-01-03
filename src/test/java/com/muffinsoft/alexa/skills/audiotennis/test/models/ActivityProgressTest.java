@@ -112,6 +112,7 @@ class ActivityProgressTest {
         defaultActivity.updateWithDifficultSettings(settings);
         Assertions.assertEquals(6, defaultActivity.getComplexity());
     }
+
     @Test
     void testComplexityFor4GameCounterForCompetition() {
 
@@ -279,6 +280,7 @@ class ActivityProgressTest {
         defaultActivity.updateWithDifficultSettings(settings);
         Assertions.assertEquals(2, defaultActivity.getComplexity());
     }
+
     @Test
     void testComplexityFor4GameCounterForOneSide() {
 

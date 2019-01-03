@@ -8,13 +8,14 @@ import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.DictionaryManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static java.util.Collections.emptySet;
 
 public class ActivityManager {
 
@@ -51,19 +52,24 @@ public class ActivityManager {
     }
 
     public WordContainer getRandomWordForActivity(ActivityType activityType) {
+        return getRandomWordForActivity(activityType, emptySet());
+    }
+
+    public WordContainer getRandomWordForActivity(ActivityType activityType, Set<String> usedWords) {
         if (activityType == ActivityType.BAM_WHAM) {
             ActivitySettings activitySettings = containerByActivity.get(activityType);
             Map<String, String> wordsToReactions = activitySettings.getWordsToReactions();
 
-            Set<String> strings = wordsToReactions.keySet();
+            Set<String> strings = new HashSet<>(wordsToReactions.keySet());
+            strings.removeAll(usedWords);
             return getWordWithRhyme(wordsToReactions, strings);
         }
         else if (activityType == ActivityType.RHYME_MATCH) {
-            return getRandomWordForRhymeMatchActivityFromLetter(Collections.emptySet());
+            return getRandomWordForRhymeMatchActivityFromLetter(usedWords);
         }
         else {
             char character = getRandomCharFromString(alphabet);
-            return getRandomWordForCompetitionActivityFromLetter(character, Collections.emptySet());
+            return getRandomWordForCompetitionActivityFromLetter(character, usedWords);
         }
     }
 

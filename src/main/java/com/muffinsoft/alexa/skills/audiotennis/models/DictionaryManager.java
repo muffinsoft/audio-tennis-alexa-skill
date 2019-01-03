@@ -82,7 +82,7 @@ public class DictionaryManager {
     }
 
     public Map<String, String> getAllWordsWithRhymes() {
-        return rhymeMatchDictionary;
+        return wordToRhymesDictionary;
     }
 
     public Map<String, String> getForRhymeMathActivity() {
