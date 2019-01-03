@@ -15,11 +15,13 @@ public class DictionaryManager {
     protected static final Logger logger = LogManager.getLogger(DictionaryManager.class);
 
     private static final String LETTER_AND_ALPHABET_WORDS_TXT = "settings/vocabularies/lastLetterAndAlphabetWords.txt";
+    private static final String ALL_KNOWN_WORDS_CSV = "settings/vocabularies/allKnownWords.csv";
     private static final String RHYME_MATCH_WORDS_CSV = "settings/vocabularies/rhymeMatchWords.csv";
 
     private final Map<Character, HashSet<String>> enemyCompetitionDictionary = new HashMap<>();
     private final Map<Character, HashSet<String>> totalWordsDictionary = new HashMap<>();
     private final Map<String, String> wordToRhymesDictionary = new HashMap<>();
+    private final Map<String, String> rhymeMatchDictionary = new HashMap<>();
 
     public DictionaryManager() {
 
@@ -42,8 +44,15 @@ public class DictionaryManager {
                 totalWordsDictionary.get(firstLetter).add(word);
             }
 
-            Map<String, String> rhymesFromFile = dictionaryFileLoader.uploadMap(RHYME_MATCH_WORDS_CSV);
-            for (Map.Entry<String, String> entry : rhymesFromFile.entrySet()) {
+            Map<String, String> rhymeMatchWordsFromFile = dictionaryFileLoader.uploadMap(RHYME_MATCH_WORDS_CSV);
+            for (Map.Entry<String, String> entry : rhymeMatchWordsFromFile.entrySet()) {
+                String rhyme = entry.getValue().replace("-", "").trim();
+                String word = entry.getKey().toLowerCase().trim().replace(" ", "");
+                rhymeMatchDictionary.put(word, rhyme);
+            }
+
+            Map<String, String> allKnownWordsFromFile = dictionaryFileLoader.uploadMap(ALL_KNOWN_WORDS_CSV);
+            for (Map.Entry<String, String> entry : allKnownWordsFromFile.entrySet()) {
                 String rhyme = entry.getValue().replace("-", "").trim();
                 String word = entry.getKey().toLowerCase().trim().replace(" ", "");
                 wordToRhymesDictionary.put(word, rhyme);
@@ -72,7 +81,11 @@ public class DictionaryManager {
         return totalWordsDictionary;
     }
 
+    public Map<String, String> getAllWordsWithRhymes() {
+        return rhymeMatchDictionary;
+    }
+
     public Map<String, String> getForRhymeMathActivity() {
-        return wordToRhymesDictionary;
+        return rhymeMatchDictionary;
     }
 }

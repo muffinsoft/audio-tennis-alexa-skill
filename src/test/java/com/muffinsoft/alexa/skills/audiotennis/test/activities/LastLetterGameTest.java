@@ -174,8 +174,8 @@ class LastLetterGameTest extends BaseTest {
 
         Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
         ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
-        Assertions.assertEquals(resultActivityProgress.getPlayerPointCounter(), 1);
-        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 3);
+        Assertions.assertEquals(resultActivityProgress.getPlayerPointCounter(), 0);
+        Assertions.assertEquals(resultActivityProgress.getUsedWords().size(), 2);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
 

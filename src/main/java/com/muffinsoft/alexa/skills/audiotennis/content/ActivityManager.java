@@ -56,12 +56,7 @@ public class ActivityManager {
             Map<String, String> wordsToReactions = activitySettings.getWordsToReactions();
 
             Set<String> strings = wordsToReactions.keySet();
-            if (strings.isEmpty()) {
-                return WordContainer.empty();
-            }
-            String word = getRandomWordFromCollection(strings);
-            String userReaction = wordsToReactions.get(word);
-            return new WordContainer(word, userReaction);
+            return getWordWithRhyme(wordsToReactions, strings);
         }
         else if (activityType == ActivityType.RHYME_MATCH) {
             return getRandomWordForRhymeMatchActivityFromLetter(Collections.emptySet());
@@ -72,20 +67,22 @@ public class ActivityManager {
         }
     }
 
+    private WordContainer getWordWithRhyme(Map<String, String> wordsToReactions, Set<String> strings) {
+        if (strings.isEmpty()) {
+            return WordContainer.empty();
+        }
+        String word = getRandomWordFromCollection(strings);
+        String userReaction = wordsToReactions.get(word);
+        return new WordContainer(word, userReaction);
+    }
+
     private WordContainer getRandomWordForRhymeMatchActivityFromLetter(Set<String> usedWords) {
         Map<String, String> activityWords = dictionaryManager.getForRhymeMathActivity();
-
 
         HashSet<String> words = new HashSet<>(activityWords.keySet());
         words.removeAll(usedWords);
 
-        if (words.isEmpty()) {
-            return WordContainer.empty();
-        }
-
-        String word = getRandomWordFromCollection(words);
-        String rhyme = activityWords.get(word);
-        return new WordContainer(word, rhyme);
+        return getWordWithRhyme(activityWords, words);
     }
 
     private char getRandomCharFromString(String input) {
@@ -148,12 +145,7 @@ public class ActivityManager {
     }
 
     public String findRhymeForWord(String word) {
-        Map<String, String> forRhymeMathActivity = dictionaryManager.getForRhymeMathActivity();
+        Map<String, String> forRhymeMathActivity = dictionaryManager.getAllWordsWithRhymes();
         return forRhymeMathActivity.get(word.toLowerCase());
-    }
-
-    public Set<String> getAllWordsFromLetter(char nextChar) {
-        Map<Character, HashSet<String>> forCompetitionActivity = dictionaryManager.getForCompetitionActivity();
-        return forCompetitionActivity.get(nextChar);
     }
 }
