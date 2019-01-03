@@ -33,8 +33,6 @@ public class LaunchStateManager extends BaseStateManager {
 
     private static final Logger logger = LogManager.getLogger(LaunchStateManager.class);
     private final ActivitiesPhraseManager activitiesPhraseManager;
-    private final RegularPhraseManager regularPhraseManager;
-    private final CardManager cardManager;
     private final ActivitySelectionAppender activitySelectionAppender;
 
     private Integer userReplyBreakpointPosition;
@@ -42,8 +40,6 @@ public class LaunchStateManager extends BaseStateManager {
 
     public LaunchStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
-        this.cardManager = settingsDependencyContainer.getCardManager();
-        this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
         this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
     }
@@ -61,10 +57,10 @@ public class LaunchStateManager extends BaseStateManager {
 
         if (userProgress != null) {
             if (this.userProgress.getAchievements().isEmpty()) {
-                buildGreetingWithAwards(builder);
+                buildGreetingWithoutAwards(builder);
             }
             else {
-                buildGreetingWithoutAwards(builder);
+                buildGreetingWithAwards(builder);
             }
 
             if (this.userProgress.getLosses() > this.userProgress.getWins()) {
@@ -94,13 +90,15 @@ public class LaunchStateManager extends BaseStateManager {
 
     private void appendEnemyWinsResult(DialogItem.Builder builder) {
         BasePhraseContainer randomEnemyLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomEnemyLastScore();
-        String newContent = replaceScoresPlaceholders(randomEnemyLastScore.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomEnemyLastScore.getRole());
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+        replaceScores(builder, randomEnemyLastScore);
     }
 
     private void appendPlayerWindResult(DialogItem.Builder builder) {
         BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
+        replaceScores(builder, randomPlayerLastScore);
+    }
+
+    private void replaceScores(DialogItem.Builder builder, BasePhraseContainer randomPlayerLastScore) {
         String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
