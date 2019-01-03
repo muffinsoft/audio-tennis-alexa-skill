@@ -238,7 +238,12 @@ public class ActivityProgress {
     }
 
     public void setUsedWords(String[] words) {
-        this.usedWords = new HashSet<>(Arrays.asList(words));
+        if (words == null) {
+            this.usedWords = new HashSet<>();
+        }
+        else {
+            this.usedWords = new HashSet<>(Arrays.asList(words));
+        }
     }
 
     public void addUsedWord(String word) {

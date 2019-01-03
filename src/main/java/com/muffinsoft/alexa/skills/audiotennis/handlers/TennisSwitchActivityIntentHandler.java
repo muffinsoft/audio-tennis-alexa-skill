@@ -45,7 +45,7 @@ public class TennisSwitchActivityIntentHandler extends TennisGameIntentHandler {
                     activityProgress = new ObjectMapper().convertValue(rawActivityProgress, ActivityProgress.class);
                     activityProgress.setCurrentActivity(activityType);
                     activityProgress.addUnlockedActivity(activityType);
-                    activityProgress.reset();
+                    activityProgress.setTransition(true);
                 }
             }
 
