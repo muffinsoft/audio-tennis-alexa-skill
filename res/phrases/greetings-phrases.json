@@ -30,7 +30,15 @@
       "role": "Alexa"
     },
     {
-      "content": "You won %wins% game and lose %losses%",
+      "content": "and how's the score these days?",
+      "role": "Ben"
+    },
+    {
+      "content": "looks like its",
+      "role": "Alexa"
+    },
+    {
+      "content": "Hey there, looks like you've won %wins% games and lost %losses% games.",
       "role": "Alexa"
     }
   ],
@@ -40,7 +48,7 @@
       "role": "Ben"
     },
     {
-      "content": "You won %wins% game and lose %losses%",
+      "content": "Hey there, looks like you've won %wins% games and lost %losses% games.",
       "role": "Alexa"
     }
   ],
