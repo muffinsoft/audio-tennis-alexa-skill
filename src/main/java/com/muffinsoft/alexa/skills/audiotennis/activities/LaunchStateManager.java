@@ -63,11 +63,13 @@ public class LaunchStateManager extends BaseStateManager {
                 buildGreetingWithAwards(builder);
             }
 
-            if (this.userProgress.getLosses() > this.userProgress.getWins()) {
-                appendEnemyWinsResult(builder);
-            }
-            else {
-                appendPlayerWindResult(builder);
+            if (this.userProgress.getLastGameHistoryEnemyPoint() != 0 && this.userProgress.getLastGameHistoryPlayerPoint() != 0) {
+                if (this.userProgress.getLosses() > this.userProgress.getWins()) {
+                    appendEnemyWinsResult(builder);
+                }
+                else {
+                    appendPlayerWindResult(builder);
+                }
             }
 
             activitySelectionAppender.append(builder, userProgress, getSessionAttributes());
@@ -130,7 +132,9 @@ public class LaunchStateManager extends BaseStateManager {
         List<PhraseContainer> newDialog = new ArrayList<>();
         for (BasePhraseContainer phraseContainer : dialog) {
             String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
-            newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
+            if (!newContent.isEmpty()) {
+                newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
+            }
         }
         builder.addResponse(getDialogTranslator().translate(newDialog));
     }
@@ -141,12 +145,17 @@ public class LaunchStateManager extends BaseStateManager {
         for (BasePhraseContainer phraseContainer : dialog) {
             String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
             newContent = replaceAwardsPlaceholders(newContent, this.userProgress.getAchievements());
-            newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
+            if (!newContent.isEmpty()) {
+                newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
+            }
         }
         builder.addResponse(getDialogTranslator().translate(newDialog));
     }
 
     private String replaceWinAndLosePlaceholders(String inputString, Integer win, Integer lose) {
+        if (win == 0 && lose == 0) {
+            return "";
+        }
         inputString = inputString.replace("%wins%", String.valueOf(win));
         inputString = inputString.replace("%losses%", String.valueOf(lose));
         return inputString;

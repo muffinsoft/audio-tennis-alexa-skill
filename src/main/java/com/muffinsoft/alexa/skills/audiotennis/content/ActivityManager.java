@@ -94,7 +94,7 @@ public class ActivityManager {
     private char getRandomCharFromString(String input) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         int index = random.nextInt(input.length());
-        return alphabet.charAt(index);
+        return input.charAt(index);
     }
 
     public char getRandomLetterExcept(char lastLetter) {

@@ -18,5 +18,6 @@ public class PhraseConstants extends com.muffinsoft.alexa.sdk.constants.PhraseCo
     public static final String PLAYER_FAVOR_PHRASE = "playerFavorPhrase";
     public static final String ENEMY_FAVOR_PHRASE = "enemyFavorPhrase";
     public static final String READY_TO_PLAY_PHRASE = "readyToPlay";
+    public static final String HELP_REPEAT_PHRASE = "helpRepeatPlay";
     public static final String FIREWORK_PHRASE = "fireworksWhistles";
 }

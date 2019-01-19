@@ -159,6 +159,12 @@
       "role": "Alexa"
     }
   ],
+  "helpRepeatPlay": [
+    {
+      "content": "Would you like me to repeat that?",
+      "role": "Alexa"
+    }
+  ],
   "fireworksWhistles": [
     {
       "content": "What a great idea, Ben. Here we go.",

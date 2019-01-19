@@ -26,6 +26,7 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ACTIVITY_LAST_LETTER_HELP_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ACTIVITY_RHYME_MATCH_HELP_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.GENERAL_HELP_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.HELP_REPEAT_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.READY_TO_PLAY_PHRASE;
 
 public class HelpStateManager extends BaseStateManager {
@@ -74,7 +75,8 @@ public class HelpStateManager extends BaseStateManager {
             builder.addResponse(getDialogTranslator().translate(activityHelp));
         }
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(READY_TO_PLAY_PHRASE)));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(HELP_REPEAT_PHRASE)));
+//        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(READY_TO_PLAY_PHRASE)));
 
         getSessionAttributes().put(SessionConstants.INTENT, IntentType.GAME);
         getSessionAttributes().put(SessionConstants.STATE_TYPE, StateType.RETURN_TO_GAME);
