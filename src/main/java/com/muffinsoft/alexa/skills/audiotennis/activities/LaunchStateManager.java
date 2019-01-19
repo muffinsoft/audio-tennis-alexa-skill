@@ -27,6 +27,7 @@ import java.util.Set;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SELECT_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public class LaunchStateManager extends BaseStateManager {
@@ -74,7 +75,7 @@ public class LaunchStateManager extends BaseStateManager {
 
             activitySelectionAppender.append(builder, userProgress, getSessionAttributes());
 
-            getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
+            getSessionAttributes().put(SELECT_ACTIVITY_STEP, true);
             getSessionAttributes().put(INTENT, IntentType.GAME);
 
             logger.debug("Existing user was started new Game Session. Start Royal Greeting");
@@ -153,7 +154,7 @@ public class LaunchStateManager extends BaseStateManager {
     }
 
     private String replaceWinAndLosePlaceholders(String inputString, Integer win, Integer lose) {
-        if (win == 0 && lose == 0) {
+        if ((win == 0 && lose == 0) && (inputString.contains("%wins%") || inputString.contains("%losses%"))) {
             return "";
         }
         inputString = inputString.replace("%wins%", String.valueOf(win));

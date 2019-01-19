@@ -48,6 +48,7 @@ import static com.muffinsoft.alexa.skills.audiotennis.components.ActivityPuller.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_ONE_POSSIBLE_ACTIVITY;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SELECT_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_UNLOCK_ACTIVITY_STEP;
 
@@ -115,6 +116,9 @@ public class TennisIntentFabric implements IntentFactory {
 
         IntentType interceptedIntentType = GAME;
 
+        if (sessionAttributes.containsKey(SELECT_ACTIVITY_STEP)) {
+            interceptedIntentType = interceptSelectActivity(inputSlots, sessionAttributes, activityProgress);
+        }
         if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
             interceptedIntentType = interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
         }
@@ -224,6 +228,15 @@ public class TennisIntentFabric implements IntentFactory {
         sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
         sessionAttributes.remove(STATE_TYPE);
         sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
+    }
+
+    private IntentType interceptSelectActivity(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+        ActivityType type = getActivityFromReply(inputSlots);
+        if (type == null) {
+            return SELECT_MISSION;
+        }
+        sessionAttributes.remove(SELECT_ACTIVITY_STEP);
+        return GAME;
     }
 
     private IntentType interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
