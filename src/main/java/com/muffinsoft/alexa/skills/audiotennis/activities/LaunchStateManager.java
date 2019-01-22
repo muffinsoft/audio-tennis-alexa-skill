@@ -64,7 +64,7 @@ public class LaunchStateManager extends BaseStateManager {
                 buildGreetingWithAwards(builder);
             }
 
-            if (this.userProgress.getLastGameHistoryEnemyPoint() != 0 && this.userProgress.getLastGameHistoryPlayerPoint() != 0) {
+            if (this.userProgress.getLastGameHistoryEnemyPoint() != 0 || this.userProgress.getLastGameHistoryPlayerPoint() != 0) {
                 if (this.userProgress.getLosses() > this.userProgress.getWins()) {
                     appendEnemyWinsResult(builder);
                 }
