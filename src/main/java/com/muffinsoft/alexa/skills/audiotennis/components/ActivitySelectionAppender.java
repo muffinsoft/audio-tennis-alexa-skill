@@ -33,15 +33,15 @@ public class ActivitySelectionAppender {
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
     }
 
-    public void append(DialogItem.Builder builder, UserProgress userProgress, Map<String, Object> sessionAttributes) {
+    public boolean appendWithSelection(DialogItem.Builder builder, UserProgress userProgress, Map<String, Object> sessionAttributes) {
 
         List<PhraseContainer> dialog;
 
         switch (userProgress.getUnlockedActivities().size()) {
             case 0:
             case 1:
-                dialog = getFirstActivityIntro(sessionAttributes);
-                break;
+                builder.addResponse(dialogTranslator.translate(getFirstActivityIntro(sessionAttributes)));
+                return false;
             case 2:
                 dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_TWO_PHRASE);
                 break;
@@ -54,6 +54,7 @@ public class ActivitySelectionAppender {
         }
 
         builder.addResponse(dialogTranslator.translate(dialog));
+        return true;
     }
 
     private List<PhraseContainer> getFirstActivityIntro(Map<String, Object> sessionAttributes) {

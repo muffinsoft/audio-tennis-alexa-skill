@@ -11,8 +11,6 @@ import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppen
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
@@ -28,7 +26,6 @@ import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SELECT_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
 
 public class LaunchStateManager extends BaseStateManager {
 
@@ -73,9 +70,11 @@ public class LaunchStateManager extends BaseStateManager {
                 }
             }
 
-            activitySelectionAppender.append(builder, userProgress, getSessionAttributes());
+            boolean withSelection = activitySelectionAppender.appendWithSelection(builder, userProgress, getSessionAttributes());
 
-            getSessionAttributes().put(SELECT_ACTIVITY_STEP, true);
+            if (withSelection) {
+                getSessionAttributes().put(SELECT_ACTIVITY_STEP, true);
+            }
             getSessionAttributes().put(INTENT, IntentType.GAME);
 
             logger.debug("Existing user was started new Game Session. Start Royal Greeting");

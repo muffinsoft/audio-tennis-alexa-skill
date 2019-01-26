@@ -36,7 +36,7 @@ public class SelectActivityStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder();
 
-        activitySelectionAppender.append(builder, userProgress, getSessionAttributes());
+        activitySelectionAppender.appendWithSelection(builder, userProgress, getSessionAttributes());
 
         return builder.build();
     }

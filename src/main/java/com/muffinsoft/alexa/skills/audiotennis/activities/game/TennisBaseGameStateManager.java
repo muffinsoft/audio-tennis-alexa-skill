@@ -167,7 +167,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected DialogItem.Builder handleReadyToPlayState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(SlotName.CONFIRMATION), UserReplies.NO)) {
-            activitySelectionAppender.append(builder, userProgress, getSessionAttributes());
+            activitySelectionAppender.appendWithSelection(builder, userProgress, getSessionAttributes());
             getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
             getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
         }
