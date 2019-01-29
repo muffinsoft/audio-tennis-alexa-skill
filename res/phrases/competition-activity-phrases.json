@@ -214,7 +214,7 @@
   "playerTurnAfterEnemyMistake": [
     {
       "content": "Your word should starts from %letter%.",
-      "role": "Ben"
+      "role": "Alexa"
     }
   ]
 }
