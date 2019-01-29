@@ -181,7 +181,7 @@
   ],
   "enemyLoseWrongWordPhrase": [
     {
-      "content": "SORRY, Ben.  %word% doesn’t start with %letter%!",
+      "content": "Sorry, Ben. %word% doesn’t start with %letter%!",
       "role": "Alexa"
     }
   ],
@@ -208,7 +208,7 @@
     },
     {
       "content": "%word% can't be repeated!",
-      "role": "c"
+      "role": "Alexa"
     }
   ],
   "playerTurnAfterEnemyMistake": [

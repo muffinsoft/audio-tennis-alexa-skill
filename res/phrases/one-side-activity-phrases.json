@@ -68,20 +68,20 @@
   "playerLoseWrongWordPhrase": [
     {
       "content": "Sorry, %word% doesn't rhyme with %rhyme%",
-      "role": "Ben"
+      "role": "Alexa"
     }
   ],
   "playerLoseRepeatWordPhrase": [
     {
       "content": "%word% was already used.",
-      "role": "Ben"
-    },
-    {
-      "content": "you already said %word%.",
       "role": "Alexa"
     },
     {
-      "content": "you can't say %word% again.",
+      "content": "You already said %word%.",
+      "role": "Alexa"
+    },
+    {
+      "content": "You can't say %word% again.",
       "role": "Alexa"
     },
     {
