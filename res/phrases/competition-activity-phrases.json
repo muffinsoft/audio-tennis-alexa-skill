@@ -94,7 +94,7 @@
   "playerLoseRepeatWordPhrase": [
     {
       "content": "%word% was already used.",
-      "role": "Ben"
+      "role": "Alexa"
     },
     {
       "content": "you already said %word%.",

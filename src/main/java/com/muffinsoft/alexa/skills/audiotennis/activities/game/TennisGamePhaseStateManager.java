@@ -14,14 +14,16 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.skills.audiotennis.components.NumberTranslator.translateToOrdinalValue;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ENEMY_FAVOR_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.FIREWORK_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE_B;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE_C;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE_D;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.PLAYER_FAVOR_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_RESTART_PHRASE;
@@ -162,14 +164,23 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
             getSessionAttributes().put(SWITCH_UNLOCK_ACTIVITY_STEP, true);
 
-            List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE);
-            List<PhraseContainer> replacesDialog = new ArrayList<>();
+            List<PhraseContainer> dialog;
 
-            for (PhraseContainer phrase : dialog) {
-                replacesDialog.add(replaceActivityPlaceholders(phrase, aliasManager.getValueByKey(nextActivity.name())));
+            switch (nextActivity) {
+                case BAM_WHAM:
+                    dialog = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE_B);
+                    break;
+                case ALPHABET_RACE:
+                    dialog = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE_C);
+                    break;
+                case RHYME_MATCH:
+                    dialog = regularPhraseManager.getValueByKey(NEW_ACTIVITY_UNLOCKED_PHRASE_D);
+                    break;
+                default:
+                    dialog = Collections.emptyList();
             }
 
-            builder.addResponse(getDialogTranslator().translate(replacesDialog));
+            builder.addResponse(getDialogTranslator().translate(dialog));
             this.activityProgress.setCurrentActivity(this.currentActivityType);
             this.activityProgress.setPossibleActivity(nextActivity);
             this.activityProgress.addUnlockedActivity(this.currentActivityType);

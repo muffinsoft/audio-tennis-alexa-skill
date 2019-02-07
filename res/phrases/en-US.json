@@ -80,25 +80,25 @@
   "activityLastLetterHelpPhrase": [
     {
       "content": "In Last Letter, pay attention to the last letter of the word because to hit back, your word has to start with that letter. So if I say dog, you say goat or grass.",
-      "role": "Alexa"
+      "role": "Ben"
     }
   ],
   "activityBamWhamHelpPhrase": [
     {
       "content": "In BAM WHAM, I'll say words that start with 'B' and you have to respond with the correct rhyming word that starts with 'W'. So if i say 'bomp', you say 'whomp'",
-      "role": "Alexa"
+      "role": "Ben"
     }
   ],
   "activityAlphabetRaceHelpPhrase": [
     {
       "content": "In ALPHABET RACE, pay attention to the first letter of the word and then respond with a word that starts with the next letter in the alphabet. So if I say Lamp, you say Monkey because M comes after L.",
-      "role": "Alexa"
+      "role": "Ben"
     }
   ],
   "activityRhymeMatchHelpPhrase": [
     {
       "content": "In RHYME MATCH we have to respond with a word that rhymes with the last word. So if I say hug, you say bug.",
-      "role": "Alexa"
+      "role": "Ben"
     }
   ],
   "trySomethingElsePhrase": [
@@ -106,9 +106,22 @@
       "content": "Would you like to try something else?"
     }
   ],
-  "newActivityUnlockedPhrase": [
+  "newActivityUnlockedPhraseB": [
     {
-      "content": "Congrats! You are now ready for a new activity called %activity%. Do you want to play it now?"
+      "content": "Congrats! You are now ready for a new activity called Bam Wham. Do you want to play it now?",
+      "role": "Ben"
+    }
+  ],
+  "newActivityUnlockedPhraseC": [
+    {
+      "content": "Way to go! You can now play a new activity called Alphabet Race. Ready to play now?",
+      "role": "Ben"
+    }
+  ],
+  "newActivityUnlockedPhraseD": [
+    {
+      "content": "Good job! You've unlocked a new activity called Rhyme Match. Will you try it now?",
+      "role": "Ben"
     }
   ],
   "selectActivityBetweenTwoPhrase": [
