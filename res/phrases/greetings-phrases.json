@@ -54,46 +54,82 @@
   ],
   "returnEnemyLastScore": [
     {
-      "content": "I really creamed you %enemyScores% to %scores% last time!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore0_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I won %enemyScores% to %scores% last time. You need some practice!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore0_1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I outplayed you big time last game! The score was %enemyScores% to %scores%.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore0_2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I beat you %enemyScores% to %scores% last game. Am I good or what?",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore1_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Guess who won %enemyScores% to %scores% last time? Me!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore1_2.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore2_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore3_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore3_2.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore4_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore4_2.mp3",
+      "role": "Audio"
     }
   ],
   "returnPlayerLastScore": [
     {
-      "content": "You really creamed me %scores% to %enemyScores% last time!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore0_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Man, you destroyed me %scores% to %enemyScores% in our last game!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore0_2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You got me good %scores% to %enemyScores% last game!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore1_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You showed me who's boss last game. You won %scores% to %enemyScores%",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore1_2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You won %scores% to %enemyScores% last time. I didn't stand a chance!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore2_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore2_2.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore3_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore4_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore4_2.mp3",
+      "role": "Audio"
     }
   ]
 }

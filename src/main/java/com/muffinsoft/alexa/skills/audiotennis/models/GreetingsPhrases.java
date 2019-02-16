@@ -3,6 +3,7 @@ package com.muffinsoft.alexa.skills.audiotennis.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -59,8 +60,9 @@ public class GreetingsPhrases {
         if (returnEnemyLastScore.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(returnEnemyLastScore.size());
-        return returnEnemyLastScore.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(returnEnemyLastScore);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
@@ -68,13 +70,31 @@ public class GreetingsPhrases {
         if (returnPlayerLastScore.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(returnPlayerLastScore.size());
-        return returnPlayerLastScore.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(returnPlayerLastScore);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     private int getRandomValue(int maxValue) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         return random.nextInt(maxValue);
+    }
+
+    @JsonIgnore
+    private List<BasePhraseContainer> removeAllPartialElements(List<BasePhraseContainer> initialList) {
+        List<BasePhraseContainer> resultList = new ArrayList<>();
+        for (BasePhraseContainer container : initialList) {
+            if (container.getRole().equals("Audio")) {
+                String link = container.getAudio();
+                if (link.charAt(link.length() - 3) != '_') {
+                    resultList.add(container);
+                }
+            }
+            else {
+                resultList.add(container);
+            }
+        }
+        return resultList;
     }
 }

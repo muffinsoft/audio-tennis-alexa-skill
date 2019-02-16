@@ -1,68 +1,68 @@
 {
   "opponentFirstPhrase": [
     {
-      "content": "I'll go ahead and start.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentFirstPhrase0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'll serve this time.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentFirstPhrase1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "It's my turn to serve.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentFirstPhrase2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'm serving. Here I go!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentFirstPhrase3.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Get ready for my serve!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentFirstPhrase4.mp3",
+      "role": "Audio"
     }
   ],
   "opponentAfterWordPhrase": [
     {
-      "content": "Your turn!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentAfterWordPhrase0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Hit it back!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentAfterWordPhrase1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You're next!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentAfterWordPhrase2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Give me your best shot!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentAfterWordPhrase3.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Go!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentAfterWordPhrase4.mp3",
+      "role": "Audio"
     }
   ],
   "opponentReactionAfterXWordsPhrase": [
     {
-      "content": "Good one. How about %word%?",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase0_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'm going with %word%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase1_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Hitting back with %word%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase2_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "My next response is %word%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase3_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'll hit back with %word%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase4_0.mp3",
+      "role": "Audio"
     }
   ],
   "playerLoseWrongWordPhrase": [
@@ -99,24 +99,24 @@
   ],
   "playerWonOnceAtGame": [
     {
-      "content": "You're too good.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesPlayerWonOnceAtGame0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You're not bad.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesPlayerWonOnceAtGame1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You got me this time!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesPlayerWonOnceAtGame2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'll do better next time!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesPlayerWonOnceAtGame3.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Great job!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/oneSideActivityPhrasesPlayerWonOnceAtGame4.mp3",
+      "role": "Audio"
     }
   ]
 }

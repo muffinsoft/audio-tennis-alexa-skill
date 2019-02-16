@@ -241,8 +241,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             userProgress.setNickNameLevel(activityProgress.getCurrentNickNameLevel());
             String nextNickName = progressManager.findNextNickName(this.activityProgress.getCurrentNickNameLevel());
             BasePhraseContainer randomPromotions = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPromotions();
-            if (randomPlayerWinScore.getRole().equals("Audio")) {
-                builder.addResponse(getDialogTranslator().translate(randomPlayerWinScore));
+            if (randomPromotions.getRole().equals("Audio")) {
+                builder.addResponse(getDialogTranslator().translate(randomPromotions));
                 builder.addResponse(getAudioForVariable(nextNickName));
             }
             else {
