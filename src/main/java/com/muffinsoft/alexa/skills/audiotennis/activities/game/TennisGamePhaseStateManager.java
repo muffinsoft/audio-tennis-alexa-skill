@@ -2,6 +2,7 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.enums.SpeechType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
@@ -201,13 +202,28 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.iterateWinCounter();
 
         BasePhraseContainer randomVictoryPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomVictoryPhrase();
-        builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomVictoryPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        if (randomVictoryPhrase.getRole().equals("Audio")) {
+            builder.addResponse(getDialogTranslator().translate(randomVictoryPhrase));
+        }
+        else {
+            builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomVictoryPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        }
 
         BasePhraseContainer randomPlayerWinGame = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinGame();
-        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        if (randomPlayerWinGame.getRole().equals("Audio")) {
+            builder.addResponse(getDialogTranslator().translate(randomPlayerWinGame));
+        }
+        else {
+            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        }
 
         BasePhraseContainer randomPlayerWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinScore();
-        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false, true)));
+        if (randomPlayerWinScore.getRole().equals("Audio")) {
+            builder.addResponse(getDialogTranslator().translate(randomPlayerWinScore));
+        }
+        else {
+            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false, true)));
+        }
 
         BasePhraseContainer randomCallToCelebrate = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomCallToCelebrate();
         builder.addResponse(getDialogTranslator().translate(randomCallToCelebrate));
@@ -225,7 +241,13 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             userProgress.setNickNameLevel(activityProgress.getCurrentNickNameLevel());
             String nextNickName = progressManager.findNextNickName(this.activityProgress.getCurrentNickNameLevel());
             BasePhraseContainer randomPromotions = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPromotions();
-            builder.addResponse(getDialogTranslator().translate(replaceNickName(randomPromotions, nextNickName)));
+            if (randomPlayerWinScore.getRole().equals("Audio")) {
+                builder.addResponse(getDialogTranslator().translate(randomPlayerWinScore));
+                builder.addResponse(getAudioForVariable(nextNickName));
+            }
+            else {
+                builder.addResponse(getDialogTranslator().translate(replaceNickName(randomPromotions, nextNickName)));
+            }
         }
     }
 
@@ -234,24 +256,39 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.iterateLoseCounter();
 
         BasePhraseContainer randomEnemyWinGame = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinGame();
-        builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        if (randomEnemyWinGame.getRole().equals("Audio")) {
+            builder.addResponse(getDialogTranslator().translate(randomEnemyWinGame));
+        }
+        else {
+            builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        }
 
         BasePhraseContainer randomDefeatPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomDefeatPhrase();
-        builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomDefeatPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        if (randomDefeatPhrase.getRole().equals("Audio")) {
+            builder.addResponse(getDialogTranslator().translate(randomDefeatPhrase));
+        }
+        else {
+            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomDefeatPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        }
     }
 
     private void addPointScores(DialogItem.Builder builder, boolean isPlayerScores) {
         BasePhraseContainer randomTotalScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomTotalScore();
-        BasePhraseContainer newPhraseContainer;
 
-        if (isPlayerScores) {
-            newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true, false);
+        if (randomTotalScore.getRole().equals("Audio")) {
+            builder.addResponse(getDialogTranslator().translate(randomTotalScore));
         }
         else {
-            newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true, false);
-        }
+            BasePhraseContainer newPhraseContainer;
 
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+            if (isPlayerScores) {
+                newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true, false);
+            }
+            else {
+                newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true, false);
+            }
+            builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+        }
     }
 
     void iteratePlayerScoreCounter(DialogItem.Builder builder) {
@@ -270,6 +307,18 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.setEnemyPointWinInRow(this.activityProgress.getEnemyPointWinInRow());
         addPointScores(builder, false);
         savePersistentAttributes();
+    }
+
+    Speech getAudioForWord(String word) {
+        String path = "https://s3.amazonaws.com/audio-tennis/words/" + word + ".mp3";
+        logger.info("Try to get sound by url " + path);
+        return new Speech(SpeechType.AUDIO, path, 0);
+    }
+
+    Speech getAudioForVariable(String word) {
+        String path = "https://s3.amazonaws.com/audio-tennis/variables/" + word + ".mp3";
+        logger.info("Try to get sound by url " + path);
+        return new Speech(SpeechType.AUDIO, path, 0);
     }
 
     private BasePhraseContainer replaceNickName(BasePhraseContainer inputContainer, String rookie) {
