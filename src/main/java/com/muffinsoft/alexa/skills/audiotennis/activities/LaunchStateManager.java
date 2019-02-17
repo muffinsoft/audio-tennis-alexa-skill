@@ -204,9 +204,9 @@ public class LaunchStateManager extends BaseStateManager {
     }
 
     private String replaceWinAndLosePlaceholders(String inputString, Integer win, Integer lose) {
-//        if ((win == 0 && lose == 0) && (inputString.contains("%wins%") || inputString.contains("%losses%"))) {
-//            return "";
-//        }
+        if ((win == 0 && lose == 0) && (inputString.contains("%wins%") || inputString.contains("%losses%"))) {
+            return "";
+        }
         inputString = inputString.replace("%wins%", String.valueOf(win));
         inputString = inputString.replace("%losses%", String.valueOf(lose));
         return inputString;
