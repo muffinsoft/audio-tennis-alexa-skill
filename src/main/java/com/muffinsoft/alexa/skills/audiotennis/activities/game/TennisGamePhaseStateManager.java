@@ -243,7 +243,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             BasePhraseContainer randomPromotions = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPromotions();
             if (randomPromotions.getRole().equals("Audio")) {
                 builder.addResponse(getDialogTranslator().translate(randomPromotions));
-                builder.addResponse(getAudioForVariable(nextNickName));
+                builder.addResponse(getDialogTranslator().translate(nextNickName));
             }
             else {
                 builder.addResponse(getDialogTranslator().translate(replaceNickName(randomPromotions, nextNickName)));
@@ -261,6 +261,22 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         }
         else {
             builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+        }
+
+        BasePhraseContainer randomEnemyWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinScore();
+        if (randomEnemyWinScore.getRole().equals("Audio")) {
+            builder.addResponse(getDialogTranslator().translate(randomEnemyWinScore));
+            builder.addResponse(getDialogTranslator().translate(variablesManager.getValueByKey(String.valueOf(this.activityProgress.getEnemyGameCounter()))));
+            String link = randomEnemyWinScore.getAudio();
+            String key = link.substring(0, link.indexOf('_'));
+            List<BasePhraseContainer> allPhrases = generalActivityPhraseManager.getGeneralActivityPhrases().getAllEnemyWinScoreBySameKey(key);
+            allPhrases.remove(randomEnemyWinScore);
+            if (!allPhrases.isEmpty()) {
+                builder.addResponse(getDialogTranslator().translate(allPhrases.get(0)));
+            }
+        }
+        else {
+            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false, true)));
         }
 
         BasePhraseContainer randomDefeatPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomDefeatPhrase();
@@ -307,18 +323,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         this.userProgress.setEnemyPointWinInRow(this.activityProgress.getEnemyPointWinInRow());
         addPointScores(builder, false);
         savePersistentAttributes();
-    }
-
-    Speech getAudioForWord(String word) {
-        String path = "https://s3.amazonaws.com/audio-tennis/words/" + word + ".mp3";
-        logger.info("Try to get sound by url " + path);
-        return new Speech(SpeechType.AUDIO, path, 0);
-    }
-
-    Speech getAudioForVariable(String word) {
-        String path = "https://s3.amazonaws.com/audio-tennis/variables/" + word + ".mp3";
-        logger.info("Try to get sound by url " + path);
-        return new Speech(SpeechType.AUDIO, path, 0);
     }
 
     private BasePhraseContainer replaceNickName(BasePhraseContainer inputContainer, String rookie) {

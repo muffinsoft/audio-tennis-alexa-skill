@@ -6,9 +6,9 @@ import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class GreetingsPhrases {
+public class GreetingsPhrases extends BasePhrases {
+
     private List<BasePhraseContainer> firstTimeGreeting = Collections.emptyList();
     private List<BasePhraseContainer> playerWithAwardsGreeting = Collections.emptyList();
     private List<BasePhraseContainer> playerWithoutAwardsGreeting = Collections.emptyList();
@@ -76,25 +76,24 @@ public class GreetingsPhrases {
     }
 
     @JsonIgnore
-    private int getRandomValue(int maxValue) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        return random.nextInt(maxValue);
+    public List<BasePhraseContainer> getAllPlayerLastScoreBySameKey(String key) {
+        List<BasePhraseContainer> resultsList = new ArrayList<>();
+        for (BasePhraseContainer container : returnPlayerLastScore) {
+            if (container.getAudio().startsWith(key)) {
+                resultsList.add(container);
+            }
+        }
+        return resultsList;
     }
 
     @JsonIgnore
-    private List<BasePhraseContainer> removeAllPartialElements(List<BasePhraseContainer> initialList) {
-        List<BasePhraseContainer> resultList = new ArrayList<>();
-        for (BasePhraseContainer container : initialList) {
-            if (container.getRole().equals("Audio")) {
-                String link = container.getAudio();
-                if (link.charAt(link.length() - 3) != '_') {
-                    resultList.add(container);
-                }
-            }
-            else {
-                resultList.add(container);
+    public List<BasePhraseContainer> getAllEnemyLastScoreBySameKey(String key) {
+        List<BasePhraseContainer> resultsList = new ArrayList<>();
+        for (BasePhraseContainer container : returnEnemyLastScore) {
+            if (container.getAudio().startsWith(key)) {
+                resultsList.add(container);
             }
         }
-        return resultList;
+        return resultsList;
     }
 }

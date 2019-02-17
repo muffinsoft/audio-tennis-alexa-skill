@@ -5,9 +5,8 @@ import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class GeneralActivityPhrases {
+public class GeneralActivityPhrases extends BasePhrases {
 
     private List<BasePhraseContainer> enemyWonOnce;
     private List<BasePhraseContainer> playerLoseTwice;
@@ -235,25 +234,14 @@ public class GeneralActivityPhrases {
     }
 
     @JsonIgnore
-    private int getRandomValue(int maxValue) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        return random.nextInt(maxValue);
-    }
-
-    @JsonIgnore
-    private List<BasePhraseContainer> removeAllPartialElements(List<BasePhraseContainer> initialList) {
-        List<BasePhraseContainer> resultList = new ArrayList<>();
-        for (BasePhraseContainer container : initialList) {
-            if (container.getRole().equals("Audio")) {
-                String link = container.getAudio();
-                if (link.charAt(link.length() - 3) != '_') {
-                    resultList.add(container);
-                }
-            }
-            else {
-                resultList.add(container);
+    public List<BasePhraseContainer> getAllEnemyWinScoreBySameKey(String key) {
+        List<BasePhraseContainer> resultsList = new ArrayList<>();
+        for (BasePhraseContainer container : enemyWinScore) {
+            if (container.getAudio().startsWith(key)) {
+                resultsList.add(container);
             }
         }
-        return resultList;
+        return resultsList;
     }
+
 }

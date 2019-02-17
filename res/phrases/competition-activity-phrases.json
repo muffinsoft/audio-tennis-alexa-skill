@@ -1,27 +1,27 @@
 {
   "opponentFirstPhrase": [
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase0.mp3",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase0.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase1.mp3",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase1.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase2.mp3",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase2.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase3.mp3",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase3.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase4.mp3",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase4.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase5.mp3",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase5.mp3",
       "role": "Audio"
     }
   ],

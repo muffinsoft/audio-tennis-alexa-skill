@@ -70,6 +70,10 @@
       "role": "Audio"
     },
     {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore1_1.mp3",
+      "role": "Audio"
+    },
+    {
       "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore1_2.mp3",
       "role": "Audio"
     },
@@ -78,7 +82,15 @@
       "role": "Audio"
     },
     {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore2_1.mp3",
+      "role": "Audio"
+    },
+    {
       "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore3_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore3_1.mp3",
       "role": "Audio"
     },
     {
@@ -87,6 +99,10 @@
     },
     {
       "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore4_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnEnemyLastScore4_1.mp3",
       "role": "Audio"
     },
     {
@@ -100,11 +116,19 @@
       "role": "Audio"
     },
     {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore0_1.mp3",
+      "role": "Audio"
+    },
+    {
       "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore0_2.mp3",
       "role": "Audio"
     },
     {
       "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore1_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore1_1.mp3",
       "role": "Audio"
     },
     {
@@ -116,6 +140,10 @@
       "role": "Audio"
     },
     {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore2_1.mp3",
+      "role": "Audio"
+    },
+    {
       "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore2_2.mp3",
       "role": "Audio"
     },
@@ -124,7 +152,15 @@
       "role": "Audio"
     },
     {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore3_1.mp3",
+      "role": "Audio"
+    },
+    {
       "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore4_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesReturnPlayerLastScore4_1.mp3",
       "role": "Audio"
     },
     {

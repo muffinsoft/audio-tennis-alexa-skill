@@ -3,11 +3,13 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseGameStateManager;
+import com.muffinsoft.alexa.sdk.enums.SpeechType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.sdk.model.SlotName;
+import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppender;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
@@ -19,6 +21,7 @@ import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.GeneralActivityPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ProgressManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.VariablesManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityPhrases;
@@ -53,6 +56,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected final RegularPhraseManager regularPhraseManager;
     final ActivitiesPhraseManager activitiesPhraseManager;
     final AliasManager aliasManager;
+    final VariablesManager variablesManager;
     final ProgressManager progressManager;
     final ActivityManager activityManager;
     final GeneralActivityPhraseManager generalActivityPhraseManager;
@@ -74,6 +78,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         this.activityManager = settingsDependencyContainer.getActivityManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
         this.generalActivityPhraseManager = phraseDependencyContainer.getGeneralActivityPhraseManager();
+        this.variablesManager = phraseDependencyContainer.getVariablesManager();
         this.enemyRole = progressManager.getEnemyRole();
         this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
     }
@@ -194,8 +199,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
-
-        builder.addResponse(getDialogTranslator().translate(word, enemyRole));
+        builder.addResponse(getAudioForWord(word));
 
         return builder;
     }
@@ -286,7 +290,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+        builder.addResponse(getAudioForWord(generateRandomWord()));
+    }
 
-        builder.addResponse(getDialogTranslator().translate(generateRandomWord(), enemyRole));
+    Speech getAudioForWord(String word) {
+        String path = "https://s3.amazonaws.com/audio-tennis/words/" + word + ".mp3";
+        logger.info("Try to get sound by url " + path);
+        return new Speech(SpeechType.AUDIO, path, 0);
     }
 }

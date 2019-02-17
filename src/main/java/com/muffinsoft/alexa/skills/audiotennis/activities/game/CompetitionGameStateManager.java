@@ -111,18 +111,9 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
 
             if (!randomOpponentAfterWordPhrase.isEmpty()) {
-                BasePhraseContainer randomOpponentPhrase = replaceWordPlaceholders(randomOpponentAfterWordPhrase, nextWord, null, null);
-                if (randomOpponentPhrase.getRole().equals("Audio")) {
-                    builder.addResponse(getDialogTranslator().translate(randomOpponentPhrase));
-                    builder.addResponse(getAudioForWord(nextWord));
-                }
-                else {
-                    builder.addResponse(getDialogTranslator().translate(randomOpponentPhrase));
-                }
+                builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
             }
-            else {
-                builder.addResponse(getAudioForWord(nextWord));
-            }
+            builder.addResponse(getAudioForWord(nextWord));
             this.activityProgress.addUsedWord(nextWord);
         }
 
@@ -143,13 +134,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
             playerLosePhrase = phrasesForActivity.getRandomPlayerLoseWrongWordPhrase();
         }
 
-        if (playerLosePhrase.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(playerLosePhrase));
-            builder.addResponse(getAudioForWord(getActionUserReply()));
-        }
-        else {
-            builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), characterWithMistake, null)));
-        }
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), characterWithMistake, null)));
 
         iterateEnemyScoreCounter(builder);
 
@@ -174,7 +159,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
                 appendNextRoundPhrase(builder);
                 BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
                 builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
-                builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
+                builder.addResponse(getAudioForWord(nextWord));
                 break;
         }
 
@@ -195,14 +180,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         builder.addResponse(getDialogTranslator().getSound(nextWord));
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseWrongWordPhrase();
-
-        if (phraseContainer.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(phraseContainer));
-            builder.addResponse(getAudioForWord(nextWord));
-        }
-        else {
-            builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(phraseContainer, nextWord, getCharWithMistakeForEnemy(), null)));
-        }
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(phraseContainer, nextWord, getCharWithMistakeForEnemy(), null)));
 
         iteratePlayerScoreCounter(builder);
 
@@ -217,13 +195,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseRepeatWordPhrase();
 
-        if (phraseContainer.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(phraseContainer));
-            builder.addResponse(getAudioForWord(alreadyUserWord));
-        }
-        else {
-            builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(phraseContainer, alreadyUserWord, null, null)));
-        }
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(phraseContainer, alreadyUserWord, null, null)));
 
         iteratePlayerScoreCounter(builder);
 
@@ -255,7 +227,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
         String newWord = generateRandomWord();
 
-        builder.addResponse(getDialogTranslator().translate(newWord, enemyRole));
+        builder.addResponse(getAudioForWord(newWord));
 
         return newWord;
     }

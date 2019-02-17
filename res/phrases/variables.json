@@ -1,48 +1,50 @@
 {
-  "numbers": {
-    "1": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers1.mp3",
-      "role": "Audio"
-    },
-    "2": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers2.mp3",
-      "role": "Audio"
-    },
-    "3": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers3.mp3",
-      "role": "Audio"
-    },
-    "4": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers4.mp3",
-      "role": "Audio"
-    },
-    "5": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers5.mp3",
-      "role": "Audio"
-    },
-    "6": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers6.mp3",
-      "role": "Audio"
-    },
-    "7": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers7.mp3",
-      "role": "Audio"
-    },
-    "8": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers8.mp3",
-      "role": "Audio"
-    },
-    "9": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers9.mp3",
-      "role": "Audio"
-    },
-    "10": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers10.mp3",
-      "role": "Audio"
-    },
-    "11": {
-      "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers11.mp3",
-      "role": "Audio"
-    }
+  "0": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers11.mp3",
+    "role": "Audio"
+  },
+  "1": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers1.mp3",
+    "role": "Audio"
+  },
+  "2": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers2.mp3",
+    "role": "Audio"
+  },
+  "3": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers3.mp3",
+    "role": "Audio"
+  },
+  "4": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers4.mp3",
+    "role": "Audio"
+  },
+  "5": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers5.mp3",
+    "role": "Audio"
+  },
+  "6": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers6.mp3",
+    "role": "Audio"
+  },
+  "7": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers7.mp3",
+    "role": "Audio"
+  },
+  "8": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers8.mp3",
+    "role": "Audio"
+  },
+  "9": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers9.mp3",
+    "role": "Audio"
+  },
+  "10": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers10.mp3",
+    "role": "Audio"
+  },
+  "11": {
+    "audio": "https://s3.amazonaws.com/audio-tennis/audio/variablesNumbers11.mp3",
+    "role": "Audio"
   }
 }

@@ -11,6 +11,7 @@ import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppen
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.VariablesManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
@@ -31,6 +32,7 @@ public class LaunchStateManager extends BaseStateManager {
 
     private static final Logger logger = LogManager.getLogger(LaunchStateManager.class);
     private final ActivitiesPhraseManager activitiesPhraseManager;
+    private final VariablesManager variablesManager;
     private final ActivitySelectionAppender activitySelectionAppender;
 
     private Integer userReplyBreakpointPosition;
@@ -39,6 +41,7 @@ public class LaunchStateManager extends BaseStateManager {
     public LaunchStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
+        this.variablesManager = phraseDependencyContainer.getVariablesManager();
         this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
     }
 
@@ -66,7 +69,7 @@ public class LaunchStateManager extends BaseStateManager {
                     appendEnemyWinsResult(builder);
                 }
                 else {
-                    appendPlayerWindResult(builder);
+                    appendPlayerWinsResult(builder);
                 }
             }
 
@@ -91,24 +94,57 @@ public class LaunchStateManager extends BaseStateManager {
     }
 
     private void appendEnemyWinsResult(DialogItem.Builder builder) {
-        BasePhraseContainer randomEnemyLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomEnemyLastScore();
-        replaceScores(builder, randomEnemyLastScore);
-    }
-
-    private void appendPlayerWindResult(DialogItem.Builder builder) {
-        BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
-        replaceScores(builder, randomPlayerLastScore);
-    }
-
-    private void replaceScores(DialogItem.Builder builder, BasePhraseContainer randomPlayerLastScore) {
-        if (randomPlayerLastScore.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomPlayerLastScore));
+        BasePhraseContainer container = this.activitiesPhraseManager.getGreetingsPhrases().getRandomEnemyLastScore();
+        if (container.getRole().equals("Audio")) {
+            String link = container.getAudio();
+            String key = link.substring(0, link.indexOf('_'));
+            List<BasePhraseContainer> allPhrases = this.activitiesPhraseManager.getGreetingsPhrases().getAllEnemyLastScoreBySameKey(key);
+            allPhrases.remove(container);
+            builder.addResponse(getDialogTranslator().translate(container));
+            builder.addResponse(getDialogTranslator().translate(
+                    variablesManager.getValueByKey(
+                            String.valueOf(this.userProgress.getLastGameHistoryPlayerPoint()))));
+            builder.addResponse(getDialogTranslator().translate(allPhrases.get(0)));
+            builder.addResponse(getDialogTranslator().translate(
+                    variablesManager.getValueByKey(
+                            String.valueOf(this.userProgress.getLastGameHistoryEnemyPoint()))));
+            if(allPhrases.size() == 2) {
+                builder.addResponse(getDialogTranslator().translate(allPhrases.get(1)));
+            }
         }
         else {
-            String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
-            BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
-            builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+            replaceTextScores(builder, container);
         }
+    }
+
+    private void appendPlayerWinsResult(DialogItem.Builder builder) {
+        BasePhraseContainer container = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
+        if (container.getRole().equals("Audio")) {
+            String link = container.getAudio();
+            String key = link.substring(0, link.indexOf('_'));
+            List<BasePhraseContainer> allPhrases = this.activitiesPhraseManager.getGreetingsPhrases().getAllPlayerLastScoreBySameKey(key);
+            allPhrases.remove(container);
+            builder.addResponse(getDialogTranslator().translate(container));
+            builder.addResponse(getDialogTranslator().translate(
+                    variablesManager.getValueByKey(
+                            String.valueOf(this.userProgress.getLastGameHistoryEnemyPoint()))));
+            builder.addResponse(getDialogTranslator().translate(allPhrases.get(0)));
+            builder.addResponse(getDialogTranslator().translate(
+                    variablesManager.getValueByKey(
+                            String.valueOf(this.userProgress.getLastGameHistoryPlayerPoint()))));
+            if(allPhrases.size() == 2) {
+                builder.addResponse(getDialogTranslator().translate(allPhrases.get(1)));
+            }
+        }
+        else {
+            replaceTextScores(builder, container);
+        }
+    }
+
+    private void replaceTextScores(DialogItem.Builder builder, BasePhraseContainer container) {
+        String newContent = replaceScoresPlaceholders(container.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, container.getRole());
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
     private void buildInitialGreeting(DialogItem.Builder builder) {
@@ -140,9 +176,7 @@ public class LaunchStateManager extends BaseStateManager {
                 newDialog.add(phraseContainer);
             }
             else {
-                System.out.println("Before: " + phraseContainer.getContent());
                 String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
-                System.out.println("After: " + newContent);
                 if (!newContent.isEmpty()) {
                     newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
                 }
@@ -159,9 +193,7 @@ public class LaunchStateManager extends BaseStateManager {
                 newDialog.add(phraseContainer);
             }
             else {
-                System.out.println("Before: " + phraseContainer.getContent());
                 String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
-                System.out.println("After: " + newContent);
                 newContent = replaceAwardsPlaceholders(newContent, this.userProgress.getAchievements());
                 if (!newContent.isEmpty()) {
                     newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
