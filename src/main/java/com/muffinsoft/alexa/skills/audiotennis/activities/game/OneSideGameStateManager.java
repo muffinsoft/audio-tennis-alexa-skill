@@ -85,10 +85,17 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         String nextWord = String.join(" ", words);
 
-        if (!randomOpponentAfterXWordPhrase.isEmpty()) {
-            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
+        //TODO remove when audio will be available
+//        if (!randomOpponentAfterXWordPhrase.isEmpty()) {
+//            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
+//        }
+//        builder.addResponse(getAudioForWord(nextWord));
+        if (randomOpponentAfterXWordPhrase.isEmpty()) {
+            builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
         }
-        builder.addResponse(getAudioForWord(nextWord));
+        else {
+            builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(randomOpponentAfterXWordPhrase, nextWord, null, null)));
+        }
 
         this.activityProgress.setPreviousWord(nextWord);
         this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));
@@ -134,7 +141,9 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
 
-        builder.addResponse(getAudioForWord(nextWord.getWord()));
+        //TODO remove when audio will be available
+//        builder.addResponse(getAudioForWord(nextWord.getWord()));
+        builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
 
         this.activityProgress.setPreviousWord(nextWord.getWord());
         this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());

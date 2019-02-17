@@ -64,15 +64,14 @@ public class LaunchStateManager extends BaseStateManager {
                 buildGreetingWithAwards(builder);
             }
 
-            // TODO: fix local scores
-//            if (this.userProgress.getLastGameHistoryEnemyPoint() != 0 || this.userProgress.getLastGameHistoryPlayerPoint() != 0) {
-//                if (this.userProgress.getLosses() > this.userProgress.getWins()) {
-//                    appendEnemyWinsResult(builder);
-//                }
-//                else {
-//                    appendPlayerWinsResult(builder);
-//                }
-//            }
+            if (this.userProgress.getLastGameHistoryEnemyPoint() != 0 || this.userProgress.getLastGameHistoryPlayerPoint() != 0) {
+                if (this.userProgress.getLosses() > this.userProgress.getWins()) {
+                    appendEnemyWinsResult(builder);
+                }
+                else {
+                    appendPlayerWindResult(builder);
+                }
+            }
 
             boolean withSelection = activitySelectionAppender.appendWithSelection(builder, userProgress, getSessionAttributes());
 
@@ -95,56 +94,18 @@ public class LaunchStateManager extends BaseStateManager {
     }
 
     private void appendEnemyWinsResult(DialogItem.Builder builder) {
-        BasePhraseContainer container = this.activitiesPhraseManager.getGreetingsPhrases().getRandomEnemyLastScore();
-        if (container.getRole().equals("Audio")) {
-            String link = container.getAudio();
-            String key = link.substring(0, link.indexOf('_'));
-            List<BasePhraseContainer> allPhrases = this.activitiesPhraseManager.getGreetingsPhrases().getAllEnemyLastScoreBySameKey(key);
-            allPhrases.remove(container);
-            builder.addResponse(getDialogTranslator().translate(container));
-            builder.addResponse(getDialogTranslator().translate(
-                    variablesManager.getValueByKey(
-                            String.valueOf(this.userProgress.getLastGameHistoryPlayerPoint()))));
-            builder.addResponse(getDialogTranslator().translate(allPhrases.get(0)));
-            builder.addResponse(getDialogTranslator().translate(
-                    variablesManager.getValueByKey(
-                            String.valueOf(this.userProgress.getLastGameHistoryEnemyPoint()))));
-            if(allPhrases.size() == 2) {
-                builder.addResponse(getDialogTranslator().translate(allPhrases.get(1)));
-            }
-        }
-        else {
-            replaceTextScores(builder, container);
-        }
+        BasePhraseContainer randomEnemyLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomEnemyLastScore();
+        replaceScores(builder, randomEnemyLastScore);
     }
 
-    private void appendPlayerWinsResult(DialogItem.Builder builder) {
-        BasePhraseContainer container = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
-        if (container.getRole().equals("Audio")) {
-            String link = container.getAudio();
-            String key = link.substring(0, link.indexOf('_'));
-            List<BasePhraseContainer> allPhrases = this.activitiesPhraseManager.getGreetingsPhrases().getAllPlayerLastScoreBySameKey(key);
-            allPhrases.remove(container);
-            builder.addResponse(getDialogTranslator().translate(container));
-            builder.addResponse(getDialogTranslator().translate(
-                    variablesManager.getValueByKey(
-                            String.valueOf(this.userProgress.getLastGameHistoryEnemyPoint()))));
-            builder.addResponse(getDialogTranslator().translate(allPhrases.get(0)));
-            builder.addResponse(getDialogTranslator().translate(
-                    variablesManager.getValueByKey(
-                            String.valueOf(this.userProgress.getLastGameHistoryPlayerPoint()))));
-            if(allPhrases.size() == 2) {
-                builder.addResponse(getDialogTranslator().translate(allPhrases.get(1)));
-            }
-        }
-        else {
-            replaceTextScores(builder, container);
-        }
+    private void appendPlayerWindResult(DialogItem.Builder builder) {
+        BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
+        replaceScores(builder, randomPlayerLastScore);
     }
 
-    private void replaceTextScores(DialogItem.Builder builder, BasePhraseContainer container) {
-        String newContent = replaceScoresPlaceholders(container.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
-        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, container.getRole());
+    private void replaceScores(DialogItem.Builder builder, BasePhraseContainer randomPlayerLastScore) {
+        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
+        BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
     }
 
@@ -205,9 +166,9 @@ public class LaunchStateManager extends BaseStateManager {
     }
 
     private String replaceWinAndLosePlaceholders(String inputString, Integer win, Integer lose) {
-        if ((win == 0 && lose == 0) && (inputString.contains("%wins%") || inputString.contains("%losses%"))) {
-            return "";
-        }
+//        if ((win == 0 && lose == 0) && (inputString.contains("%wins%") || inputString.contains("%losses%"))) {
+//            return "";
+//        }
         inputString = inputString.replace("%wins%", String.valueOf(win));
         inputString = inputString.replace("%losses%", String.valueOf(lose));
         return inputString;

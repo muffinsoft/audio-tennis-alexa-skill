@@ -117,16 +117,24 @@ public class TennisIntentFabric implements IntentFactory {
         IntentType interceptedIntentType = GAME;
 
         if (sessionAttributes.containsKey(SELECT_ACTIVITY_STEP)) {
+            logger.info("SELECT_ACTIVITY_STEP is present");
             interceptedIntentType = interceptSelectActivity(inputSlots, sessionAttributes, activityProgress);
+            logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
-        if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
+        else if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
+            logger.info("SWITCH_ACTIVITY_STEP is present");
             interceptedIntentType = interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
         else if (sessionAttributes.containsKey(SWITCH_UNLOCK_ACTIVITY_STEP)) {
+            logger.info("SWITCH_UNLOCK_ACTIVITY_STEP is present");
             interceptUnlockedActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
         else if (sessionAttributes.containsKey(ASK_RANDOM_SWITCH_ACTIVITY_STEP)) {
+            logger.info("ASK_RANDOM_SWITCH_ACTIVITY_STEP is present");
             interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
 
         if (interceptedIntentType != GAME) {
@@ -137,6 +145,10 @@ public class TennisIntentFabric implements IntentFactory {
 
         if (currentActivity == null) {
             currentActivity = ActivityProgress.getDefaultActivity();
+            logger.info("Set default activity: " + currentActivity);
+        }
+        else {
+            logger.info("Open activity: " + currentActivity);
         }
 
         switch (currentActivity) {
@@ -235,6 +247,8 @@ public class TennisIntentFabric implements IntentFactory {
         if (type == null) {
             return SELECT_MISSION;
         }
+        logger.info("Update current activity type to value: " + type);
+        activityProgress.setCurrentActivity(type);
         sessionAttributes.remove(SELECT_ACTIVITY_STEP);
         return GAME;
     }
