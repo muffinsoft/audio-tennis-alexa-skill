@@ -52,7 +52,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     String getAlreadyUserWord(char nextLetter, Set<String> usedWords) {
         List<String> usedWordsOnLetter = new ArrayList<>();
         for (String word : usedWords) {
-            if (word.startsWith(String.valueOf(nextLetter))) {
+            if (word.startsWith(String.valueOf(nextLetter)) && activityManager.isWordInDictionary(word)) {
                 usedWordsOnLetter.add(word);
             }
         }
@@ -177,7 +177,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
     private String appendNextWrongWord(DialogItem.Builder builder) {
 
         String nextWord = getNextWrongWordForActivity();
-        builder.addResponse(getDialogTranslator().getSound(nextWord));
+        builder.addResponse(getAudioForWord(nextWord));
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseWrongWordPhrase();
         builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(phraseContainer, nextWord, getCharWithMistakeForEnemy(), null)));
