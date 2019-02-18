@@ -54,7 +54,7 @@
   ],
   "returnEnemyLastScore": [
     {
-      "content": "Ben really creamed you %enemyScores% to %scores% last time!",
+      "content": "Ben really creamed you %enemyScores% to %scores% last game!",
       "role": "Alexa"
     },
     {
@@ -66,11 +66,7 @@
       "role": "Alexa"
     },
     {
-      "content": "Ben  beat you %enemyScores% to %scores% last game. Am I good or what?",
-      "role": "Alexa"
-    },
-    {
-      "content": "Guess who won %enemyScores% to %scores% last time? Ben!",
+      "content": "Ben  beat you %enemyScores% to %scores% last game. Is he good or what?",
       "role": "Alexa"
     }
   ],
@@ -88,7 +84,7 @@
       "role": "Alexa"
     },
     {
-      "content": "You showed Ben who's boss last game. You won %scores% to %enemyScores%",
+      "content": "You really showed Ben who's boss last game. You won %scores% to %enemyScores%",
       "role": "Alexa"
     },
     {
