@@ -3,10 +3,10 @@ package com.muffinsoft.alexa.skills.audiotennis.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class GeneralActivityPhrases {
+public class GeneralActivityPhrases extends BasePhrases {
 
     private List<BasePhraseContainer> enemyWonOnce;
     private List<BasePhraseContainer> playerLoseTwice;
@@ -137,91 +137,111 @@ public class GeneralActivityPhrases {
 
     @JsonIgnore
     public BasePhraseContainer getRandomEnemyWonOnce() {
+        List<BasePhraseContainer> values = removeAllPartialElements(enemyWonOnce);
         int index = getRandomValue(enemyWonOnce.size());
         return enemyWonOnce.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomPlayerLoseTwice() {
-        int index = getRandomValue(playerLoseTwice.size());
-        return playerLoseTwice.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(enemyWonOnce);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomNextRound() {
-        int index = getRandomValue(nextRound.size());
-        return nextRound.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(nextRound);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomPlayerWonTwice() {
-        int index = getRandomValue(playerWonTwiceInRow.size());
-        return playerWonTwiceInRow.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(playerWonTwiceInRow);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomTotalScore() {
-        int index = getRandomValue(totalScore.size());
-        return totalScore.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(totalScore);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomEnemyWinGame() {
-        int index = getRandomValue(enemyWinGame.size());
-        return enemyWinGame.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(enemyWinGame);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomPlayerWinGame() {
-        int index = getRandomValue(playerWinGame.size());
-        return playerWinGame.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(playerWinGame);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomEnemyWinScore() {
-        int index = getRandomValue(enemyWinScore.size());
-        return enemyWinScore.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(enemyWinScore);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomPlayerWinScore() {
-        int index = getRandomValue(playerWinScore.size());
-        return playerWinScore.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(playerWinScore);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomVictoryPhrase() {
-        int index = getRandomValue(victoryPhrase.size());
-        return victoryPhrase.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(victoryPhrase);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomDefeatPhrase() {
-        int index = getRandomValue(defeatPhrase.size());
-        return defeatPhrase.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(defeatPhrase);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomCallToCelebrate() {
-        int index = getRandomValue(callToCelebrate.size());
-        return callToCelebrate.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(callToCelebrate);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomPromotions() {
-        int index = getRandomValue(promotions.size());
-        return promotions.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(promotions);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
     public BasePhraseContainer getRandomLevelUps() {
-        int index = getRandomValue(levelUps.size());
-        return levelUps.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(levelUps);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
-    private int getRandomValue(int maxValue) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        return random.nextInt(maxValue);
+    public List<BasePhraseContainer> getAllEnemyWinScoreBySameKey(String key) {
+        List<BasePhraseContainer> resultsList = new ArrayList<>();
+        for (BasePhraseContainer container : enemyWinScore) {
+            if (container.getAudio().startsWith(key)) {
+                resultsList.add(container);
+            }
+        }
+        return resultsList;
     }
+
 }

@@ -118,6 +118,17 @@ public class ActivityManager {
         return false;
     }
 
+
+    public boolean isWordInDictionary(String word) {
+        if (word == null || word.isEmpty()) {
+            return false;
+        }
+        Map<Character, HashSet<String>> competitionWords = dictionaryManager.getForCompetitionActivity();
+        char firstChar = word.charAt(0);
+        HashSet<String> wordsFromLetter = competitionWords.get(firstChar);
+        return wordsFromLetter.contains(word);
+    }
+
     public WordContainer getRandomWordForCompetitionActivityFromLetter(char lastLetter, Set<String> usedWords) {
         Map<Character, HashSet<String>> activityWords = dictionaryManager.getForCompetitionActivity();
 

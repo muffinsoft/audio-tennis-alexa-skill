@@ -1,72 +1,8 @@
 {
   "intro": [
     {
-      "content": "For this round, I'll serve the ball by saying one or more words. To return the shot, you must say a word or words that rhyme with my words. You know what? Let me play with my sister Lilly so you’ll see how it is done. ",
-      "role": "Ben"
-    },
-    {
-      "role": "Sound",
-      "audio": null
-    },
-    {
-      "content": "pear",
-      "role": "Ben"
-    },
-    {
-      "_comment": "<ball hits the racket (from far)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "bear",
-      "role": "Lily"
-    },
-    {
-      "_comment": "<balls hits the racket (up close)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "cow, book",
-      "role": "Ben"
-    },
-    {
-      "_comment": "<ball hits the racket (from far)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "how, took",
-      "role": "Lily"
-    },
-    {
-      "_comment": "<balls hits the racket (up close)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "cheese, egg, jam!",
-      "role": "Ben"
-    },
-    {
-      "_comment": "<ball hits the racket (from far)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "please, beg, spam!",
-      "role": "Lily"
-    },
-    {
-      "_comment": "<balls hits the racket (up close)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/rhymeMatchPhrasesIntro0.mp3"
     }
   ]
 }

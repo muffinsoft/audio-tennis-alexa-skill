@@ -1,219 +1,219 @@
 {
   "opponentFirstPhrase": [
     {
-      "content": "Let me start.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'll go first.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'll serve.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'll start.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase3.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Me first.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase4.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I’ll go ahead and start.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentFirstPhrase5.mp3",
+      "role": "Audio"
     }
   ],
   "opponentAfterWordPhrase": [
     {
-      "content": "Your turn!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Hit it back!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You're next!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Give me your best shot!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase3.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Go!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentAfterWordPhrase4.mp3",
+      "role": "Audio"
     }
   ],
   "opponentReactionAfterXWordsPhrase": [
     {
-      "content": "Good one. How about %word%?",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentReactionAfterXWordsPhrase0_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'm going with %word%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentReactionAfterXWordsPhrase1_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Hitting back with %word%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentReactionAfterXWordsPhrase2_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "My next response is %word%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentReactionAfterXWordsPhrase3_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'll hit back with %word%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesOpponentReactionAfterXWordsPhrase4_0.mp3",
+      "role": "Audio"
     }
   ],
   "playerLoseWrongWordPhrase": [
     {
-      "content": "%word% doesn't start with %letter%.",
+      "audio": "%word% doesn't start with %letter%.",
       "role": "Alexa"
     },
     {
-      "content": "%word% doesn't begin with %letter%.",
+      "audio": "%word% doesn't begin with %letter%.",
       "role": "Alexa"
     },
     {
-      "content": "%letter% isn't the the first letter of %word%.",
+      "audio": "%letter% isn't the the first letter of %word%.",
       "role": "Alexa"
     },
     {
-      "content": "Your word had to start with %letter%.",
+      "audio": "Your word had to start with %letter%.",
       "role": "Alexa"
     },
     {
-      "content": "Your word was supposed to start with %letter%.",
+      "audio": "Your word was supposed to start with %letter%.",
       "role": "Alexa"
     }
   ],
   "playerLoseRepeatWordPhrase": [
     {
-      "content": "%word% was already used.",
+      "audio": "%word% was already used.",
       "role": "Alexa"
     },
     {
-      "content": "you already said %word%.",
+      "audio": "you already said %word%.",
       "role": "Alexa"
     },
     {
-      "content": "you can't say %word% again.",
+      "audio": "you can't say %word% again.",
       "role": "Alexa"
     },
     {
-      "content": "%word% can't be used again.",
+      "audio": "%word% can't be used again.",
       "role": "Alexa"
     },
     {
-      "content": "you already said %word%!",
+      "audio": "you already said %word%!",
       "role": "Alexa"
     },
     {
-      "content": "%word% can't be repeated!",
+      "audio": "%word% can't be repeated!",
       "role": "Alexa"
     }
   ],
   "playerWonOnceAtGame": [
     {
-      "content": "Man... you won!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Aw man, you beat me!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Nice job! You won!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Looks like you got me this time!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame3.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Hey! You defeated me fair and square with a score of!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame4.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Good one!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame5.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Nice shot!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame6.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Great hit!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame7.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Not bad!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame8.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Woah, nice!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame9.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Shucks on me!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame10.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Aww, man!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame11.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Oops!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame12.mp3",
+      "role": "Audio"
     },
     {
-      "content": "My bad!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame13.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Bummer!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/competitionActivityPhrasesPlayerWonOnceAtGame14.mp3",
+      "role": "Audio"
     }
   ],
   "enemyLoseWrongWordPhrase": [
     {
-      "content": "Sorry, Ben. %word% doesn’t start with %letter%!",
+      "audio": "Sorry, Ben. %word% doesn’t start with %letter%!",
       "role": "Alexa"
     }
   ],
   "enemyLoseRepeatWordPhrase": [
     {
-      "content": "%word% was already used.",
+      "audio": "%word% was already used.",
       "role": "Alexa"
     },
     {
-      "content": "Hey Ben, you already said %word%.",
+      "audio": "Hey Ben, you already said %word%.",
       "role": "Alexa"
     },
     {
-      "content": "Nice try, Ben - you can't say %word% again.",
+      "audio": "Nice try, Ben - you can't say %word% again.",
       "role": "Alexa"
     },
     {
-      "content": "%word% can't be used again.",
+      "audio": "%word% can't be used again.",
       "role": "Alexa"
     },
     {
-      "content": "Hmm, Ben - you already said %word%!",
+      "audio": "Hmm, Ben - you already said %word%!",
       "role": "Alexa"
     },
     {
-      "content": "%word% can't be repeated!",
+      "audio": "%word% can't be repeated!",
       "role": "Alexa"
     }
   ],
   "playerTurnAfterEnemyMistake": [
     {
-      "content": "Your word should starts from %letter%.",
+      "audio": "Your word should starts from %letter%.",
       "role": "Alexa"
     }
   ]

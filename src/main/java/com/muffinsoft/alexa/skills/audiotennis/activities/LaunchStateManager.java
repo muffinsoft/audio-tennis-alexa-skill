@@ -11,6 +11,7 @@ import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppen
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.VariablesManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
@@ -31,6 +32,7 @@ public class LaunchStateManager extends BaseStateManager {
 
     private static final Logger logger = LogManager.getLogger(LaunchStateManager.class);
     private final ActivitiesPhraseManager activitiesPhraseManager;
+    private final VariablesManager variablesManager;
     private final ActivitySelectionAppender activitySelectionAppender;
 
     private Integer userReplyBreakpointPosition;
@@ -39,6 +41,7 @@ public class LaunchStateManager extends BaseStateManager {
     public LaunchStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
+        this.variablesManager = phraseDependencyContainer.getVariablesManager();
         this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
     }
 
@@ -131,9 +134,14 @@ public class LaunchStateManager extends BaseStateManager {
         List<BasePhraseContainer> dialog = activitiesPhraseManager.getGreetingsPhrases().getPlayerWithoutAwardsGreeting();
         List<PhraseContainer> newDialog = new ArrayList<>();
         for (BasePhraseContainer phraseContainer : dialog) {
-            String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
-            if (!newContent.isEmpty()) {
-                newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
+            if (phraseContainer.getRole().equals("Audio")) {
+                newDialog.add(phraseContainer);
+            }
+            else {
+                String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
+                if (!newContent.isEmpty()) {
+                    newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
+                }
             }
         }
         builder.addResponse(getDialogTranslator().translate(newDialog));
@@ -143,19 +151,24 @@ public class LaunchStateManager extends BaseStateManager {
         List<BasePhraseContainer> dialog = activitiesPhraseManager.getGreetingsPhrases().getPlayerWithAwardsGreeting();
         List<PhraseContainer> newDialog = new ArrayList<>();
         for (BasePhraseContainer phraseContainer : dialog) {
-            String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
-            newContent = replaceAwardsPlaceholders(newContent, this.userProgress.getAchievements());
-            if (!newContent.isEmpty()) {
-                newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
+            if (phraseContainer.getRole().equals("Audio")) {
+                newDialog.add(phraseContainer);
+            }
+            else {
+                String newContent = replaceWinAndLosePlaceholders(phraseContainer.getContent(), this.userProgress.getWins(), this.userProgress.getLosses());
+                newContent = replaceAwardsPlaceholders(newContent, this.userProgress.getAchievements());
+                if (!newContent.isEmpty()) {
+                    newDialog.add(new BasePhraseContainer(newContent, phraseContainer.getRole()));
+                }
             }
         }
         builder.addResponse(getDialogTranslator().translate(newDialog));
     }
 
     private String replaceWinAndLosePlaceholders(String inputString, Integer win, Integer lose) {
-        if ((win == 0 && lose == 0) && (inputString.contains("%wins%") || inputString.contains("%losses%"))) {
-            return "";
-        }
+//        if ((win == 0 && lose == 0) && (inputString.contains("%wins%") || inputString.contains("%losses%"))) {
+//            return "";
+//        }
         inputString = inputString.replace("%wins%", String.valueOf(win));
         inputString = inputString.replace("%losses%", String.valueOf(lose));
         return inputString;
