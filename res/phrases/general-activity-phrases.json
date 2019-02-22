@@ -1,72 +1,72 @@
 {
   "playerWonTwiceInRow": [
     {
-      "content": "Looks like this is too easy for you!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPlayerWonTwiceInRow0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You've clearly gotten a lot better!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPlayerWonTwiceInRow1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I think you're ready for more of a challenge!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPlayerWonTwiceInRow2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "So you think you're a master already, huh?",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPlayerWonTwiceInRow3.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You're getting really good at this!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPlayerWonTwiceInRow4.mp3",
+      "role": "Audio"
     }
   ],
   "enemyWonOnce": [
     {
-      "content": "I win this round!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Woohoo! I win the round!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Yay, I win the round!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Got you this round!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce3.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Nice, I win the round!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce4.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Yes! I won!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce5.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Sweet! beat you!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce6.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Oh yeah! I defeated you!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce7.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Woohoo! I won!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce8.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I got you this time! I won!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWonOnce9.mp3",
+      "role": "Audio"
     }
   ],
   "playerLoseTwice": [
     {
-      "content": "I beat you twice in a round!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPlayerLoseTwice0.mp3",
+      "role": "Audio"
     }
   ],
   "totalScore": [
@@ -93,20 +93,20 @@
   ],
   "nextRound": [
     {
-      "content": "Let's do another round.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesNextRound0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Next round!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesNextRound1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Time for the next round!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesNextRound2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Let's play again!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesNextRound3.mp3",
+      "role": "Audio"
     }
   ],
   "playerWinScore": [
@@ -131,20 +131,36 @@
   ],
   "enemyWinScore": [
     {
-      "content": "This is my %scores% victory.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWinScore0_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "This is the %scores% time that I've won!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWinScore0_1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "This is the %scores% time that I beat you!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWinScore1_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "This marks the %scores% time that I taste victory!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWinScore1_1.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWinScore2_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWinScore2_1.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWinScore3_0.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesEnemyWinScore3_1.mp3",
+      "role": "Audio"
     }
   ],
   "enemyWinGame": [
@@ -155,88 +171,88 @@
   ],
   "victoryPhrase": [
     {
-      "content": "Hey you really creamed me.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesVictoryPhrase0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Hey that was really close.",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesVictoryPhrase1.mp3",
+      "role": "Audio"
     }
   ],
   "defeatPhrase": [
     {
-      "content": "Hey I really creamed you",
-      "role": "Ben"
-    },
-    {
-      "content": "Hey that was really close",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesDefeatPhrase0.mp3",
+      "role": "Audio"
     }
   ],
   "callToCelebrate": [
     {
-      "content": "Alexa, let's celebrate the winner with some fireworks!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesCallToCelebrate0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Alexa, let's launch some fireworks in honor of the winner!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesCallToCelebrate1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Alexa, I think the winner deserves an awesome fireworks show!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesCallToCelebrate2.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Alexa, time for some fireworks to celebrate the winner's victory!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesCallToCelebrate3.mp3",
+      "role": "Audio"
     }
   ],
   "promotions": [
     {
-      "content": "You now have the nickname %rookie%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions0_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You've earned the nickname %rookie%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions1_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Your new nickname is %rookie%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions2_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You made it to %rookie%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions3_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You've reached the nickname %rookie%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions4_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "You won! That means you got the nickname %rookie%!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions5_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "For winning you'll now be called %rookie%! Congrats!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions6_0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Now we're going to start calling you %rookie%! ",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions6_1.mp3",
+      "role": "Audio"
+    },
+    {
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesPromotions7_0.mp3",
+      "role": "Audio"
     }
   ],
   "levelUps": [
     {
-      "content": "I'm going to to start trying even harder now!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesLevelUps0.mp3",
+      "role": "Audio"
     },
     {
-      "content": "I'm ready to really show you what I've got!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesLevelUps1.mp3",
+      "role": "Audio"
     },
     {
-      "content": "Time for me to try my best! Hope you're ready!",
-      "role": "Ben"
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/generalActivityPhrasesLevelUps2.mp3",
+      "role": "Audio"
     }
   ]
 }

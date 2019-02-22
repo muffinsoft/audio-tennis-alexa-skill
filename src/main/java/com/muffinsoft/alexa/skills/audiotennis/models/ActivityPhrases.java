@@ -5,9 +5,8 @@ import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class ActivityPhrases {
+public class ActivityPhrases extends BasePhrases {
 
     private List<BasePhraseContainer> intro = Collections.emptyList();
     private List<BasePhraseContainer> opponentFirstPhrase = Collections.emptyList();
@@ -105,12 +104,13 @@ public class ActivityPhrases {
         if (opponentAfterWordPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(opponentAfterWordPhrase.size() * 2);
-        if (index > opponentAfterWordPhrase.size() - 1) {
+        List<BasePhraseContainer> values = removeAllPartialElements(opponentAfterWordPhrase);
+        int index = getRandomValue(values.size() * 2);
+        if (index > values.size() - 1) {
             return BasePhraseContainer.empty();
         }
         else {
-            return opponentAfterWordPhrase.get(index);
+            return values.get(index);
         }
     }
 
@@ -119,8 +119,9 @@ public class ActivityPhrases {
         if (opponentFirstPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(opponentFirstPhrase.size());
-        return opponentFirstPhrase.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(opponentFirstPhrase);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
@@ -128,12 +129,13 @@ public class ActivityPhrases {
         if (opponentReactionAfterXWordsPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(opponentReactionAfterXWordsPhrase.size() * 3);
-        if (index > opponentReactionAfterXWordsPhrase.size() - 1) {
+        List<BasePhraseContainer> values = removeAllPartialElements(opponentReactionAfterXWordsPhrase);
+        int index = getRandomValue(values.size() * 3);
+        if (index > values.size() - 1) {
             return BasePhraseContainer.empty();
         }
         else {
-            return opponentReactionAfterXWordsPhrase.get(index);
+            return values.get(index);
         }
     }
 
@@ -142,8 +144,9 @@ public class ActivityPhrases {
         if (playerLoseWrongWordPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(playerLoseWrongWordPhrase.size());
-        return playerLoseWrongWordPhrase.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(playerLoseWrongWordPhrase);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
@@ -151,8 +154,9 @@ public class ActivityPhrases {
         if (enemyLoseWrongWordPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(enemyLoseWrongWordPhrase.size());
-        return enemyLoseWrongWordPhrase.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(enemyLoseWrongWordPhrase);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
@@ -160,8 +164,9 @@ public class ActivityPhrases {
         if (playerLoseRepeatWordPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(playerLoseRepeatWordPhrase.size());
-        return playerLoseRepeatWordPhrase.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(playerLoseRepeatWordPhrase);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
@@ -169,8 +174,9 @@ public class ActivityPhrases {
         if (enemyLoseRepeatWordPhrase.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(enemyLoseRepeatWordPhrase.size());
-        return enemyLoseRepeatWordPhrase.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(enemyLoseRepeatWordPhrase);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
@@ -178,8 +184,9 @@ public class ActivityPhrases {
         if (playerWonOnceAtGame.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(playerWonOnceAtGame.size());
-        return playerWonOnceAtGame.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(playerWonOnceAtGame);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
@@ -187,13 +194,8 @@ public class ActivityPhrases {
         if (playerTurnAfterEnemyMistake.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(playerTurnAfterEnemyMistake.size());
-        return playerTurnAfterEnemyMistake.get(index);
-    }
-
-    @JsonIgnore
-    private int getRandomValue(int maxValue) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        return random.nextInt(maxValue);
+        List<BasePhraseContainer> values = removeAllPartialElements(playerTurnAfterEnemyMistake);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 }

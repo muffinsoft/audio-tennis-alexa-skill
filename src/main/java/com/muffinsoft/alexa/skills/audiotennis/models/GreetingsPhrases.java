@@ -3,11 +3,12 @@ package com.muffinsoft.alexa.skills.audiotennis.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class GreetingsPhrases {
+public class GreetingsPhrases extends BasePhrases {
+
     private List<BasePhraseContainer> firstTimeGreeting = Collections.emptyList();
     private List<BasePhraseContainer> playerWithAwardsGreeting = Collections.emptyList();
     private List<BasePhraseContainer> playerWithoutAwardsGreeting = Collections.emptyList();
@@ -59,8 +60,9 @@ public class GreetingsPhrases {
         if (returnEnemyLastScore.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(returnEnemyLastScore.size());
-        return returnEnemyLastScore.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(returnEnemyLastScore);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
@@ -68,13 +70,30 @@ public class GreetingsPhrases {
         if (returnPlayerLastScore.isEmpty()) {
             return BasePhraseContainer.empty();
         }
-        int index = getRandomValue(returnPlayerLastScore.size());
-        return returnPlayerLastScore.get(index);
+        List<BasePhraseContainer> values = removeAllPartialElements(returnPlayerLastScore);
+        int index = getRandomValue(values.size());
+        return values.get(index);
     }
 
     @JsonIgnore
-    private int getRandomValue(int maxValue) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        return random.nextInt(maxValue);
+    public List<BasePhraseContainer> getAllPlayerLastScoreBySameKey(String key) {
+        List<BasePhraseContainer> resultsList = new ArrayList<>();
+        for (BasePhraseContainer container : returnPlayerLastScore) {
+            if (container.getAudio().startsWith(key)) {
+                resultsList.add(container);
+            }
+        }
+        return resultsList;
+    }
+
+    @JsonIgnore
+    public List<BasePhraseContainer> getAllEnemyLastScoreBySameKey(String key) {
+        List<BasePhraseContainer> resultsList = new ArrayList<>();
+        for (BasePhraseContainer container : returnEnemyLastScore) {
+            if (container.getAudio().startsWith(key)) {
+                resultsList.add(container);
+            }
+        }
+        return resultsList;
     }
 }

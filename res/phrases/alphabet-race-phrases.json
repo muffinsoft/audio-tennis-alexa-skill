@@ -1,52 +1,8 @@
 {
   "intro": [
     {
-      "content": "To play this round, you need to keep in mind the order of ABCs.  Pay attention to the first letter of my word.  Then think of the next letter of the alphabet and hit back with a word that starts with it. We'll keep going until one of us misses. Look how we do it! ",
-      "role": "Ben"
-    },
-    {
-      "role": "Sound",
-      "audio": null
-    },
-    {
-      "content": "Dinosaur!",
-      "role": "Ben"
-    },
-    {
-      "_comment": "<ball hits the racket (from far)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "Egg!",
-      "role": "Lily"
-    },
-    {
-      "_comment": "<balls hits the racket (up close)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "Flower!",
-      "role": "Ben"
-    },
-    {
-      "_comment": "<ball hits the racket (from far)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "Goat!",
-      "role": "Lily"
-    },
-    {
-      "_comment": "<balls hits the racket (up close)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/alphabetRacePhrasesIntro0.mp3"
     }
   ]
 }

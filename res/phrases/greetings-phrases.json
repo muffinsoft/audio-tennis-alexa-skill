@@ -1,37 +1,37 @@
 {
   "firstTimeGreeting": [
     {
-      "content": "Let’s play Audio Tennis!  I'm going to hit the ball by saying words.  Then you hit it back by responding correctly.  Whoever gets 11 points wins the game. Sounds good?",
-      "role": "Ben"
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesFirstTimeGreeting0.mp3"
     },
     {
       "userResponse": true
     },
     {
-      "content": "We'll be competing, you know. So let's ask our friend Alexa to help. She's not very good at playing tennis but she's an amazing scorekeeper! What do you say, Alexa?",
-      "role": "Ben"
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesFirstTimeGreeting1.mp3"
     },
     {
       "content": "Of course, Ben. You and your friend can 'count' on me.",
       "role": "Alexa"
     },
     {
-      "content": "Alrighty then - let’s start with my favorite activity, called Last Letter",
-      "role": "Ben"
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesFirstTimeGreeting2.mp3"
     }
   ],
   "playerWithAwardsGreeting": [
     {
-      "content": "Welcome back to Audio Tennis! Alexa, please give our friend a royal greeting!",
-      "role": "Ben"
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesPlayerWithAwardsGreeting0.mp3"
     },
     {
       "content": "Introducing %achievements%",
       "role": "Alexa"
     },
     {
-      "content": "and how's the score these days?",
-      "role": "Ben"
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesPlayerWithAwardsGreeting1.mp3"
     },
     {
       "content": "looks like its",
@@ -44,8 +44,8 @@
   ],
   "playerWithoutAwardsGreeting": [
     {
-      "content": "Welcome back to Audio Tennis! Alexa, how's our friend doing on the score these days?",
-      "role": "Ben"
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/greetingsPhrasesPlayerWithoutAwardsGreeting0.mp3"
     },
     {
       "content": "Hey there, looks like you've won %wins% games and lost %losses% games.",
@@ -54,46 +54,42 @@
   ],
   "returnEnemyLastScore": [
     {
-      "content": "I really creamed you %enemyScores% to %scores% last time!",
-      "role": "Ben"
+      "content": "Ben really creamed you %enemyScores% to %scores% last game!",
+      "role": "Alexa"
     },
     {
-      "content": "I won %enemyScores% to %scores% last time. You need some practice!",
-      "role": "Ben"
+      "content": "Ben won %enemyScores% to %scores% last time. You need some practice!",
+      "role": "Alexa"
     },
     {
-      "content": "I outplayed you big time last game! The score was %enemyScores% to %scores%.",
-      "role": "Ben"
+      "content": "Ben outplayed you big time last game! The score was %enemyScores% to %scores%.",
+      "role": "Alexa"
     },
     {
-      "content": "I beat you %enemyScores% to %scores% last game. Am I good or what?",
-      "role": "Ben"
-    },
-    {
-      "content": "Guess who won %enemyScores% to %scores% last time? Me!",
-      "role": "Ben"
+      "content": "Ben  beat you %enemyScores% to %scores% last game. Is he good or what?",
+      "role": "Alexa"
     }
   ],
   "returnPlayerLastScore": [
     {
-      "content": "You really creamed me %scores% to %enemyScores% last time!",
-      "role": "Ben"
+      "content": "You really creamed Ben %scores% to %enemyScores% last time!",
+      "role": "Alexa"
     },
     {
-      "content": "Man, you destroyed me %scores% to %enemyScores% in our last game!",
-      "role": "Ben"
+      "content": "Man, you destroyed Ben %scores% to %enemyScores% in our last game!",
+      "role": "Alexa"
     },
     {
-      "content": "You got me good %scores% to %enemyScores% last game!",
-      "role": "Ben"
+      "content": "You got Ben good %scores% to %enemyScores% last game!",
+      "role": "Alexa"
     },
     {
-      "content": "You showed me who's boss last game. You won %scores% to %enemyScores%",
-      "role": "Ben"
+      "content": "You really showed Ben who's boss last game. You won %scores% to %enemyScores%",
+      "role": "Alexa"
     },
     {
-      "content": "You won %scores% to %enemyScores% last time. I didn't stand a chance!",
-      "role": "Ben"
+      "content": "You won %scores% to %enemyScores% last time. Ben didn't stand a chance!",
+      "role": "Alexa"
     }
   ]
 }

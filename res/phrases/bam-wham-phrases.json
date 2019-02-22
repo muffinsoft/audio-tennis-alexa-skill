@@ -1,72 +1,8 @@
 {
   "intro": [
     {
-      "content": "I love this round! I'm going to use one of my serving words to hit the ball to you. If I say Bam, you say Wham.  If I say Boom, you say Whoom.  If I say Boom Bap, you say Whoom Whap. You know what? Let me play with my sister Lilly so you’ll see how it is done. ",
-      "role": "Ben"
-    },
-    {
-      "role": "Sound",
-      "audio": null
-    },
-    {
-      "content": "Boom!",
-      "role": "Ben"
-    },
-    {
-      "_comment": "<ball hits the racket (from far)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "Whoom!",
-      "role": "Lily"
-    },
-    {
-      "_comment": "<balls hits the racket (up close)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "Bomp, Bap!",
-      "role": "Ben"
-    },
-    {
-      "_comment": "<ball hits the racket (from far)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "Whomp, Whap!",
-      "role": "Lily"
-    },
-    {
-      "_comment": "<balls hits the racket (up close)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "Whonk, Whoom, Wham!",
-      "role": "Ben"
-    },
-    {
-      "_comment": "<ball hits the racket (from far)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
-    },
-    {
-      "content": "Bonk, Boom, Bam",
-      "role": "Lily"
-    },
-    {
-      "_comment": "<balls hits the racket (up close)>",
-      "role": "Sound",
-      "audio": "ballsHitsTheRacketUpClose",
-      "durationInMillis": 500
+      "role": "Audio",
+      "audio": "https://s3.amazonaws.com/audio-tennis/audio/bamWhamPhrasesIntro0.mp3"
     }
   ]
 }

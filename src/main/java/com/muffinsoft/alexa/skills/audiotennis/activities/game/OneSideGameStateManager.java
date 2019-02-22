@@ -85,6 +85,11 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         String nextWord = String.join(" ", words);
 
+        //TODO remove when audio will be available
+//        if (!randomOpponentAfterXWordPhrase.isEmpty()) {
+//            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
+//        }
+//        builder.addResponse(getAudioForWord(nextWord));
         if (randomOpponentAfterXWordPhrase.isEmpty()) {
             builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
         }
@@ -136,6 +141,8 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
 
+        //TODO remove when audio will be available
+//        builder.addResponse(getAudioForWord(nextWord.getWord()));
         builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
 
         this.activityProgress.setPreviousWord(nextWord.getWord());

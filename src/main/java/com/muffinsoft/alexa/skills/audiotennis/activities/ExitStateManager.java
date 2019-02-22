@@ -4,9 +4,11 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
+import com.muffinsoft.alexa.sdk.enums.SpeechType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
@@ -71,7 +73,7 @@ public class ExitStateManager extends BaseStateManager {
                         getSessionAttributes().put(INTENT, IntentType.GAME);
                         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.activityProgress.getCurrentActivity()).getRandomOpponentFirstPhrase();
                         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
-                        builder.addResponse(getDialogTranslator().translate(previousWord));
+                        builder.addResponse(getAudioForWord(previousWord));
                         return builder.build();
                     }
                 }
@@ -88,5 +90,11 @@ public class ExitStateManager extends BaseStateManager {
         builder.shouldEnd();
 
         return builder.build();
+    }
+
+    Speech getAudioForWord(String word) {
+        String path = "https://s3.amazonaws.com/audio-tennis/words/" + word + ".mp3";
+        logger.info("Try to get sound by url " + path);
+        return new Speech(SpeechType.AUDIO, path, 0);
     }
 }
