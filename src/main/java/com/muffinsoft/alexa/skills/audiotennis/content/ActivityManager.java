@@ -121,7 +121,13 @@ public class ActivityManager {
     public WordContainer getRandomWordForCompetitionActivityFromLetter(char lastLetter, Set<String> usedWords) {
         Map<Character, HashSet<String>> activityWords = dictionaryManager.getForCompetitionActivity();
 
-        HashSet<String> wordsByRule = new HashSet<>(activityWords.get(lastLetter));
+        Set<String> wordsByLetter = activityWords.get(lastLetter);
+
+        if(wordsByLetter == null) {
+            return WordContainer.empty();
+        }
+
+        HashSet<String> wordsByRule = new HashSet<>(wordsByLetter);
         wordsByRule.removeAll(usedWords);
 
         if (wordsByRule.isEmpty()) {
