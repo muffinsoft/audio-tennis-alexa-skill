@@ -31,7 +31,7 @@
           "samples": [
             "{Action}",
             "{Action} {Action}",
-            "{Action} {Action} {Action}",
+            "{Action} {Action} {Action}"
           ]
         },
         {
@@ -154,7 +154,7 @@
                 "value": "bam wham",
                 "synonyms": [
                   "b",
-                  "bam wham",
+                  "bam wham"
                 ]
               }
             },

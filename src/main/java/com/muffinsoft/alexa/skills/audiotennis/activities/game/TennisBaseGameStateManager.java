@@ -34,6 +34,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -297,5 +298,13 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         String path = "https://s3.amazonaws.com/audio-tennis/words/" + word + ".mp3";
         logger.info("Try to get sound by url " + path);
         return new Speech(SpeechType.AUDIO, path, 0);
+    }
+
+    List<Speech> getAudioForWords(List<String> words) {
+        List<Speech> result = new ArrayList<>(words.size() * 2);
+        for (String word : words) {
+            result.add(getAudioForWord(word));
+        }
+        return result;
     }
 }

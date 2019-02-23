@@ -2,7 +2,9 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
+import com.muffinsoft.alexa.sdk.enums.SpeechType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
@@ -42,5 +44,12 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
             return false;
         }
         return one.trim().equalsIgnoreCase(two.trim());
+    }
+
+    @Override
+    Speech getAudioForWord(String word) {
+        String path = "https://s3.amazonaws.com/audio-tennis/variables/" + word + ".mp3";
+        logger.info("Try to get sound by url " + path);
+        return new Speech(SpeechType.AUDIO, path, 0);
     }
 }

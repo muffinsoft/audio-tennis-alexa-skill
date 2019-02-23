@@ -191,7 +191,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
     private String appendNextRepeatedWord(DialogItem.Builder builder, String alreadyUserWord) {
 
-        builder.addResponse(getDialogTranslator().translate(alreadyUserWord, enemyRole));
+        builder.addResponse(getAudioForWord(alreadyUserWord));
 
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomEnemyLoseRepeatWordPhrase();
 

@@ -5,6 +5,7 @@ import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
 import com.muffinsoft.alexa.sdk.handlers.ResponseExceptionHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisActionIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisActionOnlyIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisCancelIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisFallbackIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisHelpIntentHandler;
@@ -14,6 +15,7 @@ import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisNavigationHomeInte
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisNoIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisResetIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSelectActivityIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSelectActivityOnlyIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisStartOverIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisStopIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSwitchActivityIntentHandler;
@@ -32,8 +34,10 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
         return Skills.standard()
                 .addRequestHandlers(
                         new TennisActionIntentHandler(IoC.provideIntentFactory()),
+                        new TennisActionOnlyIntentHandler(IoC.provideIntentFactory()),
                         new TennisMissionNavigationIntentHandler(IoC.provideIntentFactory()),
                         new TennisSelectActivityIntentHandler(IoC.provideIntentFactory()),
+                        new TennisSelectActivityOnlyIntentHandler(IoC.provideIntentFactory()),
                         new TennisYesIntentHandler(IoC.provideIntentFactory()),
                         new TennisNoIntentHandler(IoC.provideIntentFactory()),
                         new TennisNavigationHomeIntentHandler(IoC.provideIntentFactory()),

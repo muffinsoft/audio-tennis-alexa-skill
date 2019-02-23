@@ -4,6 +4,7 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
+import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
@@ -83,21 +84,12 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
     private void appendSuccessFlow(DialogItem.Builder builder, List<String> words, List<String> reactions) {
         BasePhraseContainer randomOpponentAfterXWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
 
-        String nextWord = String.join(" ", words);
-
-        //TODO remove when audio will be available
-//        if (!randomOpponentAfterXWordPhrase.isEmpty()) {
-//            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
-//        }
-//        builder.addResponse(getAudioForWord(nextWord));
-        if (randomOpponentAfterXWordPhrase.isEmpty()) {
-            builder.addResponse(getDialogTranslator().translate(nextWord, enemyRole));
+        if (!randomOpponentAfterXWordPhrase.isEmpty()) {
+            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
         }
-        else {
-            builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(randomOpponentAfterXWordPhrase, nextWord, null, null)));
-        }
+        builder.addResponse(getAudioForWords(words));
 
-        this.activityProgress.setPreviousWord(nextWord);
+        this.activityProgress.setPreviousWord(String.join(" ", words));
         this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));
 
         BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
@@ -141,8 +133,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
 
-        //TODO remove when audio will be available
-//        builder.addResponse(getAudioForWord(nextWord.getWord()));
+        builder.addResponse(getAudioForWord(nextWord.getWord()));
         builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
 
         this.activityProgress.setPreviousWord(nextWord.getWord());
