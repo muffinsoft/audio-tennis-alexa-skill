@@ -8,7 +8,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 
 import java.util.List;
 
-import static com.muffinsoft.alexa.sdk.constants.PhraseConstants.WANT_START_MISSION_PHRASE;
+import static com.muffinsoft.alexa.sdk.constants.PhraseConstants.EXIT_PHRASE;
 
 public class TennisCancelIntentHandler extends CancelIntentHandler {
 
@@ -20,7 +20,12 @@ public class TennisCancelIntentHandler extends CancelIntentHandler {
     }
 
     @Override
+    protected boolean shouldEnd() {
+        return true;
+    }
+
+    @Override
     protected List<PhraseContainer> getPhrase() {
-        return regularPhraseManager.getValueByKey(WANT_START_MISSION_PHRASE);
+        return regularPhraseManager.getValueByKey(EXIT_PHRASE);
     }
 }

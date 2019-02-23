@@ -16,11 +16,22 @@
             }
           ],
           "samples": [
+            "what about {Action}",
+            "it's {ActionAlternative}"
+          ]
+        },
+        {
+          "name": "ActionOnlyIntent",
+          "slots": [
+            {
+              "name": "Action",
+              "type": "ACTION"
+            }
+          ],
+          "samples": [
             "{Action}",
             "{Action} {Action}",
             "{Action} {Action} {Action}",
-            "what about {Action}",
-            "it's {ActionAlternative}"
           ]
         },
         {
@@ -39,7 +50,6 @@
             }
           ],
           "samples": [
-            "{Mission}",
             "{Mission} please",
             "I'd like {Mission}",
             "I'm feeling {Mission}",
@@ -47,6 +57,18 @@
             "start {Mission}",
             "let's play {Mission}",
             "I'd like to play {Mission}"
+          ]
+        },
+        {
+          "name": "SelectActivityOnlyIntent",
+          "slots": [
+            {
+              "name": "Mission",
+              "type": "MISSION"
+            }
+          ],
+          "samples": [
+            "{Mission}"
           ]
         },
         {
@@ -74,12 +96,16 @@
           ]
         },
         {
-          "name": "AMAZON.CancelIntent",
+          "name": "MenuIntent",
           "samples": [
             "new game",
             "return to the main menu",
             "different game"
           ]
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
         },
         {
           "name": "AMAZON.FallbackIntent",
