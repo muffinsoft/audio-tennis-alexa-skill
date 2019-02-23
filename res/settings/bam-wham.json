@@ -17,7 +17,8 @@
     "Bop": "wop",
     "Boosh": "woosh",
     "Bump": "wump"
-  }
+  },
+  "introImage": "https://s3.amazonaws.com/audio-tennis/images/{size}/7.jpg"
 }
 
 

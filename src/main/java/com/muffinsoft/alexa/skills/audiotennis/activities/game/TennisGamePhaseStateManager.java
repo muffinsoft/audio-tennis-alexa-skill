@@ -2,7 +2,6 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
-import com.muffinsoft.alexa.sdk.enums.SpeechType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
@@ -16,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +55,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     protected DialogItem.Builder handleLoseAnswerOfActivity(DialogItem.Builder builder) {
         Speech mistake = builder.popFirstSpeech();
         iterateEnemyGameCounter(builder);
+        builder.withAplDocument(aplManager.getScoreDocument());
+        builder.withAplTemplateData(generateAplTemplateData());
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("scores-1"));
         builder.addResponseToBegining(mistake);
         handleRoundEnd(builder);
         savePersistentAttributes();
@@ -78,9 +81,19 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
                 builder.addResponseToBegining(wrongWord);
             }
         }
+        builder.withAplDocument(aplManager.getScoreDocument());
+        builder.withAplTemplateData(generateAplTemplateData());
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("scores-2"));
         handleRoundEnd(builder);
         savePersistentAttributes();
         return builder;
+    }
+
+    private Map<String, String> generateAplTemplateData() {
+        Map<String, String> data = new HashMap<>();
+        data.put("playerScore", String.valueOf(this.activityProgress.getPlayerPointCounter()));
+        data.put("enemyScore", String.valueOf(this.activityProgress.getEnemyPointCounter()));
+        return data;
     }
 
     ActivityUnlokingStatus getUnlockingStatus() {

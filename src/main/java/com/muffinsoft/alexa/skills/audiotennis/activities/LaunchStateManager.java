@@ -11,7 +11,8 @@ import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppen
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.VariablesManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
@@ -32,7 +33,8 @@ public class LaunchStateManager extends BaseStateManager {
 
     private static final Logger logger = LogManager.getLogger(LaunchStateManager.class);
     private final ActivitiesPhraseManager activitiesPhraseManager;
-    private final VariablesManager variablesManager;
+    private final AplManager aplManager;
+    private final CardManager cardManager;
     private final ActivitySelectionAppender activitySelectionAppender;
 
     private Integer userReplyBreakpointPosition;
@@ -41,7 +43,8 @@ public class LaunchStateManager extends BaseStateManager {
     public LaunchStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
-        this.variablesManager = phraseDependencyContainer.getVariablesManager();
+        this.aplManager = settingsDependencyContainer.getAplManager();
+        this.cardManager = settingsDependencyContainer.getCardManager();
         this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
     }
 
@@ -57,6 +60,7 @@ public class LaunchStateManager extends BaseStateManager {
         DialogItem.Builder builder = DialogItem.builder();
 
         if (userProgress != null) {
+
             if (this.userProgress.getAchievements().isEmpty()) {
                 buildGreetingWithoutAwards(builder);
             }
@@ -90,7 +94,10 @@ public class LaunchStateManager extends BaseStateManager {
             logger.debug("New user was started new Game Session.");
         }
 
-        return builder.build();
+        return builder
+                .withAplDocument(aplManager.getImageDocument())
+                .addBackgroundImageUrl(cardManager.getValueByKey("greeting"))
+                .build();
     }
 
     private void appendEnemyWinsResult(DialogItem.Builder builder) {

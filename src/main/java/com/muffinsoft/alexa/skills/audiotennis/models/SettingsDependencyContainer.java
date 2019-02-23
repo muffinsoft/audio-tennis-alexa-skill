@@ -4,6 +4,7 @@ import com.muffinsoft.alexa.sdk.components.BaseDialogTranslator;
 import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppender;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ProgressManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.UserReplyManager;
@@ -16,15 +17,17 @@ public class SettingsDependencyContainer {
     private final BaseDialogTranslator dialogTranslator;
     private final ActivityManager activityManager;
     private final ProgressManager progressManager;
+    private final AplManager aplManager;
     private final ActivitySelectionAppender activitySelectionAppender;
 
-    public SettingsDependencyContainer(CardManager cardManager, UserReplyManager userReplyManager, AliasManager aliasManager, BaseDialogTranslator dialogTranslator, ActivityManager activityManager, ProgressManager progressManager, ActivitySelectionAppender activitySelectionAppender) {
+    public SettingsDependencyContainer(CardManager cardManager, UserReplyManager userReplyManager, AliasManager aliasManager, BaseDialogTranslator dialogTranslator, ActivityManager activityManager, ProgressManager progressManager, ActivitySelectionAppender activitySelectionAppender, AplManager aplManager) {
         this.cardManager = cardManager;
         this.userReplyManager = userReplyManager;
         this.aliasManager = aliasManager;
         this.dialogTranslator = dialogTranslator;
         this.activityManager = activityManager;
         this.progressManager = progressManager;
+        this.aplManager = aplManager;
         this.activitySelectionAppender = activitySelectionAppender;
     }
 
@@ -50,6 +53,10 @@ public class SettingsDependencyContainer {
 
     public ActivityManager getActivityManager() {
         return activityManager;
+    }
+
+    public AplManager getAplManager() {
+        return aplManager;
     }
 
     public ActivitySelectionAppender getActivitySelectionAppender() {

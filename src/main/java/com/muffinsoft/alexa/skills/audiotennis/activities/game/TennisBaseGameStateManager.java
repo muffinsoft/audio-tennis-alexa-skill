@@ -18,6 +18,8 @@ import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.GeneralActivityPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ProgressManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
@@ -56,12 +58,14 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     protected final RegularPhraseManager regularPhraseManager;
     final ActivitiesPhraseManager activitiesPhraseManager;
-    final AliasManager aliasManager;
     final VariablesManager variablesManager;
     final ProgressManager progressManager;
     final ActivityManager activityManager;
     final GeneralActivityPhraseManager generalActivityPhraseManager;
     final String enemyRole;
+    final CardManager cardManager;
+    final AplManager aplManager;
+    private final AliasManager aliasManager;
     private final ActivitySelectionAppender activitySelectionAppender;
     UserProgress userProgress;
     ActivityProgress activityProgress;
@@ -82,6 +86,8 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         this.variablesManager = phraseDependencyContainer.getVariablesManager();
         this.enemyRole = progressManager.getEnemyRole();
         this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
+        this.aplManager = settingsDependencyContainer.getAplManager();
+        this.cardManager = settingsDependencyContainer.getCardManager();
     }
 
     String getActionUserReply() {
@@ -176,10 +182,13 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             activitySelectionAppender.appendWithSelection(builder, userProgress, getSessionAttributes());
             getSessionAttributes().put(SWITCH_ACTIVITY_STEP, true);
             getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
+            builder.addBackgroundImageUrl(cardManager.getValueByKey("select-activity"));
         }
         else {
             initGameStatePhrase(builder);
+            addActivityImage(builder);
         }
+        builder.withAplDocument(aplManager.getImageDocument());
         return builder;
     }
 
@@ -230,6 +239,9 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         if (iterationPointer >= dialog.size()) {
             builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.READY_TO_STATE_PHRASE)));
         }
+
+        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
+        builder.withAplDocument(aplManager.getImageDocument());
 
         return builder;
     }
@@ -292,6 +304,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
         builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
         builder.addResponse(getAudioForWord(generateRandomWord()));
+    }
+
+    void addActivityImage(DialogItem.Builder builder) {
+
     }
 
     Speech getAudioForWord(String word) {

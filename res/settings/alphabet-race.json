@@ -4,5 +4,6 @@
   "iterateComplexityEveryScoresValue": 2,
   "addToComplexityValue": 2,
   "scoresToWinRoundValue": 3,
-  "startIterationIndex": 3
+  "startIterationIndex": 3,
+  "introImage": "https://s3.amazonaws.com/audio-tennis/images/{size}/4.jpg"
 }

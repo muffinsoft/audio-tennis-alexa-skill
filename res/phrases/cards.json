@@ -1,3 +1,7 @@
 {
-  "welcome": "Samurai Chef"
+  "select-activity": "https://s3.amazonaws.com/audio-tennis/images/{size}/1.jpg",
+  "greeting": "https://s3.amazonaws.com/audio-tennis/images/{size}/2.jpg",
+  "alphabet-race-letters": "https://s3.amazonaws.com/audio-tennis/images/{size}/5.jpg",
+  "scores-1": "https://s3.amazonaws.com/audio-tennis/images/{size}/9.jpg",
+  "scores-2": "https://s3.amazonaws.com/audio-tennis/images/{size}/10.jpg"
 }

@@ -14,6 +14,7 @@ public class ActivitySettings {
     private Map<String, String> wordsToReactions;
     private int startIterationIndex;
     private int maxComplexityValue;
+    private String introImage;
 
     public String getName() {
         return name;
@@ -93,5 +94,13 @@ public class ActivitySettings {
 
     public void setMaxComplexityValue(int maxComplexityValue) {
         this.maxComplexityValue = maxComplexityValue;
+    }
+
+    public String getIntroImage() {
+        return introImage;
+    }
+
+    public void setIntroImage(String introImage) {
+        this.introImage = introImage;
     }
 }

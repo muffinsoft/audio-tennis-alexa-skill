@@ -8,6 +8,8 @@ import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
@@ -25,12 +27,16 @@ public class ActivitySelectionAppender {
 
     private final DialogTranslator dialogTranslator;
     private final RegularPhraseManager regularPhraseManager;
-    private ActivitiesPhraseManager activitiesPhraseManager;
+    private final ActivitiesPhraseManager activitiesPhraseManager;
+    private final AplManager aplManager;
+    private final CardManager cardManager;
 
-    public ActivitySelectionAppender(PhraseDependencyContainer phraseDependencyContainer, DialogTranslator dialogTranslator) {
+    public ActivitySelectionAppender(PhraseDependencyContainer phraseDependencyContainer, AplManager aplManager, CardManager cardManager, DialogTranslator dialogTranslator) {
         this.dialogTranslator = dialogTranslator;
         this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
+        this.aplManager = aplManager;
+        this.cardManager = cardManager;
     }
 
     public boolean appendWithSelection(DialogItem.Builder builder, UserProgress userProgress, Map<String, Object> sessionAttributes) {
@@ -53,7 +59,10 @@ public class ActivitySelectionAppender {
                 break;
         }
 
-        builder.addResponse(dialogTranslator.translate(dialog));
+        builder
+                .withAplDocument(aplManager.getImageDocument())
+                .addBackgroundImageUrl(cardManager.getValueByKey("select-activity"))
+                .addResponse(dialogTranslator.translate(dialog));
         return true;
     }
 

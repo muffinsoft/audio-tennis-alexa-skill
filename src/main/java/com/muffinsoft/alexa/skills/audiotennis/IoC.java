@@ -8,6 +8,7 @@ import com.muffinsoft.alexa.skills.audiotennis.components.TennisIntentFabric;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CharactersManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.GeneralActivityPhraseManager;
@@ -28,6 +29,7 @@ public class IoC {
     private static final UserReplyManager USER_REPLY_MANAGER;
     private static final ProgressManager PROGRESS_MANAGER;
     private static final AliasManager ALIAS_MANAGER;
+    private static final AplManager APL_MANAGER;
     private static final SettingsDependencyContainer SETTINGS_DEPENDENCY_CONTAINER;
     private static final PhraseDependencyContainer PHRASE_DEPENDENCY_CONTAINER;
     private static final TennisIntentFabric INTENT_FABRIC;
@@ -51,12 +53,13 @@ public class IoC {
         VARIABLES_MANAGER = new VariablesManager("phrases/variables.json");
         BASE_DIALOG_TRANSLATOR = new BaseDialogTranslator(CHARACTERS_MANAGER.getContainer(), SOUNDS_MANAGER.getContainer());
         ACTIVITIES_PHRASE_MANAGER = new ActivitiesPhraseManager();
+        APL_MANAGER = new AplManager();
         GENERAL_ACTIVITY_PHRASE_MANAGER = new GeneralActivityPhraseManager();
         DICTIONARY_MANAGER = new DictionaryManager();
         ACTIVITY_MANAGER = new ActivityManager(DICTIONARY_MANAGER);
         PHRASE_DEPENDENCY_CONTAINER = new PhraseDependencyContainer(REGULAR_PHRASE_MANAGER, ACTIVITIES_PHRASE_MANAGER, GENERAL_ACTIVITY_PHRASE_MANAGER, VARIABLES_MANAGER);
-        ACTIVITY_SELECTION_APPENDER = new ActivitySelectionAppender(PHRASE_DEPENDENCY_CONTAINER, BASE_DIALOG_TRANSLATOR);
-        SETTINGS_DEPENDENCY_CONTAINER = new SettingsDependencyContainer(CARD_MANAGER, USER_REPLY_MANAGER, ALIAS_MANAGER, BASE_DIALOG_TRANSLATOR, ACTIVITY_MANAGER, PROGRESS_MANAGER, ACTIVITY_SELECTION_APPENDER);
+        ACTIVITY_SELECTION_APPENDER = new ActivitySelectionAppender(PHRASE_DEPENDENCY_CONTAINER, APL_MANAGER, CARD_MANAGER, BASE_DIALOG_TRANSLATOR);
+        SETTINGS_DEPENDENCY_CONTAINER = new SettingsDependencyContainer(CARD_MANAGER, USER_REPLY_MANAGER, ALIAS_MANAGER, BASE_DIALOG_TRANSLATOR, ACTIVITY_MANAGER, PROGRESS_MANAGER, ACTIVITY_SELECTION_APPENDER, APL_MANAGER);
         INTENT_FABRIC = new TennisIntentFabric(SETTINGS_DEPENDENCY_CONTAINER, PHRASE_DEPENDENCY_CONTAINER);
     }
 
