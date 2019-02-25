@@ -71,6 +71,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         if (builder.getSpeechSize() >= 2) {
             wrongWord = builder.popFirstSpeech();
             mistakeDescription = builder.popFirstSpeech();
+            builder.removeAllSpeeches();
         }
         iteratePlayerGameCounter(builder);
         if (builder.getSpeechSize() >= 2) {
@@ -151,7 +152,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         getSessionAttributes().remove(SWITCH_UNLOCK_ACTIVITY_STEP);
         getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE)));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(WANT_RESTART_PHRASE), true));
     }
 
     void handlerContinueRePrompt(DialogItem.Builder builder) {
@@ -161,7 +162,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         getSessionAttributes().put(ASK_RANDOM_SWITCH_ACTIVITY_STEP, true);
 
         List<PhraseContainer> valueByKey = regularPhraseManager.getValueByKey(TRY_SOMETHING_ELSE_PHRASE);
-        builder.addResponse(getDialogTranslator().translate(valueByKey));
+        builder.addResponse(getDialogTranslator().translate(valueByKey, true));
     }
 
     void handleEnterNewActivity(DialogItem.Builder builder) {
@@ -194,7 +195,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
                     dialog = Collections.emptyList();
             }
 
-            builder.addResponse(getDialogTranslator().translate(dialog));
+            builder.addResponse(getDialogTranslator().translate(dialog, true));
             this.activityProgress.setCurrentActivity(this.currentActivityType);
             this.activityProgress.setPossibleActivity(nextActivity);
             this.activityProgress.addUnlockedActivity(this.currentActivityType);
@@ -216,37 +217,37 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         BasePhraseContainer randomVictoryPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomVictoryPhrase();
         if (randomVictoryPhrase.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomVictoryPhrase));
+            builder.addResponse(getDialogTranslator().translate(randomVictoryPhrase, true));
         }
         else {
-            builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomVictoryPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+            builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomVictoryPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false), true));
         }
 
         BasePhraseContainer randomPlayerWinGame = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinGame();
         if (randomPlayerWinGame.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomPlayerWinGame));
+            builder.addResponse(getDialogTranslator().translate(randomPlayerWinGame, true));
         }
         else {
-            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false), true));
         }
 
         BasePhraseContainer randomPlayerWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPlayerWinScore();
         if (randomPlayerWinScore.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomPlayerWinScore));
+            builder.addResponse(getDialogTranslator().translate(randomPlayerWinScore, true));
         }
         else {
-            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false, true)));
+            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomPlayerWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false, true), true));
         }
 
         BasePhraseContainer randomCallToCelebrate = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomCallToCelebrate();
-        builder.addResponse(getDialogTranslator().translate(randomCallToCelebrate));
+        builder.addResponse(getDialogTranslator().translate(randomCallToCelebrate, false));
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(FIREWORK_PHRASE)));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(FIREWORK_PHRASE), false));
 
         if (activityProgress.isTimeToLevelUp(settingsForActivity)) {
             activityProgress.updateWithDifficultSettings(settingsForActivity);
             BasePhraseContainer randomLevelUps = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomLevelUps();
-            builder.addResponse(getDialogTranslator().translate(randomLevelUps));
+            builder.addResponse(getDialogTranslator().translate(randomLevelUps, true));
         }
 
         if (activityProgress.isTimeToAddNickName()) {
@@ -255,11 +256,11 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             String nextNickName = progressManager.findNextNickName(this.activityProgress.getCurrentNickNameLevel());
             BasePhraseContainer randomPromotions = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomPromotions();
             if (randomPromotions.getRole().equals("Audio")) {
-                builder.addResponse(getDialogTranslator().translate(randomPromotions));
-                builder.addResponse(getDialogTranslator().translate(nextNickName));
+                builder.addResponse(getDialogTranslator().translate(randomPromotions, true));
+                builder.addResponse(getDialogTranslator().translate(nextNickName, true));
             }
             else {
-                builder.addResponse(getDialogTranslator().translate(replaceNickName(randomPromotions, nextNickName)));
+                builder.addResponse(getDialogTranslator().translate(replaceNickName(randomPromotions, nextNickName), true));
             }
         }
     }
@@ -270,34 +271,34 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         BasePhraseContainer randomEnemyWinGame = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinGame();
         if (randomEnemyWinGame.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomEnemyWinGame));
+            builder.addResponse(getDialogTranslator().translate(randomEnemyWinGame, true));
         }
         else {
-            builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+            builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinGame, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false), true));
         }
 
         BasePhraseContainer randomEnemyWinScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWinScore();
         if (randomEnemyWinScore.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomEnemyWinScore));
-            builder.addResponse(getDialogTranslator().translate(variablesManager.getValueByKey(String.valueOf(this.activityProgress.getEnemyGameCounter()))));
+            builder.addResponse(getDialogTranslator().translate(randomEnemyWinScore, true));
+            builder.addResponse(getDialogTranslator().translate(variablesManager.getValueByKey(String.valueOf(this.activityProgress.getEnemyGameCounter())), true));
             String link = randomEnemyWinScore.getAudio();
             String key = link.substring(0, link.indexOf('_'));
             List<BasePhraseContainer> allPhrases = generalActivityPhraseManager.getGeneralActivityPhrases().getAllEnemyWinScoreBySameKey(key);
             allPhrases.remove(randomEnemyWinScore);
             if (!allPhrases.isEmpty()) {
-                builder.addResponse(getDialogTranslator().translate(allPhrases.get(0)));
+                builder.addResponse(getDialogTranslator().translate(allPhrases.get(0), true));
             }
         }
         else {
-            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false, true)));
+            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomEnemyWinScore, this.activityProgress.getEnemyGameCounter(), this.activityProgress.getPlayerGameCounter(), false, true), true));
         }
 
         BasePhraseContainer randomDefeatPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomDefeatPhrase();
         if (randomDefeatPhrase.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomDefeatPhrase));
+            builder.addResponse(getDialogTranslator().translate(randomDefeatPhrase, true));
         }
         else {
-            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomDefeatPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false)));
+            builder.addResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomDefeatPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false), true));
         }
     }
 
@@ -305,7 +306,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         BasePhraseContainer randomTotalScore = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomTotalScore();
 
         if (randomTotalScore.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomTotalScore));
+            builder.addResponse(getDialogTranslator().translate(randomTotalScore, true));
         }
         else {
             BasePhraseContainer newPhraseContainer;
@@ -316,13 +317,13 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             else {
                 newPhraseContainer = replaceScoresPlaceholders(randomTotalScore, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), true, false);
             }
-            builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+            builder.addResponse(getDialogTranslator().translate(newPhraseContainer, true));
         }
     }
 
     void iteratePlayerScoreCounter(DialogItem.Builder builder) {
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerWonOnceAtGamePhrase();
-        builder.addResponse(getDialogTranslator().translate(phraseContainer));
+        builder.addResponse(getDialogTranslator().translate(phraseContainer, true));
         this.activityProgress.iteratePlayerPointCounter();
         this.userProgress.setPlayerPointWinInRow(this.activityProgress.getPlayerPointWinInRow());
         addPointScores(builder, true);
@@ -331,7 +332,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     void iterateEnemyScoreCounter(DialogItem.Builder builder) {
         BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
-        builder.addResponse(getDialogTranslator().translate(randomPhrase));
+        builder.addResponse(getDialogTranslator().translate(randomPhrase, true));
         this.activityProgress.iterateEnemyPointCounter();
         this.userProgress.setEnemyPointWinInRow(this.activityProgress.getEnemyPointWinInRow());
         addPointScores(builder, false);

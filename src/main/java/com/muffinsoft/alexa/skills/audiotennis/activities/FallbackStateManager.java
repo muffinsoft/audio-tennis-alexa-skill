@@ -27,7 +27,7 @@ public class FallbackStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder();
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.UNKNOWN_WORD_PHRASE)));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.UNKNOWN_WORD_PHRASE), true));
 
         getSessionAttributes().put(SessionConstants.INTENT, IntentType.GAME);
 

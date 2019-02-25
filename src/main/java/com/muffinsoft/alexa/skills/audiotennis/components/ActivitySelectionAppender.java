@@ -46,7 +46,7 @@ public class ActivitySelectionAppender {
         switch (userProgress.getUnlockedActivities().size()) {
             case 0:
             case 1:
-                builder.addResponse(dialogTranslator.translate(getFirstActivityIntro(sessionAttributes)));
+                builder.addResponse(dialogTranslator.translate(getFirstActivityIntro(sessionAttributes), true));
                 return false;
             case 2:
                 dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_TWO_PHRASE);
@@ -62,7 +62,7 @@ public class ActivitySelectionAppender {
         builder
                 .withAplDocument(aplManager.getImageDocument())
                 .addBackgroundImageUrl(cardManager.getValueByKey("select-activity"))
-                .addResponse(dialogTranslator.translate(dialog));
+                .addResponse(dialogTranslator.translate(dialog, true));
         return true;
     }
 

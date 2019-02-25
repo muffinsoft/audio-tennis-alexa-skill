@@ -60,7 +60,7 @@ public class ResetStateManager extends BaseStateManager {
         if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.NO)) {
             getSessionAttributes().put(INTENT, IntentType.GAME);
             getSessionAttributes().put(STATE_TYPE, StateType.ACTIVITY_INTRO);
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE), true));
         }
         else if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.YES)) {
             getSessionAttributes().remove(ACTIVITY_PROGRESS);
@@ -70,7 +70,7 @@ public class ResetStateManager extends BaseStateManager {
             savePersistentAttributes();
         }
         else {
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE), true));
         }
 
         return builder.build();
@@ -90,12 +90,12 @@ public class ResetStateManager extends BaseStateManager {
                 this.getSessionAttributes().put(INTENT, GAME);
                 break;
             }
-            builder.addResponse(getDialogTranslator().translate(phraseSettings));
+            builder.addResponse(getDialogTranslator().translate(phraseSettings, true));
         }
 
         if (index >= dialog.size()) {
             this.getSessionAttributes().put(STATE_TYPE, StateType.READY);
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.READY_TO_STATE_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.READY_TO_STATE_PHRASE), true));
         }
     }
 }

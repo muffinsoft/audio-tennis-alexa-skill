@@ -25,7 +25,7 @@ public class ExitWithoutConfirmationStateManager extends BaseStateManager {
     public DialogItem nextResponse() {
         DialogItem.Builder builder = DialogItem.builder();
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_PHRASE)));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_PHRASE), true));
         builder.shouldEnd();
 
         return builder.build();

@@ -113,7 +113,7 @@ public class LaunchStateManager extends BaseStateManager {
     private void replaceScores(DialogItem.Builder builder, BasePhraseContainer randomPlayerLastScore) {
         String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
-        builder.addResponse(getDialogTranslator().translate(newPhraseContainer));
+        builder.addResponse(getDialogTranslator().translate(newPhraseContainer, true));
     }
 
     private void buildInitialGreeting(DialogItem.Builder builder) {
@@ -133,7 +133,7 @@ public class LaunchStateManager extends BaseStateManager {
                 this.getSessionAttributes().put(SessionConstants.USER_REPLY_BREAKPOINT, index);
                 break;
             }
-            builder.addResponse(getDialogTranslator().translate(phraseSettings));
+            builder.addResponse(getDialogTranslator().translate(phraseSettings, true));
         }
     }
 
@@ -151,7 +151,7 @@ public class LaunchStateManager extends BaseStateManager {
                 }
             }
         }
-        builder.addResponse(getDialogTranslator().translate(newDialog));
+        builder.addResponse(getDialogTranslator().translate(newDialog, true));
     }
 
     private void buildGreetingWithAwards(DialogItem.Builder builder) {
@@ -169,7 +169,7 @@ public class LaunchStateManager extends BaseStateManager {
                 }
             }
         }
-        builder.addResponse(getDialogTranslator().translate(newDialog));
+        builder.addResponse(getDialogTranslator().translate(newDialog, true));
     }
 
     private String replaceWinAndLosePlaceholders(String inputString, Integer win, Integer lose) {

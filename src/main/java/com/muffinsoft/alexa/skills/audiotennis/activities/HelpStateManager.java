@@ -27,7 +27,6 @@ import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ACTIVITY_RHYME_MATCH_HELP_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.GENERAL_HELP_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.HELP_REPEAT_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.READY_TO_PLAY_PHRASE;
 
 public class HelpStateManager extends BaseStateManager {
 
@@ -54,7 +53,7 @@ public class HelpStateManager extends BaseStateManager {
 
         List<PhraseContainer> generalHelp = regularPhraseManager.getValueByKey(GENERAL_HELP_PHRASE);
 
-        builder.addResponse(getDialogTranslator().translate(generalHelp));
+        builder.addResponse(getDialogTranslator().translate(generalHelp, true));
 
         if (this.activityProgress != null && this.activityProgress.getCurrentActivity() != null) {
             List<PhraseContainer> activityHelp = Collections.emptyList();
@@ -72,10 +71,10 @@ public class HelpStateManager extends BaseStateManager {
                     activityHelp = regularPhraseManager.getValueByKey(ACTIVITY_ALPHABET_RACE_HELP_PHRASE);
                     break;
             }
-            builder.addResponse(getDialogTranslator().translate(activityHelp));
+            builder.addResponse(getDialogTranslator().translate(activityHelp, true));
         }
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(HELP_REPEAT_PHRASE)));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(HELP_REPEAT_PHRASE), true));
 //        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(READY_TO_PLAY_PHRASE)));
 
         getSessionAttributes().put(SessionConstants.INTENT, IntentType.GAME);

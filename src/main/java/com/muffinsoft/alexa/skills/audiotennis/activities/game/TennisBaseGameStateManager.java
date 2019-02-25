@@ -17,7 +17,6 @@ import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.AliasManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.GeneralActivityPhraseManager;
@@ -36,7 +35,6 @@ import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,10 +60,8 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     final ProgressManager progressManager;
     final ActivityManager activityManager;
     final GeneralActivityPhraseManager generalActivityPhraseManager;
-    final String enemyRole;
     final CardManager cardManager;
     final AplManager aplManager;
-    private final AliasManager aliasManager;
     private final ActivitySelectionAppender activitySelectionAppender;
     UserProgress userProgress;
     ActivityProgress activityProgress;
@@ -78,13 +74,11 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     TennisBaseGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
         this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
-        this.aliasManager = settingsDependencyContainer.getAliasManager();
         this.progressManager = settingsDependencyContainer.getProgressManager();
         this.activityManager = settingsDependencyContainer.getActivityManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
         this.generalActivityPhraseManager = phraseDependencyContainer.getGeneralActivityPhraseManager();
         this.variablesManager = phraseDependencyContainer.getVariablesManager();
-        this.enemyRole = progressManager.getEnemyRole();
         this.activitySelectionAppender = settingsDependencyContainer.getActivitySelectionAppender();
         this.aplManager = settingsDependencyContainer.getAplManager();
         this.cardManager = settingsDependencyContainer.getCardManager();
@@ -170,7 +164,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     @Override
     protected DialogItem.Builder handleInterception(DialogItem.Builder builder) {
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(UNKNOWN_WORD_PHRASE)));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(UNKNOWN_WORD_PHRASE), true));
 
         return builder;
     }
@@ -207,9 +201,13 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             word = this.activityProgress.getPreviousWord();
         }
 
+
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
-        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
-        builder.addResponse(getAudioForWord(word));
+        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase, false));
+
+        for (String pWord : word.split(" ")) {
+            builder.addResponse(getAudioForWord(pWord));
+        }
 
         return builder;
     }
@@ -218,11 +216,13 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     protected DialogItem.Builder handleRestartState(DialogItem.Builder builder) {
 
         if (UserReplyComparator.compare(getUserReply(SlotName.CONFIRMATION), UserReplies.NO)) {
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_PHRASE), true));
             builder.shouldEnd();
         }
         else {
             initGameStatePhrase(builder);
+            builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
+            builder.withAplDocument(aplManager.getImageDocument());
         }
         return builder;
     }
@@ -237,7 +237,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         int iterationPointer = wrapAnyUserResponse(dialog, builder);
 
         if (iterationPointer >= dialog.size()) {
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.READY_TO_STATE_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.READY_TO_STATE_PHRASE), true));
         }
 
         builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
@@ -267,7 +267,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
                 this.stateType = StateType.ACTIVITY_INTRO;
                 break;
             }
-            builder.addResponse(getDialogTranslator().translate(phraseSettings));
+            builder.addResponse(getDialogTranslator().translate(phraseSettings, true));
         }
         return index;
     }
@@ -290,7 +290,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     void appendNextRoundPhrase(DialogItem.Builder builder) {
         BasePhraseContainer randomOpponentFirstPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomNextRound();
-        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase, false));
     }
 
     private void initGameStatePhrase(DialogItem.Builder builder) {
@@ -302,8 +302,11 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         }
 
         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
-        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
-        builder.addResponse(getAudioForWord(generateRandomWord()));
+        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase, false));
+
+        for (String word : generateRandomWord().split(" ")) {
+            builder.addResponse(getAudioForWord(word));
+        }
     }
 
     void addActivityImage(DialogItem.Builder builder) {
@@ -314,13 +317,5 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         String path = "https://s3.amazonaws.com/audio-tennis/words/" + word + ".mp3";
         logger.info("Try to get sound by url " + path);
         return new Speech(SpeechType.AUDIO, path, 0);
-    }
-
-    List<Speech> getAudioForWords(List<String> words) {
-        List<Speech> result = new ArrayList<>(words.size() * 2);
-        for (String word : words) {
-            result.add(getAudioForWord(word));
-        }
-        return result;
     }
 }

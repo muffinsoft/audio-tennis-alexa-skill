@@ -33,18 +33,18 @@
               "items": [
                 {
                   "type": "Text",
-                  "color": "#FFFFFF",
+                  "color": "#000000",
                   "text": "${payload.templateData.playerScore}",
                   "position": "absolute",
-                  "right": "50",
+                  "right": "35%",
                   "fontSize": "32dp"
                 },
                 {
                   "type": "Text",
-                  "color": "#FFFFFF",
+                  "color": "#000000",
                   "text": "${payload.templateData.enemyScore}",
                   "position": "absolute",
-                  "left": "50",
+                  "left": "35%",
                   "fontSize": "32dp"
                 }
               ]

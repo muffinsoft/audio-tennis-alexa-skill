@@ -8,6 +8,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.DictionaryManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -61,7 +62,12 @@ public class ActivityManager {
             Map<String, String> wordsToReactions = activitySettings.getWordsToReactions();
 
             Set<String> strings = new HashSet<>(wordsToReactions.keySet());
-            strings.removeAll(usedWords);
+            if (usedWords.size() > 1) {
+                strings.remove(Arrays.asList(usedWords.toArray()).get(0));
+            }
+            else {
+                strings.removeAll(usedWords);
+            }
             return getWordWithRhyme(wordsToReactions, strings);
         }
         else if (activityType == ActivityType.RHYME_MATCH) {
@@ -134,7 +140,7 @@ public class ActivityManager {
 
         Set<String> wordsByLetter = activityWords.get(lastLetter);
 
-        if(wordsByLetter == null) {
+        if (wordsByLetter == null) {
             return WordContainer.empty();
         }
 

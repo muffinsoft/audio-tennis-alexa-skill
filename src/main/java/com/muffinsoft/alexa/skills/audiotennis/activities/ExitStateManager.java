@@ -72,8 +72,10 @@ public class ExitStateManager extends BaseStateManager {
                     if (previousWord != null && activityProgress.getCurrentActivity() != null) {
                         getSessionAttributes().put(INTENT, IntentType.GAME);
                         BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.activityProgress.getCurrentActivity()).getRandomOpponentFirstPhrase();
-                        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
-                        builder.addResponse(getAudioForWord(previousWord));
+                        builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase, false));
+                        for (String pWord : previousWord.split(" ")) {
+                            builder.addResponse(getAudioForWord(pWord));
+                        }
                         return builder.build();
                     }
                 }
@@ -81,12 +83,12 @@ public class ExitStateManager extends BaseStateManager {
 
             getSessionAttributes().put(INTENT, IntentType.GAME);
             getSessionAttributes().put(STATE_TYPE, StateType.RETURN_TO_GAME);
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(RETURN_TO_GAME_PHRASE), true));
 
             return builder.build();
         }
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_AFTER_CANCEL_PHRASE)));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(EXIT_AFTER_CANCEL_PHRASE), true));
         builder.shouldEnd();
 
         return builder.build();

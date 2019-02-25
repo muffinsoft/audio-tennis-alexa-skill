@@ -4,16 +4,15 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
-import com.muffinsoft.alexa.sdk.model.Speech;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.Collections.singleton;
 
 abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
 
@@ -28,7 +27,7 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
         List<String> reactions = new ArrayList<>();
 
         for (int i = 0; i < this.activityProgress.getComplexity(); i++) {
-            WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType, singleton(this.activityProgress.getPreviousWord()));
+            WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType, new HashSet<>(Arrays.asList(this.activityProgress.getPreviousWord().split(" "))));
             if (nextWord.isEmpty()) {
                 return handleMistakeAnswer(builder);
             }
@@ -85,15 +84,17 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
         BasePhraseContainer randomOpponentAfterXWordPhrase = phrasesForActivity.getRandomOpponentReactionAfterXWordsPhrase();
 
         if (!randomOpponentAfterXWordPhrase.isEmpty()) {
-            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase));
+            builder.addResponse(getDialogTranslator().translate(randomOpponentAfterXWordPhrase, false));
         }
-        builder.addResponse(getAudioForWords(words));
+        for (String word : words) {
+            builder.addResponse(getAudioForWord(word));
+        }
 
         this.activityProgress.setPreviousWord(String.join(" ", words));
         this.activityProgress.setRequiredUserReaction(String.join(" ", reactions));
 
         BasePhraseContainer randomOpponentAfterWordPhrase = phrasesForActivity.getRandomOpponentAfterWordPhrase();
-        builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase));
+        builder.addResponse(getDialogTranslator().translate(randomOpponentAfterWordPhrase, false));
     }
 
     @Override
@@ -128,13 +129,12 @@ abstract class OneSideGameStateManager extends TennisGamePhaseStateManager {
             this.activityProgress.setSuccessCounter(0);
 
             BasePhraseContainer randomOpponentFirstPhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomOpponentFirstPhrase();
-            builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase));
+            builder.addResponse(getDialogTranslator().translate(randomOpponentFirstPhrase, false));
         }
 
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType);
 
         builder.addResponse(getAudioForWord(nextWord.getWord()));
-        builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
 
         this.activityProgress.setPreviousWord(nextWord.getWord());
         this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());

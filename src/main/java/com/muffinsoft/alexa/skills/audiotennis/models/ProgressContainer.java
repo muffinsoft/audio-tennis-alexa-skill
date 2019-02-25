@@ -10,15 +10,6 @@ public class ProgressContainer {
 
     private Map<String, Integer> activitiesOrder;
     private Map<String, String> nickNamesByLevel;
-    private String enemyRole;
-
-    public String getEnemyRole() {
-        return enemyRole;
-    }
-
-    public void setEnemyRole(String enemyRole) {
-        this.enemyRole = enemyRole;
-    }
 
     public Map<String, Integer> getActivitiesOrder() {
         return activitiesOrder;

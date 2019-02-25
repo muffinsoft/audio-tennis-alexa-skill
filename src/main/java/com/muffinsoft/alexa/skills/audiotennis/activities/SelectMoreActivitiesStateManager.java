@@ -28,7 +28,7 @@ public class SelectMoreActivitiesStateManager extends BaseStateManager {
         DialogItem.Builder builder = DialogItem.builder();
 
         List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_OTHERS);
-        builder.addResponse(getDialogTranslator().translate(dialog));
+        builder.addResponse(getDialogTranslator().translate(dialog, true));
 
         return builder.build();
     }

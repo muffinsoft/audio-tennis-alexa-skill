@@ -54,7 +54,7 @@ public class ResetConfirmationStateManager extends BaseStateManager {
             dialog = regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE);
         }
 
-        DialogItem.Builder builder = DialogItem.builder().addResponse(getDialogTranslator().translate(dialog));
+        DialogItem.Builder builder = DialogItem.builder().addResponse(getDialogTranslator().translate(dialog, true));
 
         return builder.build();
     }

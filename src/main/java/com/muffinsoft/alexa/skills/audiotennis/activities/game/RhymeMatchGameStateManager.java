@@ -62,7 +62,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
     protected DialogItem.Builder handleMistakeAnswer(DialogItem.Builder builder) {
 
         BasePhraseContainer playerLosePhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerLoseWrongWordPhrase();
-        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), null, this.activityProgress.getPreviousWord())));
+        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), null, this.activityProgress.getPreviousWord()), true));
 
         this.activityProgress.iterateMistakeCount();
 
@@ -82,12 +82,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
                 handlerContinueRePrompt(builder);
                 break;
             case PROCEED:
-                if (playerLosePhrase.getRole().equals("Audio")) {
-                    builder.addResponse(getAudioForWord(nextWord.getWord()));
-                }
-                else {
-                    builder.addResponse(getDialogTranslator().translate(nextWord.getWord(), enemyRole));
-                }
+                builder.addResponse(getAudioForWord(nextWord.getWord()));
                 break;
         }
 

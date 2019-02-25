@@ -86,7 +86,7 @@ public class InitialGreetingStateManager extends BaseStateManager {
                 this.getSessionAttributes().put(INTENT, INITIAL_GREETING);
                 break;
             }
-            builder.addResponse(getDialogTranslator().translate(phraseSettings));
+            builder.addResponse(getDialogTranslator().translate(phraseSettings, true));
         }
 
         if (index >= dialog.size()) {
@@ -115,12 +115,12 @@ public class InitialGreetingStateManager extends BaseStateManager {
                 this.getSessionAttributes().put(INTENT, GAME);
                 break;
             }
-            builder.addResponse(getDialogTranslator().translate(phraseSettings));
+            builder.addResponse(getDialogTranslator().translate(phraseSettings, true));
         }
 
         if (index >= dialog.size()) {
             this.getSessionAttributes().put(STATE_TYPE, StateType.READY);
-            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.READY_TO_STATE_PHRASE)));
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(PhraseConstants.READY_TO_STATE_PHRASE), true));
         }
     }
 }
