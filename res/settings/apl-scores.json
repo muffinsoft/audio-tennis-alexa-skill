@@ -36,18 +36,92 @@
                   "color": "#000000",
                   "text": "${payload.templateData.playerScore}",
                   "position": "absolute",
-                  "right": "35%",
-                  "fontSize": "32dp"
+                  "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '30%' : '32%') : '29%'}",
+                  "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
                 },
                 {
                   "type": "Text",
                   "color": "#000000",
                   "text": "${payload.templateData.enemyScore}",
                   "position": "absolute",
-                  "left": "35%",
-                  "fontSize": "32dp"
+                  "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '32%' : '32%') : '29%'}",
+                  "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
                 }
               ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "2": {
+    "type": "Alexa.Presentation.APL.RenderDocument",
+    "version": "1.0",
+    "theme": "dark",
+    "mainTemplate": {
+      "description": "Audio Tennis GUI",
+      "parameters": [
+        "payload"
+      ],
+      "items": [
+        {
+          "type": "Pager",
+          "id": "picCarousel",
+          "width": "100%",
+          "height": "100%",
+          "alignItems": "center",
+          "justifyContent": "center",
+          "navigation": "none",
+          "items": [
+            {
+              "type": "Container",
+              "width": "100%",
+              "height": "100%",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "items": [
+                {
+                  "type": "Image",
+                  "source": "${payload.templateData.backgroundImage}",
+                  "position": "absolute",
+                  "width": "100vw",
+                  "height": "100vh",
+                  "scale": "fill"
+                },
+                {
+                  "type": "Container",
+                  "width": "100%",
+                  "height": "100%",
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "items": [
+                    {
+                      "type": "Text",
+                      "color": "#000000",
+                      "text": "${payload.templateData.enemyScore}",
+                      "position": "absolute",
+                      "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '30%' : '32%') : '29%'}",
+                      "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
+                    },
+                    {
+                      "type": "Text",
+                      "color": "#000000",
+                      "text": "${payload.templateData.playerScore}",
+                      "position": "absolute",
+                      "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '32%' : '32%') : '29%'}",
+                      "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Image",
+              "source": "${payload.templateData.backgroundImage1}",
+              "position": "absolute",
+              "width": "100vw",
+              "height": "100vh",
+              "scale": "fill"
             }
           ]
         }

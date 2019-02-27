@@ -56,8 +56,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         Speech mistake = builder.popFirstSpeech();
         iterateEnemyGameCounter(builder);
         builder.withAplDocument(aplManager.getScoreDocument());
-        builder.withAplTemplateData(generateAplTemplateData());
-        builder.addBackgroundImageUrl(cardManager.getValueByKey("scores-1"));
+        builder.withAplTemplateData(generateAplTemplateGameData());
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("game-score"));
+        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
         builder.addResponseToBegining(mistake);
         handleRoundEnd(builder);
         savePersistentAttributes();
@@ -83,17 +84,25 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             }
         }
         builder.withAplDocument(aplManager.getScoreDocument());
-        builder.withAplTemplateData(generateAplTemplateData());
-        builder.addBackgroundImageUrl(cardManager.getValueByKey("scores-2"));
+        builder.withAplTemplateData(generateAplTemplateGameData());
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("game-score"));
+        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
         handleRoundEnd(builder);
         savePersistentAttributes();
         return builder;
     }
 
-    private Map<String, String> generateAplTemplateData() {
+    private Map<String, String> generateAplTemplatePointData() {
         Map<String, String> data = new HashMap<>();
         data.put("playerScore", String.valueOf(this.activityProgress.getPlayerPointCounter()));
         data.put("enemyScore", String.valueOf(this.activityProgress.getEnemyPointCounter()));
+        return data;
+    }
+
+    private Map<String, String> generateAplTemplateGameData() {
+        Map<String, String> data = new HashMap<>();
+        data.put("playerScore", String.valueOf(this.activityProgress.getPlayerGameCounter()));
+        data.put("enemyScore", String.valueOf(this.activityProgress.getEnemyGameCounter()));
         return data;
     }
 
@@ -323,8 +332,12 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     void iteratePlayerScoreCounter(DialogItem.Builder builder) {
         BasePhraseContainer phraseContainer = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerWonOnceAtGamePhrase();
-        builder.addResponse(getDialogTranslator().translate(phraseContainer, true));
         this.activityProgress.iteratePlayerPointCounter();
+        builder.addResponse(getDialogTranslator().translate(phraseContainer, true));
+        builder.withAplDocument(aplManager.getScoreDocument());
+        builder.withAplTemplateData(generateAplTemplatePointData());
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("point-score"));
+        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
         this.userProgress.setPlayerPointWinInRow(this.activityProgress.getPlayerPointWinInRow());
         addPointScores(builder, true);
         savePersistentAttributes();
@@ -332,8 +345,12 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     void iterateEnemyScoreCounter(DialogItem.Builder builder) {
         BasePhraseContainer randomPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomEnemyWonOnce();
-        builder.addResponse(getDialogTranslator().translate(randomPhrase, true));
         this.activityProgress.iterateEnemyPointCounter();
+        builder.addResponse(getDialogTranslator().translate(randomPhrase, true));
+        builder.withAplDocument(aplManager.getScoreDocument());
+        builder.withAplTemplateData(generateAplTemplatePointData());
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("point-score"));
+        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
         this.userProgress.setEnemyPointWinInRow(this.activityProgress.getEnemyPointWinInRow());
         addPointScores(builder, false);
         savePersistentAttributes();
