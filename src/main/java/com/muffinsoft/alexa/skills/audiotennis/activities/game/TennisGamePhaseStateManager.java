@@ -57,7 +57,8 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         iterateEnemyGameCounter(builder);
         builder.withAplDocument(aplManager.getScoreDocument());
         builder.withAplTemplateData(generateAplTemplateGameData());
-        builder.addBackgroundImageUrl(cardManager.getValueByKey("game-score"));
+        builder.removeAllBackgroundImageUrls();
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("point-score"));
         builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
         builder.addResponseToBegining(mistake);
         handleRoundEnd(builder);
@@ -85,6 +86,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         }
         builder.withAplDocument(aplManager.getScoreDocument());
         builder.withAplTemplateData(generateAplTemplateGameData());
+        builder.removeAllBackgroundImageUrls();
         builder.addBackgroundImageUrl(cardManager.getValueByKey("game-score"));
         builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
         handleRoundEnd(builder);

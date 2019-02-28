@@ -244,7 +244,10 @@ public class TennisIntentFabric implements IntentFactory {
 
     private IntentType interceptSelectActivity(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
         ActivityType type = getActivityFromReply(inputSlots);
-        if (type == null) {
+        if (isSomethingElseReply(inputSlots)) {
+            return SELECT_OTHER_MISSION;
+        }
+        else if (type == null) {
             return SELECT_MISSION;
         }
         logger.info("Update current activity type to value: " + type);
