@@ -25,7 +25,7 @@
     "version": "1.0",
     "theme": "dark",
     "mainTemplate": {
-      "description": "Samurai Chef GUI",
+      "description": "Audio Tennis GUI",
       "parameters": [
         "payload"
       ],

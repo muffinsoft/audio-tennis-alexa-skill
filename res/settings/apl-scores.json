@@ -100,7 +100,7 @@
                       "color": "#000000",
                       "text": "${payload.templateData.enemyScore}",
                       "position": "absolute",
-                      "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '30%' : '32%') : '29%'}",
+                      "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '30%' : '30%') : '29%'}",
                       "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
                     },
                     {
