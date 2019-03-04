@@ -10,8 +10,11 @@ import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
+import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +37,8 @@ public class InitialGreetingStateManager extends BaseStateManager {
 
     private final ActivitiesPhraseManager activitiesPhraseManager;
     private final RegularPhraseManager regularPhraseManager;
+    private final ActivityManager activityManager;
+    private final AplManager aplManager;
 
     private Integer userReplyBreakpointPosition;
     private ActivityProgress activityProgress;
@@ -42,6 +47,8 @@ public class InitialGreetingStateManager extends BaseStateManager {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
         this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
+        this.activityManager = settingsDependencyContainer.getActivityManager();
+        this.aplManager = settingsDependencyContainer.getAplManager();
     }
 
     @Override
@@ -117,6 +124,11 @@ public class InitialGreetingStateManager extends BaseStateManager {
             }
             builder.addResponse(getDialogTranslator().translate(phraseSettings, true));
         }
+
+        ActivitySettings settingsForActivity = activityManager.getSettingsForActivity(this.activityProgress.getCurrentActivity());
+
+        builder.withAplDocument(aplManager.getImageDocument());
+        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
 
         if (index >= dialog.size()) {
             this.getSessionAttributes().put(STATE_TYPE, StateType.READY);
