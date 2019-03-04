@@ -134,7 +134,6 @@ attempt
 attend
 attention
 attitude
-attorney
 attractive
 audience
 audition
@@ -241,7 +240,6 @@ blind
 block
 blocked
 blonde
-blood
 blowing
 blown
 blue
@@ -459,7 +457,6 @@ close
 closed
 closer
 closet
-closing
 clothes
 clothing
 cloud
@@ -506,7 +503,6 @@ complete
 completed
 computer
 comrade
-con
 concentrate
 concept
 concern
@@ -850,7 +846,6 @@ exciting
 excuse
 exercise
 exist
-existence
 exit
 expect
 expensive
@@ -896,7 +891,6 @@ fixed
 flag
 flame
 flash
-flat
 flesh
 flight
 flip
@@ -1596,7 +1590,6 @@ notice
 noticed
 novel
 november
-now
 nowadays
 nowhere
 nuclear
@@ -1634,7 +1627,6 @@ opera
 operate
 opinion
 opposite
-option
 orange
 order
 organized
@@ -1764,7 +1756,6 @@ private
 prize
 pro
 problem
-procedure
 proceed
 process
 produce

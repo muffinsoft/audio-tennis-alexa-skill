@@ -56,7 +56,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         Speech mistake = builder.popFirstSpeech();
         iterateEnemyGameCounter(builder);
         builder.withAplDocument(aplManager.getScoreDocument());
-        builder.withAplTemplateData(generateAplTemplateGameData());
+        builder.withAplTemplateData(generateAplTemplatePointData());
         builder.removeAllBackgroundImageUrls();
         builder.addBackgroundImageUrl(cardManager.getValueByKey("point-score"));
         builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
@@ -85,9 +85,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
             }
         }
         builder.withAplDocument(aplManager.getScoreDocument());
-        builder.withAplTemplateData(generateAplTemplateGameData());
+        builder.withAplTemplateData(generateAplTemplatePointData());
         builder.removeAllBackgroundImageUrls();
-        builder.addBackgroundImageUrl(cardManager.getValueByKey("game-score"));
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("point-win-score"));
         builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
         handleRoundEnd(builder);
         savePersistentAttributes();
@@ -98,13 +98,6 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         Map<String, String> data = new HashMap<>();
         data.put("playerScore", String.valueOf(this.activityProgress.getPlayerPointCounter()));
         data.put("enemyScore", String.valueOf(this.activityProgress.getEnemyPointCounter()));
-        return data;
-    }
-
-    private Map<String, String> generateAplTemplateGameData() {
-        Map<String, String> data = new HashMap<>();
-        data.put("playerScore", String.valueOf(this.activityProgress.getPlayerGameCounter()));
-        data.put("enemyScore", String.valueOf(this.activityProgress.getEnemyGameCounter()));
         return data;
     }
 
@@ -251,9 +244,9 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         }
 
         BasePhraseContainer randomCallToCelebrate = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomCallToCelebrate();
-        builder.addResponse(getDialogTranslator().translate(randomCallToCelebrate, false));
+        builder.addResponse(getDialogTranslator().translate(randomCallToCelebrate, true));
 
-        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(FIREWORK_PHRASE), false));
+        builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey(FIREWORK_PHRASE), true));
 
         if (activityProgress.isTimeToLevelUp(settingsForActivity)) {
             activityProgress.updateWithDifficultSettings(settingsForActivity);

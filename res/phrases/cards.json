@@ -3,5 +3,5 @@
   "greeting": "https://s3.amazonaws.com/audio-tennis/images/{size}/2.jpg",
   "alphabet-race-letters": "https://s3.amazonaws.com/audio-tennis/images/{size}/5.jpg",
   "point-score": "https://s3.amazonaws.com/audio-tennis/images/{size}/9.jpg",
-  "game-score": "https://s3.amazonaws.com/audio-tennis/images/{size}/10.jpg"
+  "point-win-score": "https://s3.amazonaws.com/audio-tennis/images/{size}/10.jpg"
 }
