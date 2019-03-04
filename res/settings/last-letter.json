@@ -5,5 +5,5 @@
   "addToComplexityValue": 2,
   "scoresToWinRoundValue": 3,
   "startIterationIndex": 3,
-  "introImage": "https://s3.amazonaws.com/audio-tennis/images/{size}/3.jpg"
+  "introImage": "https://s3.amazonaws.com/audio-tennis-store/images/{size}/3.jpg"
 }

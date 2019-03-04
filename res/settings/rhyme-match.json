@@ -8,5 +8,5 @@
   "availableLives": 1,
   "successAnswersToGetScoreValue": 4,
   "maxComplexityValue": 3,
-  "introImage": "https://s3.amazonaws.com/audio-tennis/images/{size}/6.jpg"
+  "introImage": "https://s3.amazonaws.com/audio-tennis-store/images/{size}/6.jpg"
 }
