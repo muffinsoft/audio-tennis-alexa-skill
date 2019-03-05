@@ -80,25 +80,25 @@
   "activityLastLetterHelpPhrase": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/activityLastLetterHelpPhrase.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/activityLastLetterHelpPhrase.mp3"
     }
   ],
   "activityBamWhamHelpPhrase": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/activityBamWhamHelpPhrase.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/activityBamWhamHelpPhrase.mp3"
     }
   ],
   "activityAlphabetRaceHelpPhrase": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/activityAlphabetRaceHelpPhrase.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/activityAlphabetRaceHelpPhrase.mp3"
     }
   ],
   "activityRhymeMatchHelpPhrase": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/activityRhymeMatchHelpPhrase.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/activityRhymeMatchHelpPhrase.mp3"
     }
   ],
   "trySomethingElsePhrase": [
@@ -109,19 +109,19 @@
   "newActivityUnlockedPhraseB": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/enUsNewActivityUnlockedPhraseB.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/enUsNewActivityUnlockedPhraseB.mp3"
     }
   ],
   "newActivityUnlockedPhraseC": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/enUsNewActivityUnlockedPhraseC.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/enUsNewActivityUnlockedPhraseC.mp3"
     }
   ],
   "newActivityUnlockedPhraseD": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/enUsNewActivityUnlockedPhraseD.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/enUsNewActivityUnlockedPhraseD.mp3"
     }
   ],
   "selectActivityBetweenTwoPhrase": [

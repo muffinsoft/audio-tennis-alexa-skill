@@ -1,7 +1,7 @@
 {
-  "select-activity": "https://s3.amazonaws.com/audio-tennis-store/images/{size}/1.jpg",
-  "greeting": "https://s3.amazonaws.com/audio-tennis-store/images/{size}/2.jpg",
-  "alphabet-race-letters": "https://s3.amazonaws.com/audio-tennis-store/images/{size}/5.jpg",
-  "point-score": "https://s3.amazonaws.com/audio-tennis-store/images/{size}/9.jpg",
-  "point-win-score": "https://s3.amazonaws.com/audio-tennis-store/images/{size}/10.jpg"
+  "select-activity": "https://dzvy8lu2f5aei.cloudfront.net/images/{size}/1.jpg",
+  "greeting": "https://dzvy8lu2f5aei.cloudfront.net/images/{size}/2.jpg",
+  "alphabet-race-letters": "https://dzvy8lu2f5aei.cloudfront.net/images/{size}/5.jpg",
+  "point-score": "https://dzvy8lu2f5aei.cloudfront.net/images/{size}/9.jpg",
+  "point-win-score": "https://dzvy8lu2f5aei.cloudfront.net/images/{size}/10.jpg"
 }

@@ -1,67 +1,67 @@
 {
   "opponentFirstPhrase": [
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentFirstPhrase0.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentFirstPhrase0.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentFirstPhrase1.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentFirstPhrase1.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentFirstPhrase2.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentFirstPhrase2.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentFirstPhrase3.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentFirstPhrase3.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentFirstPhrase4.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentFirstPhrase4.mp3",
       "role": "Audio"
     }
   ],
   "opponentAfterWordPhrase": [
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentAfterWordPhrase0.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentAfterWordPhrase0.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentAfterWordPhrase1.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentAfterWordPhrase1.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentAfterWordPhrase2.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentAfterWordPhrase2.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentAfterWordPhrase3.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentAfterWordPhrase3.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentAfterWordPhrase4.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentAfterWordPhrase4.mp3",
       "role": "Audio"
     }
   ],
   "opponentReactionAfterXWordsPhrase": [
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase0_0.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase0_0.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase1_0.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase1_0.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase2_0.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase2_0.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase3_0.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase3_0.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase4_0.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesOpponentReactionAfterXWordsPhrase4_0.mp3",
       "role": "Audio"
     }
   ],
@@ -99,23 +99,23 @@
   ],
   "playerWonOnceAtGame": [
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesPlayerWonOnceAtGame0.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesPlayerWonOnceAtGame0.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesPlayerWonOnceAtGame1.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesPlayerWonOnceAtGame1.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesPlayerWonOnceAtGame2.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesPlayerWonOnceAtGame2.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesPlayerWonOnceAtGame3.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesPlayerWonOnceAtGame3.mp3",
       "role": "Audio"
     },
     {
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/oneSideActivityPhrasesPlayerWonOnceAtGame4.mp3",
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/oneSideActivityPhrasesPlayerWonOnceAtGame4.mp3",
       "role": "Audio"
     }
   ]

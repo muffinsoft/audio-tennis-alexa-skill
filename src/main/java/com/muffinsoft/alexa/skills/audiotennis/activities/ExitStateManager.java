@@ -95,7 +95,7 @@ public class ExitStateManager extends BaseStateManager {
     }
 
     Speech getAudioForWord(String word) {
-        String path = "https://s3.amazonaws.com/audio-tennis-store/words/" + word + ".mp3";
+        String path = "https://dzvy8lu2f5aei.cloudfront.net/words/" + word + ".mp3";
         logger.info("Try to get sound by url " + path);
         return new Speech(SpeechType.AUDIO, path, 0);
     }

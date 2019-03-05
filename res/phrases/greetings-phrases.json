@@ -2,14 +2,14 @@
   "firstTimeGreeting": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/greetingsPhrasesFirstTimeGreeting0.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/greetingsPhrasesFirstTimeGreeting0.mp3"
     },
     {
       "userResponse": true
     },
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/greetingsPhrasesFirstTimeGreeting1.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/greetingsPhrasesFirstTimeGreeting1.mp3"
     },
     {
       "content": "Of course, Ben. You and your friend can 'count' on me.",
@@ -17,13 +17,13 @@
     },
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/greetingsPhrasesFirstTimeGreeting2.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/greetingsPhrasesFirstTimeGreeting2.mp3"
     }
   ],
   "playerWithAwardsGreeting": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/greetingsPhrasesPlayerWithAwardsGreeting0.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/greetingsPhrasesPlayerWithAwardsGreeting0.mp3"
     },
     {
       "content": "Introducing %achievements%",
@@ -31,7 +31,7 @@
     },
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/greetingsPhrasesPlayerWithAwardsGreeting1.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/greetingsPhrasesPlayerWithAwardsGreeting1.mp3"
     },
     {
       "content": "looks like its",
@@ -45,7 +45,7 @@
   "playerWithoutAwardsGreeting": [
     {
       "role": "Audio",
-      "audio": "https://s3.amazonaws.com/audio-tennis-store/audio/greetingsPhrasesPlayerWithoutAwardsGreeting0.mp3"
+      "audio": "https://dzvy8lu2f5aei.cloudfront.net/audio/greetingsPhrasesPlayerWithoutAwardsGreeting0.mp3"
     },
     {
       "content": "Hey there, looks like you've won %wins% games and lost %losses% games.",
