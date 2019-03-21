@@ -89,7 +89,25 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             return null;
         }
         else {
-            return getUserReply(SlotName.ACTION).get(0);
+
+            List<String> actionList = getUserReply(SlotName.ACTION);
+            List<String> actionList2 = getUserReply(SlotName.ACTION_2);
+            List<String> actionList3 = getUserReply(SlotName.ACTION_3);
+
+            String action = actionList.isEmpty() ? null : actionList.get(0);
+            String action2 = actionList2.isEmpty() ? null : actionList2.get(0);
+            String action3 = actionList3.isEmpty() ? null : actionList3.get(0);
+            StringBuilder builder = new StringBuilder();
+            if (action != null) {
+                builder.append(action).append(" ");
+            }
+            if (action2 != null) {
+                builder.append(action2).append(" ");
+            }
+            if (action3 != null) {
+                builder.append(action3).append(" ");
+            }
+            return builder.toString().trim();
         }
     }
 
