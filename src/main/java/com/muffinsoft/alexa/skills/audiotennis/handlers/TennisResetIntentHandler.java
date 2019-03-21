@@ -1,6 +1,6 @@
 package com.muffinsoft.alexa.skills.audiotennis.handlers;
 
-import com.muffinsoft.alexa.sdk.handlers.ResetIntentHandler;
+import com.muffinsoft.alexa.sdk.handlers.CustomResetIntentHandler;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.muffinsoft.alexa.sdk.constants.PhraseConstants.WANT_RESET_PROGRESS_PHRASE;
 
-public class TennisResetIntentHandler extends ResetIntentHandler {
+public class TennisResetIntentHandler extends CustomResetIntentHandler {
 
     private final RegularPhraseManager regularPhraseManager;
 
