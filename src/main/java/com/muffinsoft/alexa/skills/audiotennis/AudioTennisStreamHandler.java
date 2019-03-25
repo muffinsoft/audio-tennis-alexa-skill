@@ -10,9 +10,11 @@ import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisCancelIntentHandle
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisFallbackIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisHelpIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisLaunchRequestHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisMenuIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisMissionNavigationIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisNavigationHomeIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisNoIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisOneActionOnlyIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisResetIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSelectActivityIntentHandler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSelectActivityOnlyIntentHandler;
@@ -42,6 +44,8 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
                         new TennisNoIntentHandler(IoC.provideIntentFactory()),
                         new TennisNavigationHomeIntentHandler(IoC.provideIntentFactory()),
                         new TennisSwitchActivityIntentHandler(IoC.provideIntentFactory()),
+                        new TennisOneActionOnlyIntentHandler(IoC.provideIntentFactory()),
+                        new TennisMenuIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisStartOverIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisCancelIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisFallbackIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),

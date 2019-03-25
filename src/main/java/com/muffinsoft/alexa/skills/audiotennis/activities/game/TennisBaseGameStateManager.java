@@ -332,6 +332,9 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     }
 
     Speech getAudioForWord(String word) {
+        if(word.contains("{") || word.contains(" }")) {
+            throw new IllegalArgumentException("Word contains wrong characters: " + word);
+        }
         String path = "https://dzvy8lu2f5aei.cloudfront.net/words/" + word + ".mp3";
         logger.info("Try to get sound by url " + path);
         return new Speech(SpeechType.AUDIO, path, 0);

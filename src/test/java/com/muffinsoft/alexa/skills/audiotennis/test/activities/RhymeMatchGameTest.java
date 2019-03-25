@@ -48,4 +48,33 @@ class RhymeMatchGameTest extends BaseTest {
         Assertions.assertEquals(resultActivityProgress.getEnemyPointCounter(), 1);
         Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
     }
+
+    @Test
+    void testActivePhaseRightAnswer() {
+
+        ActivityManager activityManager = IoC.provideSettingsDependencyContainer().getActivityManager();
+        WordContainer wordForActivity = activityManager.getRandomWordForActivity(ActivityType.RHYME_MATCH);
+
+        ActivityProgress activityProgress = new ActivityProgress(ActivityType.RHYME_MATCH);
+        activityProgress.setPreviousWord(wordForActivity.getWord());
+        activityProgress.setRequiredUserReaction(wordForActivity.getUserReaction());
+        activityProgress.setComplexity(2);
+
+        Map<String, Slot> slots = createSlotsForValue(SlotName.ACTION, "test");
+
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put(ACTIVITY_PROGRESS, toMap(activityProgress));
+        attributes.put(STATE_TYPE, StateType.READY);
+
+        RhymeMatchGameStateManager stateManager = new RhymeMatchGameStateManager(slots, createAttributesManager(slots, attributes), IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer());
+
+        DialogItem dialogItem = stateManager.nextResponse();
+
+        stateManager.updateAttributesManager();
+
+        Map<String, Object> sessionAttributes = stateManager.getSessionAttributes();
+        ActivityProgress resultActivityProgress = (ActivityProgress) sessionAttributes.get(ACTIVITY_PROGRESS);
+        Assertions.assertEquals(resultActivityProgress.getEnemyPointCounter(), 1);
+        Assertions.assertFalse(dialogItem.getSpeech().isEmpty());
+    }
 }

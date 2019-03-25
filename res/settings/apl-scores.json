@@ -36,7 +36,7 @@
                   "color": "#000000",
                   "text": "${payload.templateData.playerScore}",
                   "position": "absolute",
-                  "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '30%' : '32%') : '27%'}",
+                  "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '23%' : '25%') : '20%'}",
                   "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
                 },
                 {
@@ -44,7 +44,7 @@
                   "color": "#000000",
                   "text": "${payload.templateData.enemyScore}",
                   "position": "absolute",
-                  "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '32%' : '32%') : '27%'}",
+                  "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '32%' : '32%') : '26%'}",
                   "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
                 }
               ]
@@ -100,7 +100,7 @@
                       "color": "#000000",
                       "text": "${payload.templateData.enemyScore}",
                       "position": "absolute",
-                      "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '30%' : '30%') : '27%'}",
+                      "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '23%' : '25%') : '20%'}",
                       "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
                     },
                     {
@@ -108,7 +108,7 @@
                       "color": "#000000",
                       "text": "${payload.templateData.playerScore}",
                       "position": "absolute",
-                      "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '32%' : '32%') : '27%'}",
+                      "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '32%' : '32%') : '26%'}",
                       "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '186dp' : '132dp') : '114dp'}"
                     }
                   ]
