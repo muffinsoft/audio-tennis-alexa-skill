@@ -43,12 +43,12 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
     @Override
     protected boolean isEndWinActivityState() {
-        return this.activityProgress.getPlayerPointCounter() >= settingsForActivity.getScoresToWinRoundValue();
+        return this.activityProgress.getPlayerPointCounter() > settingsForActivity.getScoresToWinRoundValue();
     }
 
     @Override
     protected boolean isEndLoseActivityState() {
-        return this.activityProgress.getEnemyPointCounter() >= settingsForActivity.getScoresToWinRoundValue();
+        return this.activityProgress.getEnemyPointCounter() > settingsForActivity.getScoresToWinRoundValue();
     }
 
     @Override
