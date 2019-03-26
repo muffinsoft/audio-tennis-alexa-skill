@@ -45,14 +45,14 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
                         new TennisNavigationHomeIntentHandler(IoC.provideIntentFactory()),
                         new TennisSwitchActivityIntentHandler(IoC.provideIntentFactory()),
                         new TennisOneActionOnlyIntentHandler(IoC.provideIntentFactory()),
-                        new TennisMenuIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
+//                        new TennisMenuIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisStartOverIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisCancelIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisFallbackIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisHelpIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisLaunchRequestHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
-                        new TennisStopIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
-                        new TennisResetIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer())
+//                        new TennisResetIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer())
+                        new TennisStopIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer())
                 )
                 .addExceptionHandler(new ResponseExceptionHandler())
                 .withSkillId(amazonSkillId)
