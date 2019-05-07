@@ -18,6 +18,7 @@ public class ActivityPuller {
 
     public static ActivityType getActivityFromReply(Map<String, Slot> inputSlots) {
         List<String> userReplies = SlotComputer.compute(inputSlots).get(SlotName.MISSION);
+        userReplies.addAll(SlotComputer.compute(inputSlots).get(SlotName.ACTION));
         for (String reply : userReplies) {
             if (UserReplyComparator.compare(reply, UserReplies.LAST_LETTER)) {
                 return LAST_LETTER;

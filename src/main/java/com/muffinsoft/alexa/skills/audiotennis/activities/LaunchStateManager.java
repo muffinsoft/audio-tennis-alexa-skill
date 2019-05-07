@@ -59,6 +59,10 @@ public class LaunchStateManager extends BaseStateManager {
 
         DialogItem.Builder builder = DialogItem.builder();
 
+        builder
+                .withAplDocument(aplManager.getImageDocument())
+                .addBackgroundImageUrl(cardManager.getValueByKey("greeting"));
+
         if (userProgress != null) {
 
             if (this.userProgress.getAchievements().isEmpty()) {
@@ -94,10 +98,7 @@ public class LaunchStateManager extends BaseStateManager {
             logger.debug("New user was started new Game Session.");
         }
 
-        return builder
-                .withAplDocument(aplManager.getImageDocument())
-                .addBackgroundImageUrl(cardManager.getValueByKey("greeting"))
-                .build();
+        return builder.build();
     }
 
     private void appendEnemyWinsResult(DialogItem.Builder builder) {
