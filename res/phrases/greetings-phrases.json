@@ -91,5 +91,11 @@
       "content": "You won %scores% to %enemyScores% last time. Ben didn't stand a chance!",
       "role": "Alexa"
     }
+  ],
+  "returnDrawLastScore": [
+    {
+      "content": "You have %scores% to Ben's %enemyScores% last time!",
+      "role": "Alexa"
+    }
   ]
 }

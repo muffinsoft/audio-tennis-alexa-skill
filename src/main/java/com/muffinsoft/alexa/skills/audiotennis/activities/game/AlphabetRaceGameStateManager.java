@@ -17,6 +17,11 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
     }
 
     @Override
+    protected void addBackgroundImageAfterScore(DialogItem.Builder builder) {
+        builder.addBackgroundImageUrl(cardManager.getValueByKey("alphabet-race-letters"));
+    }
+
+    @Override
     protected boolean isSuccessAnswer() {
         String previousWord = this.activityProgress.getPreviousWord().toLowerCase();
         char firstEnemyLetter = previousWord.charAt(0);

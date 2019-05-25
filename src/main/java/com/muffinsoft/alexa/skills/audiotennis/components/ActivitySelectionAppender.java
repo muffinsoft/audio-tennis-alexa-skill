@@ -12,6 +12,7 @@ import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
+import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 

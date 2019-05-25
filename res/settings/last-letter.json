@@ -3,7 +3,7 @@
   "startComplexityValue": 4,
   "iterateComplexityEveryScoresValue": 2,
   "addToComplexityValue": 2,
-  "scoresToWinRoundValue": 11,
+  "scoresToWinRoundValue": 10,
   "startIterationIndex": 3,
   "introImage": "https://dzvy8lu2f5aei.cloudfront.net/images/{size}/3.jpg"
 }

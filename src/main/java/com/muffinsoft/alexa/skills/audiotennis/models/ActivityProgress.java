@@ -342,12 +342,12 @@ public class ActivityProgress {
 
     public void fromUserProgress(UserProgress userProgress) {
 
-        if (this.playerGameCounter == 0 && userProgress.getWins() != 0) {
+//        if (this.playerGameCounter == 0 && userProgress.getWins() != 0) {
             this.playerGameCounter = userProgress.getWins();
-        }
-        if (this.enemyGameCounter == 0 && userProgress.getLosses() != 0) {
+//        }
+//        if (this.enemyGameCounter == 0 && userProgress.getLosses() != 0) {
             this.enemyGameCounter = userProgress.getLosses();
-        }
+//        }
 //        if (!userProgress.isEndRound()) {
 //            if (this.playerPointCounter == 0 && userProgress.getLastGamePlayerPoint() != 0) {
 //                this.playerPointCounter = userProgress.getLastGamePlayerPoint();
@@ -357,25 +357,25 @@ public class ActivityProgress {
 //            }
 //            userProgress.setEndRound(false);
 //        }
-        if (this.enemyPointWinInRow == 0 && userProgress.getEnemyPointWinInRow() != 0) {
+//        if (this.enemyPointWinInRow == 0 && userProgress.getEnemyPointWinInRow() != 0) {
             this.enemyPointWinInRow = userProgress.getEnemyPointWinInRow();
-        }
-        if (this.playerPointWinInRow == 0 && userProgress.getPlayerPointWinInRow() != 0) {
+//        }
+//        if (this.playerPointWinInRow == 0 && userProgress.getPlayerPointWinInRow() != 0) {
             this.playerPointWinInRow = userProgress.getPlayerPointWinInRow();
-        }
-        if (this.currentNickNameLevel == 0 && userProgress.getNickNameLevel() != 0) {
+//        }
+//        if (this.currentNickNameLevel == 0 && userProgress.getNickNameLevel() != 0) {
             this.currentNickNameLevel = userProgress.getNickNameLevel();
-        }
-        if (this.amountOfTwoPointsInRow == 0 && userProgress.getAmountOfTwoPointsInRow() != 0) {
+//        }
+//        if (this.amountOfTwoPointsInRow == 0 && userProgress.getAmountOfTwoPointsInRow() != 0) {
             this.amountOfTwoPointsInRow = userProgress.getAmountOfTwoPointsInRow();
-        }
+//        }
 
-        if (this.getUnlockedActivities() == null || this.getUnlockedActivities().isEmpty() || this.getUnlockedActivities().size() == 1) {
-            if (userProgress.getUnlockedActivities() != null && !userProgress.getUnlockedActivities().isEmpty()) {
+//        if (this.getUnlockedActivities() == null || this.getUnlockedActivities().isEmpty() || this.getUnlockedActivities().size() == 1) {
+//            if (userProgress.getUnlockedActivities() != null && !userProgress.getUnlockedActivities().isEmpty()) {
                 for (String activity : userProgress.getUnlockedActivities()) {
                     this.addUnlockedActivity(ActivityType.valueOf(activity));
-                }
-            }
+//                }
+//            }
         }
         this.isNew = false;
     }

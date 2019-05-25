@@ -73,11 +73,14 @@ public class LaunchStateManager extends BaseStateManager {
             }
 
             if (this.userProgress.getLastGameHistoryEnemyPoint() != 0 || this.userProgress.getLastGameHistoryPlayerPoint() != 0) {
-                if (this.userProgress.getLosses() > this.userProgress.getWins()) {
+                if (this.userProgress.getLastGameHistoryEnemyPoint() > this.userProgress.getLastGameHistoryPlayerPoint()) {
                     appendEnemyWinsResult(builder);
                 }
+                else if(this.userProgress.getLastGameHistoryEnemyPoint() == this.userProgress.getLastGameHistoryPlayerPoint()) {
+                    appendDrawResult(builder);
+                }
                 else {
-                    appendPlayerWindResult(builder);
+                    appendPlayerWinsResult(builder);
                 }
             }
 
@@ -106,13 +109,18 @@ public class LaunchStateManager extends BaseStateManager {
         replaceScores(builder, randomEnemyLastScore);
     }
 
-    private void appendPlayerWindResult(DialogItem.Builder builder) {
+    private void appendDrawResult(DialogItem.Builder builder) {
+        BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomDrawLastScore();
+        replaceScores(builder, randomPlayerLastScore);
+    }
+
+    private void appendPlayerWinsResult(DialogItem.Builder builder) {
         BasePhraseContainer randomPlayerLastScore = this.activitiesPhraseManager.getGreetingsPhrases().getRandomPlayerLastScore();
         replaceScores(builder, randomPlayerLastScore);
     }
 
     private void replaceScores(DialogItem.Builder builder, BasePhraseContainer randomPlayerLastScore) {
-        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameHistoryEnemyPoint(), this.userProgress.getLastGameHistoryPlayerPoint());
+        String newContent = replaceScoresPlaceholders(randomPlayerLastScore.getContent(), this.userProgress.getLastGameHistoryPlayerPoint(), this.userProgress.getLastGameHistoryEnemyPoint());
         BasePhraseContainer newPhraseContainer = new BasePhraseContainer(newContent, randomPlayerLastScore.getRole());
         builder.addResponse(getDialogTranslator().translate(newPhraseContainer, true));
     }

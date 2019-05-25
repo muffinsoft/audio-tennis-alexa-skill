@@ -12,14 +12,18 @@ import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
+import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,11 +42,23 @@ public class ResetStateManager extends BaseStateManager {
 
     private final RegularPhraseManager regularPhraseManager;
     private final ActivitiesPhraseManager activitiesPhraseManager;
+    private final ActivityManager activityManager;
+    private final AplManager aplManager;
+
+    private ActivityProgress activityProgress;
 
     public ResetStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
         this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
+        this.activityManager = settingsDependencyContainer.getActivityManager();
+        this.aplManager = settingsDependencyContainer.getAplManager();
+    }
+
+    @Override
+    protected void populateActivityVariables() {
+        LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
+        this.activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : ActivityProgress.createDefault();
     }
 
     @Override
@@ -92,6 +108,10 @@ public class ResetStateManager extends BaseStateManager {
             }
             builder.addResponse(getDialogTranslator().translate(phraseSettings, true));
         }
+        ActivitySettings settingsForActivity = activityManager.getSettingsForActivity(ActivityProgress.getDefaultActivity());
+
+        builder.withAplDocument(aplManager.getImageDocument());
+        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
 
         if (index >= dialog.size()) {
             this.getSessionAttributes().put(STATE_TYPE, StateType.READY);

@@ -13,10 +13,13 @@ import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
+import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import org.apache.logging.log4j.LogManager;
@@ -47,6 +50,8 @@ public class CancelStateManager extends BaseStateManager {
 
     private final RegularPhraseManager regularPhraseManager;
     private final ActivitiesPhraseManager activitiesPhraseManager;
+    private final ActivityManager activityManager;
+    private final AplManager aplManager;
 
     private ActivityProgress activityProgress;
 
@@ -54,6 +59,8 @@ public class CancelStateManager extends BaseStateManager {
         super(inputSlots, attributesManager, settingsDependencyContainer.getDialogTranslator());
         this.regularPhraseManager = phraseDependencyContainer.getRegularPhraseManager();
         this.activitiesPhraseManager = phraseDependencyContainer.getActivitiesPhraseManager();
+        this.activityManager = settingsDependencyContainer.getActivityManager();
+        this.aplManager = settingsDependencyContainer.getAplManager();
     }
 
     @Override
@@ -71,12 +78,19 @@ public class CancelStateManager extends BaseStateManager {
 
         List<PhraseContainer> dialog;
 
+        DialogItem.Builder builder = DialogItem.builder();
+
         if (UserReplyComparator.compare(getUserReply(CONFIRMATION), UserReplies.YES)) {
             getSessionAttributes().remove(SWITCH_ACTIVITY_STEP);
             getSessionAttributes().remove(SWITCH_UNLOCK_ACTIVITY_STEP);
             getSessionAttributes().remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
 
             dialog = updateSessionAttributesForRandomActivity(activityProgress);
+
+            ActivitySettings settingsForActivity = activityManager.getSettingsForActivity(this.activityProgress.getCurrentActivity());
+
+            builder.withAplDocument(aplManager.getImageDocument());
+            builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
 
             getSessionAttributes().put(INTENT, IntentType.GAME);
         }
@@ -88,7 +102,7 @@ public class CancelStateManager extends BaseStateManager {
             dialog = regularPhraseManager.getValueByKey(REPEAT_LAST_PHRASE);
         }
 
-        DialogItem.Builder builder = DialogItem.builder().addResponse(getDialogTranslator().translate(dialog, true));
+        builder.addResponse(getDialogTranslator().translate(dialog, true));
 
         return builder.build();
     }

@@ -59,7 +59,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         builder.withAplTemplateData(generateAplTemplatePointData());
         builder.removeAllBackgroundImageUrls();
         builder.addBackgroundImageUrl(cardManager.getValueByKey("point-score"));
-        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
+        addBackgroundImageAfterScore(builder);
         builder.addResponseToBegining(mistake);
         handleRoundEnd(builder);
         savePersistentAttributes();
@@ -88,10 +88,14 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         builder.withAplTemplateData(generateAplTemplatePointData());
         builder.removeAllBackgroundImageUrls();
         builder.addBackgroundImageUrl(cardManager.getValueByKey("point-win-score"));
-        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
+        addBackgroundImageAfterScore(builder);
         handleRoundEnd(builder);
         savePersistentAttributes();
         return builder;
+    }
+
+    protected void addBackgroundImageAfterScore(DialogItem.Builder builder) {
+        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
     }
 
     private Map<String, String> generateAplTemplatePointData() {
@@ -221,7 +225,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
 
         BasePhraseContainer randomVictoryPhrase = generalActivityPhraseManager.getGeneralActivityPhrases().getRandomVictoryPhrase();
         if (randomVictoryPhrase.getRole().equals("Audio")) {
-            builder.addResponse(getDialogTranslator().translate(randomVictoryPhrase, true));
+            builder.addResponse(getDialogTranslator().translate(randomVictoryPhrase, false));
         }
         else {
             builder.replaceResponse(getDialogTranslator().translate(replaceScoresPlaceholders(randomVictoryPhrase, this.activityProgress.getEnemyPointCounter(), this.activityProgress.getPlayerPointCounter(), false, false), true));
@@ -332,7 +336,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         builder.withAplDocument(aplManager.getScoreDocument());
         builder.withAplTemplateData(generateAplTemplatePointData());
         builder.addBackgroundImageUrl(cardManager.getValueByKey("point-score"));
-        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
+        addBackgroundImageAfterScore(builder);
         this.userProgress.setPlayerPointWinInRow(this.activityProgress.getPlayerPointWinInRow());
         addPointScores(builder, true);
         savePersistentAttributes();
@@ -345,7 +349,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         builder.withAplDocument(aplManager.getScoreDocument());
         builder.withAplTemplateData(generateAplTemplatePointData());
         builder.addBackgroundImageUrl(cardManager.getValueByKey("point-score"));
-        builder.addBackgroundImageUrl(settingsForActivity.getIntroImage());
+        addBackgroundImageAfterScore(builder);
         this.userProgress.setEnemyPointWinInRow(this.activityProgress.getEnemyPointWinInRow());
         addPointScores(builder, false);
         savePersistentAttributes();

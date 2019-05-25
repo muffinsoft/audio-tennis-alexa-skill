@@ -14,6 +14,7 @@ public class GreetingsPhrases extends BasePhrases {
     private List<BasePhraseContainer> playerWithoutAwardsGreeting = Collections.emptyList();
     private List<BasePhraseContainer> returnEnemyLastScore = Collections.emptyList();
     private List<BasePhraseContainer> returnPlayerLastScore = Collections.emptyList();
+    private List<BasePhraseContainer> returnDrawLastScore = Collections.emptyList();
 
     public List<BasePhraseContainer> getFirstTimeGreeting() {
         return firstTimeGreeting;
@@ -55,12 +56,30 @@ public class GreetingsPhrases extends BasePhrases {
         this.returnPlayerLastScore = returnPlayerLastScore;
     }
 
+    public List<BasePhraseContainer> getReturnDrawLastScore() {
+        return returnDrawLastScore;
+    }
+
+    public void setReturnDrawLastScore(List<BasePhraseContainer> returnDrawLastScore) {
+        this.returnDrawLastScore = returnDrawLastScore;
+    }
+
     @JsonIgnore
     public BasePhraseContainer getRandomEnemyLastScore() {
         if (returnEnemyLastScore.isEmpty()) {
             return BasePhraseContainer.empty();
         }
         List<BasePhraseContainer> values = removeAllPartialElements(returnEnemyLastScore);
+        int index = getRandomValue(values.size());
+        return values.get(index);
+    }
+
+    @JsonIgnore
+    public BasePhraseContainer getRandomDrawLastScore() {
+        if (returnDrawLastScore.isEmpty()) {
+            return BasePhraseContainer.empty();
+        }
+        List<BasePhraseContainer> values = removeAllPartialElements(returnDrawLastScore);
         int index = getRandomValue(values.size());
         return values.get(index);
     }
