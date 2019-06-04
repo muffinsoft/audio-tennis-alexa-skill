@@ -79,7 +79,11 @@ public class IoC {
         return PHRASE_DEPENDENCY_CONTAINER;
     }
 
-    static IntentFactory provideIntentFactory() {
+    public static IntentFactory provideIntentFactory() {
         return INTENT_FABRIC;
+    }
+
+    public static BaseDialogTranslator provideDialogtranslator() {
+        return BASE_DIALOG_TRANSLATOR;
     }
 }
