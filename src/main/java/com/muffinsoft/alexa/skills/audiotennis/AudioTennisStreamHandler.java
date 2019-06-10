@@ -48,7 +48,7 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
                         new TennisSwitchActivityIntentHandler(IoC.provideIntentFactory()),
                         new TennisOneActionOnlyIntentHandler(IoC.provideIntentFactory()),
                         new TennisWhatCanIBuyHandler(IoC.provideDialogtranslator()),
-                        new TennisRefundIntentHandler(IoC.provideDialogtranslator()),
+                        new TennisRefundIntentHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer()),
                         new TennisPurchaseHistoryHandler(IoC.provideDialogtranslator()),
                         new TennisWhatCanIBuyHandler(IoC.provideDialogtranslator()),
                         new TennisConnectionsResponseHandler(),

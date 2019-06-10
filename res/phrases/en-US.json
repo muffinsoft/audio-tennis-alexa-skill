@@ -187,5 +187,11 @@
       "audio": "soundbank://soundlibrary/impacts/amzn_sfx_fireworks_whistles_01",
       "role": "Audio"
     }
+  ],
+  "purchaseNoRefund" : [
+    {
+      "content": "You haven't purchased the expansion pack yet. You can say - what can I buy - to get information about the expansion pack, or say yes to return to the game.",
+      "role": "Alexa"
+    }
   ]
 }
