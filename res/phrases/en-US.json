@@ -193,5 +193,29 @@
       "content": "You haven't purchased the expansion pack yet. You can say - what can I buy - to get information about the expansion pack, or say yes to return to the game.",
       "role": "Alexa"
     }
+  ],
+  "purchaseNothing" : [
+    {
+      "content" : "There are no products available for purchase right now. Sorry about that. Would you like to return to the main menu?",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseWhat" : [
+    {
+      "content" : "You can buy the expansion pack. It comes with Alphabet race, Rhyme Match and all other activities that will be released in the future. Would you like to learn more?",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseHistory" : [
+    {
+      "content" : "You bought the expansion pack, it gave you access to Alphabet Race, Rhyme Match and all other premium activities.",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseHistoryNothing" : [
+    {
+      "content" : "You haven't purchased the expansion pack with exciting premium activities yet.",
+      "role" : "Alexa"
+    }
   ]
 }
