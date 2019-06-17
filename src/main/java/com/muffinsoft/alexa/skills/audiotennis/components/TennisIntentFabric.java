@@ -3,22 +3,15 @@ package com.muffinsoft.alexa.skills.audiotennis.components;
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
+import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.sdk.util.SlotComputer;
-import com.muffinsoft.alexa.skills.audiotennis.activities.CancelStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.ExitStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.ExitWithoutConfirmationStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.FallbackStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.HelpStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.ResetConfirmationStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.ResetStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.SelectActivityStateManager;
-import com.muffinsoft.alexa.skills.audiotennis.activities.SelectMoreActivitiesStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.*;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.AlphabetRaceGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGameStateManager;
@@ -31,26 +24,14 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
-import static com.muffinsoft.alexa.sdk.enums.IntentType.GAME;
-import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_MISSION;
-import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_OTHER_MISSION;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.*;
+import static com.muffinsoft.alexa.sdk.enums.IntentType.*;
+import static com.muffinsoft.alexa.sdk.enums.StateType.RETURN_TO_GAME;
 import static com.muffinsoft.alexa.skills.audiotennis.components.ActivityPuller.getActivityFromReply;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_ONE_POSSIBLE_ACTIVITY;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SELECT_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_UNLOCK_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.*;
 
 public class TennisIntentFabric implements IntentFactory {
 
@@ -103,8 +84,24 @@ public class TennisIntentFabric implements IntentFactory {
                 return new SelectActivityStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
             case GAME:
                 return getNextGameState(inputSlots, attributesManager);
+            case BUY_INTENT:
+                return buy(inputSlots, attributesManager);
             default:
                 throw new IllegalArgumentException("Can't create new Intent State object for type " + intent);
+        }
+    }
+
+    private StateManager buy(Map<String, Slot> slots, AttributesManager attributesManager) {
+        if (isPositiveReply(slots)) {
+            return new BaseStateManager(slots, attributesManager, null) {
+                @Override
+                public DialogItem nextResponse() {
+                    return DialogItem.builder().withDirective("BUY").build();
+                }
+            };
+        } else {
+            attributesManager.getSessionAttributes().put(STATE_TYPE, RETURN_TO_GAME);
+            return getNextGameState(slots, attributesManager);
         }
     }
 
@@ -211,7 +208,7 @@ public class TennisIntentFabric implements IntentFactory {
         }
         else {
             if (sessionAttributes.containsKey(STATE_TYPE)) {
-                sessionAttributes.put(STATE_TYPE, StateType.RETURN_TO_GAME);
+                sessionAttributes.put(STATE_TYPE, RETURN_TO_GAME);
             }
             else {
                 sessionAttributes.put(STATE_TYPE, StateType.ACTIVITY_INTRO);
