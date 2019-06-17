@@ -4,6 +4,7 @@ import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
 import com.muffinsoft.alexa.sdk.handlers.ResponseExceptionHandler;
+import com.muffinsoft.alexa.sdk.util.BaseResponseAssembler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.*;
 
 public class AudioTennisStreamHandler extends SkillStreamHandler {
@@ -30,9 +31,9 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
                         new TennisOneActionOnlyIntentHandler(IoC.provideIntentFactory()),
                         new TennisRefundIntentHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer()),
                         new TennisBuyIntentHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer()),
-                        new TennisPurchaseHistoryHandler(IoC.provideDialogtranslator()),
+                        new TennisPurchaseHistoryHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer()),
                         new TennisWhatCanIBuyHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer()),
-                        new TennisConnectionsResponseHandler(),
+                        new TennisConnectionsResponseHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer(), new BaseResponseAssembler()),
 //                        new TennisMenuIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisStartOverIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisCancelIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),

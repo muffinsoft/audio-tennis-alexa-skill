@@ -214,7 +214,37 @@
   ],
   "purchaseHistoryNothing" : [
     {
-      "content" : "You haven't purchased the expansion pack with exciting premium activities yet.",
+      "content" : "You have not purchased anything.",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseWait" : [
+    {
+      "content" : "I've asked for permission to purchase the expansion pack.",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseAlreadyDone" : [
+    {
+      "content" : "You have already purchased the expansion pack, it gave you access to Alphabet Race, Rhyme Match and all other premium activities.",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseUnsuccessful" : [
+    {
+      "content" : "We couldn't complete the purchase. You can always ask me how to get the expansion pack later.",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseDeclined" : [
+    {
+      "content" : "Sorry, your payment was declined, maybe try again later.",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseError" : [
+    {
+      "content" : "Sorry, looks like the store is closed for now.",
       "role" : "Alexa"
     }
   ]

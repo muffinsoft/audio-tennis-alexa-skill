@@ -36,6 +36,9 @@ public class TennisWhatCanIBuyHandler extends WhatCanIBuyIntentHandler {
                 if(PurchaseManager.isAvailable(product)) {
                      response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseWhat");
                     getSessionAttributes().put(INTENT, IntentType.BUY_INTENT);
+                } else if (PurchaseManager.isEntitled(product)) {
+                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistory");
+                    getSessionAttributes().put(INTENT, IntentType.GAME);
                 } else {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseNothing");
                     getSessionAttributes().put(INTENT, IntentType.GAME);

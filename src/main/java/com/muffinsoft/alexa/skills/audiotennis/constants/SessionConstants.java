@@ -8,4 +8,6 @@ public class SessionConstants extends com.muffinsoft.alexa.sdk.constants.Session
     public static final String EXIT_FROM_HELP = "exitFromHelp";
     public static final String ASK_RANDOM_SWITCH_ACTIVITY_STEP = "askRandomSwitchActivityStep";
     public static final String EXIT_FROM_ONE_POSSIBLE_ACTIVITY = "exitFromOnePossibleActivity";
+    public static final String LAST_PURCHASE_ATTEMPT_ON = "lastPurchaseAttemptOn";
+    public static final String PURCHASE_STATE = "purchaseState";
 }
