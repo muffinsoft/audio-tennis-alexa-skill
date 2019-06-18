@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
+import com.muffinsoft.alexa.sdk.constants.PaywallConstants;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
@@ -86,9 +87,20 @@ public class TennisIntentFabric implements IntentFactory {
                 return getNextGameState(inputSlots, attributesManager);
             case BUY_INTENT:
                 return buy(inputSlots, attributesManager);
+            case UPSELL:
+                return upsell(inputSlots, attributesManager);
             default:
                 throw new IllegalArgumentException("Can't create new Intent State object for type " + intent);
         }
+    }
+
+    private StateManager upsell(Map<String, Slot> slots, AttributesManager attributesManager) {
+        return new BaseStateManager(slots, attributesManager, null) {
+            @Override
+            public DialogItem nextResponse() {
+                return DialogItem.builder().withDirective(PaywallConstants.UPSELL).build();
+            }
+        };
     }
 
     private StateManager buy(Map<String, Slot> slots, AttributesManager attributesManager) {
@@ -96,7 +108,7 @@ public class TennisIntentFabric implements IntentFactory {
             return new BaseStateManager(slots, attributesManager, null) {
                 @Override
                 public DialogItem nextResponse() {
-                    return DialogItem.builder().withDirective("BUY").build();
+                    return DialogItem.builder().withDirective(PaywallConstants.BUY).build();
                 }
             };
         } else {
@@ -125,12 +137,12 @@ public class TennisIntentFabric implements IntentFactory {
         }
         else if (sessionAttributes.containsKey(SWITCH_UNLOCK_ACTIVITY_STEP)) {
             logger.info("SWITCH_UNLOCK_ACTIVITY_STEP is present");
-            interceptUnlockedActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            interceptedIntentType = interceptUnlockedActivityProgress(inputSlots, sessionAttributes, activityProgress);
             logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
         else if (sessionAttributes.containsKey(ASK_RANDOM_SWITCH_ACTIVITY_STEP)) {
             logger.info("ASK_RANDOM_SWITCH_ACTIVITY_STEP is present");
-            interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            interceptedIntentType = interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
             logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
 
@@ -184,9 +196,17 @@ public class TennisIntentFabric implements IntentFactory {
         return unlockedActivities.stream().skip(random.nextInt(unlockedActivities.size())).findFirst().orElse(null);
     }
 
-    private void interceptAskRandomActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private IntentType interceptAskRandomActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
 
         ActivityType type = getActivityFromReply(inputSlots);
+
+        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+            if (sessionAttributes.containsKey(type.name())) {
+                return UPSELL;
+            } else {
+                sessionAttributes.put(type.name(), "true");
+            }
+        }
 
         if (isPositiveReply(inputSlots)) {
             interceptRandomActivityProgress(sessionAttributes, activityProgress);
@@ -195,6 +215,7 @@ public class TennisIntentFabric implements IntentFactory {
             movingBetweenActivities(sessionAttributes, activityProgress, type);
         }
         sessionAttributes.remove(ASK_RANDOM_SWITCH_ACTIVITY_STEP);
+        return GAME;
     }
 
     private void movingBetweenActivities(Map<String, Object> sessionAttributes, ActivityProgress activityProgress, ActivityType type) {
@@ -216,8 +237,16 @@ public class TennisIntentFabric implements IntentFactory {
         }
     }
 
-    private void interceptUnlockedActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private IntentType interceptUnlockedActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
         ActivityType type = getActivityFromReply(inputSlots);
+
+        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+            if (sessionAttributes.containsKey(type.name())) {
+                return UPSELL;
+            } else {
+                sessionAttributes.put(type.name(), "true");
+            }
+        }
 
         if (isPositiveReply(inputSlots) && activityProgress.getPossibleActivity() != null) {
             moveToPossibleActivity(sessionAttributes, activityProgress);
@@ -226,6 +255,7 @@ public class TennisIntentFabric implements IntentFactory {
             movingBetweenActivities(sessionAttributes, activityProgress, type);
         }
         sessionAttributes.remove(SWITCH_UNLOCK_ACTIVITY_STEP);
+        return GAME;
     }
 
     private void moveToPossibleActivity(Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
@@ -247,6 +277,13 @@ public class TennisIntentFabric implements IntentFactory {
         else if (type == null) {
             return SELECT_MISSION;
         }
+        else if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+            if (sessionAttributes.containsKey(type.name())) {
+                return UPSELL;
+            } else {
+                sessionAttributes.put(type.name(), "true");
+            }
+        }
         logger.info("Update current activity type to value: " + type);
         activityProgress.setCurrentActivity(type);
         sessionAttributes.remove(SELECT_ACTIVITY_STEP);
@@ -266,6 +303,13 @@ public class TennisIntentFabric implements IntentFactory {
             return SELECT_OTHER_MISSION;
         }
         else {
+            if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+                if (sessionAttributes.containsKey(type.name())) {
+                    return UPSELL;
+                } else {
+                    sessionAttributes.put(type.name(), "true");
+                }
+            }
             movingBetweenActivities(sessionAttributes, activityProgress, type);
             sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
         }
