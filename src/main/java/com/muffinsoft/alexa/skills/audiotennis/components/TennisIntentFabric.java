@@ -8,6 +8,7 @@ import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 import com.muffinsoft.alexa.sdk.constants.PaywallConstants;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
+import com.muffinsoft.alexa.sdk.enums.PurchaseState;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.SlotName;
@@ -122,27 +123,29 @@ public class TennisIntentFabric implements IntentFactory {
         ActivityProgress activityProgress = getCurrentActivityProgress(attributesManager);
 
         Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
+        String state = String.valueOf(attributesManager.getPersistentAttributes().getOrDefault(PURCHASE_STATE, PurchaseState.NOT_ENTITLED));
+        PurchaseState purchaseState = PurchaseState.valueOf(state);
 
         IntentType interceptedIntentType = GAME;
 
         if (sessionAttributes.containsKey(SELECT_ACTIVITY_STEP)) {
             logger.info("SELECT_ACTIVITY_STEP is present");
-            interceptedIntentType = interceptSelectActivity(inputSlots, sessionAttributes, activityProgress);
+            interceptedIntentType = interceptSelectActivity(inputSlots, sessionAttributes, activityProgress, purchaseState);
             logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
         else if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
             logger.info("SWITCH_ACTIVITY_STEP is present");
-            interceptedIntentType = interceptActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            interceptedIntentType = interceptActivityProgress(inputSlots, sessionAttributes, activityProgress, purchaseState);
             logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
         else if (sessionAttributes.containsKey(SWITCH_UNLOCK_ACTIVITY_STEP)) {
             logger.info("SWITCH_UNLOCK_ACTIVITY_STEP is present");
-            interceptedIntentType = interceptUnlockedActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            interceptedIntentType = interceptUnlockedActivityProgress(inputSlots, sessionAttributes, activityProgress, purchaseState);
             logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
         else if (sessionAttributes.containsKey(ASK_RANDOM_SWITCH_ACTIVITY_STEP)) {
             logger.info("ASK_RANDOM_SWITCH_ACTIVITY_STEP is present");
-            interceptedIntentType = interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress);
+            interceptedIntentType = interceptAskRandomActivityProgress(inputSlots, sessionAttributes, activityProgress, purchaseState);
             logger.info("Intercepted IntentType:" + interceptedIntentType);
         }
 
@@ -196,12 +199,12 @@ public class TennisIntentFabric implements IntentFactory {
         return unlockedActivities.stream().skip(random.nextInt(unlockedActivities.size())).findFirst().orElse(null);
     }
 
-    private IntentType interceptAskRandomActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private IntentType interceptAskRandomActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
 
         ActivityType type = getActivityFromReply(inputSlots);
 
         if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-            if (sessionAttributes.containsKey(type.name())) {
+            if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                 return UPSELL;
             } else {
                 sessionAttributes.put(type.name(), "true");
@@ -237,11 +240,11 @@ public class TennisIntentFabric implements IntentFactory {
         }
     }
 
-    private IntentType interceptUnlockedActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private IntentType interceptUnlockedActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
         ActivityType type = getActivityFromReply(inputSlots);
 
         if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-            if (sessionAttributes.containsKey(type.name())) {
+            if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                 return UPSELL;
             } else {
                 sessionAttributes.put(type.name(), "true");
@@ -269,7 +272,7 @@ public class TennisIntentFabric implements IntentFactory {
         sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
     }
 
-    private IntentType interceptSelectActivity(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private IntentType interceptSelectActivity(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
         ActivityType type = getActivityFromReply(inputSlots);
         if (isSomethingElseReply(inputSlots)) {
             return SELECT_OTHER_MISSION;
@@ -278,7 +281,7 @@ public class TennisIntentFabric implements IntentFactory {
             return SELECT_MISSION;
         }
         else if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-            if (sessionAttributes.containsKey(type.name())) {
+            if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                 return UPSELL;
             } else {
                 sessionAttributes.put(type.name(), "true");
@@ -290,7 +293,7 @@ public class TennisIntentFabric implements IntentFactory {
         return GAME;
     }
 
-    private IntentType interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private IntentType interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
         ActivityType type = getActivityFromReply(inputSlots);
 
         if (isPositiveReply(inputSlots) && activityProgress.getPossibleActivity() != null) {
@@ -304,7 +307,7 @@ public class TennisIntentFabric implements IntentFactory {
         }
         else {
             if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-                if (sessionAttributes.containsKey(type.name())) {
+                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                     return UPSELL;
                 } else {
                     sessionAttributes.put(type.name(), "true");
