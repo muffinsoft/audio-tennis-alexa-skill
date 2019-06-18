@@ -5,6 +5,7 @@ import com.amazon.ask.model.Slot;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
+import com.muffinsoft.alexa.sdk.components.BaseDialogTranslator;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 import com.muffinsoft.alexa.sdk.constants.PaywallConstants;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
@@ -89,17 +90,17 @@ public class TennisIntentFabric implements IntentFactory {
             case BUY_INTENT:
                 return buy(inputSlots, attributesManager);
             case UPSELL:
-                return upsell(inputSlots, attributesManager);
+                return upsell(inputSlots, attributesManager, phraseDependencyContainer);
             default:
                 throw new IllegalArgumentException("Can't create new Intent State object for type " + intent);
         }
     }
 
-    private StateManager upsell(Map<String, Slot> slots, AttributesManager attributesManager) {
+    private StateManager upsell(Map<String, Slot> slots, AttributesManager attributesManager, PhraseDependencyContainer phraseDependencyContainer) {
         return new BaseStateManager(slots, attributesManager, null) {
             @Override
             public DialogItem nextResponse() {
-                return DialogItem.builder().withDirective(PaywallConstants.UPSELL).build();
+                return BuyManager.getBuyResponse(attributesManager, phraseDependencyContainer, new BaseDialogTranslator(), PaywallConstants.UPSELL);
             }
         };
     }
