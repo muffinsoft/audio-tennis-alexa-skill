@@ -1,11 +1,14 @@
 package com.muffinsoft.alexa.skills.audiotennis.components;
 
 import com.amazon.ask.attributes.AttributesManager;
+import com.amazon.ask.dispatcher.request.handler.HandlerInput;
+import com.amazon.ask.model.services.monetization.InSkillProduct;
 import com.muffinsoft.alexa.sdk.components.DialogTranslator;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.enums.PurchaseState;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
+import com.muffinsoft.alexa.sdk.util.PurchaseManager;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 
@@ -64,5 +67,22 @@ public class BuyManager {
                 .addResponse(dialogTranslator.translate(response, true))
                 .withReprompt(dialogTranslator.translate(response, true))
                 .build();
+    }
+
+    public static void verifyEntitled(HandlerInput input) {
+        InSkillProduct product = PurchaseManager.getInSkillProduct(input);
+        Map<String, Object> persistent = input.getAttributesManager().getPersistentAttributes();
+        if (persistent == null) {
+            persistent = new HashMap<>();
+        }
+        String state = String.valueOf(persistent.getOrDefault(PURCHASE_STATE, PurchaseState.NOT_ENTITLED));
+        PurchaseState purchaseState = PurchaseState.valueOf(state);
+        if (PurchaseManager.isEntitled(product)) {
+            persistent.put(PURCHASE_STATE, PurchaseState.ENTITLED);
+        } else if (purchaseState == PurchaseState.ENTITLED && !PurchaseManager.isEntitled(product)) {
+            persistent.put(PURCHASE_STATE, PurchaseState.NOT_ENTITLED);
+        }
+        input.getAttributesManager().setPersistentAttributes(persistent);
+        input.getAttributesManager().savePersistentAttributes();
     }
 }
