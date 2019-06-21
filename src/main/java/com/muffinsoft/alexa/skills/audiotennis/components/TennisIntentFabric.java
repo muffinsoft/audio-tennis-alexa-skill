@@ -288,10 +288,16 @@ public class TennisIntentFabric implements IntentFactory {
                 sessionAttributes.put(type.name(), "true");
             }
         }
-        logger.info("Update current activity type to value: " + type);
-        activityProgress.setCurrentActivity(type);
-        sessionAttributes.remove(SELECT_ACTIVITY_STEP);
-        return GAME;
+        if(activityProgress.getUnlockedActivities().contains(type)) {
+            logger.info("Update current activity type to value: " + type);
+            activityProgress.setCurrentActivity(type);
+            sessionAttributes.remove(SELECT_ACTIVITY_STEP);
+            return GAME;
+        }
+        else {
+            sessionAttributes.put(BLOCKED_ACTIVITY_CALL, "true");
+            return SELECT_MISSION;
+        }
     }
 
     private IntentType interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
