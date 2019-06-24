@@ -5,7 +5,29 @@ import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
 import com.muffinsoft.alexa.sdk.handlers.ResponseExceptionHandler;
 import com.muffinsoft.alexa.sdk.util.BaseResponseAssembler;
-import com.muffinsoft.alexa.skills.audiotennis.handlers.*;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisActionIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisActionOnlyIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisBamWhamActionOnlyIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisBuyIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisCancelIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisConnectionsResponseHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisFallbackIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisHelpIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisLaunchRequestHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisMissionNavigationIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisNavigationHomeIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisNoIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisOneActionOnlyIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisOneBamWhamActionOnlyIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisPurchaseHistoryHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisRefundIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSelectActivityIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSelectActivityOnlyIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisStartOverIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisStopIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisSwitchActivityIntentHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisWhatCanIBuyHandler;
+import com.muffinsoft.alexa.skills.audiotennis.handlers.TennisYesIntentHandler;
 
 public class AudioTennisStreamHandler extends SkillStreamHandler {
 
@@ -34,6 +56,8 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
                         new TennisPurchaseHistoryHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer()),
                         new TennisWhatCanIBuyHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer()),
                         new TennisConnectionsResponseHandler(IoC.provideDialogtranslator(), IoC.providePhraseDependencyContainer(), new BaseResponseAssembler()),
+                        new TennisBamWhamActionOnlyIntentHandler(IoC.provideIntentFactory()),
+                        new TennisOneBamWhamActionOnlyIntentHandler(IoC.provideIntentFactory()),
 //                        new TennisMenuIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisStartOverIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisCancelIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),

@@ -91,15 +91,30 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
         else {
 
             List<String> actionList = getUserReply(SlotName.ACTION);
+            List<String> bamWhamActionList = getUserReply(SlotName.BAM_WHAM_ACTION);
             List<String> actionList2 = getUserReply(SlotName.ACTION_2);
+            List<String> bamWhamActionList2 = getUserReply(SlotName.BAM_WHAM_ACTION_2);
             List<String> actionList3 = getUserReply(SlotName.ACTION_3);
+            List<String> bamWhamActionList3 = getUserReply(SlotName.BAM_WHAM_ACTION_3);
 
             String action = actionList.isEmpty() ? null : actionList.get(0);
+            String bamWhamAction = bamWhamActionList.isEmpty() ? null : bamWhamActionList.get(0);
             String action2 = actionList2.isEmpty() ? null : actionList2.get(0);
+            String bamWhamAction2 = bamWhamActionList2.isEmpty() ? null : bamWhamActionList2.get(0);
             String action3 = actionList3.isEmpty() ? null : actionList3.get(0);
+            String bamWhamAction3 = bamWhamActionList3.isEmpty() ? null : bamWhamActionList3.get(0);
             StringBuilder builder = new StringBuilder();
             if (action != null) {
                 builder.append(action).append(" ");
+            }
+            if (bamWhamAction != null) {
+                builder.append(bamWhamAction).append(" ");
+            }
+            if (bamWhamAction2 != null) {
+                builder.append(bamWhamAction2).append(" ");
+            }
+            if (bamWhamAction3 != null) {
+                builder.append(bamWhamAction3).append(" ");
             }
             if (action2 != null) {
                 builder.append(action2).append(" ");
