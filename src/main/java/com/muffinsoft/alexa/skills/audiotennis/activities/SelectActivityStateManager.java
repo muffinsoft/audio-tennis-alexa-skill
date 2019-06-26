@@ -13,6 +13,8 @@ import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,8 @@ import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.BLOCKED_ACTIVITY_CALL;
 
 public class SelectActivityStateManager extends BaseStateManager {
+
+    private static final Logger logger = LogManager.getLogger(SelectActivityStateManager.class);
 
     private final ActivitySelectionAppender activitySelectionAppender;
     private final RegularPhraseManager regularPhraseManager;
@@ -45,6 +49,8 @@ public class SelectActivityStateManager extends BaseStateManager {
     public DialogItem nextResponse() {
 
         DialogItem.Builder builder = DialogItem.builder();
+
+        logger.info("BLOCKED_ACTIVITY_CALL:" + getSessionAttributes().containsKey(BLOCKED_ACTIVITY_CALL));
 
         if (getSessionAttributes().containsKey(BLOCKED_ACTIVITY_CALL)) {
             List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_BLOCKED_ACTIVTY);

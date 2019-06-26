@@ -10,13 +10,13 @@
   "maxComplexityValue": 3,
   "wordsToReactions": {
     "Bam": "wham",
-    "Bap": "wap",
+    "Bap": "wop",
     "Boom": "whoom",
     "Bomp": "womp",
     "Bonk": "wonk",
     "Bop": "wop",
     "Boosh": "woosh",
-    "Bump": "wump"
+    "Bump": "womp"
   },
   "introImage": "https://dzvy8lu2f5aei.cloudfront.net/images/{size}/7.jpg"
 }
