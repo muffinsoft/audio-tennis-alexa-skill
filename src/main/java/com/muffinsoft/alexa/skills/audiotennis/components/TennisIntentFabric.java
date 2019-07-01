@@ -282,12 +282,20 @@ public class TennisIntentFabric implements IntentFactory {
     private IntentType interceptUnlockedActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
         ActivityType type = getActivityFromReply(inputSlots);
 
-        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-            if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
-                return UPSELL;
+        if (type != null) {
+            if (activityProgress.getUnlockedActivities().size() > 1 && activityProgress.getUnlockedActivities().contains(type)) {
+                if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+                    if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
+                        return UPSELL;
+                    }
+                    else {
+                        sessionAttributes.put(type.name(), "true");
+                    }
+                }
             }
             else {
-                sessionAttributes.put(type.name(), "true");
+                sessionAttributes.put(BLOCKED_ACTIVITY_CALL, "true");
+                return SELECT_MISSION;
             }
         }
 
@@ -320,15 +328,18 @@ public class TennisIntentFabric implements IntentFactory {
         else if (type == null) {
             return SELECT_MISSION;
         }
-        else if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-            if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
-                return UPSELL;
-            }
-            else {
-                sessionAttributes.put(type.name(), "true");
-            }
-        }
+
         if (activityProgress.getUnlockedActivities().size() > 1 && activityProgress.getUnlockedActivities().contains(type)) {
+
+            if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
+                    return UPSELL;
+                }
+                else {
+                    sessionAttributes.put(type.name(), "true");
+                }
+            }
+
             logger.info("Update current activity type to value: " + type);
             activityProgress.setCurrentActivity(type);
             sessionAttributes.remove(SELECT_ACTIVITY_STEP);
