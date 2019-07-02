@@ -195,7 +195,7 @@ public class TennisIntentFabric implements IntentFactory {
 
         Set<ActivityType> unlockedActivities = getCurrentActivityProgress(attributesManager).getUnlockedActivities();
 
-        if (unlockedActivities.size() > 1 && unlockedActivities.contains(currentActivity)) {
+        if (unlockedActivities.size() > 1 && !unlockedActivities.contains(currentActivity)) {
             attributesManager.getSessionAttributes().put(BLOCKED_ACTIVITY_CALL, true);
             return new SelectActivityStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         }
