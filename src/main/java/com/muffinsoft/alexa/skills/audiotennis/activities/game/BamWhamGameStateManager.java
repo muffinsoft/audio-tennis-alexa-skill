@@ -11,6 +11,8 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class BamWhamGameStateManager extends OneSideGameStateManager {
@@ -36,6 +38,7 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
 
     @Override
     protected boolean isSuccessAnswer() {
+        logger.info(">>>> try compare: '" + getActionUserReply() + "' and '" + this.activityProgress.getRequiredUserReaction() + "'");
         return areEquals(getActionUserReply(), this.activityProgress.getRequiredUserReaction());
     }
 
@@ -43,7 +46,18 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
         if (one == null || two == null) {
             return false;
         }
-        return one.trim().equalsIgnoreCase(two.trim());
+        if (one.trim().equalsIgnoreCase(two.trim())) {
+            return true;
+        }
+        else {
+            List<String> oneList = Arrays.asList(one.split(" "));
+            List<String> twoList = Arrays.asList(one.split(" "));
+            long intersection = oneList.stream()
+                    .distinct()
+                    .filter(twoList::contains)
+                    .count();
+            return intersection >= twoList.size();
+        }
     }
 
     @Override
