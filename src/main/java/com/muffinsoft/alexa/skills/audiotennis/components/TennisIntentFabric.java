@@ -195,6 +195,7 @@ public class TennisIntentFabric implements IntentFactory {
 
         Set<ActivityType> unlockedActivities = getCurrentActivityProgress(attributesManager).getUnlockedActivities();
 
+        logger.info("Try to enter activity " + currentActivity + "; available activities: " + unlockedActivities);
         if (unlockedActivities.size() > 1 && !unlockedActivities.contains(currentActivity)) {
             attributesManager.getSessionAttributes().put(BLOCKED_ACTIVITY_CALL, true);
             return new SelectActivityStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
@@ -283,19 +284,17 @@ public class TennisIntentFabric implements IntentFactory {
         ActivityType type = getActivityFromReply(inputSlots);
 
         if (type != null) {
-            if (activityProgress.getUnlockedActivities().size() > 1 && activityProgress.getUnlockedActivities().contains(type)) {
-                if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-                    if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
-                        return UPSELL;
-                    }
-                    else {
-                        sessionAttributes.put(type.name(), "true");
-                    }
-                }
-            }
-            else {
+            if (activityProgress.getUnlockedActivities().size() > 1 && !activityProgress.getUnlockedActivities().contains(type)) {
                 sessionAttributes.put(BLOCKED_ACTIVITY_CALL, "true");
                 return SELECT_MISSION;
+            }
+            if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
+                    return UPSELL;
+                }
+                else {
+                    sessionAttributes.put(type.name(), "true");
+                }
             }
         }
 
@@ -329,26 +328,24 @@ public class TennisIntentFabric implements IntentFactory {
             return SELECT_MISSION;
         }
 
-        if (activityProgress.getUnlockedActivities().size() > 1 && activityProgress.getUnlockedActivities().contains(type)) {
-
-            if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
-                    return UPSELL;
-                }
-                else {
-                    sessionAttributes.put(type.name(), "true");
-                }
-            }
-
-            logger.info("Update current activity type to value: " + type);
-            activityProgress.setCurrentActivity(type);
-            sessionAttributes.remove(SELECT_ACTIVITY_STEP);
-            return GAME;
-        }
-        else {
+        if (activityProgress.getUnlockedActivities().size() > 1 && !activityProgress.getUnlockedActivities().contains(type)) {
             sessionAttributes.put(BLOCKED_ACTIVITY_CALL, "true");
             return SELECT_MISSION;
         }
+
+        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+            if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
+                return UPSELL;
+            }
+            else {
+                sessionAttributes.put(type.name(), "true");
+            }
+        }
+
+        logger.info("Update current activity type to value: " + type);
+        activityProgress.setCurrentActivity(type);
+        sessionAttributes.remove(SELECT_ACTIVITY_STEP);
+        return GAME;
     }
 
     private IntentType interceptActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
