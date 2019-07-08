@@ -51,11 +51,17 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
         }
         else {
             List<String> oneList = Arrays.asList(one.split(" "));
-            List<String> twoList = Arrays.asList(one.split(" "));
+            logger.info("input list: " + oneList);
+            List<String> twoList = Arrays.asList(two.split(" "));
+            logger.info("required list: " + twoList);
             long intersection = oneList.stream()
                     .distinct()
                     .filter(twoList::contains)
                     .count();
+            logger.info("intersection: " + intersection);
+            if (intersection == 0) {
+                return false;
+            }
             return intersection >= twoList.size();
         }
     }
