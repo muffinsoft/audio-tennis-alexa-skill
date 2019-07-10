@@ -73,34 +73,34 @@ public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatch
 
             switch (purchaseResult) {
                 case "PENDING_PURCHASE":
-                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.PENDING);
+                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.PENDING.name());
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseWait");
                     break;
                 case "ACCEPTED": {
-                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.ENTITLED);
+                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.ENTITLED.name());
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistory");
                     break;
                 }
                 case "DECLINED": {
-                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.DECLINED);
+                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.DECLINED.name());
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseDeclined");
                     break;
                 }
                 case "ALREADY_PURCHASED": {
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseAlreadyDone");
-                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.ENTITLED);
+                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.ENTITLED.name());
                     break;
                 }
                 default:
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseUnsuccessful");
-                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.FAILED);
+                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.FAILED.name());
                     break;
             }
 
         } else {
             //Something failed
             System.out.println("Connections.Response indicated failure. error: " + input.getRequestEnvelopeJson().get("request").get("status").get("message").toString());
-            persistentAttributes.put(PURCHASE_STATE, PurchaseState.FAILED);
+            persistentAttributes.put(PURCHASE_STATE, PurchaseState.FAILED.name());
             speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseError");
         }
 
