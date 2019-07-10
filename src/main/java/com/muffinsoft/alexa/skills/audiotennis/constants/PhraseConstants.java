@@ -12,6 +12,7 @@ public class PhraseConstants extends com.muffinsoft.alexa.sdk.constants.PhraseCo
     public static final String NEW_ACTIVITY_UNLOCKED_PHRASE_B = "newActivityUnlockedPhraseB";
     public static final String NEW_ACTIVITY_UNLOCKED_PHRASE_C = "newActivityUnlockedPhraseC";
     public static final String NEW_ACTIVITY_UNLOCKED_PHRASE_D = "newActivityUnlockedPhraseD";
+    public static final String SELECT_BLOCKED_ACTIVTY = "selectBlockedActivity";
     public static final String SELECT_ACTIVITY_BETWEEN_TWO_PHRASE = "selectActivityBetweenTwoPhrase";
     public static final String SELECT_ACTIVITY_BETWEEN_THREE_PHRASE = "selectActivityBetweenThreePhrase";
     public static final String SELECT_ACTIVITY_BETWEEN_ALL_PHRASE = "selectActivityBetweenAllPhrase";

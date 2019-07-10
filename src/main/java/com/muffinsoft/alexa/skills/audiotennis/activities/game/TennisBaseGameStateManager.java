@@ -85,30 +85,36 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     }
 
     String getActionUserReply() {
-        if (getUserReply(SlotName.ACTION).isEmpty()) {
-            return null;
-        }
-        else {
+        StringBuilder builder = new StringBuilder(" ");
 
-            List<String> actionList = getUserReply(SlotName.ACTION);
-            List<String> actionList2 = getUserReply(SlotName.ACTION_2);
-            List<String> actionList3 = getUserReply(SlotName.ACTION_3);
-
-            String action = actionList.isEmpty() ? null : actionList.get(0);
-            String action2 = actionList2.isEmpty() ? null : actionList2.get(0);
-            String action3 = actionList3.isEmpty() ? null : actionList3.get(0);
-            StringBuilder builder = new StringBuilder();
-            if (action != null) {
-                builder.append(action).append(" ");
-            }
-            if (action2 != null) {
-                builder.append(action2).append(" ");
-            }
-            if (action3 != null) {
-                builder.append(action3).append(" ");
-            }
-            return builder.toString().trim();
+        List<String> actionList = getUserReply(SlotName.ACTION);
+        if (!actionList.isEmpty()) {
+            builder.append(actionList.get(0)).append(" ");
         }
+        List<String> actionList2 = getUserReply(SlotName.ACTION_2);
+        if (!actionList2.isEmpty()) {
+            builder.append(actionList2.get(0)).append(" ");
+        }
+        List<String> actionList3 = getUserReply(SlotName.ACTION_3);
+        if (!actionList3.isEmpty()) {
+            builder.append(actionList3.get(0)).append(" ");
+        }
+
+        List<String> bamWhamActionList = getUserReply(SlotName.BAM_WHAM_ACTION);
+        if (!bamWhamActionList.isEmpty()) {
+            builder.append(String.join(" ", bamWhamActionList)).append(" ");
+        }
+        List<String> bamWhamActionList2 = getUserReply(SlotName.BAM_WHAM_ACTION_2);
+        if (!bamWhamActionList2.isEmpty()) {
+            builder.append(String.join(" ", bamWhamActionList2)).append(" ");
+        }
+        List<String> bamWhamActionList3 = getUserReply(SlotName.BAM_WHAM_ACTION_3);
+        if (!bamWhamActionList3.isEmpty()) {
+            builder.append(String.join(" ", bamWhamActionList3)).append(" ");
+        }
+        String userResponse = builder.toString().trim();
+        System.out.println("User response: " + userResponse);
+        return userResponse;
     }
 
     @Override

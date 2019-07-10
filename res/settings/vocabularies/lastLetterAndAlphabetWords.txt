@@ -330,7 +330,6 @@ butterfly
 button
 buy
 buying
-bye
 cab
 cabin
 cable
@@ -344,7 +343,6 @@ camera
 camp
 campaign
 can
-cancel
 candy
 cap
 capable
@@ -453,7 +451,6 @@ climate
 climb
 clinic
 clock
-close
 closed
 closer
 closet
@@ -799,7 +796,6 @@ emperor
 empire
 employee
 empty
-end
 ending
 enemy
 energy
@@ -811,7 +807,6 @@ england
 english
 enjoy
 enormous
-enough
 enter
 entire
 entrance
@@ -1011,7 +1006,6 @@ golden
 golf
 gone
 good
-goodbye
 goodness
 gorgeous
 government
@@ -1109,7 +1103,6 @@ hurry
 hurt
 hurting
 husband
-hush
 hut
 ice
 id
@@ -1585,7 +1578,6 @@ north
 northern
 nose
 note
-nothing
 notice
 noticed
 novel
@@ -1607,7 +1599,6 @@ ocean
 october
 odd
 odds
-off
 offense
 offer
 offering
@@ -2087,7 +2078,6 @@ sign
 signal
 signature
 silence
-silent
 silly
 silver
 simon
@@ -2230,10 +2220,8 @@ stock
 stole
 stomach
 stone
-stop
 stopped
 stopping
-stops
 store
 storm
 story
@@ -2713,7 +2701,6 @@ height
 helen
 hello
 helmet
-help
 helping
 henry
 hercules

@@ -130,6 +130,12 @@
       "role": "Alexa"
     }
   ],
+  "selectBlockedActivity": [
+    {
+      "content": "This activity is blocked.",
+      "role": "Alexa"
+    }
+  ],
   "selectActivityBetweenThreePhrase": [
     {
       "content": "Do you want to play Last Letter, Bam Wham or Alphabet Race?",

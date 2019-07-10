@@ -14,7 +14,16 @@ import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.SlotName;
 import com.muffinsoft.alexa.sdk.util.SlotComputer;
-import com.muffinsoft.alexa.skills.audiotennis.activities.*;
+import com.muffinsoft.alexa.skills.audiotennis.activities.CancelStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.ExitStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.ExitWithoutConfirmationStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.FallbackStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.HelpStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.InitialGreetingStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.ResetConfirmationStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.ResetStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.SelectActivityStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.activities.SelectMoreActivitiesStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.AlphabetRaceGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGameStateManager;
@@ -27,14 +36,30 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.*;
-import static com.muffinsoft.alexa.sdk.enums.IntentType.*;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
+import static com.muffinsoft.alexa.sdk.enums.IntentType.GAME;
+import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_MISSION;
+import static com.muffinsoft.alexa.sdk.enums.IntentType.SELECT_OTHER_MISSION;
+import static com.muffinsoft.alexa.sdk.enums.IntentType.UPSELL;
 import static com.muffinsoft.alexa.sdk.enums.StateType.RETURN_TO_GAME;
 import static com.muffinsoft.alexa.skills.audiotennis.components.ActivityPuller.getActivityFromReply;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.*;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.BLOCKED_ACTIVITY_CALL;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_HELP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_ONE_POSSIBLE_ACTIVITY;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.PURCHASE_STATE;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SELECT_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_UNLOCK_ACTIVITY_STEP;
 
 public class TennisIntentFabric implements IntentFactory {
 
@@ -63,6 +88,8 @@ public class TennisIntentFabric implements IntentFactory {
             }
             attributesManager.getSessionAttributes().remove(EXIT_FROM_ONE_POSSIBLE_ACTIVITY);
         }
+
+        logger.info("Handle INTENT " + intent);
 
         switch (intent) {
             case INITIAL_GREETING:
@@ -113,7 +140,8 @@ public class TennisIntentFabric implements IntentFactory {
                     return DialogItem.builder().withDirective(PaywallConstants.BUY).build();
                 }
             };
-        } else {
+        }
+        else {
             attributesManager.getSessionAttributes().put(STATE_TYPE, RETURN_TO_GAME);
             return getNextGameState(slots, attributesManager);
         }
@@ -133,6 +161,7 @@ public class TennisIntentFabric implements IntentFactory {
             logger.info("SELECT_ACTIVITY_STEP is present");
             interceptedIntentType = interceptSelectActivity(inputSlots, sessionAttributes, activityProgress, purchaseState);
             logger.info("Intercepted IntentType:" + interceptedIntentType);
+            sessionAttributes.remove(SELECT_ACTIVITY_STEP);
         }
         else if (sessionAttributes.containsKey(SWITCH_ACTIVITY_STEP)) {
             logger.info("SWITCH_ACTIVITY_STEP is present");
@@ -164,17 +193,26 @@ public class TennisIntentFabric implements IntentFactory {
             logger.info("Open activity: " + currentActivity);
         }
 
-        switch (currentActivity) {
-            case ALPHABET_RACE:
-                return new AlphabetRaceGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
-            case LAST_LETTER:
-                return new LastLetterGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
-            case RHYME_MATCH:
-                return new RhymeMatchGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
-            case BAM_WHAM:
-                return new BamWhamGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
-            default:
-                throw new IllegalArgumentException("Can't create instance of activity handler for type " + currentActivity);
+        Set<ActivityType> unlockedActivities = getCurrentActivityProgress(attributesManager).getUnlockedActivities();
+
+        logger.info("Try to enter activity " + currentActivity + "; available activities: " + unlockedActivities);
+        if (unlockedActivities.size() > 1 && !unlockedActivities.contains(currentActivity)) {
+            attributesManager.getSessionAttributes().put(BLOCKED_ACTIVITY_CALL, true);
+            return new SelectActivityStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+        }
+        else {
+            switch (currentActivity) {
+                case ALPHABET_RACE:
+                    return new AlphabetRaceGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+                case LAST_LETTER:
+                    return new LastLetterGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+                case RHYME_MATCH:
+                    return new RhymeMatchGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+                case BAM_WHAM:
+                    return new BamWhamGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
+                default:
+                    throw new IllegalArgumentException("Can't create instance of activity handler for type " + currentActivity);
+            }
         }
     }
 
@@ -207,7 +245,8 @@ public class TennisIntentFabric implements IntentFactory {
         if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
             if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                 return UPSELL;
-            } else {
+            }
+            else {
                 sessionAttributes.put(type.name(), "true");
             }
         }
@@ -244,11 +283,18 @@ public class TennisIntentFabric implements IntentFactory {
     private IntentType interceptUnlockedActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
         ActivityType type = getActivityFromReply(inputSlots);
 
-        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-            if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
-                return UPSELL;
-            } else {
-                sessionAttributes.put(type.name(), "true");
+        if (type != null) {
+            if (activityProgress.getUnlockedActivities().size() > 1 && !activityProgress.getUnlockedActivities().contains(type)) {
+                sessionAttributes.put(BLOCKED_ACTIVITY_CALL, "true");
+                return SELECT_MISSION;
+            }
+            if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
+                    return UPSELL;
+                }
+                else {
+                    sessionAttributes.put(type.name(), "true");
+                }
             }
         }
 
@@ -281,13 +327,21 @@ public class TennisIntentFabric implements IntentFactory {
         else if (type == null) {
             return SELECT_MISSION;
         }
-        else if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+
+        if (activityProgress.getUnlockedActivities().size() > 1 && !activityProgress.getUnlockedActivities().contains(type)) {
+            sessionAttributes.put(BLOCKED_ACTIVITY_CALL, "true");
+            return SELECT_MISSION;
+        }
+
+        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
             if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                 return UPSELL;
-            } else {
+            }
+            else {
                 sessionAttributes.put(type.name(), "true");
             }
         }
+
         logger.info("Update current activity type to value: " + type);
         activityProgress.setCurrentActivity(type);
         sessionAttributes.remove(SELECT_ACTIVITY_STEP);
@@ -310,7 +364,8 @@ public class TennisIntentFabric implements IntentFactory {
             if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
                 if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                     return UPSELL;
-                } else {
+                }
+                else {
                     sessionAttributes.put(type.name(), "true");
                 }
             }
