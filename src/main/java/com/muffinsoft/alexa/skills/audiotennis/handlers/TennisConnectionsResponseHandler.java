@@ -15,6 +15,7 @@ import com.muffinsoft.alexa.sdk.enums.PurchaseState;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.sdk.util.ResponseAssembler;
+import com.muffinsoft.alexa.skills.audiotennis.IoC;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 
@@ -82,9 +83,8 @@ public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatch
                     break;
                 }
                 case "DECLINED": {
-                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.DECLINED.name());
-                    speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseDeclined");
-                    break;
+                    persistentAttributes.put(PURCHASE_STATE, PurchaseState.NOT_ENTITLED.name());
+                    return new TennisActionIntentHandler(IoC.provideIntentFactory()).handle(input);
                 }
                 case "ALREADY_PURCHASED": {
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseAlreadyDone");
