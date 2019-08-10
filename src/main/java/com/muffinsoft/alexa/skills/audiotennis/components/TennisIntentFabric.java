@@ -5,7 +5,6 @@ import com.amazon.ask.model.Slot;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
-import com.muffinsoft.alexa.sdk.components.BaseDialogTranslator;
 import com.muffinsoft.alexa.sdk.components.IntentFactory;
 import com.muffinsoft.alexa.sdk.constants.PaywallConstants;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
@@ -124,10 +123,12 @@ public class TennisIntentFabric implements IntentFactory {
     }
 
     private StateManager upsell(Map<String, Slot> slots, AttributesManager attributesManager, PhraseDependencyContainer phraseDependencyContainer) {
-        return new BaseStateManager(slots, attributesManager, null) {
+        return new BaseStateManager(slots, attributesManager, settingsDependencyContainer.getDialogTranslator()) {
             @Override
             public DialogItem nextResponse() {
-                return BuyManager.getBuyResponse(attributesManager, phraseDependencyContainer, new BaseDialogTranslator(), PaywallConstants.UPSELL);
+                DialogItem response = BuyManager.getBuyResponse(attributesManager, phraseDependencyContainer, settingsDependencyContainer.getDialogTranslator(), PaywallConstants.UPSELL);
+                logger.info(">>>> UPSELL response: " + response.toString());
+                return response;
             }
         };
     }
@@ -242,7 +243,18 @@ public class TennisIntentFabric implements IntentFactory {
 
         ActivityType type = getActivityFromReply(inputSlots);
 
-        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+        if (type == null) {
+            ActivityType currentActivity = activityProgress.getCurrentActivity();
+            if (currentActivity == ActivityType.ALPHABET_RACE || currentActivity == ActivityType.RHYME_MATCH) {
+                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(currentActivity.name())) {
+                    return UPSELL;
+                }
+                else {
+                    sessionAttributes.put(currentActivity.name(), "true");
+                }
+            }
+        }
+        else if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
             if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                 return UPSELL;
             }
@@ -294,6 +306,17 @@ public class TennisIntentFabric implements IntentFactory {
                 }
                 else {
                     sessionAttributes.put(type.name(), "true");
+                }
+            }
+        }
+        else {
+            ActivityType currentActivity = activityProgress.getCurrentActivity();
+            if (currentActivity == ActivityType.ALPHABET_RACE || currentActivity == ActivityType.RHYME_MATCH) {
+                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(currentActivity.name())) {
+                    return UPSELL;
+                }
+                else {
+                    sessionAttributes.put(currentActivity.name(), "true");
                 }
             }
         }
@@ -361,7 +384,18 @@ public class TennisIntentFabric implements IntentFactory {
             return SELECT_OTHER_MISSION;
         }
         else {
-            if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+            if (type == null) {
+                ActivityType currentActivity = activityProgress.getCurrentActivity();
+                if (currentActivity == ActivityType.ALPHABET_RACE || currentActivity == ActivityType.RHYME_MATCH) {
+                    if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(currentActivity.name())) {
+                        return UPSELL;
+                    }
+                    else {
+                        sessionAttributes.put(currentActivity.name(), "true");
+                    }
+                }
+            }
+            else if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
                 if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                     return UPSELL;
                 }
