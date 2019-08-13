@@ -4,7 +4,6 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.muffinsoft.alexa.sdk.components.DialogTranslator;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.enums.PurchaseState;
-import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
@@ -53,7 +52,7 @@ public class BuyManager {
         } else if (state == PurchaseState.NOT_ENTITLED) {
             return DialogItem.builder()
                     .withDirective(action)
-                    .addResponse(dialogTranslator.translate(new BasePhraseContainer("Empty message"), false))
+                    .addResponse(dialogTranslator.translate(phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseUpsell"), true))
                     .build();
         } else if (state == PurchaseState.ENTITLED) {
             key = "purchaseAlreadyDone";

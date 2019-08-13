@@ -111,7 +111,7 @@ public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatch
         return responseAssembler.assemble(input, dialog);
     }
 
-    private Map<String, Object> getSessionAttributes(JsonNode jsonNode) {
+    public static Map<String, Object> getSessionAttributes(JsonNode jsonNode) {
         String json = jsonNode.toString().replaceAll("^\"|\"$|\\\\", "");
         try {
             ObjectMapper mapper = new ObjectMapper();
