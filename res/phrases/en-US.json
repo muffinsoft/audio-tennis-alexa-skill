@@ -325,5 +325,11 @@
       "content" : "Sorry this activity is only available once per day, would you like to try something else?",
       "role" : "Alexa"
     }
+  ],
+  "purchaseNothingToRefund" : [
+    {
+      "content" : "You have not made any purchases, there is nothing to refund. You will be returned back to game process",
+      "role" : "Alexa"
+    }
   ]
 }
