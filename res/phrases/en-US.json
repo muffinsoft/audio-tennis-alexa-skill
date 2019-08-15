@@ -196,7 +196,7 @@
   ],
   "purchaseNoRefund" : [
     {
-      "content": "You haven't purchased the expansion pack yet. You can say - what can I buy - to get information about the expansion pack, or say yes to return to the adventure.",
+      "content": "You haven't purchased the expansion pack yet. You can say - what can I buy - to get information about the expansion pack, or say yes to return to the match.",
       "role": "Alexa"
     }
   ],
@@ -220,19 +220,19 @@
   ],
   "purchaseHistory" : [
     {
-      "content" : "Thanks for buying the expansion pack, with 6 more exciting levels. Would you like to try them out?",
+      "content" : "Thanks for buying the expansion pack, with unlimited access to all of the activities. Would you like to try one of them out?",
       "role" : "Alexa"
     }
   ],
   "purchaseHistoryReprompt" : [
     {
-      "content" : "You asked me what you bought, it was the expansion pack with 6 new levels. Would you like to try the new levels?",
+      "content" : "You asked me what you bought, it was the expansion pack, with unlimited access to all of this games features. Would you like to continue with one of the premium activities?",
       "role" : "Alexa"
     }
   ],
   "purchaseHistoryNothing" : [
     {
-      "content" : "You have not purchased the expansion pack which includes 6 exciting new missions.",
+      "content" : "You have not purchased the expansion pack which gives unlimited access to all premium activities.",
       "role" : "Alexa"
     }
   ],
@@ -244,13 +244,13 @@
   ],
   "purchaseWait" : [
     {
-      "content" : "While you wait, would you like to take another crack at one of the available missions again?",
+      "content" : "While you wait, would you like to continue with one of the available activities?",
       "role" : "Alexa"
     }
   ],
   "purchasePending" : [
     {
-      "content" : "I've asked for permission to purchase the expansion pack. In the meantime, would you like to play a different mission, or reset this mission?",
+      "content" : "I've asked for permission to purchase the expansion pack. In the meantime, would you like to continue playing one of the available activities?",
       "role" : "Alexa"
     }
   ],
@@ -262,49 +262,49 @@
   ],
   "purchaseAlreadyDone" : [
     {
-      "content" : "You already own the expansion pack. Would you like to pick out a mission to play?",
+      "content" : "You already own the expansion pack. Would you like to play one of the premium activities",
       "role" : "Alexa"
     }
   ],
   "purchaseAlreadyDoneReprompt" : [
     {
-      "content" : "Want to select a mission?",
+      "content" : "Want to select a premium activity?",
       "role" : "Alexa"
     }
   ],
   "purchaseUnsuccessful" : [
     {
-      "content" : "We couldn't complete the purchase. You can always ask me how to get more levels later. Want to try one of the available missions again?",
+      "content" : "We couldn't complete the purchase. You can always ask me how to get more features later. For now, want to continue with one of the available activities?",
       "role" : "Alexa"
     }
   ],
   "purchaseDeclined" : [
     {
-      "content" : "Sorry, your purchase was declined, For now want to try one of the available missions again?",
+      "content" : "Sorry, your purchase was declined, For now, Want to continue with one of the available activities?",
       "role" : "Alexa"
     }
   ],
   "purchaseError" : [
     {
-      "content" : "Sorry, looks like the store is closed for now. Want to try one of the available missions again?",
+      "content" : "Sorry, looks like the store is closed for now. Want to continue with one of the available activities?",
       "role" : "Alexa"
     }
   ],
   "purchaseCancel" : [
     {
-      "content" : "In the future you can purchase the expansion pack by saying 'what can I buy'. For now want to try one of the available missions again?",
+      "content" : "In the future you can purchase the expansion pack by saying “what can I buy”. For now, want to continue with one of the available activities?",
       "role" : "Alexa"
     }
   ],
   "purchaseComplete" : [
     {
-      "content" : "Congrats, your purchase was completed! Would you like to continue your adventure with the new available mission?",
+      "content" : "Congrats, your purchase was completed! Would you like to continue playing with one of your newly available activities?",
       "role" : "Alexa"
     }
   ],
   "purchaseCompleteReprompt" : [
     {
-      "content" : "Would you like to continue your adventure with the new available levels?",
+      "content" : "Would you like to continue your match with one of the premium activities?",
       "role" : "Alexa"
     }
   ],
@@ -316,7 +316,7 @@
   ],
   "playAgainReprompt" : [
     {
-      "content" : "Want to try one of the available missions again?",
+      "content" : "Want to continue with one of the available activities?",
       "role" : "Alexa"
     }
   ],
