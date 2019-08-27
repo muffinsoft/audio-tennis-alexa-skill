@@ -118,8 +118,13 @@ public class TennisIntentFabric implements IntentFactory {
         return new BaseStateManager(slots, attributesManager, translator) {
             @Override
             public DialogItem nextResponse() {
+                String state = String.valueOf(attributesManager.getPersistentAttributes().getOrDefault(PURCHASE_STATE, PurchaseState.NOT_ENTITLED));
+                PurchaseState purchaseState = PurchaseState.valueOf(state);
+
                 getSessionAttributes().put(NEW_ACTIVITY_OR_MENU, NEW_ACTIVITY_OR_MENU);
-                List<PhraseContainer> response = phraseManager.getValueByKey("noMorePremium");
+                String key = purchaseState == PurchaseState.PENDING ? "purchasePending" : "noMorePremium";
+
+                List<PhraseContainer> response = phraseManager.getValueByKey(key);
                 return DialogItem.builder()
                         .addResponse(translator.translate(response, true))
                         .withReprompt(translator.translate(response, true))
