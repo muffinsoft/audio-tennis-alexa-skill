@@ -203,6 +203,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             builder.addBackgroundImageUrl(cardManager.getValueByKey("select-activity"));
         }
         else {
+            // TODO после отказа от покупки вызывается этот метод, при положительном ответе на вопрос о продолжении игры попадаем сюда
             initGameStatePhrase(builder);
             addActivityImage(builder);
         }
@@ -319,6 +320,7 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     private void initGameStatePhrase(DialogItem.Builder builder) {
         this.stateType = StateType.GAME_PHASE_1;
+        //TODO а вот тут, собственно, и сбрасываются очки за уровни, нужно костыльнуть еще одним флагом в точках апсела и Амазона (ну те которые написаны в описании бага) ну и тут, как обычно, ифчик по этому флагу :-)
         this.activityProgress.reset();
 
         if (this.currentActivityType.isCompetition()) {

@@ -36,16 +36,16 @@
                   "color": "#000000",
                   "text": "${payload.templateData.playerScore}",
                   "position": "absolute",
-                  "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '25%' : '26%') : '20%'}",
-                  "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '224dp' : '164dp') : '100dp'}"
+                  "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '28%' : '30%') : '20%'}",
+                  "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '224dp' : '172dp') : '100dp'}"
                 },
                 {
                   "type": "Text",
                   "color": "#000000",
                   "text": "${payload.templateData.enemyScore}",
                   "position": "absolute",
-                  "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '25%' : '26%') : '18%'}",
-                  "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '224dp' : '164dp') : '100dp'}"
+                  "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '28%' : '30%') : '18%'}",
+                  "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '224dp' : '172dp') : '100dp'}"
                 }
               ]
             }
@@ -100,16 +100,16 @@
                       "color": "#000000",
                       "text": "${payload.templateData.enemyScore}",
                       "position": "absolute",
-                      "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '25%' : '26%') : '20%'}",
-                      "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '224dp' : '164dp') : '100dp'}"
+                      "right": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '28%' : '30%') : '20%'}",
+                      "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '224dp' : '172dp') : '100dp'}"
                     },
                     {
                       "type": "Text",
                       "color": "#000000",
                       "text": "${payload.templateData.playerScore}",
                       "position": "absolute",
-                      "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '25%' : '26%') : '18%'}",
-                      "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '224dp' : '164dp') : '100dp'}"
+                      "left": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '28%' : '30%') : '18%'}",
+                      "fontSize": "${viewport.shape == 'rectangle' ? (viewport.height > 601 ? '224dp' : '172dp') : '100dp'}"
                     }
                   ]
                 }
