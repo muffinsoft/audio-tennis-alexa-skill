@@ -3,35 +3,19 @@ package com.muffinsoft.alexa.skills.audiotennis.activities.game;
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseGameStateManager;
+import com.muffinsoft.alexa.sdk.constants.PaywallConstants;
 import com.muffinsoft.alexa.sdk.enums.SpeechType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
-import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
-import com.muffinsoft.alexa.sdk.model.DialogItem;
-import com.muffinsoft.alexa.sdk.model.PhraseContainer;
-import com.muffinsoft.alexa.sdk.model.SlotName;
-import com.muffinsoft.alexa.sdk.model.Speech;
+import com.muffinsoft.alexa.sdk.model.*;
 import com.muffinsoft.alexa.skills.audiotennis.components.ActivitySelectionAppender;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserProgressConverter;
 import com.muffinsoft.alexa.skills.audiotennis.components.UserReplyComparator;
 import com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
-import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.ActivityManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.GeneralActivityPhraseManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.ProgressManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
-import com.muffinsoft.alexa.skills.audiotennis.content.VariablesManager;
+import com.muffinsoft.alexa.skills.audiotennis.content.*;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
-import com.muffinsoft.alexa.skills.audiotennis.models.ActivityPhrases;
-import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
-import com.muffinsoft.alexa.skills.audiotennis.models.ActivitySettings;
-import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
-import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
-import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
-import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,10 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.sdk.constants.PhraseConstants.EXIT_PHRASE;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.*;
 import static com.muffinsoft.alexa.sdk.enums.StateType.ACTIVITY_INTRO;
 import static com.muffinsoft.alexa.sdk.enums.StateType.READY;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.UNKNOWN_WORD_PHRASE;
@@ -320,8 +301,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
 
     private void initGameStatePhrase(DialogItem.Builder builder) {
         this.stateType = StateType.GAME_PHASE_1;
-        //TODO а вот тут, собственно, и сбрасываются очки за уровни, нужно костыльнуть еще одним флагом в точках апсела и Амазона (ну те которые написаны в описании бага) ну и тут, как обычно, ифчик по этому флагу :-)
-        this.activityProgress.reset();
+        if (!getPersistentAttributes().containsKey(PaywallConstants.UPSELL)) {
+            this.activityProgress.reset();
+        } else {
+            getPersistentAttributes().remove(PaywallConstants.UPSELL);
+        }
+        savePersistentAttributes();
 
         if (this.currentActivityType.isCompetition()) {
             this.activityProgress.iterateEnemyAnswerCounter();

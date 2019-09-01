@@ -29,7 +29,13 @@ public class TennisRefundIntentHandler extends RefundIntentHandler {
         return new BaseStateManager(getSlotsFromInput(input), input.getAttributesManager(), dialogTranslator) {
             @Override
             public DialogItem nextResponse() {
-                List<PhraseContainer> response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseNothingToRefund");
+                boolean arePurchasesEnabled = (boolean) getSessionAttributes().get("arePurchasesEnabled");
+                List<PhraseContainer> response;
+                if (!arePurchasesEnabled) {
+                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");
+                } else {
+                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseNothingToRefund");
+                }
                 getSessionAttributes().put(INTENT, IntentType.GAME);
                 return DialogItem.builder()
                         .addResponse(dialogTranslator.translate(response, true))

@@ -29,6 +29,8 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -137,6 +139,8 @@ public class TennisIntentFabric implements IntentFactory {
         return new BaseStateManager(slots, attributesManager, settingsDependencyContainer.getDialogTranslator()) {
             @Override
             public DialogItem nextResponse() {
+                getPersistentAttributes().put(PaywallConstants.UPSELL, ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT));
+                savePersistentAttributes();
                 DialogItem response = BuyManager.getBuyResponse(attributesManager, phraseDependencyContainer, settingsDependencyContainer.getDialogTranslator(), PaywallConstants.UPSELL);
                 logger.info(">>>> UPSELL response: " + response.toString());
                 return response;

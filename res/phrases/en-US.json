@@ -331,5 +331,11 @@
       "content" : "You have not made any purchases, there is nothing to refund. You will be returned back to game process",
       "role" : "Alexa"
     }
+  ],
+  "unknownRequest" : [
+    {
+      "content" : "Sorry, I am not sure.",
+      "role" : "Alexa"
+    }
   ]
 }

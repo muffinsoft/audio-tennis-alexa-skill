@@ -33,15 +33,17 @@ public class TennisWhatCanIBuyHandler extends WhatCanIBuyIntentHandler {
             public DialogItem nextResponse() {
                 InSkillProduct product = PurchaseManager.getInSkillProduct(input);
                 List<PhraseContainer> response;
-                if(PurchaseManager.isAvailable(product)) {
-                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseWhat");
-                    getSessionAttributes().put(INTENT, IntentType.BUY_INTENT);
-                } else if (PurchaseManager.isEntitled(product)) {
+                boolean arePurchasesEnabled = (boolean) getSessionAttributes().get("arePurchasesEnabled");
+                getSessionAttributes().put(INTENT, IntentType.GAME);
+                if (PurchaseManager.isEntitled(product)) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistory");
-                    getSessionAttributes().put(INTENT, IntentType.GAME);
+                } else if (!arePurchasesEnabled) {
+                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");
+                } else if(PurchaseManager.isAvailable(product)) {
+                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseWhat");
+                    getSessionAttributes().put(INTENT, IntentType.BUY_INTENT);
                 } else {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseNothing");
-                    getSessionAttributes().put(INTENT, IntentType.GAME);
                 }
                 return DialogItem.builder()
                         .addResponse(dialogTranslator.translate(response, true))

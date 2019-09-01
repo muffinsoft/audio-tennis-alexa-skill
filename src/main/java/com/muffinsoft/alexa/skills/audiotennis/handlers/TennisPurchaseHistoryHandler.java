@@ -37,8 +37,11 @@ public class TennisPurchaseHistoryHandler extends PurchaseHistoryHandler {
                 InSkillProduct product = PurchaseManager.getInSkillProduct(input);
                 PurchaseState previousState = getPreviousPurchaseState(input);
                 List<PhraseContainer> response;
+                boolean arePurchasesEnabled = (boolean) getSessionAttributes().get("arePurchasesEnabled");
                 if(PurchaseManager.isEntitled(product)) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistory");
+                } else if (!arePurchasesEnabled) {
+                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");
                 } else if (PurchaseManager.isPending(product, previousState)) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchasePending");
                 } else if (PurchaseManager.isAvailable(product)) {
