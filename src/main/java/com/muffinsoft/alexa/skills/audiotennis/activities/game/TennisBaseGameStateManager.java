@@ -184,7 +184,6 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
             builder.addBackgroundImageUrl(cardManager.getValueByKey("select-activity"));
         }
         else {
-            // TODO после отказа от покупки вызывается этот метод, при положительном ответе на вопрос о продолжении игры попадаем сюда
             initGameStatePhrase(builder);
             addActivityImage(builder);
         }
@@ -302,8 +301,10 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     private void initGameStatePhrase(DialogItem.Builder builder) {
         this.stateType = StateType.GAME_PHASE_1;
         if (!getPersistentAttributes().containsKey(PaywallConstants.UPSELL)) {
+            logger.warn(">>>> RESET ACTIVITY PROGRESS");
             this.activityProgress.reset();
         } else {
+            logger.warn(">>>> RESET ACTIVITY PROGRESS was not done - UPSELL flag removed");
             getPersistentAttributes().remove(PaywallConstants.UPSELL);
         }
         savePersistentAttributes();

@@ -367,7 +367,7 @@ public class ActivityProgress {
             this.currentNickNameLevel = userProgress.getNickNameLevel();
 //        }
 //        if (this.amountOfTwoPointsInRow == 0 && userProgress.getAmountOfTwoPointsInRow() != 0) {
-            this.amountOfTwoPointsInRow = userProgress.getAmountOfTwoPointsInRow();
+//            this.amountOfTwoPointsInRow = userProgress.getAmountOfTwoPointsInRow();
 //        }
 
 //        if (this.getUnlockedActivities() == null || this.getUnlockedActivities().isEmpty() || this.getUnlockedActivities().size() == 1) {
