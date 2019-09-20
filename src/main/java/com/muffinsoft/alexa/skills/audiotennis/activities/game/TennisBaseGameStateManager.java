@@ -301,10 +301,8 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     private void initGameStatePhrase(DialogItem.Builder builder) {
         this.stateType = StateType.GAME_PHASE_1;
         if (!getPersistentAttributes().containsKey(PaywallConstants.UPSELL)) {
-            logger.warn(">>>> RESET ACTIVITY PROGRESS");
             this.activityProgress.reset();
         } else {
-            logger.warn(">>>> RESET ACTIVITY PROGRESS was not done - UPSELL flag removed");
             getPersistentAttributes().remove(PaywallConstants.UPSELL);
         }
         savePersistentAttributes();

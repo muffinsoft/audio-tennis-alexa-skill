@@ -20,12 +20,14 @@ import com.muffinsoft.alexa.skills.audiotennis.activities.game.AlphabetRaceGameS
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.BamWhamGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.LastLetterGameStateManager;
 import com.muffinsoft.alexa.skills.audiotennis.activities.game.RhymeMatchGameStateManager;
+import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.RegularPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.enums.UserReplies;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
+import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -140,6 +142,29 @@ public class TennisIntentFabric implements IntentFactory {
             @Override
             public DialogItem nextResponse() {
                 getPersistentAttributes().put(PaywallConstants.UPSELL, ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT));
+                UserProgress userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
+
+                LinkedHashMap rawActivityProgress = (LinkedHashMap) getSessionAttributes().get(ACTIVITY_PROGRESS);
+                ActivityProgress activityProgress = rawActivityProgress != null ? mapper.convertValue(rawActivityProgress, ActivityProgress.class) : null;
+                if (activityProgress != null) {
+                    activityProgress.getUnlockedActivities().remove(null);
+                    if (userProgress != null) {
+                        userProgress.setLastGameEnemyPoint(activityProgress.getEnemyPointCounter());
+                        userProgress.setLastGamePlayerPoint(activityProgress.getPlayerPointCounter());
+                        userProgress.setMoveToUpSell(true);
+                        userProgress.setPlayerPointsBeforeUpSell(activityProgress.getPlayerPointCounter());
+                        userProgress.setPlayerScoresBeforeUpSell(activityProgress.getPlayerGameCounter());
+                        userProgress.setPlayerPointWinInRow(activityProgress.getPlayerPointWinInRow());
+                        userProgress.setEnemyPointWinInRow(activityProgress.getEnemyPointWinInRow());
+                        userProgress.setEnemyPointsBeforeUpSell(activityProgress.getEnemyPointCounter());
+                        userProgress.setEnemyScoresBeforeUpSell(activityProgress.getEnemyGameCounter());
+
+                        String json = UserProgressConverter.toJson(userProgress);
+                        if (json != null) {
+                            this.getPersistentAttributes().put(SessionConstants.USER_PROGRESS, json);
+                        }
+                    }
+                }
                 savePersistentAttributes();
                 DialogItem response = BuyManager.getBuyResponse(attributesManager, phraseDependencyContainer, settingsDependencyContainer.getDialogTranslator(), PaywallConstants.UPSELL);
                 logger.info(">>>> UPSELL response: " + response.toString());

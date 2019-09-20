@@ -21,6 +21,11 @@ public class UserProgress {
     private Set<String> unlockedActivities = new HashSet<>();
     private Set<String> achievements = new HashSet<>();
     private int nickNameLevel;
+    private boolean moveToUpSell = false;
+    private int enemyScoresBeforeUpSell;
+    private int enemyPointsBeforeUpSell;
+    private int playerScoresBeforeUpSell;
+    private int playerPointsBeforeUpSell;
 
     public UserProgress() {
     }
@@ -141,6 +146,46 @@ public class UserProgress {
         this.amountOfTwoPointsInRow = amountOfTwoPointsInRow;
     }
 
+    public boolean isMoveToUpSell() {
+        return moveToUpSell;
+    }
+
+    public void setMoveToUpSell(boolean moveToUpSell) {
+        this.moveToUpSell = moveToUpSell;
+    }
+
+    public int getEnemyScoresBeforeUpSell() {
+        return enemyScoresBeforeUpSell;
+    }
+
+    public void setEnemyScoresBeforeUpSell(int enemyScoresBeforeUpSell) {
+        this.enemyScoresBeforeUpSell = enemyScoresBeforeUpSell;
+    }
+
+    public int getEnemyPointsBeforeUpSell() {
+        return enemyPointsBeforeUpSell;
+    }
+
+    public void setEnemyPointsBeforeUpSell(int enemyPointsBeforeUpSell) {
+        this.enemyPointsBeforeUpSell = enemyPointsBeforeUpSell;
+    }
+
+    public int getPlayerScoresBeforeUpSell() {
+        return playerScoresBeforeUpSell;
+    }
+
+    public void setPlayerScoresBeforeUpSell(int playerScoresBeforeUpSell) {
+        this.playerScoresBeforeUpSell = playerScoresBeforeUpSell;
+    }
+
+    public int getPlayerPointsBeforeUpSell() {
+        return playerPointsBeforeUpSell;
+    }
+
+    public void setPlayerPointsBeforeUpSell(int playerPointsBeforeUpSell) {
+        this.playerPointsBeforeUpSell = playerPointsBeforeUpSell;
+    }
+
     @Override
     @JsonIgnore
     public String toString() {
@@ -157,6 +202,11 @@ public class UserProgress {
                 ", unlockedActivities=" + unlockedActivities +
                 ", achievements=" + achievements +
                 ", nickNameLevel=" + nickNameLevel +
+                ", moveToUpSell=" + moveToUpSell +
+                ", enemyScoresBeforeUpSell=" + enemyScoresBeforeUpSell +
+                ", enemyPointsBeforeUpSell=" + enemyPointsBeforeUpSell +
+                ", playerScoresBeforeUpSell=" + playerScoresBeforeUpSell +
+                ", playerPointsBeforeUpSell=" + playerPointsBeforeUpSell +
                 '}';
     }
 
