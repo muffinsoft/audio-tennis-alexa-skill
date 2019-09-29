@@ -355,6 +355,7 @@ public class TennisIntentFabric implements IntentFactory {
 
     private IntentType interceptUnlockedActivityProgress(Map<String, Slot> inputSlots, Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
         ActivityType type = getActivityFromReply(inputSlots);
+        logger.debug("Activity from reply is {}", type);
 
         boolean isPurchasable = (boolean) sessionAttributes.getOrDefault("isPurchasable", false);
 
@@ -363,33 +364,13 @@ public class TennisIntentFabric implements IntentFactory {
                 sessionAttributes.put(BLOCKED_ACTIVITY_CALL, "true");
                 return SELECT_MISSION;
             }
-            if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
-                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
-                    if (isPurchasable) {
-                        return UPSELL;
-                    } else {
-                        return NEW_OR_MENU;
-                    }
-                }
-                else {
-                    sessionAttributes.put(type.name(), "true");
-                }
-            }
+            IntentType x = checkPaidActivities(sessionAttributes, state, type, isPurchasable);
+            if (x != null) return x;
         }
         else {
             ActivityType currentActivity = activityProgress.getCurrentActivity();
-            if (currentActivity == ActivityType.ALPHABET_RACE || currentActivity == ActivityType.RHYME_MATCH) {
-                if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(currentActivity.name())) {
-                    if (isPurchasable) {
-                        return UPSELL;
-                    } else {
-                        return NEW_OR_MENU;
-                    }
-                }
-                else {
-                    sessionAttributes.put(currentActivity.name(), "true");
-                }
-            }
+            IntentType x = checkPaidActivities(sessionAttributes, state, currentActivity, isPurchasable);
+            if (x != null) return x;
         }
 
         if (isPositiveReply(inputSlots) && activityProgress.getPossibleActivity() != null) {
@@ -402,12 +383,32 @@ public class TennisIntentFabric implements IntentFactory {
         return GAME;
     }
 
+    private IntentType checkPaidActivities(Map<String, Object> sessionAttributes, PurchaseState state, ActivityType type, boolean isPurchasable) {
+        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+            logger.debug("{} is selected, checking if entitled", type);
+            if (state != PurchaseState.ENTITLED) {
+                if (sessionAttributes.put(type.name(), "true") != null) {
+                    logger.debug("Have set {} to session attributes", type);
+                    if (isPurchasable) {
+                        return UPSELL;
+                    } else {
+                        return NEW_OR_MENU;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private void moveToPossibleActivity(Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
         ActivityType possibleActivity = activityProgress.getPossibleActivity();
         ActivityType currentActivity = activityProgress.getCurrentActivity();
         activityProgress.setTransition(true);
         activityProgress.setCurrentActivity(possibleActivity);
         activityProgress.setPreviousActivity(currentActivity);
+        if (possibleActivity == ActivityType.ALPHABET_RACE || possibleActivity == ActivityType.RHYME_MATCH) {
+            sessionAttributes.put(possibleActivity.name(), "true");
+        }
         sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
         sessionAttributes.remove(STATE_TYPE);
         sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
