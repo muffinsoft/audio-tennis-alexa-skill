@@ -20,6 +20,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
     public RhymeMatchGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.RHYME_MATCH;
+        this.activityProgress.setCurrentActivity(ActivityType.RHYME_MATCH);
     }
 
     @Override

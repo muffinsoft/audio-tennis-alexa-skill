@@ -141,6 +141,7 @@ public class TennisIntentFabric implements IntentFactory {
         return new BaseStateManager(slots, attributesManager, settingsDependencyContainer.getDialogTranslator()) {
             @Override
             public DialogItem nextResponse() {
+                logger.info("Generating upsell");
                 getPersistentAttributes().put(PaywallConstants.UPSELL, ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT));
                 UserProgress userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
 
@@ -238,18 +239,23 @@ public class TennisIntentFabric implements IntentFactory {
 
         logger.info("Try to enter activity " + currentActivity + "; available activities: " + unlockedActivities);
         if (unlockedActivities.size() > 1 && !unlockedActivities.contains(currentActivity)) {
+            logger.info("Trying to call a blocked activity");
             attributesManager.getSessionAttributes().put(BLOCKED_ACTIVITY_CALL, true);
             return new SelectActivityStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         }
         else {
             switch (currentActivity) {
                 case ALPHABET_RACE:
+                    logger.info("Returning Alphabet Race Manager");
                     return new AlphabetRaceGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
                 case LAST_LETTER:
+                    logger.info("Returning Last Letter Manager");
                     return new LastLetterGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
                 case RHYME_MATCH:
+                    logger.info("Returning Rhyme Match Manager");
                     return new RhymeMatchGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
                 case BAM_WHAM:
+                    logger.info("Returning Bam Wham Manager");
                     return new BamWhamGameStateManager(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
                 default:
                     throw new IllegalArgumentException("Can't create instance of activity handler for type " + currentActivity);
@@ -287,8 +293,10 @@ public class TennisIntentFabric implements IntentFactory {
 
         if (needToUpsell(sessionAttributes, activityProgress, state, type)) {
             if (isPurchasable) {
+                logger.info("Game is purchasable, need to upsell");
                 return UPSELL;
             } else {
+                logger.info("Game is not purchasable, need to switch activity");
                 return NEW_OR_MENU;
             }
         }
@@ -420,10 +428,13 @@ public class TennisIntentFabric implements IntentFactory {
         }
 
         if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+            logger.debug("Paid activity selected");
             if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
+                logger.debug("Trigger upsell");
                 return UPSELL;
             }
             else {
+                logger.debug("Saving activity name in session attributes");
                 sessionAttributes.put(type.name(), "true");
             }
         }

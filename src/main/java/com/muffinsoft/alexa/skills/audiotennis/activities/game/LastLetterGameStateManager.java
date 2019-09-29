@@ -13,6 +13,7 @@ public class LastLetterGameStateManager extends CompetitionGameStateManager {
     public LastLetterGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.LAST_LETTER;
+        this.activityProgress.setCurrentActivity(ActivityType.LAST_LETTER);
     }
 
     @Override

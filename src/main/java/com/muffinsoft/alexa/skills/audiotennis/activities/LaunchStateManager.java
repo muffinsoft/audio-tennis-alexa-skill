@@ -13,6 +13,8 @@ import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.content.ActivitiesPhraseManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.AplManager;
 import com.muffinsoft.alexa.skills.audiotennis.content.CardManager;
+import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
+import com.muffinsoft.alexa.skills.audiotennis.models.ActivityProgress;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.UserProgress;
@@ -23,10 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_REPLY_BREAKPOINT;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.*;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SELECT_ACTIVITY_STEP;
 
 public class LaunchStateManager extends BaseStateManager {
@@ -50,8 +51,18 @@ public class LaunchStateManager extends BaseStateManager {
 
     @Override
     protected void populateActivityVariables() {
-        this.userProgress = UserProgressConverter.fromJson(String.valueOf(getPersistentAttributes().get(USER_PROGRESS)));
+        String userProgress = String.valueOf(getPersistentAttributes().get(USER_PROGRESS));
+        this.userProgress = UserProgressConverter.fromJson(userProgress);
         this.userReplyBreakpointPosition = (Integer) this.getSessionAttributes().getOrDefault(USER_REPLY_BREAKPOINT, null);
+        if (this.userProgress.getUnlockedActivities() != null) {
+            Set<ActivityType> unlocked = this.userProgress.getUnlockedActivities().stream()
+                    .map(ActivityType::valueOf)
+                    .collect(Collectors.toSet());
+            ActivityProgress activityProgress = new ActivityProgress(null);
+            activityProgress.getUnlockedActivities().addAll(unlocked);
+            activityProgress.getUnlockedActivities().remove(null);
+            this.getSessionAttributes().put(ACTIVITY_PROGRESS, activityProgress);
+        }
     }
 
     @Override

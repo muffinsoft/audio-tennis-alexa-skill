@@ -14,6 +14,7 @@ public class AlphabetRaceGameStateManager extends CompetitionGameStateManager {
     public AlphabetRaceGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.ALPHABET_RACE;
+        this.activityProgress.setCurrentActivity(ActivityType.ALPHABET_RACE);
     }
 
     @Override

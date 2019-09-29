@@ -22,6 +22,7 @@ public class BamWhamGameStateManager extends OneSideGameStateManager {
     public BamWhamGameStateManager(Map<String, Slot> inputSlots, AttributesManager attributesManager, SettingsDependencyContainer settingsDependencyContainer, PhraseDependencyContainer phraseDependencyContainer) {
         super(inputSlots, attributesManager, settingsDependencyContainer, phraseDependencyContainer);
         this.currentActivityType = ActivityType.BAM_WHAM;
+        this.activityProgress.setCurrentActivity(ActivityType.BAM_WHAM);
     }
 
     @Override

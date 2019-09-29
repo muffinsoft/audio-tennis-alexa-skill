@@ -116,10 +116,12 @@ public abstract class TennisBaseGameStateManager extends BaseGameStateManager {
     @Override
     protected void updateSessionAttributes() {
         if (this.activityProgress.getCurrentActivity() == null) {
+            logger.info("Current activity is null, setting to {}", this.currentActivityType);
             this.activityProgress.setCurrentActivity(this.currentActivityType);
         }
         this.getSessionAttributes().put(STATE_TYPE, this.stateType);
         this.getSessionAttributes().put(ACTIVITY_PROGRESS, this.activityProgress);
+        logger.info("Save session attributes with current activity {}", activityProgress.getCurrentActivity());
     }
 
     @Override
