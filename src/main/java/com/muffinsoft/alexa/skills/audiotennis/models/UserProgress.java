@@ -26,6 +26,7 @@ public class UserProgress {
     private int enemyPointsBeforeUpSell;
     private int playerScoresBeforeUpSell;
     private int playerPointsBeforeUpSell;
+    private Set<String> alreadyPlayed = new HashSet<>();
 
     public UserProgress() {
     }
@@ -184,6 +185,10 @@ public class UserProgress {
 
     public void setPlayerPointsBeforeUpSell(int playerPointsBeforeUpSell) {
         this.playerPointsBeforeUpSell = playerPointsBeforeUpSell;
+    }
+
+    public Set<String> getAlreadyPlayed() {
+        return alreadyPlayed;
     }
 
     @Override

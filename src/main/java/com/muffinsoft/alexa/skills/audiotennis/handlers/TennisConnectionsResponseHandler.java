@@ -16,8 +16,11 @@ import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
 import com.muffinsoft.alexa.sdk.util.ResponseAssembler;
 import com.muffinsoft.alexa.skills.audiotennis.IoC;
+import com.muffinsoft.alexa.skills.audiotennis.components.Utils;
 import com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -28,9 +31,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.AFTER_UPSELL;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.PURCHASE_STATE;
 
 public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatcher.request.handler.impl.ConnectionsResponseHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(TennisConnectionsResponseHandler.class);
 
     private final DialogTranslator dialogTranslator;
     private final PhraseDependencyContainer phraseDependencyContainer;
@@ -72,9 +78,14 @@ public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatch
         if (code.equalsIgnoreCase("200")) {
             String purchaseResult = input.getRequestEnvelopeJson().get("request").get("payload").get("purchaseResult").asText();
 
+            logger.debug("Received connection response {}", purchaseResult);
+
             switch (purchaseResult) {
                 case "PENDING_PURCHASE":
                     persistentAttributes.put(PURCHASE_STATE, PurchaseState.PENDING.name());
+                    sessionAttributes.put(INTENT, IntentType.SELECT_MISSION);
+                    sessionAttributes.put(AFTER_UPSELL, true);
+                    Utils.restoreAlreadyPlayed(persistentAttributes, sessionAttributes);
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseWait");
                     break;
                 case "ACCEPTED": {
@@ -84,6 +95,9 @@ public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatch
                 }
                 case "DECLINED": {
                     persistentAttributes.put(PURCHASE_STATE, PurchaseState.NOT_ENTITLED.name());
+                    sessionAttributes.put(INTENT, IntentType.SELECT_MISSION);
+                    sessionAttributes.put(AFTER_UPSELL, true);
+                    Utils.restoreAlreadyPlayed(persistentAttributes, sessionAttributes);
                     return new TennisActionIntentHandler(IoC.provideIntentFactory()).handle(input);
                 }
                 case "ALREADY_PURCHASED": {
