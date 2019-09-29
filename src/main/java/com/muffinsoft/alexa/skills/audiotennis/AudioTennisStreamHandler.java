@@ -3,6 +3,7 @@ package com.muffinsoft.alexa.skills.audiotennis;
 import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
+import com.muffinsoft.alexa.sdk.handlers.ResponseExceptionHandler;
 import com.muffinsoft.alexa.sdk.util.BaseResponseAssembler;
 import com.muffinsoft.alexa.skills.audiotennis.handlers.*;
 
@@ -45,7 +46,7 @@ public class AudioTennisStreamHandler extends SkillStreamHandler {
                         new TennisStopIntentHandler(IoC.provideSettingsDependencyContainer(), IoC.providePhraseDependencyContainer()),
                         new TennisRefundConnectionsResponseHandler()
                 )
-                //.addExceptionHandler(new ResponseExceptionHandler())
+                .addExceptionHandler(new ResponseExceptionHandler())
                 .withSkillId(amazonSkillId)
                 .withTableName("audio-tennis")
                 .build();

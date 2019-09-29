@@ -184,6 +184,7 @@ public class TennisIntentFabric implements IntentFactory {
             };
         }
         else {
+            attributesManager.getSessionAttributes().put(INTENT, GAME);
             attributesManager.getSessionAttributes().put(STATE_TYPE, RETURN_TO_GAME);
             return getNextGameState(slots, attributesManager);
         }
