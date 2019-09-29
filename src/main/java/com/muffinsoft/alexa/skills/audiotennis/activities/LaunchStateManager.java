@@ -54,7 +54,7 @@ public class LaunchStateManager extends BaseStateManager {
         String userProgress = String.valueOf(getPersistentAttributes().get(USER_PROGRESS));
         this.userProgress = UserProgressConverter.fromJson(userProgress);
         this.userReplyBreakpointPosition = (Integer) this.getSessionAttributes().getOrDefault(USER_REPLY_BREAKPOINT, null);
-        if (this.userProgress.getUnlockedActivities() != null) {
+        if (this.userProgress != null && this.userProgress.getUnlockedActivities() != null) {
             Set<ActivityType> unlocked = this.userProgress.getUnlockedActivities().stream()
                     .map(ActivityType::valueOf)
                     .collect(Collectors.toSet());
