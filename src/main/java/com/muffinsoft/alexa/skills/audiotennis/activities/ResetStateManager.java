@@ -3,6 +3,7 @@ package com.muffinsoft.alexa.skills.audiotennis.activities;
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.model.Slot;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
+import com.muffinsoft.alexa.sdk.constants.PaywallConstants;
 import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.enums.StateType;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
@@ -27,14 +28,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.STATE_TYPE;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.*;
 import static com.muffinsoft.alexa.sdk.enums.IntentType.GAME;
 import static com.muffinsoft.alexa.sdk.model.SlotName.CONFIRMATION;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.REPEAT_LAST_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.RETURN_TO_GAME_PHRASE;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.INTENT;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.*;
 
 public class ResetStateManager extends BaseStateManager {
 
@@ -64,6 +64,9 @@ public class ResetStateManager extends BaseStateManager {
     @Override
     protected void updatePersistentAttributes() {
         getPersistentAttributes().remove(USER_PROGRESS);
+        getPersistentAttributes().remove(LAST_PURCHASE_ATTEMPT_ON);
+        getPersistentAttributes().remove(PURCHASE_STATE);
+        getPersistentAttributes().remove(PaywallConstants.UPSELL);
     }
 
     @Override
