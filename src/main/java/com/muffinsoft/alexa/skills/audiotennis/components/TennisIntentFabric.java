@@ -179,6 +179,8 @@ public class TennisIntentFabric implements IntentFactory {
             return new BaseStateManager(slots, attributesManager, null) {
                 @Override
                 public DialogItem nextResponse() {
+                    getPersistentAttributes().put(PaywallConstants.UPSELL, ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT));
+                    savePersistentAttributes();
                     return DialogItem.builder().withDirective(PaywallConstants.BUY).build();
                 }
             };
