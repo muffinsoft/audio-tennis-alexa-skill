@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.AFTER_UPSELL;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.PURCHASE_STATE;
 
 public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatcher.request.handler.impl.ConnectionsResponseHandler {
@@ -84,7 +83,6 @@ public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatch
                 case "PENDING_PURCHASE":
                     persistentAttributes.put(PURCHASE_STATE, PurchaseState.PENDING.name());
                     sessionAttributes.put(INTENT, IntentType.SELECT_MISSION);
-                    sessionAttributes.put(AFTER_UPSELL, true);
                     Utils.restoreAlreadyPlayed(persistentAttributes, sessionAttributes);
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseWait");
                     break;
@@ -96,7 +94,6 @@ public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatch
                 case "DECLINED": {
                     persistentAttributes.put(PURCHASE_STATE, PurchaseState.NOT_ENTITLED.name());
                     sessionAttributes.put(INTENT, IntentType.SELECT_MISSION);
-                    sessionAttributes.put(AFTER_UPSELL, true);
                     Utils.restoreAlreadyPlayed(persistentAttributes, sessionAttributes);
                     return new TennisActionIntentHandler(IoC.provideIntentFactory()).handle(input);
                 }

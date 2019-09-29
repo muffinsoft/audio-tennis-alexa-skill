@@ -13,6 +13,8 @@ import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContaine
 import java.util.List;
 import java.util.Map;
 
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SELECT_ACTIVITY_STEP;
+
 public class SelectMoreActivitiesStateManager extends BaseStateManager {
 
     private final RegularPhraseManager regularPhraseManager;
@@ -28,6 +30,7 @@ public class SelectMoreActivitiesStateManager extends BaseStateManager {
         DialogItem.Builder builder = DialogItem.builder();
 
         List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_ACTIVITY_BETWEEN_OTHERS);
+        getSessionAttributes().put(SELECT_ACTIVITY_STEP, true);
         builder.addResponse(getDialogTranslator().translate(dialog, true));
 
         return builder.build();

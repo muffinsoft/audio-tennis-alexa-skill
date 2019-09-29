@@ -22,7 +22,8 @@ import java.util.Map;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.*;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.BLOCKED_ACTIVITY_CALL;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SELECT_ACTIVITY_STEP;
 
 public class SelectActivityStateManager extends BaseStateManager {
 
@@ -58,14 +59,9 @@ public class SelectActivityStateManager extends BaseStateManager {
             List<PhraseContainer> dialog = regularPhraseManager.getValueByKey(PhraseConstants.SELECT_BLOCKED_ACTIVTY);
             builder.addResponse(dialogTranslator.translate(dialog, true));
             getSessionAttributes().remove(BLOCKED_ACTIVITY_CALL);
-            getSessionAttributes().put(SELECT_ACTIVITY_STEP, true);
-            getSessionAttributes().put(INTENT, IntentType.GAME);
         }
-        if (getSessionAttributes().containsKey(AFTER_UPSELL)) {
-            getSessionAttributes().remove(AFTER_UPSELL);
-            getSessionAttributes().put(SELECT_ACTIVITY_STEP, true);
-            getSessionAttributes().put(INTENT, IntentType.GAME);
-        }
+        getSessionAttributes().put(SELECT_ACTIVITY_STEP, true);
+        getSessionAttributes().put(INTENT, IntentType.GAME);
 
         activitySelectionAppender.appendWithSelection(builder, userProgress, getSessionAttributes());
 

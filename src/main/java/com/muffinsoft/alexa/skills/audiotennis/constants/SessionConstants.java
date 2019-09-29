@@ -25,5 +25,4 @@ public class SessionConstants extends com.muffinsoft.alexa.sdk.constants.Session
     public static final String LAST_PURCHASE_ATTEMPT_ON = "lastPurchaseAttemptOn";
     public static final String PURCHASE_STATE = "purchaseState";
     public static final String NEW_ACTIVITY_OR_MENU = "newActivityOrMenu";
-    public static final String AFTER_UPSELL = "afterUpSell";
 }
