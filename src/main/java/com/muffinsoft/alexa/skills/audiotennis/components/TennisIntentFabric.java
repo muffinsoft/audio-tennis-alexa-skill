@@ -63,8 +63,10 @@ public class TennisIntentFabric implements IntentFactory {
         }
 
         if (attributesManager.getSessionAttributes().containsKey(EXIT_FROM_ONE_POSSIBLE_ACTIVITY)) {
+            logger.debug("Exit prompt detected");
             if (isNegativeReply(inputSlots)) {
                 intent = IntentType.EXIT_CONFIRMATION;
+                logger.debug("Need to exit");
             }
             attributesManager.getSessionAttributes().remove(EXIT_FROM_ONE_POSSIBLE_ACTIVITY);
         }
@@ -77,6 +79,24 @@ public class TennisIntentFabric implements IntentFactory {
                 intent = SELECT_MISSION;
             }
             attributesManager.getSessionAttributes().remove(NEW_ACTIVITY_OR_MENU);
+        }
+
+        if (attributesManager.getSessionAttributes().containsKey(CONTINUE_OR_MENU)) {
+            if (isPositiveReply(inputSlots)) {
+                intent = GAME;
+            } else {
+                intent = SELECT_MISSION;
+            }
+            attributesManager.getSessionAttributes().remove(CONTINUE_OR_MENU);
+        }
+
+        if (attributesManager.getSessionAttributes().containsKey(MENU_OR_CONTINUE)) {
+            if (isPositiveReply(inputSlots)) {
+                intent = SELECT_MISSION;
+            } else {
+                intent = GAME;
+            }
+            attributesManager.getSessionAttributes().remove(MENU_OR_CONTINUE);
         }
 
         logger.info("Handle INTENT " + intent);

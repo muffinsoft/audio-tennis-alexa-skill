@@ -13,6 +13,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import java.util.List;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.CONTINUE_OR_MENU;
 
 public class TennisRefundIntentHandler extends RefundIntentHandler {
 
@@ -35,6 +36,7 @@ public class TennisRefundIntentHandler extends RefundIntentHandler {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");
                 } else {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseNothingToRefund");
+                    getSessionAttributes().put(CONTINUE_OR_MENU, "true");
                 }
                 getSessionAttributes().put(INTENT, IntentType.GAME);
                 return DialogItem.builder()

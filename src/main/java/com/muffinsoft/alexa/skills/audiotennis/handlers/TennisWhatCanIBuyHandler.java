@@ -15,6 +15,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import java.util.List;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.MENU_OR_CONTINUE;
 
 public class TennisWhatCanIBuyHandler extends WhatCanIBuyIntentHandler {
 
@@ -37,6 +38,7 @@ public class TennisWhatCanIBuyHandler extends WhatCanIBuyIntentHandler {
                 getSessionAttributes().put(INTENT, IntentType.GAME);
                 if (PurchaseManager.isEntitled(product)) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistory");
+                    getSessionAttributes().put(MENU_OR_CONTINUE, "true");
                 } else if (!arePurchasesEnabled) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");
                 } else if(PurchaseManager.isAvailable(product)) {
@@ -44,6 +46,7 @@ public class TennisWhatCanIBuyHandler extends WhatCanIBuyIntentHandler {
                     getSessionAttributes().put(INTENT, IntentType.BUY_INTENT);
                 } else {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseNothing");
+                    getSessionAttributes().put(MENU_OR_CONTINUE, "true");
                 }
                 return DialogItem.builder()
                         .addResponse(dialogTranslator.translate(response, true))

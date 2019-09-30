@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.EXIT_FROM_ONE_POSSIBLE_ACTIVITY;
 import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.PURCHASE_STATE;
 
 public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatcher.request.handler.impl.ConnectionsResponseHandler {
@@ -85,6 +86,7 @@ public class TennisConnectionsResponseHandler implements com.amazon.ask.dispatch
                     sessionAttributes.put(INTENT, IntentType.SELECT_MISSION);
                     Utils.restoreAlreadyPlayed(persistentAttributes, sessionAttributes);
                     speechText = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseWait");
+                    sessionAttributes.put(EXIT_FROM_ONE_POSSIBLE_ACTIVITY, "true");
                     break;
                 case "ACCEPTED": {
                     persistentAttributes.put(PURCHASE_STATE, PurchaseState.ENTITLED.name());

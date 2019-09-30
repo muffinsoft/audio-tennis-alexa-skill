@@ -232,7 +232,7 @@
   ],
   "purchaseHistoryNothing" : [
     {
-      "content" : "You have not purchased the expansion pack which gives unlimited access to all premium activities.",
+      "content" : "You have not purchased the expansion pack which gives unlimited access to all premium activities. You can say - what can I buy - to learn more. Would you like to continue?",
       "role" : "Alexa"
     }
   ],
@@ -250,19 +250,19 @@
   ],
   "purchasePending" : [
     {
-      "content" : "I've asked for permission to purchase the expansion pack. In the meantime, would you like to continue playing one of the available activities?",
+      "content" : "I've asked for permission to purchase the expansion pack. In the meantime, would you like to continue playing?",
       "role" : "Alexa"
     }
   ],
   "purchaseStillPending" : [
     {
-      "content" : "Your purchase is still pending.",
+      "content" : "Your purchase is still pending. Would you like to continue?",
       "role" : "Alexa"
     }
   ],
   "purchaseAlreadyDone" : [
     {
-      "content" : "You already own the expansion pack. Would you like to play one of the premium activities",
+      "content" : "You already own the expansion pack. Would you like to play one of the premium activities?",
       "role" : "Alexa"
     }
   ],
@@ -328,13 +328,13 @@
   ],
   "purchaseNothingToRefund" : [
     {
-      "content" : "You have not made any purchases, there is nothing to refund. You will be returned back to game process",
+      "content" : "You have not made any purchases, there is nothing to refund. Would you like to continue?",
       "role" : "Alexa"
     }
   ],
   "unknownRequest" : [
     {
-      "content" : "Sorry, I am not sure.",
+      "content" : "Sorry, I am not sure. What can I help you with?",
       "role" : "Alexa"
     }
   ]

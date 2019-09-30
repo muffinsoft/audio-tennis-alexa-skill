@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.sdk.constants.SessionConstants.INTENT;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.*;
 
 public class TennisPurchaseHistoryHandler extends PurchaseHistoryHandler {
 
@@ -40,12 +41,15 @@ public class TennisPurchaseHistoryHandler extends PurchaseHistoryHandler {
                 boolean arePurchasesEnabled = (boolean) getSessionAttributes().get("arePurchasesEnabled");
                 if(PurchaseManager.isEntitled(product)) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistory");
+                    getSessionAttributes().put(MENU_OR_CONTINUE, "true");
                 } else if (!arePurchasesEnabled) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");
                 } else if (PurchaseManager.isPending(product, previousState)) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchasePending");
+                    getSessionAttributes().put(EXIT_FROM_ONE_POSSIBLE_ACTIVITY, "true");
                 } else if (PurchaseManager.isAvailable(product)) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistoryNothing");
+                    getSessionAttributes().put(CONTINUE_OR_MENU, "true");
                 } else {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseNothing");
                 }
