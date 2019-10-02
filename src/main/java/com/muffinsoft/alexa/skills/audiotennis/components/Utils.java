@@ -14,9 +14,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.ACTIVITY_PROGRESS;
-import static com.muffinsoft.alexa.sdk.constants.SessionConstants.USER_PROGRESS;
+import static com.muffinsoft.alexa.sdk.constants.SessionConstants.*;
 
 public class Utils {
 
@@ -66,6 +67,20 @@ public class Utils {
             }
             userProgress.getAlreadyPlayed().clear();
             logger.debug("Clearing already played");
+        }
+    }
+
+    public static void getActivityProgress(Map<String, Object> persistentAttributes, Map<String, Object> sessionAttributes, ActivityType activityType) {
+        String userProgressStr = String.valueOf(persistentAttributes.get(USER_PROGRESS));
+        UserProgress userProgress = UserProgressConverter.fromJson(userProgressStr);
+        if (userProgress != null && userProgress.getUnlockedActivities() != null) {
+            Set<ActivityType> unlocked = userProgress.getUnlockedActivities().stream()
+                    .map(ActivityType::valueOf)
+                    .collect(Collectors.toSet());
+            ActivityProgress activityProgress = new ActivityProgress(activityType);
+            activityProgress.getUnlockedActivities().addAll(unlocked);
+            activityProgress.getUnlockedActivities().remove(null);
+            sessionAttributes.put(ACTIVITY_PROGRESS, new ObjectMapper().convertValue(activityProgress, LinkedHashMap.class));
         }
     }
 }

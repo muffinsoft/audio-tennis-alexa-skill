@@ -55,6 +55,13 @@ public class TennisIntentFabric implements IntentFactory {
 
     public StateManager getNextState(IntentType intent, Map<String, Slot> inputSlots, AttributesManager attributesManager) {
 
+        ActivityType activityType = getActivityFromReply(inputSlots);
+        Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
+        ActivityProgress activityProgress = null;
+        if (activityType != null && !sessionAttributes.containsKey(ACTIVITY_PROGRESS)) {
+            Utils.getActivityProgress(attributesManager.getPersistentAttributes(), sessionAttributes, activityType);
+        }
+
         if (attributesManager.getSessionAttributes().containsKey(EXIT_FROM_HELP)) {
             if (isPositiveReply(inputSlots)) {
                 intent = IntentType.HELP;
