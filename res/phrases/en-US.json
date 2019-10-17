@@ -337,5 +337,11 @@
       "content" : "Sorry, I am not sure. What can I help you with?",
       "role" : "Alexa"
     }
+  ],
+  "alreadyHave" : [
+    {
+      "content" : "You already have all the activities. Would you like to select one of them?",
+      "role" : "Alexa"
+    }
   ]
 }

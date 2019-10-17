@@ -37,7 +37,7 @@ public class TennisWhatCanIBuyHandler extends WhatCanIBuyIntentHandler {
                 boolean arePurchasesEnabled = (boolean) getSessionAttributes().get("arePurchasesEnabled");
                 getSessionAttributes().put(INTENT, IntentType.GAME);
                 if (PurchaseManager.isEntitled(product)) {
-                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistory");
+                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("alreadyHave");
                     getSessionAttributes().put(MENU_OR_CONTINUE, "true");
                 } else if (!arePurchasesEnabled) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");
