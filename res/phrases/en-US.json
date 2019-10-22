@@ -73,7 +73,7 @@
   ],
   "generalHelpPhrase": [
     {
-      "content": "You are competing against your friend Ben. The game is played until 11 points. During each round, you will be playing one of 5 fun activities.",
+      "content": "You are competing against your friend Ben. The game is played until 11 points. During each round, you will be playing one of 4 fun activities.",
       "role": "Alexa"
     }
   ],
@@ -275,6 +275,12 @@
   "purchaseUnsuccessful" : [
     {
       "content" : "We couldn't complete the purchase. You can always ask me how to get more features later. For now, want to continue with one of the available activities?",
+      "role" : "Alexa"
+    }
+  ],
+  "purchaseUnavailable" : [
+    {
+      "content" : "That is not available, do you want to continue with one of the available activities?",
       "role" : "Alexa"
     }
   ],

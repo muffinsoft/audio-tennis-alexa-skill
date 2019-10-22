@@ -74,6 +74,7 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
         WordContainer nextWord = activityManager.getRandomWordForActivity(this.currentActivityType, singleton(this.activityProgress.getPreviousWord()));
         this.activityProgress.setPreviousWord(nextWord.getWord());
         this.activityProgress.setRequiredUserReaction(nextWord.getUserReaction());
+        this.activityProgress.addUsedWord(nextWord.getWord());
 
         switch (getUnlockingStatus()) {
             case UNLOCKED:

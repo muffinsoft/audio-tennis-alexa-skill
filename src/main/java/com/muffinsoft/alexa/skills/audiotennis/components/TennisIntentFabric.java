@@ -438,9 +438,15 @@ public class TennisIntentFabric implements IntentFactory {
 
         if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
             logger.debug("Paid activity selected");
+            boolean isPurchasable = (boolean) sessionAttributes.getOrDefault("isPurchasable", false);
             if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
-                logger.debug("Trigger upsell");
-                return UPSELL;
+                if (isPurchasable) {
+                    logger.debug("Trigger upsell");
+                    return UPSELL;
+                } else {
+                    logger.debug("Not purchasable");
+                    return NEW_OR_MENU;
+                }
             }
             else {
                 logger.debug("Saving activity name in session attributes");
@@ -467,7 +473,15 @@ public class TennisIntentFabric implements IntentFactory {
             return SELECT_OTHER_MISSION;
         }
         else {
-            if (needToUpsell(sessionAttributes, activityProgress, state, type)) return UPSELL;
+            if (needToUpsell(sessionAttributes, activityProgress, state, type)) {
+                boolean isPurchasable = (boolean) sessionAttributes.getOrDefault("isPurchasable", false);
+                if (isPurchasable) {
+                    return UPSELL;
+                } else {
+                    return NEW_OR_MENU;
+                }
+
+            }
             movingBetweenActivities(sessionAttributes, activityProgress, type);
             sessionAttributes.remove(SWITCH_ACTIVITY_STEP);
         }
