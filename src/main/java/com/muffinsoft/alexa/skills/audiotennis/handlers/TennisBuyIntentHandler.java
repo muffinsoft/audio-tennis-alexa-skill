@@ -1,6 +1,8 @@
 package com.muffinsoft.alexa.skills.audiotennis.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
+import com.amazon.ask.model.services.monetization.EntitlementReason;
+import com.amazon.ask.model.services.monetization.InSkillProduct;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.components.DialogTranslator;
@@ -8,6 +10,7 @@ import com.muffinsoft.alexa.sdk.constants.PaywallConstants;
 import com.muffinsoft.alexa.sdk.handlers.BuyIntentHandler;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
+import com.muffinsoft.alexa.sdk.util.PurchaseManager;
 import com.muffinsoft.alexa.skills.audiotennis.components.BuyManager;
 import com.muffinsoft.alexa.skills.audiotennis.components.Utils;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
@@ -30,17 +33,25 @@ public class TennisBuyIntentHandler extends BuyIntentHandler {
             @Override
             public DialogItem nextResponse() {
                 boolean isPurchasable = (boolean) input.getAttributesManager().getSessionAttributes().getOrDefault("isPurchasable", false);
-                if (isPurchasable) {
+                InSkillProduct product = PurchaseManager.getInSkillProduct(input);
+                String key;
+
+                if ((PurchaseManager.isEntitled(product) &&
+                        product.getEntitlementReason() == EntitlementReason.AUTO_ENTITLED)) {
+                    key = "unknownRequest";
+                } else if (isPurchasable) {
                     Utils.saveProgressBeforeUpsell(this.getPersistentAttributes(), this.getSessionAttributes(), mapper);
                     savePersistentAttributes();
                     return BuyManager.getBuyResponse(input.getAttributesManager(), phraseDependencyContainer, dialogTranslator, PaywallConstants.BUY);
                 } else {
-                    List<PhraseContainer> response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseUnavailable");
-                    return DialogItem.builder()
-                            .addResponse(dialogTranslator.translate(response, true))
-                            .withReprompt(dialogTranslator.translate(response, true))
-                            .build();
+                    key = "purchaseUnavailable";
                 }
+
+                List<PhraseContainer> response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey(key);
+                return DialogItem.builder()
+                        .addResponse(dialogTranslator.translate(response, true))
+                        .withReprompt(dialogTranslator.translate(response, true))
+                        .build();
             }
         };
     }

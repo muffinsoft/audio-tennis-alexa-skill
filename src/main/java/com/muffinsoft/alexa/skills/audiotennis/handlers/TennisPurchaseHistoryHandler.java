@@ -1,6 +1,7 @@
 package com.muffinsoft.alexa.skills.audiotennis.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
+import com.amazon.ask.model.services.monetization.EntitlementReason;
 import com.amazon.ask.model.services.monetization.InSkillProduct;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
@@ -40,7 +41,8 @@ public class TennisPurchaseHistoryHandler extends PurchaseHistoryHandler {
                 List<PhraseContainer> response;
                 boolean arePurchasesEnabled = (boolean) getSessionAttributes().get("arePurchasesEnabled");
                 if(PurchaseManager.isEntitled(product)) {
-                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseHistory");
+                    String key = product.getEntitlementReason() == EntitlementReason.AUTO_ENTITLED ? "unknownRequest" : "purchaseHistory";
+                    response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey(key);
                     getSessionAttributes().put(MENU_OR_CONTINUE, "true");
                 } else if (!arePurchasesEnabled) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");

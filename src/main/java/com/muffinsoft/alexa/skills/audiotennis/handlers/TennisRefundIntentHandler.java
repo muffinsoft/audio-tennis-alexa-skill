@@ -1,6 +1,8 @@
 package com.muffinsoft.alexa.skills.audiotennis.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
+import com.amazon.ask.model.services.monetization.EntitlementReason;
+import com.amazon.ask.model.services.monetization.InSkillProduct;
 import com.muffinsoft.alexa.sdk.activities.BaseStateManager;
 import com.muffinsoft.alexa.sdk.activities.StateManager;
 import com.muffinsoft.alexa.sdk.components.DialogTranslator;
@@ -8,6 +10,7 @@ import com.muffinsoft.alexa.sdk.enums.IntentType;
 import com.muffinsoft.alexa.sdk.handlers.RefundIntentHandler;
 import com.muffinsoft.alexa.sdk.model.DialogItem;
 import com.muffinsoft.alexa.sdk.model.PhraseContainer;
+import com.muffinsoft.alexa.sdk.util.PurchaseManager;
 import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 
 import java.util.List;
@@ -32,7 +35,8 @@ public class TennisRefundIntentHandler extends RefundIntentHandler {
             public DialogItem nextResponse() {
                 boolean arePurchasesEnabled = (boolean) getSessionAttributes().get("arePurchasesEnabled");
                 List<PhraseContainer> response;
-                if (!arePurchasesEnabled) {
+                InSkillProduct product = PurchaseManager.getInSkillProduct(input);
+                if (PurchaseManager.isEntitled(product) && product.getEntitlementReason() == EntitlementReason.AUTO_ENTITLED || !arePurchasesEnabled) {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("unrecognized");
                 } else {
                     response = phraseDependencyContainer.getRegularPhraseManager().getValueByKey("purchaseNothingToRefund");
