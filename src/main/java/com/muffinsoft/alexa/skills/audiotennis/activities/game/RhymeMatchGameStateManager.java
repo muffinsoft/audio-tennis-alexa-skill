@@ -10,6 +10,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -62,8 +63,14 @@ public class RhymeMatchGameStateManager extends OneSideGameStateManager {
     @Override
     protected DialogItem.Builder handleMistakeAnswer(DialogItem.Builder builder) {
 
-        BasePhraseContainer playerLosePhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerLoseWrongWordPhrase();
-        builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), null, this.activityProgress.getPreviousWord()), true));
+        List<String> words = Arrays.asList(this.activityProgress.getPreviousWord().split(" "));
+        List<String> userReply = getUserReply(SlotName.ACTION);
+        if (words.containsAll(userReply)) {
+            builder.addResponse(getDialogTranslator().translate(regularPhraseManager.getValueByKey("sameWordRhyme"), true));
+        } else {
+            BasePhraseContainer playerLosePhrase = activitiesPhraseManager.getGeneralPhrasesForActivity(this.currentActivityType).getRandomPlayerLoseWrongWordPhrase();
+            builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), null, this.activityProgress.getPreviousWord()), true));
+        }
 
         this.activityProgress.iterateMistakeCount();
 
