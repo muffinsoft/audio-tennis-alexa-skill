@@ -322,7 +322,7 @@ public class TennisIntentFabric implements IntentFactory {
     private boolean needToUpsell(Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state, ActivityType type) {
         if (type == null) {
             ActivityType currentActivity = activityProgress.getCurrentActivity();
-            if (currentActivity == ActivityType.ALPHABET_RACE || currentActivity == ActivityType.RHYME_MATCH) {
+            if (ActivityType.PAID.contains(currentActivity)) {
                 if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(currentActivity.name())) {
                     return true;
                 }
@@ -331,7 +331,7 @@ public class TennisIntentFabric implements IntentFactory {
                 }
             }
         }
-        else if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+        else if (ActivityType.PAID.contains(type)) {
             if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
                 return true;
             }
@@ -392,7 +392,7 @@ public class TennisIntentFabric implements IntentFactory {
     }
 
     private IntentType checkPaidActivities(Map<String, Object> sessionAttributes, PurchaseState state, ActivityType type, boolean isPurchasable) {
-        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+        if (ActivityType.PAID.contains(type)) {
             logger.debug("{} is selected, checking if entitled", type);
             if (state != PurchaseState.ENTITLED) {
                 if (sessionAttributes.put(type.name(), "true") != null) {
@@ -414,7 +414,7 @@ public class TennisIntentFabric implements IntentFactory {
         activityProgress.setTransition(true);
         activityProgress.setCurrentActivity(possibleActivity);
         activityProgress.setPreviousActivity(currentActivity);
-        if (possibleActivity == ActivityType.ALPHABET_RACE || possibleActivity == ActivityType.RHYME_MATCH) {
+        if (ActivityType.PAID.contains(possibleActivity)) {
             sessionAttributes.put(possibleActivity.name(), "true");
         }
         sessionAttributes.put(ACTIVITY_PROGRESS, ObjectConvert.toMap(activityProgress));
@@ -436,7 +436,7 @@ public class TennisIntentFabric implements IntentFactory {
             return SELECT_MISSION;
         }
 
-        if (type == ActivityType.ALPHABET_RACE || type == ActivityType.RHYME_MATCH) {
+        if (ActivityType.PAID.contains(type)) {
             logger.debug("Paid activity selected");
             boolean isPurchasable = (boolean) sessionAttributes.getOrDefault("isPurchasable", false);
             if (state != PurchaseState.ENTITLED && sessionAttributes.containsKey(type.name())) {
