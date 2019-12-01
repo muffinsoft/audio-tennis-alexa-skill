@@ -126,7 +126,7 @@
   ],
   "selectActivityBetweenTwoPhrase": [
     {
-      "content": "Do you want to play Last Letter or Bam Wham?",
+      "content": "Do you want to play Last Letter or Alphabet Race?",
       "role": "Alexa"
     }
   ],
@@ -138,19 +138,19 @@
   ],
   "selectActivityBetweenThreePhrase": [
     {
-      "content": "Do you want to play Last Letter, Bam Wham or Alphabet Race?",
+      "content": "Do you want to play Last Letter, Alphabet Race or Rhyme Match?",
       "role": "Alexa"
     }
   ],
   "selectActivityBetweenAllPhrase": [
     {
-      "content": "Do you want to play Last Letter, Bam Wham or Something Else?",
+      "content": "Do you want to play Last Letter, Alphabet Race or Something Else?",
       "role": "Alexa"
     }
   ],
   "selectActivityBetweenOthersPhrase": [
     {
-      "content": "Do you want to play Alphabet Race or Rhyme Match?",
+      "content": "Do you want to play Rhyme Match or Bam Wham?",
       "role": "Alexa"
     }
   ],
