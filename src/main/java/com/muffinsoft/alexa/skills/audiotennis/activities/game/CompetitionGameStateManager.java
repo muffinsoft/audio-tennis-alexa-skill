@@ -10,11 +10,7 @@ import com.muffinsoft.alexa.skills.audiotennis.models.PhraseDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.SettingsDependencyContainer;
 import com.muffinsoft.alexa.skills.audiotennis.models.WordContainer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
@@ -124,6 +120,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
 
     @Override
     protected DialogItem.Builder handleMistakeAnswer(DialogItem.Builder builder) {
+        logger.debug("Starting to handle mistake answer");
 
         BasePhraseContainer playerLosePhrase;
 
@@ -135,6 +132,7 @@ abstract class CompetitionGameStateManager extends TennisGamePhaseStateManager {
         }
 
         builder.addResponse(getDialogTranslator().translate(replaceWordPlaceholders(playerLosePhrase, getActionUserReply(), characterWithMistake, null), true));
+        logger.debug("Player lose phrase created");
 
         iterateEnemyScoreCounter(builder);
 

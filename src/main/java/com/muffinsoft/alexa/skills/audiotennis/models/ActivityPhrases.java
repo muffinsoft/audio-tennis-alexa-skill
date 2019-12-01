@@ -2,11 +2,16 @@ package com.muffinsoft.alexa.skills.audiotennis.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.muffinsoft.alexa.sdk.model.BasePhraseContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ActivityPhrases extends BasePhrases {
+
+    private static final Logger logger = LoggerFactory.getLogger(ActivityPhrases.class);
 
     private List<BasePhraseContainer> intro = Collections.emptyList();
     private List<BasePhraseContainer> opponentFirstPhrase = Collections.emptyList();
@@ -142,11 +147,16 @@ public class ActivityPhrases extends BasePhrases {
     @JsonIgnore
     public BasePhraseContainer getRandomPlayerLoseWrongWordPhrase() {
         if (playerLoseWrongWordPhrase.isEmpty()) {
+            logger.debug("Player lose list is empty");
             return BasePhraseContainer.empty();
         }
         List<BasePhraseContainer> values = removeAllPartialElements(playerLoseWrongWordPhrase);
+
+        logger.debug("There are {} phrases: {}", values.size(), values.stream().map(BasePhraseContainer::getAudio).collect(Collectors.joining(",")));
         int index = getRandomValue(values.size());
-        return values.get(index);
+        BasePhraseContainer result = values.get(index);
+        logger.debug("Returning {}", result.getContent());
+        return result;
     }
 
     @JsonIgnore

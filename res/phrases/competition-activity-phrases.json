@@ -71,49 +71,49 @@
   ],
   "playerLoseWrongWordPhrase": [
     {
-      "audio": "%word% doesn't start with %letter%.",
+      "content": "%word% doesn't start with %letter%.",
       "role": "Alexa"
     },
     {
-      "audio": "%word% doesn't begin with %letter%.",
+      "content": "%word% doesn't begin with %letter%.",
       "role": "Alexa"
     },
     {
-      "audio": "%letter% isn't the the first letter of %word%.",
+      "content": "%letter% isn't the the first letter of %word%.",
       "role": "Alexa"
     },
     {
-      "audio": "Your word had to start with %letter%.",
+      "content": "Your word had to start with %letter%.",
       "role": "Alexa"
     },
     {
-      "audio": "Your word was supposed to start with %letter%.",
+      "content": "Your word was supposed to start with %letter%.",
       "role": "Alexa"
     }
   ],
   "playerLoseRepeatWordPhrase": [
     {
-      "audio": "%word% was already used.",
+      "content": "%word% was already used.",
       "role": "Alexa"
     },
     {
-      "audio": "you already said %word%.",
+      "content": "you already said %word%.",
       "role": "Alexa"
     },
     {
-      "audio": "you can't say %word% again.",
+      "content": "you can't say %word% again.",
       "role": "Alexa"
     },
     {
-      "audio": "%word% can't be used again.",
+      "content": "%word% can't be used again.",
       "role": "Alexa"
     },
     {
-      "audio": "you already said %word%!",
+      "content": "you already said %word%!",
       "role": "Alexa"
     },
     {
-      "audio": "%word% can't be repeated!",
+      "content": "%word% can't be repeated!",
       "role": "Alexa"
     }
   ],
@@ -181,39 +181,39 @@
   ],
   "enemyLoseWrongWordPhrase": [
     {
-      "audio": "Sorry, Ben. %word% doesn’t start with %letter%!",
+      "content": "Sorry, Ben. %word% doesn’t start with %letter%!",
       "role": "Alexa"
     }
   ],
   "enemyLoseRepeatWordPhrase": [
     {
-      "audio": "%word% was already used.",
+      "content": "%word% was already used.",
       "role": "Alexa"
     },
     {
-      "audio": "Hey Ben, you already said %word%.",
+      "content": "Hey Ben, you already said %word%.",
       "role": "Alexa"
     },
     {
-      "audio": "Nice try, Ben - you can't say %word% again.",
+      "content": "Nice try, Ben - you can't say %word% again.",
       "role": "Alexa"
     },
     {
-      "audio": "%word% can't be used again.",
+      "content": "%word% can't be used again.",
       "role": "Alexa"
     },
     {
-      "audio": "Hmm, Ben - you already said %word%!",
+      "content": "Hmm, Ben - you already said %word%!",
       "role": "Alexa"
     },
     {
-      "audio": "%word% can't be repeated!",
+      "content": "%word% can't be repeated!",
       "role": "Alexa"
     }
   ],
   "playerTurnAfterEnemyMistake": [
     {
-      "audio": "Your word should starts from %letter%.",
+      "content": "Your word should starts from %letter%.",
       "role": "Alexa"
     }
   ]

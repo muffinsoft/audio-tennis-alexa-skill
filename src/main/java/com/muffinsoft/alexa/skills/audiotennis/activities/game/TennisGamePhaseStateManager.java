@@ -20,17 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.muffinsoft.alexa.skills.audiotennis.components.NumberTranslator.translateToOrdinalValue;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.ENEMY_FAVOR_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.FIREWORK_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE_B;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE_C;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.NEW_ACTIVITY_UNLOCKED_PHRASE_D;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.PLAYER_FAVOR_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.TRY_SOMETHING_ELSE_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.WANT_RESTART_PHRASE;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.ASK_RANDOM_SWITCH_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_ACTIVITY_STEP;
-import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.SWITCH_UNLOCK_ACTIVITY_STEP;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.PhraseConstants.*;
+import static com.muffinsoft.alexa.skills.audiotennis.constants.SessionConstants.*;
 
 public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateManager {
 
@@ -407,6 +398,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
     }
 
     BasePhraseContainer replaceWordPlaceholders(PhraseContainer inputContainer, String word, Character character, String rhyme) {
+        logger.debug("Replacing placeholders, input: {} word: {}", inputContainer.getContent(), word);
         String newContent = replaceWordPlaceholders(inputContainer.getContent(), word, character, rhyme);
         return new BasePhraseContainer(newContent, inputContainer.getRole());
     }
@@ -422,6 +414,7 @@ public abstract class TennisGamePhaseStateManager extends TennisBaseGameStateMan
         if (rhyme != null) {
             result = result.replace("%rhyme%", rhyme);
         }
+        logger.debug("Result of replacing words: {}", result);
         return result;
     }
 

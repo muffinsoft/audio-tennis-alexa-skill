@@ -6,11 +6,15 @@ import com.muffinsoft.alexa.sdk.util.ContentLoader;
 import com.muffinsoft.alexa.skills.audiotennis.enums.ActivityType;
 import com.muffinsoft.alexa.skills.audiotennis.models.ActivityPhrases;
 import com.muffinsoft.alexa.skills.audiotennis.models.GreetingsPhrases;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ActivitiesPhraseManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(ActivitiesPhraseManager.class);
 
     private static final String ALPHABET_RACE = "phrases/alphabet-race-phrases.json";
     private static final String LAST_LETTER = "phrases/last-letter-phrases.json";
@@ -53,7 +57,7 @@ public class ActivitiesPhraseManager {
     }
 
     public ActivityPhrases getGeneralPhrasesForActivity(ActivityType type) {
-
+        logger.debug("Getting phrases for activity {}", type);
         if (type == ActivityType.LAST_LETTER || type == ActivityType.ALPHABET_RACE) {
             return competitionPhrases;
         }
