@@ -54,7 +54,7 @@
   ],
   "returnEnemyLastScore": [
     {
-      "content": "Ben really creamed you %enemyScores% to %scores% last game!",
+      "content": "Ben really creamed you %enemyScores% to %scores% last time!",
       "role": "Alexa"
     },
     {
@@ -62,11 +62,11 @@
       "role": "Alexa"
     },
     {
-      "content": "Ben outplayed you big time last game! The score was %enemyScores% to %scores%.",
+      "content": "Ben outplayed you big time! The score was %enemyScores% to %scores%.",
       "role": "Alexa"
     },
     {
-      "content": "Ben  beat you %enemyScores% to %scores% last game. Is he good or what?",
+      "content": "Ben  beat you %enemyScores% to %scores% last time. Is he good or what?",
       "role": "Alexa"
     }
   ],
@@ -76,15 +76,15 @@
       "role": "Alexa"
     },
     {
-      "content": "Man, you destroyed Ben %scores% to %enemyScores% in our last game!",
+      "content": "Man, you destroyed Ben %scores% to %enemyScores% last time!",
       "role": "Alexa"
     },
     {
-      "content": "You got Ben good %scores% to %enemyScores% last game!",
+      "content": "You got Ben good %scores% to %enemyScores% last time!",
       "role": "Alexa"
     },
     {
-      "content": "You really showed Ben who's boss last game. You won %scores% to %enemyScores%",
+      "content": "You really showed Ben who's boss last time. You won %scores% to %enemyScores%",
       "role": "Alexa"
     },
     {
