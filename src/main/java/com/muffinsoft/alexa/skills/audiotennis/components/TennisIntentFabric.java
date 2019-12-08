@@ -80,7 +80,8 @@ public class TennisIntentFabric implements IntentFactory {
 
         if (attributesManager.getSessionAttributes().containsKey(NEW_ACTIVITY_OR_MENU)) {
             if (isPositiveReply(inputSlots)) {
-                interceptRandomActivityProgress(attributesManager.getSessionAttributes(), getCurrentActivityProgress(attributesManager));
+                PurchaseState purchaseState = getPurchaseState(attributesManager);
+                interceptRandomActivityProgress(attributesManager.getSessionAttributes(), getCurrentActivityProgress(attributesManager), purchaseState);
                 intent = GAME;
             } else {
                 intent = SELECT_MISSION;
@@ -142,14 +143,18 @@ public class TennisIntentFabric implements IntentFactory {
         }
     }
 
+    private PurchaseState getPurchaseState(AttributesManager attributesManager) {
+        String state = String.valueOf(attributesManager.getPersistentAttributes().getOrDefault(PURCHASE_STATE, PurchaseState.NOT_ENTITLED));
+        return PurchaseState.valueOf(state);
+    }
+
     private StateManager newActivityPrompt(Map<String, Slot> slots, AttributesManager attributesManager, PhraseDependencyContainer phraseDependencyContainer) {
         DialogTranslator translator = settingsDependencyContainer.getDialogTranslator();
         RegularPhraseManager phraseManager = phraseDependencyContainer.getRegularPhraseManager();
         return new BaseStateManager(slots, attributesManager, translator) {
             @Override
             public DialogItem nextResponse() {
-                String state = String.valueOf(attributesManager.getPersistentAttributes().getOrDefault(PURCHASE_STATE, PurchaseState.NOT_ENTITLED));
-                PurchaseState purchaseState = PurchaseState.valueOf(state);
+                PurchaseState purchaseState = getPurchaseState(attributesManager);
 
                 getSessionAttributes().put(NEW_ACTIVITY_OR_MENU, NEW_ACTIVITY_OR_MENU);
                 String key = purchaseState == PurchaseState.PENDING ? "purchasePending" : "noMorePremium";
@@ -202,8 +207,7 @@ public class TennisIntentFabric implements IntentFactory {
         ActivityProgress activityProgress = getCurrentActivityProgress(attributesManager);
 
         Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
-        String state = String.valueOf(attributesManager.getPersistentAttributes().getOrDefault(PURCHASE_STATE, PurchaseState.NOT_ENTITLED));
-        PurchaseState purchaseState = PurchaseState.valueOf(state);
+        PurchaseState purchaseState = getPurchaseState(attributesManager);
 
         IntentType interceptedIntentType = GAME;
 
@@ -271,10 +275,11 @@ public class TennisIntentFabric implements IntentFactory {
         }
     }
 
-    private void interceptRandomActivityProgress(Map<String, Object> sessionAttributes, ActivityProgress activityProgress) {
+    private void interceptRandomActivityProgress(Map<String, Object> sessionAttributes, ActivityProgress activityProgress, PurchaseState state) {
         ActivityType currentActivity = activityProgress.getCurrentActivity();
         Set<ActivityType> unlockedActivities = new HashSet<>(activityProgress.getUnlockedActivities());
         unlockedActivities.remove(currentActivity);
+        unlockedActivities.removeIf(o -> ActivityType.PAID.contains(o) && state != PurchaseState.ENTITLED && sessionAttributes.containsKey(o.name()));
         if (unlockedActivities.isEmpty()) {
             return;
         }
@@ -310,7 +315,7 @@ public class TennisIntentFabric implements IntentFactory {
         }
 
         if (isPositiveReply(inputSlots)) {
-            interceptRandomActivityProgress(sessionAttributes, activityProgress);
+            interceptRandomActivityProgress(sessionAttributes, activityProgress, state);
         }
         else {
             movingBetweenActivities(sessionAttributes, activityProgress, type);
