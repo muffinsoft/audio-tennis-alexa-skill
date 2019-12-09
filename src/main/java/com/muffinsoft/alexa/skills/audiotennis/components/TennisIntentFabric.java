@@ -214,6 +214,7 @@ public class TennisIntentFabric implements IntentFactory {
         if (sessionAttributes.containsKey(SELECT_ACTIVITY_STEP)) {
             logger.info("SELECT_ACTIVITY_STEP is present");
             interceptedIntentType = interceptSelectActivity(inputSlots, sessionAttributes, activityProgress, purchaseState);
+            sessionAttributes.remove(STATE_TYPE);
             logger.info("Intercepted IntentType:" + interceptedIntentType);
             sessionAttributes.remove(SELECT_ACTIVITY_STEP);
         }
